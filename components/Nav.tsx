@@ -54,9 +54,9 @@ export default function Nav() {
               <Image
                 src="/images/illustration-bandoneon-dark.png"
                 alt="춘천국제탱고페스티벌"
-                width={44}
-                height={44}
-                style={{ height: '40px', width: 'auto' }}
+                width={56}
+                height={56}
+                style={{ height: '56px', width: 'auto' }}
                 priority
               />
             </Link>
@@ -85,7 +85,7 @@ export default function Nav() {
               </Link>
               <a
                 href={registerUrl}
-                className="bg-burgundy hover:bg-burgundy-deep text-warm-white font-en-body font-bold text-[12px] tracking-[0.18em] uppercase px-6 py-3 rounded-md transition-colors duration-200"
+                className="bg-burgundy text-warm-white font-en-body font-bold text-[12px] tracking-[0.18em] uppercase px-6 py-3 rounded-md transition-all duration-150 shadow-[0_3px_0_#5A0E1B] hover:shadow-[0_1px_0_#5A0E1B] hover:translate-y-[2px]"
               >
                 {t('register')}
               </a>
@@ -133,9 +133,9 @@ export default function Nav() {
             <Image
               src="/images/illustration-bandoneon-dark.png"
               alt="춘천국제탱고페스티벌"
-              width={40}
-              height={40}
-              style={{ height: '40px', width: 'auto' }}
+              width={44}
+              height={44}
+              style={{ height: '44px', width: 'auto' }}
               priority
             />
           </Link>
@@ -180,7 +180,7 @@ export default function Nav() {
           <a
             href={registerUrl}
             onClick={() => setMenuOpen(false)}
-            className="block w-full bg-burgundy hover:bg-burgundy-deep text-warm-white font-en-body font-bold text-[13px] tracking-[0.18em] uppercase text-center py-4 rounded-md transition-colors shadow-stamp"
+            className="block w-full bg-burgundy text-warm-white font-en-body font-bold text-[16px] tracking-[0.18em] uppercase text-center py-4 rounded-md transition-all duration-150 shadow-[0_4px_0_#5A0E1B] hover:shadow-[0_2px_0_#5A0E1B] hover:translate-y-[2px]"
           >
             {t('register')}
           </a>

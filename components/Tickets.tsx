@@ -132,10 +132,10 @@ export default function Tickets() {
                 <a
                   href={registerUrl}
                   className={[
-                    'block text-center font-en-body font-bold text-[11px] tracking-[0.2em] uppercase py-3 rounded transition-colors duration-200',
+                    'block text-center font-en-body font-bold text-[13px] tracking-[0.2em] uppercase py-3 rounded transition-all duration-150',
                     tier.featured
-                      ? 'bg-warm-white text-burgundy hover:bg-cream'
-                      : 'bg-burgundy text-warm-white hover:bg-burgundy-deep',
+                      ? 'bg-warm-white text-burgundy shadow-[0_3px_0_rgba(253,250,245,0.4)] hover:shadow-[0_1px_0_rgba(253,250,245,0.4)] hover:translate-y-[2px]'
+                      : 'bg-burgundy text-warm-white shadow-[0_3px_0_#5A0E1B] hover:shadow-[0_1px_0_#5A0E1B] hover:translate-y-[2px]',
                   ].join(' ')}
                 >
                   {item.cta} →

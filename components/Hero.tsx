@@ -68,7 +68,7 @@ export default function Hero() {
               <div className="pt-2">
                 <a
                   href={registerUrl}
-                  className="inline-block bg-burgundy hover:bg-burgundy-deep text-warm-white font-en-body font-bold text-[12px] tracking-[0.22em] uppercase px-8 py-[14px] rounded-md transition-colors duration-200"
+                  className="inline-block bg-burgundy text-warm-white font-en-body font-bold text-[16px] tracking-[0.22em] uppercase px-9 py-4 rounded-md transition-all duration-150 shadow-[0_4px_0_#5A0E1B] hover:shadow-[0_2px_0_#5A0E1B] hover:translate-y-[2px]"
                 >
                   {t('cta')}
                 </a>
@@ -192,7 +192,7 @@ export default function Hero() {
         <div className="py-5">
           <a
             href={registerUrl}
-            className="block w-full bg-burgundy hover:bg-burgundy-deep text-warm-white font-en-body font-bold text-[12px] tracking-[0.22em] uppercase text-center py-4 rounded-md transition-colors"
+            className="block w-full bg-burgundy text-warm-white font-en-body font-bold text-[16px] tracking-[0.22em] uppercase text-center py-4 rounded-md transition-all duration-150 shadow-[0_4px_0_#5A0E1B] hover:shadow-[0_2px_0_#5A0E1B] hover:translate-y-[2px]"
           >
             {t('cta')}
           </a>
