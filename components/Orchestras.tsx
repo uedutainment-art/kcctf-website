@@ -10,7 +10,7 @@ export default function Orchestras() {
     <section id="orchestras" className="bg-burgundy text-warm-white overflow-hidden">
 
       {/* ── Header ────────────────────────────────────────────────────── */}
-      <div className="max-w-4xl mx-auto px-6 pt-16 pb-10 text-center">
+      <div className="max-w-[1200px] mx-auto px-6 md:px-10 pt-16 pb-10 text-center">
         <p className="font-en-body font-bold text-[12px] tracking-[0.4em] uppercase text-gold mb-3">
           {t('eyebrow')}
         </p>
@@ -29,7 +29,7 @@ export default function Orchestras() {
       </div>
 
       {/* ── Orchestra cards ────────────────────────────────────────────── */}
-      <div className="flex flex-col gap-4 pb-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+      <div className="flex flex-col gap-4 pb-16 max-w-[1200px] mx-auto px-6 md:px-10">
         {ORCHESTRAS.map((orq, i) => {
           const item = t.raw(`items.${i}`) as {
             name: string; nameEn: string; role: string; description: string; liveBadge: string;

@@ -22,8 +22,8 @@ export default function Footer() {
   const contactEmail = process.env.NEXT_PUBLIC_CONTACT_EMAIL ?? 'info@kcctf.org';
 
   return (
-    <footer id="about" className="bg-night text-warm-white px-4 sm:px-6 pt-16 pb-10">
-      <div className="max-w-5xl mx-auto">
+    <footer id="about" className="bg-night text-warm-white pt-16 pb-10">
+      <div className="max-w-[1200px] mx-auto px-6 md:px-10">
 
         {/* Top row: tagline + bandoneon */}
         <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-6 mb-12 border-b border-warm-white/10 pb-10">

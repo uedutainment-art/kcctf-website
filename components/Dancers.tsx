@@ -5,8 +5,8 @@ export default function Dancers() {
   const t = useTranslations('dancers');
 
   return (
-    <section id="dancers" className="bg-warm-white py-16 px-4 sm:px-6">
-      <div className="max-w-5xl mx-auto">
+    <section id="dancers" className="bg-warm-white py-16">
+      <div className="max-w-[1200px] mx-auto px-6 md:px-10">
 
         {/* Header */}
         <div className="text-center mb-12">

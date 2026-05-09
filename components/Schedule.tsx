@@ -24,8 +24,8 @@ export default function Schedule() {
   const dayItems = SCHEDULE_ITEMS.filter((item) => item.day === activeDay);
 
   return (
-    <section id="schedule" className="bg-mustard-soft py-16 px-4 sm:px-6">
-      <div className="max-w-4xl mx-auto">
+    <section id="schedule" className="bg-mustard-soft py-16">
+      <div className="max-w-[1200px] mx-auto px-6 md:px-10">
 
         {/* Header */}
         <div className="text-center mb-10">

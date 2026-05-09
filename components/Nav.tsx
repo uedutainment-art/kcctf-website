@@ -46,7 +46,7 @@ export default function Nav() {
             : 'bg-transparent border-b border-transparent',
         ].join(' ')}
       >
-        <div className="mx-auto max-w-7xl px-5 lg:px-8">
+        <div className="max-w-[1200px] mx-auto px-6 md:px-10">
           <div className="flex h-[72px] lg:h-[72px] items-center justify-between gap-4">
 
             {/* Logo */}

@@ -25,7 +25,7 @@ export default function Hero() {
 
       {/* ── DESKTOP layout (lg+) ──────────────────────────────────────── */}
       <div className="hidden lg:block relative z-10">
-        <div className="mx-auto max-w-7xl px-8 pt-8 pb-0">
+        <div className="max-w-[1200px] mx-auto px-6 md:px-10 pt-8 pb-0">
           <div className="grid grid-cols-[1.4fr_1fr] gap-6 items-start">
 
             {/* Left: text column */}
@@ -109,7 +109,7 @@ export default function Hero() {
       </div>
 
       {/* ── MOBILE layout (< lg) ─────────────────────────────────────── */}
-      <div className="lg:hidden relative z-10 px-[18px] pt-5 pb-0">
+      <div className="lg:hidden relative z-10 px-6 pt-5 pb-0">
 
         {/* Eyebrow */}
         <p className="font-en-body font-bold text-[9px] tracking-[0.4em] uppercase text-burgundy text-center mb-3">

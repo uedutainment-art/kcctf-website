@@ -26,8 +26,8 @@ export default function Tickets() {
   };
 
   return (
-    <section id="tickets" className="bg-mustard-soft py-16 px-4 sm:px-6">
-      <div className="max-w-5xl mx-auto">
+    <section id="tickets" className="bg-mustard-soft py-16">
+      <div className="max-w-[1200px] mx-auto px-6 md:px-10">
 
         {/* Header */}
         <div className="text-center mb-12">
