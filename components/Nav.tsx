@@ -52,11 +52,11 @@ export default function Nav() {
             {/* Logo */}
             <Link href="/" className="flex-shrink-0">
               <Image
-                src="/images/logo-mark.svg"
+                src="/images/KCCTF_logo/KCCTF_white.svg"
                 alt="춘천국제탱고페스티벌"
-                width={56}
+                width={42}
                 height={56}
-                style={{ height: '56px', width: '56px' }}
+                style={{ height: '52px', width: 'auto' }}
                 unoptimized
                 priority
               />
@@ -132,11 +132,11 @@ export default function Nav() {
         <div className="flex items-center justify-between px-5 pt-5 pb-4">
           <Link href="/" onClick={() => setMenuOpen(false)}>
             <Image
-              src="/images/logo-mark.svg"
+              src="/images/KCCTF_logo/KCCTF_white.svg"
               alt="춘천국제탱고페스티벌"
-              width={44}
+              width={34}
               height={44}
-              style={{ height: '44px', width: '44px' }}
+              style={{ height: '44px', width: 'auto' }}
               unoptimized
               priority
             />
