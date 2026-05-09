@@ -163,15 +163,16 @@ export default function Hero() {
 
         {/* Stats 2×2 */}
         <div className="grid grid-cols-2 gap-[10px] mb-4">
-          {stats.map(({ num, label }) => (
+          {stats.map(({ num, label }, i) => (
             <div
               key={label}
-              className="bg-burgundy px-3 py-[10px] text-center rounded-[4px] shadow-stamp"
+              className="bg-warm-white border-2 border-ink-soft px-3 py-[10px] text-center"
+              style={{ transform: `rotate(${STAT_ROTATIONS[i]})` }}
             >
-              <div className="font-en-display italic font-black text-[22px] text-gold-soft leading-none">
+              <div className="font-en-display italic font-black text-[28px] text-burgundy leading-none">
                 {num}
               </div>
-              <div className="font-en-body font-bold text-[8px] tracking-[0.2em] uppercase text-warm-white/75 mt-1">
+              <div className="font-en-body font-bold text-[8px] tracking-[0.2em] uppercase text-ink-soft mt-1">
                 {label}
               </div>
             </div>
@@ -252,18 +253,21 @@ type StatsRowProps = {
   stats: { num: string; label: string }[];
 };
 
+const STAT_ROTATIONS = ['-2deg', '1deg', '-1deg', '2deg'];
+
 function StatsRow({ stats }: StatsRowProps) {
   return (
     <div className="grid grid-cols-4 gap-[10px] mb-4">
-      {stats.map(({ num, label }) => (
+      {stats.map(({ num, label }, i) => (
         <div
           key={label}
-          className="bg-burgundy px-3 py-[10px] text-center rounded-[4px] shadow-stamp"
+          className="bg-warm-white border-2 border-ink-soft px-3 py-[12px] text-center"
+          style={{ transform: `rotate(${STAT_ROTATIONS[i]})` }}
         >
-          <div className="font-en-display italic font-black text-[28px] text-gold-soft leading-none">
+          <div className="font-en-display italic font-black text-[36px] text-burgundy leading-none">
             {num}
           </div>
-          <div className="font-en-body font-bold text-[9px] tracking-[0.2em] uppercase text-warm-white/75 mt-1">
+          <div className="font-en-body font-bold text-[9px] tracking-[0.25em] uppercase text-ink-soft mt-1">
             {label}
           </div>
         </div>
