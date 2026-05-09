@@ -98,14 +98,21 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Sponsors placeholder */}
+          {/* Sponsors / organizers */}
           <div className="col-span-2 sm:col-span-1">
             <p className="font-en-body font-bold text-[10px] tracking-[0.3em] uppercase text-gold mb-4">
               {t('sponsorsTitle')}
             </p>
-            <p className="font-kr-sans text-[13px] text-warm-white/35">
-              춘천국제탱고페스티벌<br />조직위원회
-            </p>
+            <div className="flex flex-col gap-2">
+              <p className="font-kr-sans text-[11px] text-warm-white/30 uppercase tracking-[0.15em]">주최·주관</p>
+              <p className="font-kr-sans text-[13px] text-warm-white/55 leading-[1.6]">
+                춘천문화재단<br />(사)춘천국제탱고페스티벌
+              </p>
+              <p className="font-kr-sans text-[11px] text-warm-white/30 uppercase tracking-[0.15em] mt-1">후원</p>
+              <p className="font-kr-sans text-[13px] text-warm-white/55 leading-[1.6]">
+                춘천시<br />주한아르헨티나 대사관
+              </p>
+            </div>
           </div>
         </div>
 
