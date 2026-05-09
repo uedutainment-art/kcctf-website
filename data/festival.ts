@@ -88,12 +88,12 @@ export const ORCHESTRAS: Orchestra[] = [
 ];
 
 export const DJS: DJ[] = [
-  { id: 'hagoon',  nameKo: '하군',     nameEn: 'Hagoon',         city: '서울', cityEn: 'Seoul',     country: 'Korea',     image: '/images/dj-hagoon.jpg'  },
-  { id: 'stone',   nameKo: '스톤',     nameEn: 'Stone',          city: '부산', cityEn: 'Busan',     country: 'Korea',     image: '/images/dj-stone.jpg'   },
-  { id: 'carlos',  nameKo: '까를로스', nameEn: 'Carlos',         city: '서울', cityEn: 'Seoul',     country: 'Korea',     image: '/images/dj-carlos.jpg'  },
-  { id: 'becca',   nameKo: '베카',     nameEn: 'Becca',          city: '서울', cityEn: 'Seoul',     country: 'Korea',     image: '/images/dj-becca.jpg'   },
-  { id: 'wangwei', nameKo: '왕웨이',   nameEn: 'Wang Wei',       city: '상해', cityEn: 'Shanghai',  country: 'China',     image: '/images/dj-wangwei.jpg' },
-  { id: 'natalie', nameKo: '나탈리',   nameEn: 'Nathalie Cheng', city: '홍콩', cityEn: 'Hong Kong', country: 'Hong Kong', image: '/images/dj-natalie.jpg' },
+  { id: 'hagoon',  nameKo: '하군',     nameEn: 'Hagoon',         city: '서울', cityEn: 'Seoul',     country: 'Korea',     image: '/images/DJ/6.png' },
+  { id: 'stone',   nameKo: '스톤',     nameEn: 'Stone',          city: '부산', cityEn: 'Busan',     country: 'Korea',     image: '/images/DJ/4.png' },
+  { id: 'carlos',  nameKo: '까를로스', nameEn: 'Carlos',         city: '서울', cityEn: 'Seoul',     country: 'Korea',     image: '/images/DJ/3.png' },
+  { id: 'becca',   nameKo: '베카',     nameEn: 'Becca',          city: '서울', cityEn: 'Seoul',     country: 'Korea',     image: '/images/DJ/5.png' },
+  { id: 'wangwei', nameKo: '왕웨이',   nameEn: 'Wang Wei',       city: '상해', cityEn: 'Shanghai',  country: 'China',     image: '/images/DJ/2.png' },
+  { id: 'natalie', nameKo: '나탈리',   nameEn: 'Nathalie Cheng', city: '홍콩', cityEn: 'Hong Kong', country: 'Hong Kong', image: '/images/DJ/1.png' },
 ];
 
 export const DANCE_TEAMS: DanceTeam[] = [
