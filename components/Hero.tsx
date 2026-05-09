@@ -26,7 +26,8 @@ export default function Hero() {
       {/* ── DESKTOP layout (lg+) ──────────────────────────────────────── */}
       <div className="hidden lg:block relative z-10">
         <div className="max-w-[1200px] mx-auto px-6 md:px-10 pt-8 pb-0">
-          <div className="grid grid-cols-[1.4fr_1fr] gap-6 items-start">
+          {/* Top row: text + bandoneon */}
+          <div className="grid grid-cols-[1.4fr_1fr] gap-6 items-center mb-6">
 
             {/* Left: text column */}
             <div className="pt-4 flex flex-col gap-5">
@@ -74,29 +75,28 @@ export default function Hero() {
               </div>
             </div>
 
-            {/* Right: bandoneon + orchestra duo card */}
-            <div className="flex flex-col items-center gap-4 pt-4">
-              {/* Bandoneon illustration */}
+            {/* Right: bandoneon only */}
+            <div className="flex justify-center items-center">
               <Image
                 src="/images/illustration-bandoneon-cream.png"
                 alt="반도네온 일러스트"
-                width={320}
-                height={320}
-                style={{ maxWidth: '300px', width: '100%', height: 'auto', transform: 'translateX(-8px)' }}
+                width={340}
+                height={340}
+                style={{ maxWidth: '340px', width: '100%', height: 'auto' }}
                 priority
-              />
-
-              {/* Orchestra duo card */}
-              <OrchestraDuoCard
-                bardo={orqBardo}
-                misteriosa={orqMisteriosa}
-                captionText="FROM BUENOS AIRES · LIVE"
               />
             </div>
           </div>
 
+          {/* Full-width orchestra duo card */}
+          <OrchestraDuoCard
+            bardo={orqBardo}
+            misteriosa={orqMisteriosa}
+            captionText="FROM BUENOS AIRES · LIVE"
+          />
+
           {/* Bottom: stats + date band */}
-          <div className="mt-7 relative z-10">
+          <div className="mt-6 relative z-10">
             <StatsRow stats={stats} />
             <DateBand
               datePrimary={t('dateBand.datePrimary')}
@@ -223,20 +223,21 @@ function OrchestraDuoCard({ bardo, misteriosa, captionText }: OrchestraDuoCardPr
               src={src}
               alt={alt}
               fill
-              className="object-cover object-[center_20%] saturate-90 contrast-[1.05]"
-              sizes="(max-width: 1024px) 50vw, 20vw"
+              className="object-cover object-[center_25%] saturate-90 contrast-[1.05]"
+              sizes="(max-width: 768px) 50vw, 600px"
             />
             {/* Bottom gradient */}
-            <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-ink/55 pointer-events-none" />
+            <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-ink/65 pointer-events-none" />
             {/* Name tag */}
-            <p className="absolute bottom-[6px] left-[6px] z-10 font-en-display italic font-bold text-[13px] text-warm-white drop-shadow-sm leading-none">
+            <p className="absolute bottom-[10px] left-[12px] z-10 font-en-display italic font-bold text-warm-white drop-shadow leading-none"
+               style={{ fontSize: 'clamp(14px, 1.8vw, 22px)' }}>
               {tag}
             </p>
           </div>
         ))}
       </div>
       {/* Caption */}
-      <p className="font-en-condensed font-semibold text-[10px] tracking-[0.12em] uppercase text-ink-soft text-center pt-2">
+      <p className="font-en-condensed font-semibold text-[11px] tracking-[0.14em] uppercase text-ink-soft text-center pt-[10px]">
         {captionText}
       </p>
     </div>
