@@ -1,4 +1,3 @@
-import Image from 'next/image';
 import { useTranslations } from 'next-intl';
 
 export default function Hero() {
@@ -19,15 +18,8 @@ export default function Hero() {
 
       {/* 춘천시 logo — corner badge, sits above both layouts */}
       <div className="absolute top-[80px] right-4 md:right-8 z-20">
-        <Image
-          src="/images/KCCTF_logo/춘천시.svg"
-          alt="춘천시"
-          width={52}
-          height={69}
-          style={{ height: '52px', width: 'auto' }}
-          unoptimized
-          priority
-        />
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src="/images/KCCTF_logo/춘천시.svg" alt="춘천시" style={{ height: '52px', width: 'auto' }} />
       </div>
 
       {/* ── DESKTOP (lg+) ─────────────────────────────────────────────── */}
@@ -79,14 +71,11 @@ export default function Hero() {
 
             {/* Right: official KCCTF logo illustration */}
             <div className="flex-shrink-0 flex items-start justify-center">
-              <Image
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
                 src="/images/KCCTF_logo/KCCTF.svg"
                 alt="KCCTF 로고"
-                width={212}
-                height={280}
                 style={{ height: 'clamp(200px, 28vw, 340px)', width: 'auto' }}
-                unoptimized
-                priority
               />
             </div>
           </div>
@@ -157,14 +146,11 @@ export default function Hero() {
 
           {/* KCCTF logo — right of title */}
           <div className="flex-shrink-0">
-            <Image
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
               src="/images/KCCTF_logo/KCCTF.svg"
               alt="KCCTF 로고"
-              width={212}
-              height={280}
               style={{ height: 'clamp(120px, 30vw, 180px)', width: 'auto' }}
-              unoptimized
-              priority
             />
           </div>
         </div>

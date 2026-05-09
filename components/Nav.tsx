@@ -51,15 +51,8 @@ export default function Nav() {
 
             {/* Logo */}
             <Link href="/" className="flex-shrink-0">
-              <Image
-                src="/images/KCCTF_logo/KCCTF_white.svg"
-                alt="춘천국제탱고페스티벌"
-                width={42}
-                height={56}
-                style={{ height: '52px', width: 'auto' }}
-                unoptimized
-                priority
-              />
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src="/images/KCCTF_logo/KCCTF_white.svg" alt="춘천국제탱고페스티벌" style={{ height: '52px', width: 'auto' }} />
             </Link>
 
             {/* Desktop nav links */}
@@ -131,15 +124,8 @@ export default function Nav() {
         {/* Top bar */}
         <div className="flex items-center justify-between px-5 pt-5 pb-4">
           <Link href="/" onClick={() => setMenuOpen(false)}>
-            <Image
-              src="/images/KCCTF_logo/KCCTF_white.svg"
-              alt="춘천국제탱고페스티벌"
-              width={34}
-              height={44}
-              style={{ height: '44px', width: 'auto' }}
-              unoptimized
-              priority
-            />
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/images/KCCTF_logo/KCCTF_white.svg" alt="춘천국제탱고페스티벌" style={{ height: '44px', width: 'auto' }} />
           </Link>
           <button
             onClick={() => setMenuOpen(false)}
