@@ -3,6 +3,9 @@ import Orchestras from '@/components/Orchestras';
 import Schedule from '@/components/Schedule';
 import Djs from '@/components/Djs';
 import Dancers from '@/components/Dancers';
+import Venue from '@/components/Venue';
+import Tickets from '@/components/Tickets';
+import Footer from '@/components/Footer';
 
 export default function HomePage() {
   return (
@@ -12,6 +15,9 @@ export default function HomePage() {
       <Schedule />
       <Djs />
       <Dancers />
+      <Venue />
+      <Tickets />
+      <Footer />
     </>
   );
 }
