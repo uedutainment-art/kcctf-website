@@ -45,7 +45,8 @@ export default function Orchestras() {
                 src={orq.image}
                 alt={orq.nameEn}
                 fill
-                className="object-cover object-center saturate-90"
+                className="object-cover saturate-90"
+                style={{ objectPosition: '50% 15%' }}
                 sizes="(max-width: 1280px) 100vw, 1280px"
                 priority={i === 0}
               />
