@@ -1,12 +1,10 @@
 import Image from 'next/image';
 import { useTranslations } from 'next-intl';
-import { ORCHESTRAS } from '@/data/festival';
 
 export default function Hero() {
   const t = useTranslations('hero');
 
   const registerUrl = process.env.NEXT_PUBLIC_REGISTER_URL ?? '#tickets';
-  const [orqBardo, orqMisteriosa] = ORCHESTRAS;
 
   const stats = [
     { num: t('stats.orchestras.num'), label: t('stats.orchestras.label') },
@@ -26,19 +24,18 @@ export default function Hero() {
       {/* ── DESKTOP layout (lg+) ──────────────────────────────────────── */}
       <div className="hidden lg:block relative z-10">
         <div className="max-w-[1200px] mx-auto px-6 md:px-10 pt-8 pb-0">
-          {/* Top row: text + bandoneon */}
+
+          {/* Row 1: text + bandoneon */}
           <div className="grid grid-cols-[1.4fr_1fr] gap-6 items-center mb-6">
 
-            {/* Left: text column */}
+            {/* Left: text */}
             <div className="pt-4 flex flex-col gap-5">
-              {/* Eyebrow */}
               <p className="font-en-body font-bold text-[10px] tracking-[0.4em] uppercase text-burgundy">
                 <span className="text-gold">★</span>{' '}
                 {t('eyebrow')}{' '}
                 <span className="text-gold">★</span>
               </p>
 
-              {/* Korean wordmark */}
               <h1
                 className="font-kr-serif font-black text-ink-soft leading-[0.92] tracking-[-0.06em]"
                 style={{ fontSize: 'clamp(56px, 7vw, 92px)' }}
@@ -47,12 +44,10 @@ export default function Hero() {
                 {t('titleLine2')}
               </h1>
 
-              {/* English subtitle */}
               <p className="font-en-body font-bold text-[18px] tracking-[0.04em] text-burgundy leading-[1.2] whitespace-pre-line">
                 {t('subtitleEn')}
               </p>
 
-              {/* Tagline */}
               <p className="font-kr-serif font-medium text-[17px] text-ink-soft leading-[1.55] max-w-[460px] whitespace-pre-line">
                 {t('tagline')}
               </p>
@@ -63,19 +58,9 @@ export default function Hero() {
                 {t('uspBand')}
                 <span className="text-gold-soft">★</span>
               </div>
-
-              {/* CTA */}
-              <div className="pt-2">
-                <a
-                  href={registerUrl}
-                  className="inline-block bg-burgundy text-warm-white font-en-body font-bold text-[16px] tracking-[0.22em] uppercase px-9 py-4 rounded-md transition-all duration-150 shadow-[0_4px_0_#5A0E1B] hover:shadow-[0_2px_0_#5A0E1B] hover:translate-y-[2px]"
-                >
-                  {t('cta')}
-                </a>
-              </div>
             </div>
 
-            {/* Right: bandoneon only */}
+            {/* Right: bandoneon */}
             <div className="flex justify-center items-center">
               <Image
                 src="/images/illustration-bandoneon-cream.png"
@@ -88,22 +73,25 @@ export default function Hero() {
             </div>
           </div>
 
-          {/* Full-width orchestra duo card */}
-          <OrchestraDuoCard
-            bardo={orqBardo}
-            misteriosa={orqMisteriosa}
-            captionText="FROM BUENOS AIRES · LIVE"
-          />
-
-          {/* Bottom: stats + date band */}
-          <div className="mt-6 relative z-10">
+          {/* Row 2: stats + date band + CTA */}
+          <div className="relative z-10">
             <StatsRow stats={stats} />
-            <DateBand
-              datePrimary={t('dateBand.datePrimary')}
-              dateSecondary={t('dateBand.dateSecondary')}
-              venuePrimary={t('dateBand.venuePrimary')}
-              venueSecondary={t('dateBand.venueSecondary')}
-            />
+            <div className="flex items-stretch gap-4">
+              <div className="flex-1">
+                <DateBand
+                  datePrimary={t('dateBand.datePrimary')}
+                  dateSecondary={t('dateBand.dateSecondary')}
+                  venuePrimary={t('dateBand.venuePrimary')}
+                  venueSecondary={t('dateBand.venueSecondary')}
+                />
+              </div>
+              <a
+                href={registerUrl}
+                className="shrink-0 self-center bg-burgundy text-warm-white font-en-body font-bold text-[16px] tracking-[0.22em] uppercase px-9 py-4 rounded-md transition-all duration-150 shadow-[0_4px_0_#5A0E1B] hover:shadow-[0_2px_0_#5A0E1B] hover:translate-y-[2px]"
+              >
+                {t('cta')}
+              </a>
+            </div>
           </div>
         </div>
       </div>
@@ -111,14 +99,12 @@ export default function Hero() {
       {/* ── MOBILE layout (< lg) ─────────────────────────────────────── */}
       <div className="lg:hidden relative z-10 px-6 pt-5 pb-0">
 
-        {/* Eyebrow */}
         <p className="font-en-body font-bold text-[9px] tracking-[0.4em] uppercase text-burgundy text-center mb-3">
           <span className="text-gold">★</span>{' '}
           {t('eyebrow')}{' '}
           <span className="text-gold">★</span>
         </p>
 
-        {/* Korean wordmark */}
         <h1
           className="font-kr-serif font-black text-ink-soft leading-[0.92] tracking-[-0.06em] text-center mb-2"
           style={{ fontSize: 'clamp(38px, 11vw, 56px)' }}
@@ -127,7 +113,6 @@ export default function Hero() {
           {t('titleLine2')}
         </h1>
 
-        {/* English subtitle */}
         <p className="font-en-body font-bold text-[11px] tracking-[0.04em] text-burgundy text-center leading-[1.3] mb-4 whitespace-pre-line">
           {t('subtitleEn')}
         </p>
@@ -141,7 +126,7 @@ export default function Hero() {
           </div>
         </div>
 
-        {/* Bandoneon (small, decorative) */}
+        {/* Bandoneon */}
         <div className="flex justify-center mb-3 opacity-80" aria-hidden>
           <Image
             src="/images/illustration-bandoneon-cream.png"
@@ -149,15 +134,6 @@ export default function Hero() {
             width={130}
             height={130}
             style={{ width: '130px', height: 'auto' }}
-          />
-        </div>
-
-        {/* Orchestra duo card */}
-        <div className="mb-4">
-          <OrchestraDuoCard
-            bardo={orqBardo}
-            misteriosa={orqMisteriosa}
-            captionText="FROM BUENOS AIRES · LIVE"
           />
         </div>
 
@@ -203,51 +179,6 @@ export default function Hero() {
 }
 
 // ── Sub-components ────────────────────────────────────────────────────────────
-
-type OrchestraDuoCardProps = {
-  bardo: (typeof ORCHESTRAS)[0];
-  misteriosa: (typeof ORCHESTRAS)[0];
-  captionText: string;
-};
-
-function OrchestraDuoCard({ bardo, misteriosa, captionText }: OrchestraDuoCardProps) {
-  return (
-    <div className="w-full bg-warm-white border-2 border-ink-soft p-[10px] shadow-stamp">
-      {/* Duo photos — aspect-ratio 16/7 */}
-      <div className="grid grid-cols-2 gap-1 overflow-hidden" style={{ aspectRatio: '16/7' }}>
-        {[
-          { src: orqPhoto(bardo),      alt: bardo.nameEn,      tag: bardo.nameEn      },
-          { src: orqPhoto(misteriosa), alt: misteriosa.nameEn, tag: misteriosa.nameEn },
-        ].map(({ src, alt, tag }) => (
-          <div key={alt} className="relative overflow-hidden">
-            <Image
-              src={src}
-              alt={alt}
-              fill
-              className="object-cover object-[center_25%] saturate-90 contrast-[1.05]"
-              sizes="(max-width: 768px) 50vw, 600px"
-            />
-            {/* Bottom gradient */}
-            <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-ink/65 pointer-events-none" />
-            {/* Name tag */}
-            <p className="absolute bottom-[10px] left-[12px] z-10 font-en-display italic font-bold text-warm-white drop-shadow leading-none"
-               style={{ fontSize: 'clamp(14px, 1.8vw, 22px)' }}>
-              {tag}
-            </p>
-          </div>
-        ))}
-      </div>
-      {/* Caption */}
-      <p className="font-en-condensed font-semibold text-[11px] tracking-[0.14em] uppercase text-ink-soft text-center pt-[10px]">
-        {captionText}
-      </p>
-    </div>
-  );
-}
-
-function orqPhoto(o: (typeof ORCHESTRAS)[0]) {
-  return o.image;
-}
 
 type StatsRowProps = {
   stats: { num: string; label: string }[];
