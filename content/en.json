@@ -8,7 +8,6 @@
     "venue": "Chuncheon Bomnae Complex",
     "country": "Chuncheon, Gangwon, South Korea"
   },
-
   "nav": {
     "home": "Home",
     "lineup": "Lineup",
@@ -20,19 +19,30 @@
     "menuOpen": "Open menu",
     "menuClose": "Close menu"
   },
-
   "hero": {
-    "eyebrow": "2026 · CHUNCHEON",
+    "eyebrow": "3RD EDITION · 2026",
     "titleLine1": "CHUNCHEON",
     "titleLine2": "TANGO FESTIVAL",
     "subtitleEn": "INTERNATIONAL\nTANGO FESTIVAL",
     "tagline": "Two orchestras. Three nights. One stadium.\nThe Asian tango lineup that doesn't exist anywhere else.",
     "uspBand": "TWO LIVE ORCHESTRAS · THREE NIGHTS",
     "stats": {
-      "orchestras": { "num": "2", "label": "Orchestras" },
-      "nights": { "num": "3", "label": "Nights" },
-      "milongas": { "num": "6", "label": "Milongas" },
-      "djs": { "num": "6", "label": "DJs" }
+      "orchestras": {
+        "num": "2",
+        "label": "Orchestras"
+      },
+      "nights": {
+        "num": "3",
+        "label": "Nights"
+      },
+      "milongas": {
+        "num": "6",
+        "label": "Milongas"
+      },
+      "djs": {
+        "num": "6",
+        "label": "DJs"
+      }
     },
     "dateBand": {
       "datePrimary": "10.03 — 10.05",
@@ -43,7 +53,6 @@
     "cta": "Register →",
     "scrollHint": "Scroll"
   },
-
   "orchestras": {
     "eyebrow": "★ TWO LIVE ORCHESTRAS ★",
     "subtitleEn": "From Buenos Aires",
@@ -70,7 +79,6 @@
       }
     ]
   },
-
   "schedule": {
     "eyebrow": "PROGRAM",
     "title": "Three days, one breath.",
@@ -173,22 +181,56 @@
     "downloadPdf": "Download program PDF",
     "addToCalendar": "Add to calendar"
   },
-
   "djs": {
     "eyebrow": "MOOD MAKERS",
     "title": "Six DJs.",
     "subtitleEn": "여섯 명의 디제이",
     "lede": "The flow of the milonga begins at the DJ's fingertips. Six curators invited from Korea, China, and Hong Kong.",
     "items": [
-      { "id": "hagoon",  "nameKo": "하군",     "nameEn": "Hagoon",         "city": "Seoul",    "country": "Korea" },
-      { "id": "stone",   "nameKo": "스톤",     "nameEn": "Stone",          "city": "Busan",    "country": "Korea" },
-      { "id": "carlos",  "nameKo": "까를로스", "nameEn": "Carlos",         "city": "Seoul",    "country": "Korea" },
-      { "id": "becca",   "nameKo": "베카",     "nameEn": "Becca",          "city": "Seoul",    "country": "Korea" },
-      { "id": "wangwei", "nameKo": "왕웨이",   "nameEn": "Wang Wei",       "city": "Shanghai", "country": "China" },
-      { "id": "natalie", "nameKo": "나탈리",   "nameEn": "Nathalie Cheng", "city": "Hong Kong","country": "Hong Kong" }
+      {
+        "id": "hagoon",
+        "nameKo": "하군",
+        "nameEn": "Hagoon",
+        "city": "Seoul",
+        "country": "Korea"
+      },
+      {
+        "id": "stone",
+        "nameKo": "스톤",
+        "nameEn": "Stone",
+        "city": "Busan",
+        "country": "Korea"
+      },
+      {
+        "id": "carlos",
+        "nameKo": "까를로스",
+        "nameEn": "Carlos",
+        "city": "Seoul",
+        "country": "Korea"
+      },
+      {
+        "id": "becca",
+        "nameKo": "베카",
+        "nameEn": "Becca",
+        "city": "Seoul",
+        "country": "Korea"
+      },
+      {
+        "id": "wangwei",
+        "nameKo": "왕웨이",
+        "nameEn": "Wang Wei",
+        "city": "Shanghai",
+        "country": "China"
+      },
+      {
+        "id": "natalie",
+        "nameKo": "나탈리",
+        "nameEn": "Nathalie Cheng",
+        "city": "Hong Kong",
+        "country": "Hong Kong"
+      }
     ]
   },
-
   "dancers": {
     "eyebrow": "PERFORMERS",
     "title": "Dance Performances",
@@ -221,7 +263,6 @@
       }
     ]
   },
-
   "venue": {
     "eyebrow": "VENUE",
     "title": "Bomnae Complex",
@@ -229,15 +270,26 @@
     "tagline": "A large space at the city's heart.\nProfessional sound. Overwhelming scale.",
     "address": "Chuncheon, Gangwon, South Korea",
     "features": [
-      { "icon": "🚄", "text": "About 60 minutes from Seoul by ITX" },
-      { "icon": "🎵", "text": "Professional sound system" },
-      { "icon": "🏛", "text": "Large dance floor in the city center" },
-      { "icon": "🅿️", "text": "Parking available" }
+      {
+        "icon": "🚄",
+        "text": "About 60 minutes from Seoul by ITX"
+      },
+      {
+        "icon": "🎵",
+        "text": "Professional sound system"
+      },
+      {
+        "icon": "🏛",
+        "text": "Large dance floor in the city center"
+      },
+      {
+        "icon": "🅿️",
+        "text": "Parking available"
+      }
     ],
     "mapLink": "View on Google Maps",
     "concertVenueNote": "Concert venue details coming soon."
   },
-
   "tickets": {
     "eyebrow": "TICKETS",
     "title": "Choose your three days.",
@@ -302,21 +354,28 @@
     },
     "registerExternalNote": "Registration is handled on a separate page."
   },
-
   "accommodation": {
     "eyebrow": "STAY",
     "title": "Chuncheon Bella Stay",
     "subtitleEn": "춘천 벨라스테이",
     "tagline": "Sleep where the festival sleeps.",
     "details": [
-      { "label": "Room", "value": "Twin" },
-      { "label": "Per night", "value": "From ₩80,000" },
-      { "label": "Breakfast", "value": "₩11,000 per person (optional)" }
+      {
+        "label": "Room",
+        "value": "Twin"
+      },
+      {
+        "label": "Per night",
+        "value": "From ₩80,000"
+      },
+      {
+        "label": "Breakfast",
+        "value": "₩11,000 per person (optional)"
+      }
     ],
     "packageNote": "Available as Full Pack + 2 nights / + 3 nights packages (prices coming soon)",
     "moreOptionsLink": "See other lodging options"
   },
-
   "about": {
     "eyebrow": "ABOUT",
     "title": "Chuncheon International Tango Festival",
@@ -333,13 +392,21 @@
     "sponsors": {
       "title": "Hosted & Supported by",
       "items": [
-        { "label": "Host", "value": "Chuncheon International Tango Festival Foundation" },
-        { "label": "Co-host", "value": "Chuncheon Cultural Foundation" },
-        { "label": "Supported by", "value": "Chuncheon City · Embassy of Argentina in Korea" }
+        {
+          "label": "Host",
+          "value": "Chuncheon International Tango Festival Foundation"
+        },
+        {
+          "label": "Co-host",
+          "value": "Chuncheon Cultural Foundation"
+        },
+        {
+          "label": "Supported by",
+          "value": "Chuncheon City · Embassy of Argentina in Korea"
+        }
       ]
     }
   },
-
   "contact": {
     "eyebrow": "CONTACT",
     "title": "See you in Chuncheon.",
@@ -350,7 +417,6 @@
       "facebook": "Chuncheon International Tango Festival"
     }
   },
-
   "faq": {
     "title": "Frequently Asked Questions",
     "subtitleEn": "자주 묻는 질문",
@@ -389,7 +455,6 @@
       }
     ]
   },
-
   "footer": {
     "tagline": "See you in Chuncheon",
     "taglineEn": "춘천에서 만나요",
@@ -405,7 +470,6 @@
     "copyright": "© 2026 Chuncheon International Tango Festival Foundation. All rights reserved.",
     "emailHarvestNotice": "Unauthorized collection of email addresses on this website using email harvesting programs or other technical means is strictly prohibited and subject to legal action under Korean Information and Communications Network Act."
   },
-
   "meta": {
     "title": "Chuncheon International Tango Festival 2026 — KCCTF",
     "description": "Two orchestras. Three nights. One stadium. Tango Bardo and Misteriosa Buenos Aires, live in Chuncheon, Korea. Oct 3–5, 2026.",

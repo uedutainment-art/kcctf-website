@@ -8,7 +8,6 @@
     "venue": "춘천 봄내체육관",
     "country": "대한민국 강원특별자치도 춘천시"
   },
-
   "nav": {
     "home": "홈",
     "lineup": "라인업",
@@ -20,19 +19,30 @@
     "menuOpen": "메뉴 열기",
     "menuClose": "메뉴 닫기"
   },
-
   "hero": {
-    "eyebrow": "2026 · 춘천",
+    "eyebrow": "3RD EDITION · 2026",
     "titleLine1": "춘천국제",
     "titleLine2": "땅고페스티벌",
     "subtitleEn": "CHUNCHEON INTERNATIONAL\nTANGO FESTIVAL",
     "tagline": "두 오케스트라, 사흘 밤. 봄내체육관에서.\n아시아에서 다시 없을 라이브 탱고.",
     "uspBand": "TWO LIVE ORCHESTRAS · THREE NIGHTS",
     "stats": {
-      "orchestras": { "num": "2", "label": "Orchestras" },
-      "nights": { "num": "3", "label": "Nights" },
-      "milongas": { "num": "6", "label": "Milongas" },
-      "djs": { "num": "6", "label": "DJs" }
+      "orchestras": {
+        "num": "2",
+        "label": "Orchestras"
+      },
+      "nights": {
+        "num": "3",
+        "label": "Nights"
+      },
+      "milongas": {
+        "num": "6",
+        "label": "Milongas"
+      },
+      "djs": {
+        "num": "6",
+        "label": "DJs"
+      }
     },
     "dateBand": {
       "datePrimary": "10.03 — 10.05",
@@ -43,7 +53,6 @@
     "cta": "예약하기 →",
     "scrollHint": "아래로"
   },
-
   "orchestras": {
     "eyebrow": "★ TWO LIVE ORCHESTRAS ★",
     "subtitleEn": "From Buenos Aires",
@@ -70,7 +79,6 @@
       }
     ]
   },
-
   "schedule": {
     "eyebrow": "PROGRAM",
     "title": "사흘의 호흡",
@@ -173,22 +181,56 @@
     "downloadPdf": "프로그램 PDF 다운로드",
     "addToCalendar": "캘린더에 추가"
   },
-
   "djs": {
     "eyebrow": "MOOD MAKERS",
     "title": "여섯 명의 디제이",
     "subtitleEn": "Six DJs",
     "lede": "밀롱가의 흐름은 디제이의 손끝에서 시작됩니다. 한국·중국·홍콩에서 모셔온 여섯 명의 큐레이터.",
     "items": [
-      { "id": "hagoon",  "nameKo": "하군",     "nameEn": "Hagoon",         "city": "서울", "country": "Korea" },
-      { "id": "stone",   "nameKo": "스톤",     "nameEn": "Stone",          "city": "부산", "country": "Korea" },
-      { "id": "carlos",  "nameKo": "까를로스", "nameEn": "Carlos",         "city": "서울", "country": "Korea" },
-      { "id": "becca",   "nameKo": "베카",     "nameEn": "Becca",          "city": "서울", "country": "Korea" },
-      { "id": "wangwei", "nameKo": "왕웨이",   "nameEn": "Wang Wei",       "city": "상해", "country": "China" },
-      { "id": "natalie", "nameKo": "나탈리",   "nameEn": "Nathalie Cheng", "city": "홍콩", "country": "Hong Kong" }
+      {
+        "id": "hagoon",
+        "nameKo": "하군",
+        "nameEn": "Hagoon",
+        "city": "서울",
+        "country": "Korea"
+      },
+      {
+        "id": "stone",
+        "nameKo": "스톤",
+        "nameEn": "Stone",
+        "city": "부산",
+        "country": "Korea"
+      },
+      {
+        "id": "carlos",
+        "nameKo": "까를로스",
+        "nameEn": "Carlos",
+        "city": "서울",
+        "country": "Korea"
+      },
+      {
+        "id": "becca",
+        "nameKo": "베카",
+        "nameEn": "Becca",
+        "city": "서울",
+        "country": "Korea"
+      },
+      {
+        "id": "wangwei",
+        "nameKo": "왕웨이",
+        "nameEn": "Wang Wei",
+        "city": "상해",
+        "country": "China"
+      },
+      {
+        "id": "natalie",
+        "nameKo": "나탈리",
+        "nameEn": "Nathalie Cheng",
+        "city": "홍콩",
+        "country": "Hong Kong"
+      }
     ]
   },
-
   "dancers": {
     "eyebrow": "PERFORMERS",
     "title": "댄서팀",
@@ -221,7 +263,6 @@
       }
     ]
   },
-
   "venue": {
     "eyebrow": "VENUE",
     "title": "봄내체육관",
@@ -229,15 +270,26 @@
     "tagline": "도시 한복판의 큰 공간.\n프로페셔널 음향. 압도적 스케일.",
     "address": "강원특별자치도 춘천시",
     "features": [
-      { "icon": "🚄", "text": "서울에서 ITX 약 60분" },
-      { "icon": "🎵", "text": "프로페셔널 음향 시스템" },
-      { "icon": "🏛", "text": "도시 한복판 큰 댄스 플로어" },
-      { "icon": "🅿️", "text": "주차 가능" }
+      {
+        "icon": "🚄",
+        "text": "서울에서 ITX 약 60분"
+      },
+      {
+        "icon": "🎵",
+        "text": "프로페셔널 음향 시스템"
+      },
+      {
+        "icon": "🏛",
+        "text": "도시 한복판 큰 댄스 플로어"
+      },
+      {
+        "icon": "🅿️",
+        "text": "주차 가능"
+      }
     ],
     "mapLink": "구글 지도에서 보기",
     "concertVenueNote": "콘서트 장소 정보는 곧 공개됩니다."
   },
-
   "tickets": {
     "eyebrow": "TICKETS",
     "title": "당신의 사흘을 고르세요",
@@ -302,21 +354,28 @@
     },
     "registerExternalNote": "예약은 별도 신청 페이지로 안내됩니다."
   },
-
   "accommodation": {
     "eyebrow": "STAY",
     "title": "춘천 벨라스테이",
     "subtitleEn": "Chuncheon Bella Stay",
     "tagline": "페스티벌과 같은 호흡으로.",
     "details": [
-      { "label": "객실", "value": "트윈룸" },
-      { "label": "1박 가격", "value": "원가 ₩80,000부터" },
-      { "label": "조식", "value": "1인 ₩11,000 (선택)" }
+      {
+        "label": "객실",
+        "value": "트윈룸"
+      },
+      {
+        "label": "1박 가격",
+        "value": "원가 ₩80,000부터"
+      },
+      {
+        "label": "조식",
+        "value": "1인 ₩11,000 (선택)"
+      }
     ],
     "packageNote": "풀팩 + 2박 / 풀팩 + 3박 패키지로 예약 가능 (가격 곧 공개)",
     "moreOptionsLink": "다른 숙소 옵션 보기"
   },
-
   "about": {
     "eyebrow": "ABOUT",
     "title": "춘천국제탱고페스티벌",
@@ -333,13 +392,21 @@
     "sponsors": {
       "title": "주최 · 후원",
       "items": [
-        { "label": "주최", "value": "(사)춘천국제탱고페스티벌" },
-        { "label": "공동 주최", "value": "춘천문화재단" },
-        { "label": "후원", "value": "춘천시 · 주한아르헨티나 대사관" }
+        {
+          "label": "주최",
+          "value": "(사)춘천국제탱고페스티벌"
+        },
+        {
+          "label": "공동 주최",
+          "value": "춘천문화재단"
+        },
+        {
+          "label": "후원",
+          "value": "춘천시 · 주한아르헨티나 대사관"
+        }
       ]
     }
   },
-
   "contact": {
     "eyebrow": "CONTACT",
     "title": "춘천에서 만나요",
@@ -350,7 +417,6 @@
       "facebook": "Chuncheon International Tango Festival"
     }
   },
-
   "faq": {
     "title": "자주 묻는 질문",
     "subtitleEn": "Frequently Asked Questions",
@@ -389,7 +455,6 @@
       }
     ]
   },
-
   "footer": {
     "tagline": "춘천에서 만나요",
     "taglineEn": "See you in Chuncheon",
@@ -405,7 +470,6 @@
     "copyright": "© 2026 사단법인 춘천국제탱고페스티벌. All rights reserved.",
     "emailHarvestNotice": "본 웹사이트에 게시된 이메일 주소가 전자우편 수집 프로그램 기타 기술적 장치를 이용하여 무단으로 수집되는 것을 거부하며, 이를 위반시 정보통신망법에 의해 형사 처벌됨을 유념하시기 바랍니다."
   },
-
   "meta": {
     "title": "춘천국제땅고페스티벌 2026 — Chuncheon International Tango Festival",
     "description": "두 오케스트라, 사흘 밤. 봄내체육관에서. 2026.10.03–10.05. 부에노스 아이레스에서 직접 오는 Tango Bardo와 Misteriosa.",
