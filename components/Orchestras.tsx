@@ -55,14 +55,14 @@ export default function Orchestras() {
                 className="absolute inset-0 pointer-events-none"
                 style={{
                   background:
-                    'linear-gradient(90deg, rgba(14,8,20,0.88) 0%, rgba(14,8,20,0.55) 30%, transparent 65%)',
+                    'linear-gradient(90deg, rgba(15,41,58,0.92) 0%, rgba(15,41,58,0.5) 30%, transparent 60%)',
                 }}
               />
 
-              {/* Bottom gradient (mobile) */}
+              {/* Bottom gradient — always visible for mobile + safety */}
               <div
-                className="absolute inset-0 pointer-events-none sm:hidden"
-                style={{ background: 'linear-gradient(180deg, transparent 40%, rgba(14,8,20,0.75) 100%)' }}
+                className="absolute inset-0 pointer-events-none"
+                style={{ background: 'linear-gradient(180deg, transparent 45%, rgba(14,8,20,0.6) 100%)' }}
               />
 
               {/* Text overlay */}
@@ -72,7 +72,7 @@ export default function Orchestras() {
                     {orq.roleEn}
                   </p>
                   <h3
-                    className="font-en-display italic font-black text-warm-white leading-[1.0] mb-2"
+                    className="font-en-display italic font-black text-warm-white leading-[1.0] mb-2 drop-shadow-md"
                     style={{ fontSize: 'clamp(28px, 4vw, 56px)' }}
                   >
                     {locale === 'ko' ? item.nameEn : orq.nameEn}
