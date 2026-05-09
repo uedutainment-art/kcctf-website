@@ -40,21 +40,34 @@ export default function Dancers() {
               ].join(' ')}
             >
               {/* Photo placeholder / TBA */}
-              <div
-                className={[
-                  'mx-auto mb-4 rounded-full flex items-center justify-center',
-                  'w-20 h-20 sm:w-24 sm:h-24',
-                  team.isTBA
-                    ? 'border-2 border-dashed border-ink-soft/25 bg-transparent'
-                    : 'bg-mustard/30',
-                ].join(' ')}
-              >
-                {team.isTBA ? (
+              {team.isTBA ? (
+                <div className="mx-auto mb-4 w-20 h-20 sm:w-24 sm:h-24 rounded-full border-2 border-dashed border-ink-soft/25 bg-transparent flex items-center justify-center">
                   <span className="text-2xl text-ink-soft/30" aria-hidden>?</span>
-                ) : (
-                  <span className="text-2xl" aria-hidden>💃</span>
-                )}
-              </div>
+                </div>
+              ) : (
+                <div
+                  className="relative mx-auto mb-4 w-20 h-20 sm:w-24 sm:h-24 rounded-full overflow-hidden flex items-center justify-center"
+                  style={{ background: '#F2C94C' }}
+                >
+                  {/* grain overlay inside circle */}
+                  <div
+                    className="absolute inset-0 opacity-40 pointer-events-none"
+                    style={{
+                      backgroundImage: "url('/images/grain.svg')",
+                      backgroundSize: '160px 160px',
+                      mixBlendMode: 'multiply',
+                    }}
+                    aria-hidden
+                  />
+                  <span
+                    className="font-en-display italic font-black text-ink-soft/40 leading-none relative z-10"
+                    style={{ fontSize: '40px' }}
+                    aria-hidden
+                  >
+                    ★
+                  </span>
+                </div>
+              )}
 
               <p
                 className={[

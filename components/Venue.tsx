@@ -60,13 +60,14 @@ export default function Venue() {
             </a>
           </div>
 
-          {/* Right: photo placeholder */}
+          {/* Right: photo placeholder — diamond mustard pattern */}
           <div
-            className="rounded-lg overflow-hidden bg-cream border-2 border-ink-soft/10 flex items-center justify-center"
+            className="diamond-bg rounded-lg overflow-hidden border-2 border-ink-soft/15 flex flex-col items-center justify-center gap-3"
             style={{ minHeight: '280px' }}
           >
-            <p className="font-kr-sans text-[13px] text-charcoal/30 text-center px-6">
-              봄내체육관<br />사진 준비 중
+            <span className="font-en-display italic font-black text-[48px] text-ink-soft/20 leading-none" aria-hidden>★</span>
+            <p className="font-kr-sans text-[14px] text-ink-soft/40 text-center px-6">
+              Photo Coming Soon
             </p>
           </div>
         </div>
