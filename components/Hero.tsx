@@ -14,7 +14,7 @@ export default function Hero() {
   ];
 
   return (
-    <section id="hero" className="diamond-bg relative pt-[72px]">
+    <section id="hero" className="diamond-bg relative pt-[72px] pb-0">
       {/* Grain overlay */}
       <div
         className="grain-overlay absolute inset-0 opacity-30 pointer-events-none"
@@ -174,6 +174,13 @@ export default function Hero() {
           </a>
         </div>
       </div>
+
+      {/* Gradient transition → Orchestras burgundy */}
+      <div
+        className="relative z-10 h-14 w-full pointer-events-none"
+        style={{ background: 'linear-gradient(180deg, transparent 0%, #8B1A2B 100%)' }}
+        aria-hidden
+      />
     </section>
   );
 }
