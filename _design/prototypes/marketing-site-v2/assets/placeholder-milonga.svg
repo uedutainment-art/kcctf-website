@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <linearGradient id="floor" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#460913"></stop>
+      <stop offset="50%" stop-color="#8B1A2B"></stop>
+      <stop offset="100%" stop-color="#2D0810"></stop>
+    </linearGradient>
+    <radialGradient id="spot" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0%" stop-color="#E8C25E" stop-opacity="0.3"></stop>
+      <stop offset="100%" stop-color="#E8C25E" stop-opacity="0"></stop>
+    </radialGradient>
+  </defs>
+  <rect width="800" height="600" fill="url(#floor)"></rect>
+  <rect width="800" height="600" fill="url(#spot)"></rect>
+  <text x="400" y="310" text-anchor="middle" font-family="&#39;Playfair Display&#39;, serif" font-style="italic" font-size="22" fill="#FDFAF5" opacity="0.55">[ milonga floor ]</text>
+</svg>

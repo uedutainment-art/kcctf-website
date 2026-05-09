@@ -1,0 +1,880 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KCCTF 2026 — 홈페이지 실행 계획</title>
+<style>
+  :root {
+    --gold: #C9A84C;
+    --gold-light: #E8C96A;
+    --dark: #1A1410;
+    --dark2: #252018;
+    --dark3: #2E2820;
+    --brown: #3D3020;
+    --text: #E8E0D0;
+    --text-muted: #A09880;
+    --green: #4CAF7D;
+    --yellow: #E8B84B;
+    --red: #E05555;
+    --blue: #5B9BD5;
+    --purple: #9B7BD5;
+    --orange: #E8844B;
+    --border: #3D3020;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Apple SD Gothic Neo', 'Malgun Gothic', Arial, sans-serif;
+    background: var(--dark); color: var(--text); min-height: 100vh; line-height: 1.6; }
+
+  .header { background: linear-gradient(135deg, var(--dark2), var(--brown));
+    border-bottom: 2px solid var(--gold); padding: 32px; text-align: center; }
+  .header h1 { font-size: 24px; color: var(--gold); letter-spacing: 1px; }
+  .header .sub { font-size: 14px; color: var(--text-muted); margin-top: 8px; }
+  .header .meta { font-size: 12px; color: var(--text-muted); margin-top: 6px; }
+  .header .reviewer-tag { display: inline-block; margin-top: 12px;
+    padding: 4px 12px; border: 1px solid var(--gold); border-radius: 20px;
+    font-size: 11px; color: var(--gold); letter-spacing: 1px; }
+
+  .main { max-width: 1100px; margin: 0 auto; padding: 32px 28px; }
+
+  .nav { display: flex; flex-wrap: wrap; gap: 8px; padding: 14px 20px;
+    background: var(--dark2); border: 1px solid var(--border); border-radius: 8px;
+    margin-bottom: 32px; font-size: 12px; }
+  .nav a { color: var(--gold); text-decoration: none; padding: 4px 10px;
+    border-radius: 4px; transition: background 0.15s; }
+  .nav a:hover { background: var(--brown); }
+
+  h2 { font-size: 20px; color: var(--gold); margin: 36px 0 18px;
+    padding-bottom: 10px; border-bottom: 2px solid var(--gold); }
+  h3 { font-size: 16px; color: var(--gold-light); margin: 24px 0 12px; }
+  h4 { font-size: 14px; color: var(--text); margin: 16px 0 8px; font-weight: 700; }
+  p { margin-bottom: 12px; font-size: 14px; }
+
+  .section-num { color: var(--gold); font-weight: 700; margin-right: 8px; }
+
+  .alert { border-radius: 8px; padding: 14px 18px; margin: 16px 0;
+    font-size: 13px; line-height: 1.6; }
+  .alert.gold { background: #3d3010; border-left: 4px solid var(--gold); }
+  .alert.green { background: #1a3d2a; border-left: 4px solid var(--green); }
+  .alert.red { background: #3d1a1a; border-left: 4px solid var(--red); }
+  .alert.blue { background: #1a2d3d; border-left: 4px solid var(--blue); }
+  .alert.yellow { background: #3d3010; border-left: 4px solid var(--yellow); }
+
+  table { width: 100%; border-collapse: collapse; font-size: 13px; margin: 16px 0; }
+  th { background: var(--brown); color: var(--gold); padding: 10px 12px;
+    text-align: left; font-weight: 600; border-bottom: 1px solid var(--gold); }
+  td { padding: 10px 12px; border-bottom: 1px solid var(--border); vertical-align: top; }
+  tr:hover td { background: var(--dark2); }
+
+  .badge { display: inline-block; padding: 3px 9px; border-radius: 4px;
+    font-size: 11px; font-weight: 600; }
+  .badge.p0 { background: #3d2010; color: var(--orange); }
+  .badge.p1 { background: #3d3010; color: var(--yellow); }
+  .badge.parallel { background: #1a3d2a; color: var(--green); }
+  .badge.blocked { background: #3d1a1a; color: var(--red); }
+  .badge.persona { background: #2d2a3d; color: var(--purple); }
+  .badge.now { background: #1a2d3d; color: var(--blue); }
+
+  /* === Phase Card === */
+  .phase { background: var(--dark2); border: 1px solid var(--border);
+    border-radius: 12px; padding: 0; margin: 20px 0; overflow: hidden; }
+  .phase-head { display: flex; align-items: center; gap: 16px;
+    padding: 18px 24px; background: linear-gradient(90deg, var(--brown), var(--dark2));
+    border-bottom: 1px solid var(--border); flex-wrap: wrap; }
+  .phase-num { width: 44px; height: 44px; border-radius: 50%;
+    background: var(--gold); color: var(--dark); font-weight: 800;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px; flex-shrink: 0; }
+  .phase-title { flex: 1; min-width: 200px; }
+  .phase-title .name { font-size: 17px; color: var(--gold); font-weight: 700; }
+  .phase-title .sub { font-size: 12px; color: var(--text-muted); margin-top: 3px; }
+  .phase-meta { display: flex; gap: 8px; flex-wrap: wrap; }
+
+  .phase-body { padding: 18px 24px; }
+  .phase-row { display: grid; grid-template-columns: 110px 1fr;
+    gap: 12px; margin-bottom: 12px; align-items: flex-start; }
+  @media (max-width: 700px) {
+    .phase-row { grid-template-columns: 1fr; gap: 4px; }
+  }
+  .phase-row .lbl { font-size: 11px; color: var(--gold);
+    text-transform: uppercase; letter-spacing: 1px;
+    padding-top: 4px; }
+  .phase-row .val { font-size: 13px; color: var(--text); }
+  .phase-row .val ul { margin: 0 0 0 18px; }
+  .phase-row .val li { margin-bottom: 3px; }
+
+  .phase.completed { opacity: 0.65; }
+  .phase.completed .phase-num { background: var(--green); }
+  .phase.now .phase-num { background: var(--blue); animation: pulse 2s infinite; }
+  @keyframes pulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(91,155,213,0.5); }
+    50% { box-shadow: 0 0 0 8px rgba(91,155,213,0); }
+  }
+
+  /* === Decision row === */
+  .decision { display: grid; grid-template-columns: 60px 1fr 200px 100px;
+    gap: 14px; padding: 14px; background: var(--dark2);
+    border-left: 3px solid var(--gold); border-radius: 6px;
+    margin-bottom: 8px; align-items: flex-start; }
+  @media (max-width: 700px) {
+    .decision { grid-template-columns: 1fr; gap: 6px; }
+  }
+  .decision .num { width: 32px; height: 32px; border-radius: 50%;
+    background: var(--brown); color: var(--gold); font-weight: 700;
+    display: flex; align-items: center; justify-content: center; font-size: 13px; }
+  .decision .body { font-size: 13px; }
+  .decision .body strong { color: var(--gold-light); }
+  .decision .who { font-size: 12px; color: var(--text-muted); }
+  .decision .who strong { color: var(--gold); }
+  .decision.locked { border-left-color: var(--green); }
+  .decision.locked .num { background: var(--green); color: var(--dark); }
+
+  /* === Gantt === */
+  .gantt { background: var(--dark2); border: 1px solid var(--border);
+    border-radius: 8px; padding: 16px; margin: 16px 0; overflow-x: auto; }
+  .gantt-table { min-width: 700px; }
+  .gantt-row { display: grid; grid-template-columns: 200px repeat(8, 1fr);
+    align-items: center; gap: 4px; margin-bottom: 4px;
+    font-size: 11px; }
+  .gantt-row.head { color: var(--gold); font-weight: 700;
+    border-bottom: 1px solid var(--border); padding-bottom: 8px; margin-bottom: 8px; }
+  .gantt-row.head > div { text-align: center; padding: 4px; font-size: 10px; }
+  .gantt-label { color: var(--text); padding: 6px 8px; }
+  .gantt-cell { background: var(--dark3); border-radius: 3px;
+    height: 24px; position: relative; }
+  .gantt-bar { position: absolute; top: 2px; bottom: 2px;
+    border-radius: 3px; padding: 0 6px; font-size: 9px;
+    display: flex; align-items: center; font-weight: 600;
+    color: var(--dark); }
+  .gantt-bar.persona { background: var(--gold); }
+  .gantt-bar.parallel { background: var(--green); color: var(--dark); }
+  .gantt-bar.blocked { background: var(--red); color: white; }
+
+  /* === Track box === */
+  .track { background: var(--dark2); border-radius: 8px;
+    padding: 16px 18px; margin-bottom: 12px;
+    border-left: 3px solid var(--gold); }
+  .track-head { display: flex; align-items: center; gap: 10px;
+    margin-bottom: 8px; }
+  .track-name { font-size: 14px; color: var(--gold); font-weight: 700; }
+  .track-desc { font-size: 12px; color: var(--text-muted); }
+
+  ul.tight { margin: 8px 0 12px 22px; }
+  ul.tight li { margin-bottom: 4px; font-size: 13px; }
+
+  code { background: var(--dark3); color: var(--gold-light); padding: 2px 6px;
+    border-radius: 3px; font-size: 12px; font-family: 'Menlo', monospace; }
+
+  .meta-footer { font-size: 11px; color: var(--text-muted); margin-top: 40px;
+    padding-top: 16px; border-top: 1px solid var(--border); text-align: center; }
+
+  .start-btn { display: inline-block; background: var(--gold); color: var(--dark);
+    padding: 12px 24px; border-radius: 8px; text-decoration: none;
+    font-weight: 700; font-size: 14px; margin-top: 10px; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>📋 KCCTF 2026 — 홈페이지 실행 계획</h1>
+  <div class="sub">디자인 시스템 + 운영기준 확정 후 단계별 진행 플랜</div>
+  <div class="meta">2026-05-09 · 알파 배포 목표: 2주 (외부 결정 차단 없을 시)</div>
+  <div class="reviewer-tag">📋 PROJECT PLAN v1.0</div>
+</div>
+
+<div class="main">
+
+  <div class="nav">
+    <a href="#summary">📌 요약</a>
+    <a href="#tracks">🛤 작업 트랙</a>
+    <a href="#decisions">① 결정사항</a>
+    <a href="#phases">② 단계 (Phase)</a>
+    <a href="#timeline">③ 타임라인</a>
+    <a href="#blockers">④ 외부 의존성</a>
+    <a href="#start">⑤ 즉시 시작</a>
+  </div>
+
+  <!-- ============ SUMMARY ============ -->
+  <h2 id="summary"><span class="section-num">📌</span>요약</h2>
+
+  <div class="alert green">
+    <strong>전제</strong>: 콘텐츠는 <code>운영기준.md</code>가 정답. 디자인 시안의 가격·라인업·워크샵 데이터는 임의 작성된 것.
+    디자인 시각 시스템은 그대로 채택, <strong>텍스트만 운영 데이터로 교체</strong>.
+  </div>
+
+  <div class="alert gold">
+    <strong>전체 흐름 (8 Phase)</strong>
+    <ol style="margin:8px 0 0 22px;">
+      <li><strong>Phase 0</strong> — 결정 잠금 (Lock-in): 즉시 가능 / 운영팀 확인 분리</li>
+      <li><strong>Phase 1</strong> — 콘텐츠 정합 매트릭스 작성 (Critic) <span class="badge parallel">병렬</span></li>
+      <li><strong>Phase 2</strong> — v1/v2 디자인 결정 (Director) <span class="badge parallel">병렬</span></li>
+      <li><strong>Phase 3</strong> — 카피 작성 — 한/영 (Wordsmith)</li>
+      <li><strong>Phase 4</strong> — 코드 스캐폴딩 (Builder Phase 0)</li>
+      <li><strong>Phase 5</strong> — 컴포넌트 구현 (Builder Phase 1)</li>
+      <li><strong>Phase 6</strong> — 통합·콘텐츠 채우기 (Builder Phase 2)</li>
+      <li><strong>Phase 7</strong> — QA + 배포 (Critic + Coordinator)</li>
+    </ol>
+    <p style="margin-top:10px;"><strong>Phase 1 + 2는 동시 진행</strong>. 그 다음 직렬.</p>
+  </div>
+
+  <!-- ============ TRACKS ============ -->
+  <h2 id="tracks"><span class="section-num">🛤</span>두 개의 작업 트랙</h2>
+
+  <p>이 프로젝트는 <strong>코드 트랙</strong>과 <strong>콘텐츠 트랙</strong>이 병렬로 흘러요.
+  서로 의존성 적게 만들어서 한쪽이 막히면 다른 쪽으로 우회 가능.</p>
+
+  <div class="track">
+    <div class="track-head">
+      <span style="font-size:18px;">💻</span>
+      <span class="track-name">트랙 A — 코드 (Builder 중심)</span>
+    </div>
+    <div class="track-desc">Next.js 14 + Tailwind + next-intl 사이트 구축. 운영팀 결정 없어도 진행 가능.</div>
+    <p style="font-size:12px;color:var(--text-muted);margin-top:6px;">Phase 4 → 5 → 6 → 7</p>
+  </div>
+
+  <div class="track">
+    <div class="track-head">
+      <span style="font-size:18px;">📝</span>
+      <span class="track-name">트랙 B — 콘텐츠 (Critic + Wordsmith)</span>
+    </div>
+    <div class="track-desc">디자인 텍스트 → 운영기준 데이터 교체 매트릭스 + 카피 작성. 운영팀 일부 결정 필요.</div>
+    <p style="font-size:12px;color:var(--text-muted);margin-top:6px;">Phase 1 → 3 (Phase 2 결정 후 합류)</p>
+  </div>
+
+  <div class="alert blue">
+    <strong>합류 지점</strong>: Phase 6 (통합)에서 두 트랙이 만남. 콘텐츠가 코드보다 늦으면 placeholder로 우선 빌드 후 텍스트만 교체.
+  </div>
+
+  <!-- ============ DECISIONS ============ -->
+  <h2 id="decisions"><span class="section-num">①</span>Phase 0 — 결정 잠금</h2>
+
+  <p>아래 결정들이 잠겨야 다음 단계가 진행됩니다. <strong>4개는 포올님 즉시 결정 가능</strong>, <strong>4개는 운영팀 확인 필요</strong>.</p>
+
+  <h3>🟢 즉시 결정 가능 (포올님)</h3>
+
+  <div class="decision">
+    <div class="num">1</div>
+    <div class="body">
+      <strong>디자인 방향</strong> — v1 (인쇄물 톤, 머스타드+와인) vs v2 (Lakeside, 다크+크림)
+    </div>
+    <div class="who">기본값: <strong>v1</strong> (포스터 톤 일치, 한국 정체성)</div>
+    <div><span class="badge p0">P0</span></div>
+  </div>
+
+  <div class="decision">
+    <div class="num">2</div>
+    <div class="body">
+      <strong>약자 표기</strong> — KCCTF (도메인 그대로) vs KCITF (디자이너 표기)
+    </div>
+    <div class="who">기본값: <strong>KCCTF</strong> (kcctf.org)</div>
+    <div><span class="badge p0">P0</span></div>
+  </div>
+
+  <div class="decision">
+    <div class="num">3</div>
+    <div class="body">
+      <strong>코드베이스 전략</strong> — A. 기존 Next.js에 디자인 적용 (개발자 협업) / <strong>B. 새 빌드 후 도메인 스왑</strong>
+    </div>
+    <div class="who">기본값: <strong>B</strong> (자유도 높음, 개발자 의존 X)</div>
+    <div><span class="badge p0">P0</span></div>
+  </div>
+
+  <div class="decision">
+    <div class="num">4</div>
+    <div class="body">
+      <strong>배포 인프라</strong> — Vercel (추천, 무료, Next.js 최적) / Firebase (현재) / Netlify
+    </div>
+    <div class="who">기본값: <strong>Vercel</strong></div>
+    <div><span class="badge p0">P0</span></div>
+  </div>
+
+  <h3 style="margin-top:24px;">🟡 운영팀 확인 필요 (병렬로 카톡으로 던질 수 있음)</h3>
+
+  <div class="decision">
+    <div class="num">5</div>
+    <div class="body">
+      <strong>회차 명시</strong> — "제3회"가 맞는가? 아니면 회차 표기 자체를 뺄지?
+    </div>
+    <div class="who">→ <strong>조앤 또는 이종화</strong></div>
+    <div><span class="badge p1">P1</span></div>
+  </div>
+
+  <div class="decision">
+    <div class="num">6</div>
+    <div class="body">
+      <strong>장소 구조</strong> — 봄내체육관(밀롱가) + 문화예술회관 940석(콘서트) 두 곳 모두 확정인지? 콘서트 어디서?
+    </div>
+    <div class="who">→ <strong>흰곰</strong> (운영기준 §3에 "🔍 실제 여부 확인 필요"로 표시됨)</div>
+    <div><span class="badge p1">P1</span></div>
+  </div>
+
+  <div class="decision">
+    <div class="num">7</div>
+    <div class="body">
+      <strong>워크샵 운영 여부</strong> — 운영하면 마에스트로 라인업 / 안 하면 Lessons 섹션 통째로 제거
+    </div>
+    <div class="who">→ <strong>조앤</strong> (예술 디렉터)</div>
+    <div><span class="badge p1">P1</span></div>
+  </div>
+
+  <div class="decision">
+    <div class="num">8</div>
+    <div class="body">
+      <strong>등록 시스템 / 입금 방식</strong> — 무엇으로 받을지 (계좌이체 / 결제 플랫폼 / 폼)
+    </div>
+    <div class="who">→ <strong>흰곰</strong> (운영기준 §11 미해결)</div>
+    <div><span class="badge p1">P1</span></div>
+  </div>
+
+  <div class="alert yellow">
+    <strong>5~8번 차단 대응</strong>: 답이 늦어도 빌드 멈추지 않게 우회 — 회차 표기 빼고, 장소는 봄내체육관만 우선 노출, Lessons 섹션 비활성, 등록은 "이메일 신청 폼" 임시 사용. <strong>출시 직전에 텍스트만 교체</strong>.
+  </div>
+
+  <!-- ============ PHASES ============ -->
+  <h2 id="phases"><span class="section-num">②</span>단계별 상세 (8 Phase)</h2>
+
+  <!-- Phase 0 -->
+  <div class="phase now">
+    <div class="phase-head">
+      <div class="phase-num">0</div>
+      <div class="phase-title">
+        <div class="name">결정 잠금 (Lock-in)</div>
+        <div class="sub">⏱ 30분 · 지금 단계</div>
+      </div>
+      <div class="phase-meta">
+        <span class="badge persona">🎬 Director + 포올</span>
+        <span class="badge now">진행 중</span>
+      </div>
+    </div>
+    <div class="phase-body">
+      <div class="phase-row">
+        <div class="lbl">목표</div>
+        <div class="val">즉시 가능한 4개 결정 + 운영팀 확인 4개를 카톡으로 발사.</div>
+      </div>
+      <div class="phase-row">
+        <div class="lbl">산출물</div>
+        <div class="val">
+          <ul>
+            <li>결정사항 1~4 답변 (포올)</li>
+            <li>결정사항 5~8 카톡 메시지 초안 (제가 작성해드림)</li>
+          </ul>
+        </div>
+      </div>
+      <div class="phase-row">
+        <div class="lbl">통과 조건</div>
+        <div class="val">v1/v2 결정 + 약자 결정 + 코드베이스 결정 잠김.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Phase 1 -->
+  <div class="phase">
+    <div class="phase-head">
+      <div class="phase-num">1</div>
+      <div class="phase-title">
+        <div class="name">콘텐츠 정합 매트릭스 (Content Sync)</div>
+        <div class="sub">⏱ 1~2시간 · Phase 2와 병렬</div>
+      </div>
+      <div class="phase-meta">
+        <span class="badge persona">🔍 Critic</span>
+        <span class="badge parallel">병렬 가능</span>
+      </div>
+    </div>
+    <div class="phase-body">
+      <div class="phase-row">
+        <div class="lbl">목표</div>
+        <div class="val">디자인 텍스트 → 운영기준 데이터 교체 매트릭스. 어느 파일/섹션의 무엇을 무엇으로 바꿀지.</div>
+      </div>
+      <div class="phase-row">
+        <div class="lbl">인풋</div>
+        <div class="val">
+          <ul>
+            <li>운영기준.md (정답 데이터)</li>
+            <li>디자인 README.md + JSX 파일들 (현재 상태)</li>
+          </ul>
+        </div>
+      </div>
+      <div class="phase-row">
+        <div class="lbl">작업 내용</div>
+        <div class="val">
+          <ul>
+            <li>가격: ₩190K(얼리) / ₩240K(현장) / ₩100K(일일) — 패키지 구조: 풀팩 / 풀팩+2박 / 풀팩+3박</li>
+            <li>DJ 한글 이름 추가 (하군/스톤/까를로스/베카/왕웨이/나탈리), 도시 표기 통일</li>
+            <li>댄서팀 4팀 추가 (London Hong&amp;Sol, Hyemi&amp;Wonjun, Team Ryu, +1 TBA)</li>
+            <li>마에스트로 라인업 → 워크샵 결정에 따라 제거 또는 교체</li>
+            <li>장소: 봄내체육관(마라톤) + 문화예술회관(콘서트 940석) 추가</li>
+            <li>일정: 운영기준 §7 그대로 (요일 오류 수정 — 10/3 토요일)</li>
+            <li>호텔: 벨라스테이 + 패키지 구조</li>
+            <li>약자 KCCTF 통일</li>
+          </ul>
+        </div>
+      </div>
+      <div class="phase-row">
+        <div class="lbl">산출물</div>
+        <div class="val">엑셀 또는 표 형태 매트릭스 1개 — "현재 텍스트 → 진실 텍스트 → 어느 파일"</div>
+      </div>
+      <div class="phase-row">
+        <div class="lbl">통과 조건</div>
+        <div class="val">디자인의 모든 임의 데이터가 운영기준 데이터로 매핑됨.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Phase 2 -->
+  <div class="phase">
+    <div class="phase-head">
+      <div class="phase-num">2</div>
+      <div class="phase-title">
+        <div class="name">v1/v2 디자인 결정 시각화</div>
+        <div class="sub">⏱ 1시간 · Phase 1과 병렬 (포올님 1번 결정과 연동)</div>
+      </div>
+      <div class="phase-meta">
+        <span class="badge persona">🎬 Director + 🎨 Aesthetic</span>
+        <span class="badge parallel">병렬 가능</span>
+      </div>
+    </div>
+    <div class="phase-body">
+      <div class="phase-row">
+        <div class="lbl">목표</div>
+        <div class="val">v1과 v2를 모바일 시안으로 나란히 비교 → 선택을 쉽게.</div>
+      </div>
+      <div class="phase-row">
+        <div class="lbl">조건부</div>
+        <div class="val">포올님이 Phase 0에서 v1 즉시 선택하시면 이 단계 스킵 가능.</div>
+      </div>
+      <div class="phase-row">
+        <div class="lbl">산출물</div>
+        <div class="val">v1 vs v2 모바일 모크업 1페이지 (Hero + 두 오케스트라 + 일정 미리보기) — 둘 중 하나 결정</div>
+      </div>
+      <div class="phase-row">
+        <div class="lbl">통과 조건</div>
+        <div class="val">결정사항 1번 잠김.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Phase 3 -->
+  <div class="phase">
+    <div class="phase-head">
+      <div class="phase-num">3</div>
+      <div class="phase-title">
+        <div class="name">카피 작성 (한/영)</div>
+        <div class="sub">⏱ 2~3시간 · Phase 1 완료 후</div>
+      </div>
+      <div class="phase-meta">
+        <span class="badge persona">✍️ Wordsmith</span>
+      </div>
+    </div>
+    <div class="phase-body">
+      <div class="phase-row">
+        <div class="lbl">목표</div>
+        <div class="val">디자인 톤 + 운영 진실 결합한 한국어/영어 카피. 모든 섹션의 모든 텍스트.</div>
+      </div>
+      <div class="phase-row">
+        <div class="lbl">인풋</div>
+        <div class="val">Phase 1 매트릭스 + 디자인의 카피 톤 (호숫가, 부에노스 아이레스 등)</div>
+      </div>
+      <div class="phase-row">
+        <div class="lbl">작업 내용</div>
+        <div class="val">
+          <ul>
+            <li>Hero: 한글 거대 워드마크 + 영문 부제 + 태그라인</li>
+            <li>두 오케스트라 섹션: eyebrow + 헤드라인 + 본문 + LIVE 라벨</li>
+            <li>일정 섹션: 각 밀롱가 분위기 한 줄 묘사 (BTE식)</li>
+            <li>DJ 섹션 헤드 + 각 DJ 약력 1~2줄</li>
+            <li>댄서팀 섹션 (추가) + 각 댄서팀 한 줄</li>
+            <li>장소 섹션: 봄내체육관 + 문화예술회관 설명</li>
+            <li>티켓 섹션: 패키지 3종 설명 + 환불 정책 미니</li>
+            <li>Footer: "춘천에서 만나요 · See you in Chuncheon"</li>
+            <li>FAQ 미니 (해외 참가자용)</li>
+          </ul>
+        </div>
+      </div>
+      <div class="phase-row">
+        <div class="lbl">산출물</div>
+        <div class="val">copy.json (i18n 키 구조) — ko/en 두 객체</div>
+      </div>
+      <div class="phase-row">
+        <div class="lbl">통과 조건</div>
+        <div class="val">모든 섹션 ko/en 카피 완성, Director 검수 통과.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Phase 4 -->
+  <div class="phase">
+    <div class="phase-head">
+      <div class="phase-num">4</div>
+      <div class="phase-title">
+        <div class="name">코드 스캐폴딩 (Builder Phase 0)</div>
+        <div class="sub">⏱ 2~3시간 · Phase 0 완료 후 (Phase 1·2와 병렬)</div>
+      </div>
+      <div class="phase-meta">
+        <span class="badge persona">💻 Builder</span>
+        <span class="badge parallel">병렬 가능</span>
+      </div>
+    </div>
+    <div class="phase-body">
+      <div class="phase-row">
+        <div class="lbl">목표</div>
+        <div class="val">Next.js 14 프로젝트 베이스 + 디자인 토큰 → Tailwind config 변환 + 폰트 로딩.</div>
+      </div>
+      <div class="phase-row">
+        <div class="lbl">작업 내용</div>
+        <div class="val">
+          <ul>
+            <li><code>npx create-next-app@latest kcctf-2026</code> (App Router, TypeScript, Tailwind)</li>
+            <li><code>next-intl</code> 설치 + ko/en 라우팅</li>
+            <li>디자인 토큰(colors, typography, spacing) → tailwind.config.ts</li>
+            <li>Google Fonts 로딩: Noto Serif KR, Noto Sans KR / Pretendard, Playfair Display, Inter, Oswald</li>
+            <li>asset 복사 (반도네온, 로고, 사진)</li>
+            <li>Vercel 배포 연결 (preview URL 확보)</li>
+          </ul>
+        </div>
+      </div>
+      <div class="phase-row">
+        <div class="lbl">산출물</div>
+        <div class="val">빌드되는 빈 사이트 + 디자인 토큰 살아있음 + preview URL</div>
+      </div>
+      <div class="phase-row">
+        <div class="lbl">통과 조건</div>
+        <div class="val">localhost:3000에 빈 페이지 뜨고, Vercel preview에 동일하게 뜸.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Phase 5 -->
+  <div class="phase">
+    <div class="phase-head">
+      <div class="phase-num">5</div>
+      <div class="phase-title">
+        <div class="name">컴포넌트 구현 (Builder Phase 1)</div>
+        <div class="sub">⏱ 1~2일 · Phase 4 완료 후</div>
+      </div>
+      <div class="phase-meta">
+        <span class="badge persona">💻 Builder</span>
+      </div>
+    </div>
+    <div class="phase-body">
+      <div class="phase-row">
+        <div class="lbl">목표</div>
+        <div class="val">받은 JSX 9개 → 진짜 React 컴포넌트로 재구성. 데이터는 placeholder.</div>
+      </div>
+      <div class="phase-row">
+        <div class="lbl">우선순위</div>
+        <div class="val">
+          <ul>
+            <li>1. Nav (sticky, 한/영 토글, 햄버거 메뉴)</li>
+            <li>2. Hero (반도네온 + 한글 워드마크 + 날짜 밴드)</li>
+            <li>3. Two Orchestras (Tango Bardo + Misteriosa)</li>
+            <li>4. Schedule (3일 탭)</li>
+            <li>5. DJs (6명 그리드)</li>
+            <li>6. Dancers (4팀, 디자인에 없던 섹션 — 신규)</li>
+            <li>7. Venue (봄내체육관 + 문화예술회관)</li>
+            <li>8. Tickets (3 패키지 + 호텔 통합)</li>
+            <li>9. Footer (반도네온 dark + 후원사 + 사이트맵)</li>
+          </ul>
+        </div>
+      </div>
+      <div class="phase-row">
+        <div class="lbl">산출물</div>
+        <div class="val">9개 컴포넌트 + 모바일 반응형 + 인터랙션 (fade-in, hover)</div>
+      </div>
+      <div class="phase-row">
+        <div class="lbl">통과 조건</div>
+        <div class="val">모든 섹션이 데스크톱+모바일에서 렌더 OK. 데이터는 placeholder여도 됨.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Phase 6 -->
+  <div class="phase">
+    <div class="phase-head">
+      <div class="phase-num">6</div>
+      <div class="phase-title">
+        <div class="name">통합·콘텐츠 채우기 (Builder Phase 2)</div>
+        <div class="sub">⏱ 반나절 · Phase 3 + 5 모두 완료 후</div>
+      </div>
+      <div class="phase-meta">
+        <span class="badge persona">💻 Builder</span>
+      </div>
+    </div>
+    <div class="phase-body">
+      <div class="phase-row">
+        <div class="lbl">목표</div>
+        <div class="val">Phase 3의 copy.json + Phase 1 매트릭스 → 컴포넌트의 placeholder 텍스트 모두 교체.</div>
+      </div>
+      <div class="phase-row">
+        <div class="lbl">작업 내용</div>
+        <div class="val">
+          <ul>
+            <li>i18n 키 연결 (next-intl)</li>
+            <li>실제 사진 연결 (반도네온, 오케스트라, DJ)</li>
+            <li>가격/일정 데이터 채우기</li>
+            <li>외부 결정 미정 영역 → "Coming soon" 배지 또는 섹션 비활성</li>
+            <li>SEO 메타 + Open Graph 이미지</li>
+            <li>한/영 hreflang</li>
+          </ul>
+        </div>
+      </div>
+      <div class="phase-row">
+        <div class="lbl">통과 조건</div>
+        <div class="val">실제 데이터 들어간 사이트가 preview URL에 뜸.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Phase 7 -->
+  <div class="phase">
+    <div class="phase-head">
+      <div class="phase-num">7</div>
+      <div class="phase-title">
+        <div class="name">QA + 배포</div>
+        <div class="sub">⏱ 반나절 · Phase 6 완료 후</div>
+      </div>
+      <div class="phase-meta">
+        <span class="badge persona">🔍 Critic + 📋 Coordinator</span>
+      </div>
+    </div>
+    <div class="phase-body">
+      <div class="phase-row">
+        <div class="lbl">QA 체크리스트</div>
+        <div class="val">
+          <ul>
+            <li>모바일 320px / 375px / 768px / 1100px+ 깨짐 없음</li>
+            <li>한/영 양쪽 카피 누락 없음</li>
+            <li>운영기준 §3, §4, §5, §6, §7과 100% 일치</li>
+            <li>"Friday session" 같은 요일 오류 0</li>
+            <li>모든 사진 alt 텍스트</li>
+            <li>색상 대비 WCAG AA 이상</li>
+            <li>Lighthouse Performance 90+</li>
+            <li>이메일 링크 (info@kcctf.org) 작동</li>
+            <li>한/영 hreflang 정확</li>
+          </ul>
+        </div>
+      </div>
+      <div class="phase-row">
+        <div class="lbl">운영진 검수</div>
+        <div class="val">존·흰곰·조앤·지이에게 preview URL 공유 → 사실관계 확인</div>
+      </div>
+      <div class="phase-row">
+        <div class="lbl">배포</div>
+        <div class="val">
+          <ul>
+            <li>옵션 A: kcctf.org 도메인 Vercel로 이전 (이종화 협력 필요)</li>
+            <li>옵션 B: 임시 서브도메인 (preview.kcctf.org) 운영하다 시기 맞춰 스왑</li>
+            <li>SNS·홍보팀(용이)에 새 사이트 공지</li>
+          </ul>
+        </div>
+      </div>
+      <div class="phase-row">
+        <div class="lbl">통과 조건</div>
+        <div class="val">kcctf.org에서 새 사이트가 보임. 운영진 OK.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ TIMELINE ============ -->
+  <h2 id="timeline"><span class="section-num">③</span>타임라인 (간트)</h2>
+
+  <p>외부 결정이 빨리 떨어지면 <strong>10일</strong>, 늦으면 <strong>2~3주</strong> 예상.</p>
+
+  <div class="gantt">
+    <div class="gantt-table">
+      <div class="gantt-row head">
+        <div></div>
+        <div>Day 1</div><div>Day 2</div><div>Day 3</div><div>Day 4</div>
+        <div>Day 5</div><div>Day 6</div><div>Day 7</div><div>Day 8+</div>
+      </div>
+
+      <div class="gantt-row">
+        <div class="gantt-label">Phase 0 — 결정 잠금</div>
+        <div class="gantt-cell"><div class="gantt-bar persona" style="left:0;width:50%;">0</div></div>
+        <div class="gantt-cell"></div><div class="gantt-cell"></div><div class="gantt-cell"></div>
+        <div class="gantt-cell"></div><div class="gantt-cell"></div><div class="gantt-cell"></div><div class="gantt-cell"></div>
+      </div>
+
+      <div class="gantt-row">
+        <div class="gantt-label">Phase 1 — 정합 매트릭스</div>
+        <div class="gantt-cell"><div class="gantt-bar parallel" style="left:50%;width:50%;">1</div></div>
+        <div class="gantt-cell"><div class="gantt-bar parallel" style="left:0;width:50%;">1</div></div>
+        <div class="gantt-cell"></div><div class="gantt-cell"></div>
+        <div class="gantt-cell"></div><div class="gantt-cell"></div><div class="gantt-cell"></div><div class="gantt-cell"></div>
+      </div>
+
+      <div class="gantt-row">
+        <div class="gantt-label">Phase 2 — v1/v2 결정</div>
+        <div class="gantt-cell"><div class="gantt-bar parallel" style="left:50%;width:50%;">2</div></div>
+        <div class="gantt-cell"></div>
+        <div class="gantt-cell"></div><div class="gantt-cell"></div>
+        <div class="gantt-cell"></div><div class="gantt-cell"></div><div class="gantt-cell"></div><div class="gantt-cell"></div>
+      </div>
+
+      <div class="gantt-row">
+        <div class="gantt-label">Phase 3 — 카피 (한/영)</div>
+        <div class="gantt-cell"></div>
+        <div class="gantt-cell"><div class="gantt-bar persona" style="left:50%;width:50%;">3</div></div>
+        <div class="gantt-cell"><div class="gantt-bar persona" style="left:0;width:100%;">3</div></div>
+        <div class="gantt-cell"></div>
+        <div class="gantt-cell"></div><div class="gantt-cell"></div><div class="gantt-cell"></div><div class="gantt-cell"></div>
+      </div>
+
+      <div class="gantt-row">
+        <div class="gantt-label">Phase 4 — 스캐폴딩</div>
+        <div class="gantt-cell"></div>
+        <div class="gantt-cell"><div class="gantt-bar parallel" style="left:50%;width:50%;">4</div></div>
+        <div class="gantt-cell"><div class="gantt-bar parallel" style="left:0;width:50%;">4</div></div>
+        <div class="gantt-cell"></div>
+        <div class="gantt-cell"></div><div class="gantt-cell"></div><div class="gantt-cell"></div><div class="gantt-cell"></div>
+      </div>
+
+      <div class="gantt-row">
+        <div class="gantt-label">Phase 5 — 컴포넌트</div>
+        <div class="gantt-cell"></div><div class="gantt-cell"></div>
+        <div class="gantt-cell"><div class="gantt-bar persona" style="left:50%;width:50%;">5</div></div>
+        <div class="gantt-cell"><div class="gantt-bar persona" style="left:0;width:100%;">5</div></div>
+        <div class="gantt-cell"><div class="gantt-bar persona" style="left:0;width:100%;">5</div></div>
+        <div class="gantt-cell"></div><div class="gantt-cell"></div><div class="gantt-cell"></div>
+      </div>
+
+      <div class="gantt-row">
+        <div class="gantt-label">Phase 6 — 통합·콘텐츠</div>
+        <div class="gantt-cell"></div><div class="gantt-cell"></div><div class="gantt-cell"></div>
+        <div class="gantt-cell"></div>
+        <div class="gantt-cell"><div class="gantt-bar persona" style="left:50%;width:50%;">6</div></div>
+        <div class="gantt-cell"><div class="gantt-bar persona" style="left:0;width:50%;">6</div></div>
+        <div class="gantt-cell"></div><div class="gantt-cell"></div>
+      </div>
+
+      <div class="gantt-row">
+        <div class="gantt-label">Phase 7 — QA + 배포</div>
+        <div class="gantt-cell"></div><div class="gantt-cell"></div><div class="gantt-cell"></div>
+        <div class="gantt-cell"></div><div class="gantt-cell"></div>
+        <div class="gantt-cell"><div class="gantt-bar persona" style="left:50%;width:50%;">7</div></div>
+        <div class="gantt-cell"><div class="gantt-bar persona" style="left:0;width:100%;">7</div></div>
+        <div class="gantt-cell"><div class="gantt-bar parallel" style="left:0;width:50%;">🚀</div></div>
+      </div>
+    </div>
+    <div style="margin-top:14px;font-size:11px;color:var(--text-muted);">
+      <span style="display:inline-block;width:12px;height:12px;background:var(--gold);border-radius:2px;vertical-align:middle;margin-right:6px;"></span>주 작업 ·
+      <span style="display:inline-block;width:12px;height:12px;background:var(--green);border-radius:2px;vertical-align:middle;margin:0 6px;"></span>병렬 가능 ·
+      Day 8+ = 배포 / 운영팀 검수
+    </div>
+  </div>
+
+  <!-- ============ BLOCKERS ============ -->
+  <h2 id="blockers"><span class="section-num">④</span>외부 의존성 매트릭스</h2>
+
+  <p>각 외부 결정이 어느 Phase를 차단하고, 답이 늦으면 어떻게 우회할지.</p>
+
+  <table>
+    <tr>
+      <th>결정 대상</th>
+      <th>담당</th>
+      <th>차단 Phase</th>
+      <th>우회 방법</th>
+    </tr>
+    <tr>
+      <td>회차 (제3회 맞나)</td>
+      <td>조앤 / 이종화</td>
+      <td>Phase 3, 6</td>
+      <td>회차 표기 자체 생략 (Hero에 "2026.10.03 — 10.05"만)</td>
+    </tr>
+    <tr>
+      <td>장소 (체육관 + 예술회관)</td>
+      <td>흰곰</td>
+      <td>Phase 3, 6 (Venue 섹션)</td>
+      <td>봄내체육관만 우선 노출, 콘서트 장소는 "곧 공개"</td>
+    </tr>
+    <tr>
+      <td>워크샵 운영 여부</td>
+      <td>조앤</td>
+      <td>Phase 5, 6 (Lessons 섹션)</td>
+      <td>Lessons 섹션 통째로 비활성. 결정되면 추가</td>
+    </tr>
+    <tr>
+      <td>마에스트로 라인업</td>
+      <td>조앤</td>
+      <td>Phase 5, 6 (워크샵 운영 시)</td>
+      <td>"강사진 곧 공개" 플레이스홀더</td>
+    </tr>
+    <tr>
+      <td>댄서팀 4번째</td>
+      <td>존</td>
+      <td>Phase 5, 6 (Dancers 섹션)</td>
+      <td>3팀만 표시 + "+ 1 TBA" 카드</td>
+    </tr>
+    <tr>
+      <td>얼리버드 마감일</td>
+      <td>흰곰</td>
+      <td>Phase 6 (Tickets 섹션 카운트다운)</td>
+      <td>마감일 미표시, "얼리버드 ₩190,000"만 표시</td>
+    </tr>
+    <tr>
+      <td>등록 시스템 / 입금 방식</td>
+      <td>흰곰</td>
+      <td>Phase 6 (Register CTA)</td>
+      <td>이메일 신청 폼 임시 사용 (info@kcctf.org)</td>
+    </tr>
+    <tr>
+      <td>호텔 패키지 공개 가격</td>
+      <td>흰곰</td>
+      <td>Phase 6 (Tickets, 풀팩+2박/3박)</td>
+      <td>"패키지 안내 곧 공개" 또는 풀팩만 우선</td>
+    </tr>
+    <tr>
+      <td>kcctf.org 도메인 권한</td>
+      <td>이종화</td>
+      <td>Phase 7 (배포 도메인 스왑)</td>
+      <td>임시 서브도메인 (preview.kcctf.org 또는 v2.kcctf.org)</td>
+    </tr>
+  </table>
+
+  <div class="alert green">
+    <strong>핵심 원칙</strong>: 어떤 외부 결정도 빌드를 멈추게 하지 않음.
+    미정 영역은 우회로 진행 → 결정 떨어지면 텍스트만 교체.
+  </div>
+
+  <!-- ============ START ============ -->
+  <h2 id="start"><span class="section-num">⑤</span>지금 즉시 시작 — Phase 0</h2>
+
+  <div class="alert gold">
+    <strong>포올님 답변 부탁드릴 4가지 (5분)</strong>
+    <ol style="margin:10px 0 0 22px;">
+      <li>디자인: <strong>v1 (인쇄물 톤)</strong> 또는 v2 (Lakeside) 또는 직접 비교 보고 결정?</li>
+      <li>약자: <strong>KCCTF 유지</strong> 또는 KCITF로 변경?</li>
+      <li>코드베이스: <strong>새로 빌드(B)</strong> 또는 기존 사이트 수정(A)?</li>
+      <li>배포: <strong>Vercel</strong> 또는 다른 곳?</li>
+    </ol>
+    <p style="margin-top:10px;"><strong>"기본값으로 가" 라고 하시면</strong> 굵게 표시된 옵션들로 잠그고 바로 Phase 1+2+4 병렬 시작합니다.</p>
+  </div>
+
+  <h3>제가 동시에 작성해드릴 카톡 메시지 초안 (5번)</h3>
+  <div class="alert blue">
+    <strong>흰곰께 (장소·등록·호텔):</strong><br>
+    "이사장님, 홈페이지 리뉴얼 작업 중인데 확인 부탁드려요.<br>
+    1) 콘서트 장소가 춘천문화예술회관(940석) 맞나요?<br>
+    2) 얼리버드 마감일 정해주세요.<br>
+    3) 등록 입금 방식 (계좌이체 / 결제 플랫폼)<br>
+    4) 호텔 패키지 공개 가격 (풀팩+2박, 풀팩+3박)"
+    <br><br>
+    <strong>조앤께 (회차·워크샵·라인업):</strong><br>
+    "감독님, 홈페이지에 들어갈 정보 확인 부탁이에요.<br>
+    1) 이번이 몇 회차인지 (제3회 맞나요?)<br>
+    2) 워크샵 운영 여부 — 한다면 마에스트로 라인업<br>
+    3) 댄서팀 4번째 팀 확정 여부 (존 통해)<br>
+    4) M2 정확한 시간 (21:00 vs 22:00)"
+  </div>
+
+  <p style="margin-top:24px;text-align:center;">
+    <strong style="color:var(--gold-light);font-size:16px;">→ 답변 주시면 Phase 1+2+4 병렬로 즉시 시작합니다.</strong>
+  </p>
+
+  <div class="meta-footer">
+    KCCTF 2026 홈페이지 실행 계획 v1.0 · 2026-05-09 · 📋 알파 배포 목표 D+10
+  </div>
+
+</div>
+
+</body>
+</html>

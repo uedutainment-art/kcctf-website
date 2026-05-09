@@ -1,0 +1,650 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8"/>
+<title>브로셔 정사각 v2 · 2026 춘천국제탱고페스티벌</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;500;600;700;900&family=Noto+Sans+KR:wght@400;500;700;900&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Inter:wght@400;500;600;700;800;900&family=Oswald:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    background: #0E0814;
+    font-family: 'Noto Sans KR', sans-serif;
+    min-height: 100vh;
+    padding: 40px 20px 80px;
+    color: #FDFAF5;
+  }
+  .lab-head { max-width: 2280px; margin: 0 auto 32px; padding: 0 20px; }
+  .lab-eyebrow { font-family: 'Inter',sans-serif; font-size: 11px; letter-spacing: 0.32em; color: #E8C25E; text-transform: uppercase; font-weight: 700; }
+  .lab-title { font-family: 'Noto Serif KR',serif; font-size: 32px; font-weight: 700; letter-spacing: -0.02em; margin: 12px 0 8px; color: #FDFAF5; }
+  .lab-sub { font-size: 14px; color: rgba(253,250,245,0.55); max-width: 820px; line-height: 1.55; }
+  .pages { display: flex; flex-wrap: wrap; gap: 40px; justify-content: center; max-width: 2280px; margin: 0 auto; }
+  .page-wrap { display: flex; flex-direction: column; gap: 12px; }
+  .page-label { font-family: 'Inter',sans-serif; font-size: 11px; letter-spacing: 0.32em; color: rgba(253,250,245,0.55); text-transform: uppercase; font-weight: 600; padding-left: 4px; }
+
+  .page {
+    width: 1080px;
+    height: 1080px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 30px 80px -20px rgba(0,0,0,0.7), 0 0 0 1px rgba(232,194,94,0.08);
+  }
+
+  /* ===================== FRONT ===================== */
+  .front {
+    background:
+      radial-gradient(circle at 75% 12%, rgba(232,194,94,0.18) 0%, transparent 45%),
+      linear-gradient(170deg, #FBF4E3 0%, #F5EBD8 55%, #EFE0C5 100%);
+    color: #1A1410;
+    display: flex; flex-direction: column;
+  }
+  .grain {
+    position: absolute; inset: 0;
+    background-image: url(../assets/grain.svg);
+    background-size: 160px;
+    mix-blend-mode: multiply; opacity: 0.4; pointer-events: none;
+  }
+
+  .front-top {
+    position: relative; z-index: 2;
+    padding: 36px 44px 0;
+    display: flex; justify-content: space-between; align-items: flex-start;
+  }
+  .logo-festival img { height: 64px; width: auto; }
+  .city-svg { height: 56px; width: auto; }
+
+  /* HERO — Korean dominant */
+  .hero-type {
+    position: relative; z-index: 2;
+    padding: 40px 44px 0;
+    text-align: center;
+  }
+  .edition-line {
+    font-family: 'Inter',sans-serif;
+    font-weight: 700; font-size: 12px;
+    letter-spacing: 0.4em; color: #8B1A2B;
+    text-transform: uppercase;
+    margin-bottom: 18px;
+  }
+  .hero-stack {
+    position: relative;
+    display: inline-block;
+  }
+  .chuncheon-kr {
+    font-family: 'Noto Serif KR',serif;
+    font-weight: 900;
+    font-size: 240px;
+    letter-spacing: -0.08em;
+    color: #4A2418;
+    line-height: 0.85;
+    margin: 0;
+    position: relative;
+    display: inline-block;
+  }
+  .chuncheon-kr::after {
+    content: "";
+    position: absolute;
+    bottom: 22px; left: -16px; right: -16px;
+    height: 16px;
+    background: linear-gradient(90deg, transparent 0%, rgba(232,194,94,0.55) 28%, rgba(232,194,94,0.55) 72%, transparent 100%);
+    z-index: -1;
+  }
+  .chuncheon-en-sub {
+    font-family: 'Playfair Display',serif;
+    font-weight: 700;
+    font-style: italic;
+    font-size: 28px;
+    letter-spacing: -0.01em;
+    color: #8B1A2B;
+    margin-top: 18px;
+  }
+  .chuncheon-en-sub::before, .chuncheon-en-sub::after {
+    content: "·"; color: #E8C25E; margin: 0 14px;
+    font-style: normal; font-weight: 900;
+  }
+  .hangang-line {
+    margin: 14px auto 0;
+    width: 320px; height: 12px;
+  }
+  .hangang-line svg { width: 100%; height: 100%; }
+  .chuncheon-tag {
+    font-family: 'Inter',sans-serif;
+    font-weight: 700; font-size: 11px;
+    letter-spacing: 0.5em;
+    color: #4A2418;
+    text-transform: uppercase;
+    margin-top: 10px;
+  }
+  .chuncheon-festival {
+    font-family: 'Noto Sans KR',sans-serif;
+    font-weight: 500;
+    font-size: 13px;
+    letter-spacing: 0.06em;
+    color: rgba(74,36,24,0.7);
+    margin-top: 8px;
+  }
+
+  /* Dates */
+  .dates-band {
+    position: relative; z-index: 2;
+    margin: 28px 44px 0;
+    padding: 14px 26px;
+    background: #1A1410;
+    color: #FDFAF5;
+    display: flex; justify-content: space-between; align-items: center;
+    box-shadow: 5px 5px 0 #8B1A2B;
+  }
+  .dates-band .d-left { display: flex; flex-direction: column; gap: 3px; }
+  .dates-band .d-num {
+    font-family: 'Playfair Display',serif;
+    font-weight: 900;
+    font-size: 28px;
+    color: #E8C25E;
+    letter-spacing: -0.03em;
+    line-height: 1;
+  }
+  .dates-band .d-dow {
+    font-family: 'Inter',sans-serif;
+    font-weight: 700; font-size: 9px;
+    letter-spacing: 0.32em;
+    color: rgba(253,250,245,0.75);
+    text-transform: uppercase;
+  }
+  .dates-band .d-right {
+    font-family: 'Noto Sans KR',sans-serif;
+    font-size: 11px; color: #FDFAF5;
+    text-align: right;
+  }
+  .dates-band .d-right .v-name {
+    font-family: 'Noto Serif KR',serif;
+    font-weight: 700; font-size: 13px; letter-spacing: -0.01em;
+  }
+  .dates-band .d-right .v-en {
+    font-family: 'Inter',sans-serif; font-size: 8px; letter-spacing: 0.22em;
+    color: rgba(253,250,245,0.55); margin-top: 2px; text-transform: uppercase;
+  }
+
+  /* Orchestras — CONTAIN style, no crop */
+  .orq-block {
+    position: relative; z-index: 2;
+    margin: 18px 44px 36px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .orq-banner {
+    background: #8B1A2B;
+    color: #FDFAF5;
+    padding: 11px 22px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .orq-banner .lbl {
+    font-family: 'Inter',sans-serif; font-weight: 800; font-size: 11px;
+    letter-spacing: 0.4em; text-transform: uppercase;
+  }
+  .orq-banner .star { color: #E8C25E; font-size: 14px; }
+  .orq-banner .live {
+    font-family: 'Playfair Display',serif; font-style: italic;
+    font-weight: 700; font-size: 16px; color: #E8C25E;
+  }
+  .orq-pair {
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+    gap: 8px;
+    flex: 1;
+    min-height: 0;
+  }
+  .orq-row {
+    position: relative;
+    overflow: hidden;
+    background: #1F0F0A;
+    border-radius: 2px;
+  }
+  .orq-row img {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%;
+    object-fit: contain;
+    object-position: center;
+    display: block;
+  }
+  .orq-row .vignette {
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at center, transparent 50%, rgba(31,15,10,0.5) 100%);
+    pointer-events: none;
+  }
+  .orq-row .meta-side {
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 30%;
+    background: linear-gradient(90deg, rgba(31,15,10,0.92) 0%, rgba(31,15,10,0.55) 70%, rgba(31,15,10,0) 100%);
+    padding: 14px 18px;
+    display: flex; flex-direction: column; justify-content: flex-end; gap: 6px;
+    z-index: 2;
+  }
+  .orq-row .meta-side .name {
+    font-family: 'Playfair Display',serif;
+    font-weight: 900;
+    font-size: 22px;
+    line-height: 1.0;
+    letter-spacing: -0.03em;
+    color: #FDFAF5;
+  }
+  .orq-row .meta-side .role {
+    font-family: 'Inter',sans-serif;
+    font-weight: 700;
+    font-size: 9px;
+    letter-spacing: 0.32em;
+    color: #E8C25E;
+    text-transform: uppercase;
+  }
+
+  /* ===================== BACK ===================== */
+  .back {
+    background: #0E0814;
+    color: #FDFAF5;
+    padding: 44px 44px 36px;
+    display: flex; flex-direction: column;
+    gap: 22px;
+  }
+  .back-glow1 {
+    position: absolute; top: -10%; left: -10%; width: 60%; height: 60%;
+    background: radial-gradient(circle, rgba(139,26,43,0.35) 0%, transparent 65%);
+    pointer-events: none;
+  }
+  .back-glow2 {
+    position: absolute; bottom: -10%; right: -10%; width: 70%; height: 70%;
+    background: radial-gradient(circle, rgba(212,38,86,0.18) 0%, transparent 65%);
+    pointer-events: none;
+  }
+  .back > * { position: relative; z-index: 1; }
+
+  .back-head {
+    display: flex; justify-content: space-between; align-items: flex-start;
+    border-bottom: 1px solid rgba(253,250,245,0.18);
+    padding-bottom: 14px;
+  }
+  .back-head .left .small {
+    font-family: 'Inter',sans-serif; font-size: 10px; letter-spacing: 0.4em;
+    color: #E8C25E; font-weight: 700; text-transform: uppercase;
+  }
+  .back-head .left h3 {
+    font-family: 'Noto Serif KR',serif; font-weight: 900;
+    font-size: 32px; letter-spacing: -0.04em;
+    margin: 6px 0 0; color: #FDFAF5; line-height: 1;
+  }
+  .back-head .left h3 em {
+    font-family: 'Playfair Display',serif; font-style: italic;
+    font-weight: 700; color: #E8C25E; font-size: 26px;
+  }
+  .back-head .right { text-align: right; }
+  .back-head .right .d {
+    font-family: 'Playfair Display',serif;
+    font-weight: 900; font-size: 18px;
+    color: #E8C25E; letter-spacing: -0.02em;
+  }
+  .back-head .right .v {
+    font-family: 'Noto Sans KR',sans-serif;
+    font-size: 10px; color: rgba(253,250,245,0.65); margin-top: 4px;
+  }
+
+  /* Schedule */
+  .sched {
+    display: grid;
+    grid-template-columns: 76px 110px 1fr;
+    background: rgba(253,250,245,0.04);
+    border: 1px solid rgba(253,250,245,0.08);
+  }
+  .sched .col-h {
+    font-family: 'Inter',sans-serif; font-weight: 800; font-size: 9px;
+    letter-spacing: 0.4em; color: #E8C25E;
+    padding: 8px 12px;
+    text-transform: uppercase;
+    border-bottom: 1px solid rgba(253,250,245,0.18);
+  }
+  .sched .day-cell {
+    background: #8B1A2B;
+    color: #FDFAF5;
+    padding: 10px 10px;
+    font-family: 'Playfair Display',serif;
+    font-weight: 900;
+    font-size: 19px;
+    letter-spacing: -0.02em;
+    grid-row: span var(--rs);
+    display: flex; flex-direction: column; gap: 3px;
+  }
+  .sched .day-cell .dow {
+    font-family: 'Inter',sans-serif;
+    font-weight: 700; font-size: 9px;
+    color: #E8C25E; letter-spacing: 0.4em;
+    margin-top: 2px;
+  }
+  .sched .time-cell, .sched .ev-cell {
+    padding: 8px 12px;
+    border-bottom: 1px solid rgba(253,250,245,0.08);
+    font-family: 'Inter',sans-serif;
+    font-size: 11px;
+    color: rgba(253,250,245,0.85);
+    display: flex; align-items: center;
+  }
+  .sched .time-cell { font-weight: 700; color: #E8C25E; font-variant-numeric: tabular-nums; }
+  .sched .ev-cell { font-family: 'Noto Sans KR',sans-serif; font-weight: 500; }
+  .sched .ev-cell.feat {
+    background: rgba(232,194,94,0.10);
+    color: #FDFAF5; font-weight: 700;
+  }
+  .sched .ev-cell.feat::before {
+    content: "★ "; color: #E8C25E; font-weight: 800; margin-right: 6px;
+  }
+
+  /* DJ section */
+  .dj-section { margin-top: 0; }
+  .dj-head {
+    display: flex; justify-content: space-between; align-items: baseline;
+    margin-bottom: 10px;
+  }
+  .dj-head h4 {
+    font-family: 'Noto Serif KR',serif;
+    font-weight: 900; font-size: 26px; letter-spacing: -0.04em;
+    color: #FDFAF5; margin: 0;
+  }
+  .dj-head h4 em {
+    font-family: 'Playfair Display',serif; font-style: italic;
+    font-weight: 700; color: #E8C25E; font-size: 22px; margin-left: 8px;
+  }
+  .dj-head .count {
+    font-family: 'Inter',sans-serif;
+    font-size: 9px; letter-spacing: 0.4em; color: #E8C25E;
+    font-weight: 700; text-transform: uppercase;
+  }
+  .dj-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 8px;
+  }
+  .dj-card {
+    position: relative;
+    aspect-ratio: 3/4;
+    overflow: hidden;
+    background: #1A1410;
+    border-radius: 3px;
+    isolation: isolate;
+  }
+  .dj-card .ph {
+    position: absolute; inset: 0;
+    background-size: cover;
+    background-position: center 20%;
+    filter: saturate(1.15) contrast(1.05);
+  }
+  .dj-card .tint {
+    position: absolute; inset: 0;
+    background: linear-gradient(180deg, rgba(139,26,43,0.10) 0%, rgba(14,8,20,0) 30%, rgba(14,8,20,0.6) 75%, rgba(14,8,20,0.95) 100%);
+  }
+  .dj-card .pinkrose {
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 90% 100%, rgba(212,38,86,0.45) 0%, transparent 55%);
+    pointer-events: none;
+  }
+  .dj-card .meta {
+    position: absolute;
+    left: 10px; right: 10px; bottom: 10px;
+    color: #FDFAF5;
+  }
+  .dj-card .meta .pre {
+    font-family: 'Oswald',sans-serif;
+    font-weight: 500; font-size: 11px;
+    color: rgba(253,250,245,0.7);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    line-height: 1;
+    margin-bottom: 1px;
+  }
+  .dj-card .meta .nm {
+    font-family: 'Oswald',sans-serif;
+    font-weight: 700;
+    font-size: 17px;
+    line-height: 0.95;
+    color: #FDFAF5;
+    letter-spacing: 0.01em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .dj-card .meta .nm.long { font-size: 13px; }
+  .dj-card .meta .or {
+    font-family: 'Inter',sans-serif;
+    font-weight: 500; font-size: 9px;
+    color: rgba(253,250,245,0.7);
+    letter-spacing: 0.06em;
+    margin-top: 4px;
+  }
+
+  .back-foot {
+    margin-top: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    padding-top: 16px;
+    border-top: 1px solid rgba(253,250,245,0.18);
+  }
+  .back-foot .org {
+    display: flex; align-items: center; gap: 12px;
+    font-family: 'Noto Sans KR',sans-serif; font-size: 11px;
+    color: rgba(253,250,245,0.85);
+  }
+  .back-foot .org-mark-svg { width: 40px; height: 40px; }
+  .back-foot .info { text-align: right; }
+  .back-foot .info .lbl {
+    font-family: 'Inter',sans-serif; font-size: 10px; letter-spacing: 0.4em;
+    color: rgba(253,250,245,0.5); font-weight: 700; text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+  .back-foot .info .url {
+    font-family: 'Playfair Display',serif; font-style: italic;
+    font-weight: 700; font-size: 20px; color: #E8C25E;
+    letter-spacing: -0.01em;
+  }
+</style>
+</head>
+<body>
+
+<header class="lab-head">
+  <div class="lab-eyebrow">SAMPLE Square v2 — 1080 × 1080 · Korean-first</div>
+  <h1 class="lab-title">2026 춘천국제탱고페스티벌 — 정사각 v2 (한글 우선)</h1>
+  <p class="lab-sub">변경: ① 헤드라인 한글 "춘천" 240px (영문은 부제로) ② 오케스트라 사진 <strong>contain</strong> 방식 — 인원 한 명도 안 잘림 ③ 좌측 다크 그라디언트로 텍스트 가독성 확보 ④ DJ 카드/일정 그대로 유지.</p>
+</header>
+
+<div class="pages">
+
+  <!-- ============ FRONT ============ -->
+  <div class="page-wrap">
+    <div class="page-label">Front · 앞면 · 1080 × 1080</div>
+    <div class="page front">
+      <div class="grain"></div>
+
+      <div class="front-top">
+        <div class="logo-festival">
+          <img src="../assets/logo-official-dark.png" alt="춘천국제탱고페스티벌"/>
+        </div>
+        <div class="city-logo">
+          <svg class="city-svg" viewBox="0 0 180 56" xmlns="http://www.w3.org/2000/svg">
+            <g transform="translate(0,4)">
+              <path d="M2 36 L14 16 L22 26 L32 10 L46 36 Z" fill="#4A2418"/>
+              <path d="M2 38 L46 38 L46 44 Q24 50 2 44 Z" fill="#8B1A2B" opacity="0.85"/>
+              <circle cx="38" cy="10" r="3.5" fill="#E8C25E"/>
+            </g>
+            <text x="60" y="22" font-family="'Noto Serif KR',serif" font-weight="800" font-size="16" fill="#4A2418" letter-spacing="-0.02em">춘천시</text>
+            <text x="60" y="38" font-family="'Inter',sans-serif" font-weight="700" font-size="9" fill="#8B1A2B" letter-spacing="0.22em">CITY OF</text>
+            <text x="60" y="50" font-family="'Inter',sans-serif" font-weight="700" font-size="9" fill="#8B1A2B" letter-spacing="0.22em">CHUNCHEON</text>
+          </svg>
+        </div>
+      </div>
+
+      <div class="hero-type">
+        <div class="edition-line">★ 3rd Edition · 2026 ★</div>
+        <h1 class="chuncheon-kr">춘천</h1>
+        <div class="chuncheon-en-sub">Chuncheon · Intl Tango Festival</div>
+        <div class="hangang-line" aria-hidden="true">
+          <svg viewBox="0 0 320 12" preserveAspectRatio="none">
+            <path d="M0 6 Q 40 0, 80 6 T 160 6 T 240 6 T 320 6" stroke="#8B1A2B" stroke-width="1.4" fill="none" opacity="0.65"/>
+            <path d="M0 9 Q 40 4, 80 9 T 160 9 T 240 9 T 320 9" stroke="#E8C25E" stroke-width="1.2" fill="none" opacity="0.7"/>
+          </svg>
+        </div>
+        <div class="chuncheon-tag">호반의 도시 · LAKESIDE TANGO · KOREA</div>
+      </div>
+
+      <div class="dates-band">
+        <div class="d-left">
+          <span class="d-num">10.03 — 10.05</span>
+          <span class="d-dow">SAT · SUN · MON · 2026</span>
+        </div>
+        <div class="d-right">
+          <div class="v-name">춘천 봄내체육관</div>
+          <div class="v-en">Chuncheon Bomnae Gym</div>
+        </div>
+      </div>
+
+      <div class="orq-block">
+        <div class="orq-banner">
+          <span class="lbl"><span class="star">★</span> &nbsp; Two Live Orchestras &nbsp; <span class="star">★</span></span>
+          <span class="live">From Buenos Aires</span>
+        </div>
+        <div class="orq-pair">
+          <div class="orq-row">
+            <img src="../assets/orq-misteriosa.jpg" alt=""/>
+            <div class="vignette"></div>
+            <div class="meta-side">
+              <div class="name">Misteriosa<br/>Buenos Aires</div>
+              <div class="role">Argentina · Sextet</div>
+            </div>
+          </div>
+          <div class="orq-row">
+            <img src="../assets/orq-tango-bardo.jpg" alt=""/>
+            <div class="vignette"></div>
+            <div class="meta-side">
+              <div class="name">Tango Bardo</div>
+              <div class="role">Argentina · Quintet</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ BACK ============ -->
+  <div class="page-wrap">
+    <div class="page-label">Back · 뒷면 · 1080 × 1080</div>
+    <div class="page back">
+      <div class="back-glow1"></div>
+      <div class="back-glow2"></div>
+
+      <header class="back-head">
+        <div class="left">
+          <div class="small">Schedule · 일정</div>
+          <h3>3박, <em>9 floors</em></h3>
+        </div>
+        <div class="right">
+          <div class="d">10.03 (SAT) — 10.05 (MON) · 2026</div>
+          <div class="v">춘천 봄내체육관 · Chuncheon Bomnae Gym</div>
+        </div>
+      </header>
+
+      <div class="sched">
+        <div class="col-h">Date</div>
+        <div class="col-h">Time</div>
+        <div class="col-h">Programme</div>
+
+        <div class="day-cell" style="--rs:3;">10/3<span class="dow">SAT</span></div>
+        <div class="time-cell">13:00 — 14:40</div>
+        <div class="ev-cell feat">Two Orquestas Concert · 두 오케스트라 합동</div>
+        <div class="time-cell">15:00 — 20:00</div>
+        <div class="ev-cell">M1 · Welcome Milonga</div>
+        <div class="time-cell">22:00 — 04:00</div>
+        <div class="ev-cell">M2 · Late Night Milonga</div>
+
+        <div class="day-cell" style="--rs:2;">10/4<span class="dow">SUN</span></div>
+        <div class="time-cell">14:00 — 19:00</div>
+        <div class="ev-cell">M3 · Afternoon Milonga</div>
+        <div class="time-cell">21:00 — 03:00</div>
+        <div class="ev-cell feat">M4 · Grand Milonga 그랜드 밀롱가</div>
+
+        <div class="day-cell" style="--rs:3;">10/5<span class="dow">MON</span></div>
+        <div class="time-cell">11:00 — 14:00</div>
+        <div class="ev-cell">City Tour · 춘천 시티 투어</div>
+        <div class="time-cell">15:00 — 20:00</div>
+        <div class="ev-cell">M5 · Farewell Milonga</div>
+        <div class="time-cell">20:00 — 24:00</div>
+        <div class="ev-cell feat">M6 · After Party</div>
+      </div>
+
+      <section class="dj-section">
+        <div class="dj-head">
+          <h4>여섯 명의 DJ <em>Six DJs</em></h4>
+          <span class="count">한국 4 · 중국 1 · 홍콩 1</span>
+        </div>
+        <div class="dj-grid">
+          <article class="dj-card">
+            <div class="ph" style="background-image:url(../assets/dj-hagoon.jpg); background-position: center 25%;"></div>
+            <div class="tint"></div>
+            <div class="pinkrose"></div>
+            <div class="meta"><div class="pre">DJ</div><div class="nm">Hagoon</div><div class="or">Korea</div></div>
+          </article>
+          <article class="dj-card">
+            <div class="ph" style="background-image:url(../assets/dj-stone.jpg); background-position: center 30%;"></div>
+            <div class="tint"></div>
+            <div class="pinkrose"></div>
+            <div class="meta"><div class="pre">DJ</div><div class="nm">Stone</div><div class="or">Korea</div></div>
+          </article>
+          <article class="dj-card">
+            <div class="ph" style="background-image:url(../assets/dj-carlos.jpg); background-position: center 25%;"></div>
+            <div class="tint"></div>
+            <div class="pinkrose"></div>
+            <div class="meta"><div class="pre">DJ</div><div class="nm">Carlos</div><div class="or">Korea</div></div>
+          </article>
+          <article class="dj-card">
+            <div class="ph" style="background-image:url(../assets/dj-becca.jpg); background-position: center 18%;"></div>
+            <div class="tint"></div>
+            <div class="pinkrose"></div>
+            <div class="meta"><div class="pre">DJ</div><div class="nm">Becca</div><div class="or">Korea</div></div>
+          </article>
+          <article class="dj-card">
+            <div class="ph" style="background-image:url(../assets/dj-natalie.jpg); background-position: center 30%;"></div>
+            <div class="tint"></div>
+            <div class="pinkrose"></div>
+            <div class="meta"><div class="pre">DJ</div><div class="nm">Natalie</div><div class="or">HK</div></div>
+          </article>
+          <article class="dj-card">
+            <div class="ph" style="background-image:url(../assets/dj-wangwei.jpg); background-position: center 25%;"></div>
+            <div class="tint"></div>
+            <div class="pinkrose"></div>
+            <div class="meta"><div class="pre">DJ</div><div class="nm long">Wang Wei</div><div class="or">China</div></div>
+          </article>
+        </div>
+      </section>
+
+      <footer class="back-foot">
+        <div class="org">
+          <svg class="org-mark-svg" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <g transform="translate(2,8)">
+              <path d="M2 30 L13 13 L20 22 L29 8 L42 30 Z" fill="#E8C25E"/>
+              <path d="M2 32 L42 32 L42 38 Q22 42 2 38 Z" fill="#8B1A2B" opacity="0.9"/>
+              <circle cx="35" cy="9" r="3" fill="#FDFAF5"/>
+            </g>
+          </svg>
+          <div>주최 · 춘천시 / 강원땅고협회<br/><span style="color:rgba(253,250,245,0.5);font-size:9px;letter-spacing:0.22em;">CITY OF CHUNCHEON · KCCTF</span></div>
+        </div>
+        <div class="info">
+          <div class="lbl">More Info</div>
+          <div class="url">kcctf.org</div>
+        </div>
+      </footer>
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>

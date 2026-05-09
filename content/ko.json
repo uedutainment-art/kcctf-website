@@ -1,0 +1,416 @@
+{
+  "common": {
+    "festival": "춘천국제땅고페스티벌",
+    "festivalShort": "KCCTF",
+    "year": "2026",
+    "dates": "2026.10.03 — 10.05",
+    "datesLong": "2026년 10월 3일 토요일 — 10월 5일 월요일",
+    "venue": "춘천 봄내체육관",
+    "country": "대한민국 강원특별자치도 춘천시"
+  },
+
+  "nav": {
+    "home": "홈",
+    "lineup": "라인업",
+    "schedule": "일정",
+    "venue": "장소",
+    "tickets": "예매",
+    "register": "예약하기",
+    "languageSwitch": "EN",
+    "menuOpen": "메뉴 열기",
+    "menuClose": "메뉴 닫기"
+  },
+
+  "hero": {
+    "eyebrow": "2026 · 춘천",
+    "titleLine1": "춘천국제",
+    "titleLine2": "땅고페스티벌",
+    "subtitleEn": "CHUNCHEON INTERNATIONAL\nTANGO FESTIVAL",
+    "tagline": "두 오케스트라, 사흘 밤. 봄내체육관에서.\n아시아에서 다시 없을 라이브 탱고.",
+    "uspBand": "TWO LIVE ORCHESTRAS · THREE NIGHTS",
+    "stats": {
+      "orchestras": { "num": "2", "label": "Orchestras" },
+      "nights": { "num": "3", "label": "Nights" },
+      "milongas": { "num": "6", "label": "Milongas" },
+      "djs": { "num": "6", "label": "DJs" }
+    },
+    "dateBand": {
+      "datePrimary": "10.03 — 10.05",
+      "dateSecondary": "SAT · SUN · MON · 2026",
+      "venuePrimary": "춘천 봄내체육관",
+      "venueSecondary": "CHUNCHEON BOMNAE COMPLEX"
+    },
+    "cta": "예약하기 →",
+    "scrollHint": "아래로"
+  },
+
+  "orchestras": {
+    "eyebrow": "★ TWO LIVE ORCHESTRAS ★",
+    "subtitleEn": "From Buenos Aires",
+    "title": "한 무대, 두 오케스트라",
+    "lede": "부에노스 아이레스에서 직접 오는 두 팀의 살아있는 탱고. 다른 어디에도 없는 단 한 번의 무대.",
+    "items": [
+      {
+        "id": "tango-bardo",
+        "name": "땅고 바르도",
+        "nameEn": "Tango Bardo",
+        "role": "오르께스따 띠삐까",
+        "origin": "Buenos Aires",
+        "description": "전통의 뿌리와 현대적 표현을 잇는 부에노스 아이레스의 대표 탱고 오케스트라.",
+        "liveBadge": "LIVE"
+      },
+      {
+        "id": "misteriosa-buenos-aires",
+        "name": "미스테리오사 부에노스 아이레스",
+        "nameEn": "Misteriosa Buenos Aires",
+        "role": "탱고 앙상블",
+        "origin": "Buenos Aires",
+        "description": "강렬한 무대 존재감으로 알려진 부에노스 아이레스 기반 앙상블.",
+        "liveBadge": "LIVE"
+      }
+    ]
+  },
+
+  "schedule": {
+    "eyebrow": "PROGRAM",
+    "title": "사흘의 호흡",
+    "lede": "오프닝 콘서트로 시작해 여섯 번의 밀롱가, 그리고 시티투어까지.",
+    "tabs": {
+      "day1": "10/3 SAT — Day 1",
+      "day2": "10/4 SUN — Day 2",
+      "day3": "10/5 MON — Day 3"
+    },
+    "items": [
+      {
+        "day": "10/3",
+        "dow": "SAT",
+        "time": "13:00 — 14:40",
+        "type": "concert",
+        "title": "오프닝 오케스트라 콘서트",
+        "subtitle": "Opening Orchestra Concert",
+        "performer": "Tango Bardo",
+        "mood": "사흘의 시작을 알리는 라이브 무대.",
+        "featured": true
+      },
+      {
+        "day": "10/3",
+        "dow": "SAT",
+        "time": "15:00 — 20:00",
+        "type": "milonga",
+        "title": "M1 · 환영 밀롱가",
+        "subtitle": "Welcome Milonga",
+        "djId": "becca",
+        "djName": "DJ 베카",
+        "mood": "햇빛에서 노을까지 — 첫 포옹."
+      },
+      {
+        "day": "10/3",
+        "dow": "SAT",
+        "time": "22:00 — 04:00",
+        "type": "milonga",
+        "title": "M2 · 첫째 밤 밀롱가",
+        "subtitle": "First Night Milonga",
+        "djId": "carlos",
+        "djName": "DJ 까를로스",
+        "mood": "사흘 중 가장 길게 깊이 들어가는 밤."
+      },
+      {
+        "day": "10/4",
+        "dow": "SUN",
+        "time": "14:00 — 19:00",
+        "type": "milonga",
+        "title": "M3 · 일요 오후 밀롱가",
+        "subtitle": "Sunday Afternoon Milonga",
+        "djId": "hagoon",
+        "djName": "DJ 하군",
+        "mood": "낮의 사이에 머무는 시간."
+      },
+      {
+        "day": "10/4",
+        "dow": "SUN",
+        "time": "21:00 — 03:00",
+        "type": "milonga",
+        "title": "M4 · 그란 밀롱가",
+        "subtitle": "Grand Milonga",
+        "djId": "wangwei",
+        "djName": "DJ 왕웨이",
+        "mood": "축제의 정점. 가장 화려한 밤.",
+        "featured": true
+      },
+      {
+        "day": "10/5",
+        "dow": "MON",
+        "time": "11:00 — 14:00",
+        "type": "tour",
+        "title": "춘천 시티투어",
+        "subtitle": "Chuncheon City Tour",
+        "mood": "호숫가 도시의 가을을 함께 걷는 시간."
+      },
+      {
+        "day": "10/5",
+        "dow": "MON",
+        "time": "15:00 — 20:00",
+        "type": "milonga",
+        "title": "M5 · 작별의 오후",
+        "subtitle": "Farewell Afternoon",
+        "djId": "stone",
+        "djName": "DJ 스톤",
+        "mood": "마지막 햇빛 아래에서."
+      },
+      {
+        "day": "10/5",
+        "dow": "MON",
+        "time": "20:00 — 24:00",
+        "type": "afterparty",
+        "title": "M6 · 애프터 파티 & 밀롱가",
+        "subtitle": "After Party & Milonga",
+        "djId": "natalie",
+        "djName": "DJ 나탈리",
+        "mood": "사흘을 마무리하는 마지막 한 탕다.",
+        "featured": true
+      }
+    ],
+    "downloadPdf": "프로그램 PDF 다운로드",
+    "addToCalendar": "캘린더에 추가"
+  },
+
+  "djs": {
+    "eyebrow": "MOOD MAKERS",
+    "title": "여섯 명의 디제이",
+    "subtitleEn": "Six DJs",
+    "lede": "밀롱가의 흐름은 디제이의 손끝에서 시작됩니다. 한국·중국·홍콩에서 모셔온 여섯 명의 큐레이터.",
+    "items": [
+      { "id": "hagoon",  "nameKo": "하군",     "nameEn": "Hagoon",         "city": "서울", "country": "Korea" },
+      { "id": "stone",   "nameKo": "스톤",     "nameEn": "Stone",          "city": "부산", "country": "Korea" },
+      { "id": "carlos",  "nameKo": "까를로스", "nameEn": "Carlos",         "city": "서울", "country": "Korea" },
+      { "id": "becca",   "nameKo": "베카",     "nameEn": "Becca",          "city": "서울", "country": "Korea" },
+      { "id": "wangwei", "nameKo": "왕웨이",   "nameEn": "Wang Wei",       "city": "상해", "country": "China" },
+      { "id": "natalie", "nameKo": "나탈리",   "nameEn": "Nathalie Cheng", "city": "홍콩", "country": "Hong Kong" }
+    ]
+  },
+
+  "dancers": {
+    "eyebrow": "PERFORMERS",
+    "title": "댄서팀",
+    "subtitleEn": "Dance Performances",
+    "lede": "한국 탱고씬을 대표하는 네 팀의 무대.",
+    "items": [
+      {
+        "id": "london-sol",
+        "name": "London Hong & Sol",
+        "origin": "Korea",
+        "isTBA": false
+      },
+      {
+        "id": "hyemi-wonjun",
+        "name": "Hyemi Seo & Wonjun Seol",
+        "origin": "Korea",
+        "isTBA": false
+      },
+      {
+        "id": "team-ryu",
+        "name": "Team Ryu",
+        "origin": "Korea",
+        "isTBA": false
+      },
+      {
+        "id": "tba",
+        "name": "Coming Soon",
+        "origin": "TBA",
+        "isTBA": true
+      }
+    ]
+  },
+
+  "venue": {
+    "eyebrow": "VENUE",
+    "title": "봄내체육관",
+    "subtitleEn": "Chuncheon Bomnae Complex",
+    "tagline": "도시 한복판의 큰 공간.\n프로페셔널 음향. 압도적 스케일.",
+    "address": "강원특별자치도 춘천시",
+    "features": [
+      { "icon": "🚄", "text": "서울에서 ITX 약 60분" },
+      { "icon": "🎵", "text": "프로페셔널 음향 시스템" },
+      { "icon": "🏛", "text": "도시 한복판 큰 댄스 플로어" },
+      { "icon": "🅿️", "text": "주차 가능" }
+    ],
+    "mapLink": "구글 지도에서 보기",
+    "concertVenueNote": "콘서트 장소 정보는 곧 공개됩니다."
+  },
+
+  "tickets": {
+    "eyebrow": "TICKETS",
+    "title": "당신의 사흘을 고르세요",
+    "subtitleEn": "Choose your three days",
+    "lede": "얼리버드는 한정된 기간만 진행됩니다.",
+    "items": [
+      {
+        "id": "fullpack-early",
+        "name": "얼리버드 풀팩",
+        "nameEn": "Earlybird Full Pack",
+        "price": 190000,
+        "priceLabel": "₩190,000",
+        "description": "사흘 모든 프로그램 포함. 가장 합리적인 선택.",
+        "includes": [
+          "오프닝 오케스트라 콘서트",
+          "여섯 번의 밀롱가 (M1–M6)",
+          "춘천 시티투어"
+        ],
+        "note": "한정 수량 · 입금 순 마감",
+        "featured": true,
+        "cta": "예약하기"
+      },
+      {
+        "id": "fullpack-onsite",
+        "name": "현장 풀팩",
+        "nameEn": "On-site Full Pack",
+        "price": 240000,
+        "priceLabel": "₩240,000",
+        "description": "얼리버드 마감 후 정상가.",
+        "includes": [
+          "오프닝 오케스트라 콘서트",
+          "여섯 번의 밀롱가 (M1–M6)",
+          "춘천 시티투어"
+        ],
+        "note": "현장 등록 가능 (선착순)",
+        "featured": false,
+        "cta": "예약하기"
+      },
+      {
+        "id": "daypass",
+        "name": "일일권",
+        "nameEn": "Day Pass",
+        "price": 100000,
+        "priceLabel": "₩100,000",
+        "description": "원하는 하루의 프로그램.",
+        "includes": [
+          "선택한 날의 모든 밀롱가",
+          "선택한 날의 콘서트 (10/3)"
+        ],
+        "note": "당일 입장 시 가능",
+        "featured": false,
+        "cta": "예약하기"
+      }
+    ],
+    "hotelPackageNote": "숙박 패키지(풀팩+2박, 풀팩+3박)는 곧 공개됩니다.",
+    "paymentInfo": {
+      "title": "입금 안내",
+      "bank": "신한은행",
+      "account": "100-038-582544",
+      "holder": "사단법인 춘천국제탱고페스티벌",
+      "note": "예약 후 7일 이내 입금 확인 시 확정"
+    },
+    "registerExternalNote": "예약은 별도 신청 페이지로 안내됩니다."
+  },
+
+  "accommodation": {
+    "eyebrow": "STAY",
+    "title": "춘천 벨라스테이",
+    "subtitleEn": "Chuncheon Bella Stay",
+    "tagline": "페스티벌과 같은 호흡으로.",
+    "details": [
+      { "label": "객실", "value": "트윈룸" },
+      { "label": "1박 가격", "value": "원가 ₩80,000부터" },
+      { "label": "조식", "value": "1인 ₩11,000 (선택)" }
+    ],
+    "packageNote": "풀팩 + 2박 / 풀팩 + 3박 패키지로 예약 가능 (가격 곧 공개)",
+    "moreOptionsLink": "다른 숙소 옵션 보기"
+  },
+
+  "about": {
+    "eyebrow": "ABOUT",
+    "title": "춘천국제탱고페스티벌",
+    "subtitleEn": "Chuncheon International Tango Festival",
+    "body": "춘천국제땅고페스티벌은 콘서트와 사회춤(밀롱가)을 결합한 사흘간의 페스티벌입니다. 부에노스 아이레스에서 직접 오는 두 오케스트라와 한국·중국·홍콩의 디제이들이 만들어 내는 밤. 세계 각지의 탱고 커뮤니티와 만나는 자리.",
+    "organization": {
+      "name": "사단법인 춘천국제탱고페스티벌",
+      "nameEn": "Chuncheon International Tango Festival Foundation",
+      "address": "강원특별자치도 춘천시 아침길 17-1, 1층(조양동)",
+      "businessNumber": "848-82-00766",
+      "registrationNumber": "140121-0000800",
+      "representative": "이종화"
+    },
+    "sponsors": {
+      "title": "주최 · 후원",
+      "items": [
+        { "label": "주최", "value": "(사)춘천국제탱고페스티벌" },
+        { "label": "공동 주최", "value": "춘천문화재단" },
+        { "label": "후원", "value": "춘천시 · 주한아르헨티나 대사관" }
+      ]
+    }
+  },
+
+  "contact": {
+    "eyebrow": "CONTACT",
+    "title": "춘천에서 만나요",
+    "subtitleEn": "See you in Chuncheon",
+    "email": "info@kcctf.org",
+    "social": {
+      "instagram": "@kcctf_official",
+      "facebook": "Chuncheon International Tango Festival"
+    }
+  },
+
+  "faq": {
+    "title": "자주 묻는 질문",
+    "subtitleEn": "Frequently Asked Questions",
+    "items": [
+      {
+        "q": "예약은 어떻게 하나요?",
+        "a": "예약하기 버튼을 누르면 별도의 신청 페이지로 안내됩니다. 신청서 작성 후 7일 이내 입금 확인 시 예약이 확정됩니다."
+      },
+      {
+        "q": "환불 규정이 어떻게 되나요?",
+        "a": "환불 규정 페이지를 참고해 주세요. 행사 30일 전까지는 부분 환불, 이후로는 환불이 어렵습니다."
+      },
+      {
+        "q": "입금은 어디로 하나요?",
+        "a": "신한은행 100-038-582544 (예금주: 사단법인 춘천국제탱고페스티벌)"
+      },
+      {
+        "q": "외국 카드 결제가 가능한가요?",
+        "a": "현재는 계좌이체 위주로 운영 중이며, 해외 카드 결제는 별도로 안내드릴 예정입니다. info@kcctf.org로 문의 주세요."
+      },
+      {
+        "q": "춘천에는 어떻게 가나요?",
+        "a": "서울에서 ITX 청춘 또는 KTX로 약 60분, 시외버스로 약 80분 거리입니다. 인천공항에서는 공항버스 또는 ITX 환승으로 약 2-3시간."
+      },
+      {
+        "q": "숙소는 어떻게 잡나요?",
+        "a": "공식 호텔(춘천 벨라스테이)을 풀팩+2박/+3박 패키지로 예약하시면 가장 편리합니다. 다른 숙소도 자유롭게 예약 가능합니다."
+      },
+      {
+        "q": "워크샵도 운영하나요?",
+        "a": "워크샵 운영 여부는 곧 공개됩니다."
+      },
+      {
+        "q": "현장 등록도 받나요?",
+        "a": "현장 등록은 가능하지만 정원이 차면 마감될 수 있어 사전 예약을 권장드립니다."
+      }
+    ]
+  },
+
+  "footer": {
+    "tagline": "춘천에서 만나요",
+    "taglineEn": "See you in Chuncheon",
+    "navTitle": "사이트맵",
+    "infoTitle": "정보",
+    "followTitle": "팔로우",
+    "sponsorsTitle": "주최 · 후원",
+    "legal": {
+      "terms": "이용약관",
+      "privacy": "개인정보처리방침",
+      "refund": "환불 규정"
+    },
+    "copyright": "© 2026 사단법인 춘천국제탱고페스티벌. All rights reserved.",
+    "emailHarvestNotice": "본 웹사이트에 게시된 이메일 주소가 전자우편 수집 프로그램 기타 기술적 장치를 이용하여 무단으로 수집되는 것을 거부하며, 이를 위반시 정보통신망법에 의해 형사 처벌됨을 유념하시기 바랍니다."
+  },
+
+  "meta": {
+    "title": "춘천국제땅고페스티벌 2026 — Chuncheon International Tango Festival",
+    "description": "두 오케스트라, 사흘 밤. 봄내체육관에서. 2026.10.03–10.05. 부에노스 아이레스에서 직접 오는 Tango Bardo와 Misteriosa.",
+    "ogTitle": "춘천국제땅고페스티벌 2026",
+    "ogDescription": "두 오케스트라, 사흘 밤. 봄내체육관에서.",
+    "keywords": "탱고, 페스티벌, 춘천, 부에노스아이레스, Tango Bardo, Misteriosa, 밀롱가, 라이브 오케스트라"
+  }
+}

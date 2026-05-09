@@ -1,0 +1,43 @@
+/* Pretendard via @fontsource — loaded before Tailwind base */
+@import '@fontsource/pretendard/400.css';
+@import '@fontsource/pretendard/500.css';
+@import '@fontsource/pretendard/600.css';
+@import '@fontsource/pretendard/700.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Design tokens — also mirrored in tailwind.config.ts */
+  --color-mustard:       #F2C94C;
+  --color-mustard-soft:  #F8DC7A;
+  --color-cream:         #F5EBD8;
+  --color-warm-white:    #FDFAF5;
+  --color-burgundy:      #8B1A2B;
+  --color-burgundy-deep: #5A0E1B;
+  --color-gold:          #D4A017;
+  --color-gold-soft:     #E8C25E;
+  --color-ink:           #1A1410;
+  --color-ink-soft:      #4A2418;
+  --color-charcoal:      #2A2018;
+  --color-night:         #0E0814;
+  --color-night-2:       #1F0F0A;
+  --color-live:          #D42656;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+  }
+
+  /* Prevent Korean text from breaking mid-word */
+  :lang(ko) {
+    word-break: keep-all;
+    overflow-wrap: break-word;
+  }
+}

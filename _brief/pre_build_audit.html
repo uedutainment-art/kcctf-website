@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KCCTF 2026 — 패키지 사전 검수 (Critical Pre-build Review)</title>
+<style>
+  :root {
+    --gold: #C9A84C;
+    --gold-light: #E8C96A;
+    --dark: #1A1410;
+    --dark2: #252018;
+    --dark3: #2E2820;
+    --brown: #3D3020;
+    --text: #E8E0D0;
+    --text-muted: #A09880;
+    --green: #4CAF7D;
+    --yellow: #E8B84B;
+    --red: #E05555;
+    --blue: #5B9BD5;
+    --purple: #9B7BD5;
+    --orange: #E8844B;
+    --border: #3D3020;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Apple SD Gothic Neo', 'Malgun Gothic', Arial, sans-serif;
+    background: var(--dark); color: var(--text); min-height: 100vh; line-height: 1.6; }
+
+  .header { background: linear-gradient(135deg, var(--dark2), var(--brown));
+    border-bottom: 2px solid var(--gold); padding: 28px 32px; text-align: center; }
+  .header h1 { font-size: 22px; color: var(--gold); letter-spacing: 1px; }
+  .header .sub { font-size: 13px; color: var(--text-muted); margin-top: 6px; }
+  .header .meta { font-size: 11px; color: var(--text-muted); margin-top: 4px; }
+  .header .tag { display: inline-block; margin-top: 10px;
+    padding: 3px 10px; border: 1px solid var(--gold); border-radius: 20px;
+    font-size: 11px; color: var(--gold); letter-spacing: 1px; }
+
+  .main { max-width: 1100px; margin: 0 auto; padding: 28px 24px; }
+
+  .nav { display: flex; flex-wrap: wrap; gap: 8px; padding: 14px 20px;
+    background: var(--dark2); border: 1px solid var(--border); border-radius: 8px;
+    margin-bottom: 28px; font-size: 12px; }
+  .nav a { color: var(--gold); text-decoration: none; padding: 4px 10px;
+    border-radius: 4px; transition: background 0.15s; }
+  .nav a:hover { background: var(--brown); }
+
+  h2 { font-size: 19px; color: var(--gold); margin: 32px 0 16px;
+    padding-bottom: 8px; border-bottom: 2px solid var(--gold); }
+  h3 { font-size: 15px; color: var(--gold-light); margin: 20px 0 10px; }
+  h4 { font-size: 13px; color: var(--text); margin: 14px 0 8px; font-weight: 700; }
+  p { margin-bottom: 10px; font-size: 13px; }
+
+  .section-num { color: var(--gold); font-weight: 700; margin-right: 8px; }
+
+  .alert { border-radius: 8px; padding: 14px 18px; margin: 14px 0;
+    font-size: 13px; line-height: 1.6; }
+  .alert.gold { background: #3d3010; border-left: 4px solid var(--gold); }
+  .alert.green { background: #1a3d2a; border-left: 4px solid var(--green); }
+  .alert.red { background: #3d1a1a; border-left: 4px solid var(--red); }
+  .alert.blue { background: #1a2d3d; border-left: 4px solid var(--blue); }
+  .alert.yellow { background: #3d3010; border-left: 4px solid var(--yellow); }
+
+  table { width: 100%; border-collapse: collapse; font-size: 12px; margin: 14px 0; }
+  th { background: var(--brown); color: var(--gold); padding: 9px 12px;
+    text-align: left; font-weight: 600; border-bottom: 1px solid var(--gold); }
+  td { padding: 9px 12px; border-bottom: 1px solid var(--border); vertical-align: top; }
+  tr:hover td { background: var(--dark2); }
+
+  .badge { display: inline-block; padding: 2px 8px; border-radius: 3px;
+    font-size: 10px; font-weight: 700; }
+  .badge.ok { background: #1a3d2a; color: var(--green); }
+  .badge.miss { background: #3d1a1a; color: var(--red); }
+  .badge.warn { background: #3d3010; color: var(--yellow); }
+  .badge.add { background: #2d2a3d; color: var(--purple); }
+  .badge.crit { background: #3d2010; color: var(--orange); }
+  .badge.opt { background: #1a2d3d; color: var(--blue); }
+
+  /* Check item */
+  .check-item { background: var(--dark2); border-radius: 6px;
+    padding: 12px 14px; margin-bottom: 8px; display: grid;
+    grid-template-columns: 32px 1fr auto; gap: 10px; align-items: flex-start; }
+  .check-item .icon { font-size: 16px; }
+  .check-item .body { font-size: 12px; }
+  .check-item .body .title { font-weight: 700; color: var(--gold-light);
+    margin-bottom: 4px; font-size: 13px; }
+  .check-item .body .desc { color: var(--text); }
+  .check-item .body .desc strong { color: var(--gold-light); }
+
+  .check-item.miss { border-left: 3px solid var(--red); }
+  .check-item.warn { border-left: 3px solid var(--yellow); }
+  .check-item.ok { border-left: 3px solid var(--green); }
+
+  /* Verdict */
+  .verdict { background: var(--dark2); border: 2px solid var(--gold);
+    border-radius: 12px; padding: 18px 22px; margin: 18px 0; }
+  .verdict .lbl { font-size: 11px; color: var(--gold); letter-spacing: 1px;
+    text-transform: uppercase; margin-bottom: 8px; }
+  .verdict .body { font-size: 14px; line-height: 1.7; color: var(--text); }
+  .verdict .body strong { color: var(--gold-light); }
+
+  /* Stage box */
+  .stage { background: var(--dark2); border-left: 4px solid var(--gold);
+    padding: 14px 18px; border-radius: 6px; margin: 10px 0; }
+  .stage .lbl { font-size: 11px; color: var(--gold); letter-spacing: 1px;
+    text-transform: uppercase; margin-bottom: 6px; }
+  .stage .name { font-size: 14px; color: var(--gold-light); font-weight: 700;
+    margin-bottom: 8px; }
+  .stage .desc { font-size: 12px; line-height: 1.6; }
+
+  pre { background: #0E0A06; color: var(--gold-light); padding: 12px 16px;
+    border-radius: 6px; font-size: 11px; font-family: 'Menlo', monospace;
+    overflow-x: auto; line-height: 1.6; border: 1px solid var(--border);
+    margin: 10px 0; white-space: pre; }
+  code { background: var(--dark3); color: var(--gold-light); padding: 2px 6px;
+    border-radius: 3px; font-size: 11px; font-family: 'Menlo', monospace; }
+
+  ul.tight { margin: 6px 0 8px 22px; }
+  ul.tight li { margin-bottom: 3px; font-size: 12px; }
+
+  .meta-footer { font-size: 11px; color: var(--text-muted); margin-top: 36px;
+    padding-top: 14px; border-top: 1px solid var(--border); text-align: center; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>🔬 패키지 사전 검수 — Critical Pre-build Review</h1>
+  <div class="sub">빠진 것 / 보강할 것 / 어떻게 만들지 — 깊은 분석</div>
+  <div class="meta">2026-05-09 · Critic + Director 합동 검수</div>
+  <div class="tag">🔬 PRE-BUILD AUDIT</div>
+</div>
+
+<div class="main">
+
+  <div class="nav">
+    <a href="#summary">📌 요약</a>
+    <a href="#inv">① 인벤토리</a>
+    <a href="#content">② 콘텐츠</a>
+    <a href="#design">③ 디자인</a>
+    <a href="#tech">④ 기술</a>
+    <a href="#ext">⑤ 외부 의존</a>
+    <a href="#deploy">⑥ 배포·운영</a>
+    <a href="#learn">⑦ 학습·UX</a>
+    <a href="#missing">⑧ 빠진 것 종합</a>
+    <a href="#options">⑨ 패키지 옵션</a>
+    <a href="#final">⑩ 최종 구조</a>
+    <a href="#next">⑪ 다음</a>
+  </div>
+
+  <!-- ============ SUMMARY ============ -->
+  <h2 id="summary"><span class="section-num">📌</span>한눈 요약</h2>
+
+  <div class="verdict">
+    <div class="lbl">CRITIC VERDICT</div>
+    <div class="body">
+    검수 결과 <strong>Critical 누락 5건, Important 누락 6건, Nice-to-have 4건</strong> 발견.<br>
+    원래 계획대로(MD + 자산 그대로 묶기)면 <strong>"카피 미작성" + "법적 페이지 누락" + "Favicon/OG 이미지 누락"</strong>으로 빌드 도중 막힘.<br>
+    <strong>패키지 빌드 방식을 옵션 1(단순) → 옵션 2(보강)으로 변경 필요.</strong>
+    </div>
+  </div>
+
+  <div class="alert green">
+    <strong>좋은 발견 — 이미 잘 갖춰진 것</strong>:
+    <ul class="tight" style="margin-top:6px;">
+      <li>디자인 시스템: V1 토큰·반도네온·로고·사진 모두 있음</li>
+      <li>콘텐츠 진실: 운영기준.md가 95% 완성</li>
+      <li>Hero 시안: 새로 디자인됨 (모바일 최적)</li>
+      <li>아키텍처: 분리 결정 + 도메인 전략 잠김</li>
+    </ul>
+  </div>
+
+  <div class="alert red">
+    <strong>치명적 누락 — 5건</strong>:
+    <ol style="margin:6px 0 0 22px;">
+      <li><strong>한/영 카피</strong> — Hero만 작성됨, 나머지 8개 섹션 카피 미작성</li>
+      <li><strong>법적 페이지 텍스트</strong> — 이용약관·개인정보·환불 규정 (현재 사이트에서 가져와야)</li>
+      <li><strong>Favicon</strong> — 브라우저 탭 아이콘 (logo-mark.svg 활용 가능)</li>
+      <li><strong>Open Graph 이미지</strong> — 카톡/SNS 공유 시 보이는 이미지 (포스터 또는 hero 영상 캡처)</li>
+      <li><strong>운영자 매뉴얼</strong> — 가격/일정 변경 시 어떻게 사이트에 반영할지 (가르치는 안내문)</li>
+    </ol>
+  </div>
+
+  <!-- ============ INVENTORY ============ -->
+  <h2 id="inv"><span class="section-num">①</span>지금까지 만든 것 인벤토리</h2>
+
+  <h3>운영/ 폴더 안 보고서 (8개)</h3>
+  <table>
+    <tr><th>파일</th><th>역할</th><th>패키지에 들어갈?</th></tr>
+    <tr><td>운영기준.md</td><td>콘텐츠 진실</td><td><span class="badge ok">YES — 핵심</span></td></tr>
+    <tr><td>홈페이지_바이브코딩.html</td><td>전략 보고서 (초기)</td><td><span class="badge ok">YES — 컨텍스트</span></td></tr>
+    <tr><td>사이트맵_와이어프레임.html</td><td>Director v0.1 IA</td><td><span class="badge warn">참고용</span></td></tr>
+    <tr><td>디자인_리뷰.html</td><td>7가지 충돌 분석</td><td><span class="badge ok">YES — 중요</span></td></tr>
+    <tr><td>실행계획.html</td><td>8 Phase 플랜</td><td><span class="badge ok">YES</span></td></tr>
+    <tr><td>새_Hero_시안.html</td><td>Hero 새 디자인</td><td><span class="badge ok">YES — 핵심</span></td></tr>
+    <tr><td>스테이징_교체_기획.html</td><td>도메인·배포</td><td><span class="badge ok">YES</span></td></tr>
+    <tr><td>아키텍처_분리.html</td><td>플랫폼/홈페이지 분리</td><td><span class="badge ok">YES</span></td></tr>
+    <tr><td>폴더_분리_초보가이드.html</td><td>실행 가이드</td><td><span class="badge ok">YES</span></td></tr>
+  </table>
+
+  <h3>받은 디자인 시스템 (운영/design/)</h3>
+  <table>
+    <tr><th>구분</th><th>항목</th><th>패키지에</th></tr>
+    <tr><td>문서</td><td>README.md (디자인 토큰 + 섹션 specs)</td><td><span class="badge ok">YES — 핵심</span></td></tr>
+    <tr><td>토큰</td><td>colors_and_type-v2.css</td><td><span class="badge ok">YES (참고)</span></td></tr>
+    <tr><td>이미지</td><td>반도네온 cream/dark, 로고, 오케스트라 사진, DJ 6장 — 27개</td><td><span class="badge ok">YES — 전부</span></td></tr>
+    <tr><td>JSX</td><td>9개 컴포넌트 (참고용)</td><td><span class="badge warn">참고용으로만</span></td></tr>
+    <tr><td>인쇄물</td><td>포스터·브로셔 PDF</td><td><span class="badge ok">YES (디자인 톤 기준)</span></td></tr>
+  </table>
+
+  <h3>그 외 운영/ 폴더 자료</h3>
+  <table>
+    <tr><th>파일</th><th>역할</th><th>패키지에</th></tr>
+    <tr><td>대시보드_내부.html</td><td>운영진용</td><td><span class="badge miss">NO — 비공개</span></td></tr>
+    <tr><td>대시보드_공개.html</td><td>진행 현황</td><td><span class="badge miss">NO — 별도</span></td></tr>
+    <tr><td>제작물.html</td><td>굿즈·브로셔</td><td><span class="badge miss">NO — 운영용</span></td></tr>
+    <tr><td>홍보동선.html</td><td>홍보 일정</td><td><span class="badge miss">NO — 운영용</span></td></tr>
+    <tr><td>장소기획/공간기획v4.html</td><td>장소 배치</td><td><span class="badge warn">참고만 (Venue 섹션)</span></td></tr>
+    <tr><td>현황판.xlsx</td><td>전체 진행</td><td><span class="badge miss">NO</span></td></tr>
+    <tr><td>조앤브리핑.docx</td><td>예술감독 브리핑</td><td><span class="badge ok">YES (라인업 컨텍스트)</span></td></tr>
+  </table>
+
+  <!-- ============ CONTENT CHECK ============ -->
+  <h2 id="content"><span class="section-num">②</span>콘텐츠 측면 점검</h2>
+
+  <h3>운영기준 §3~§7 매핑</h3>
+  <table>
+    <tr><th>운영기준 섹션</th><th>홈페이지 사용처</th><th>준비됨?</th></tr>
+    <tr><td>§3 행사 기본 정보</td><td>Hero · 날짜밴드 · About</td><td><span class="badge ok">완비</span></td></tr>
+    <tr><td>§4 참가비</td><td>Tickets 섹션</td><td><span class="badge ok">완비 (₩190K/₩240K/₩100K)</span></td></tr>
+    <tr><td>§5 호텔</td><td>Tickets 패키지 + Accommodation 미니</td><td><span class="badge ok">완비</span></td></tr>
+    <tr><td>§6 오케스트라/DJ/댄서</td><td>Lineup · Orchestras · DJs · Dancers</td><td><span class="badge ok">완비</span></td></tr>
+    <tr><td>§7 프로그램 일정</td><td>Schedule</td><td><span class="badge ok">완비 (요일 오류 수정)</span></td></tr>
+  </table>
+
+  <h3>섹션별 카피 — 미작성 발견</h3>
+
+  <div class="check-item miss">
+    <div class="icon">❌</div>
+    <div class="body">
+      <div class="title">한/영 카피 미작성 (Critical)</div>
+      <div class="desc">
+      Hero 카피만 새_Hero_시안에 있음. <strong>Orchestras/Schedule/DJs/Dancers/Venue/Tickets/About/Footer 카피 미작성.</strong>
+      Claude Code가 현장에서 작성하면 운영기준 데이터를 잘못 매핑할 위험.<br>
+      <strong>해결</strong>: 패키지에 <code>content/ko.json</code> + <code>content/en.json</code> 미리 작성해서 넣기.
+      </div>
+    </div>
+    <div><span class="badge crit">CRIT</span></div>
+  </div>
+
+  <div class="check-item miss">
+    <div class="icon">❌</div>
+    <div class="body">
+      <div class="title">법적 페이지 텍스트 누락 (Critical)</div>
+      <div class="desc">
+      현재 kcctf.org에 있는 <strong>이용약관 · 개인정보처리방침 · 환불 규정</strong> 페이지의 텍스트가 패키지에 없음.
+      이건 운영팀(흰곰)이 이미 작성한 콘텐츠 — 새 사이트도 동일하게 사용해야 함.<br>
+      <strong>해결</strong>: 현재 사이트에서 텍스트 복사 → <code>_brief/legal/terms.md, privacy.md, refund.md</code>로 넣기.
+      </div>
+    </div>
+    <div><span class="badge crit">CRIT</span></div>
+  </div>
+
+  <div class="check-item warn">
+    <div class="icon">⚠️</div>
+    <div class="body">
+      <div class="title">FAQ 콘텐츠 미작성 (Important)</div>
+      <div class="desc">
+      해외 참가자용 FAQ 미작성. P1 (2차 추가)이지만, 5/12 얼리버드 오픈 후 외국인 신청 들어오면 즉시 필요.<br>
+      <strong>해결</strong>: 기본 FAQ 8~10개 미리 작성 (비자/공항/현금/언어/환불 등).
+      </div>
+    </div>
+    <div><span class="badge warn">WARN</span></div>
+  </div>
+
+  <div class="check-item warn">
+    <div class="icon">⚠️</div>
+    <div class="body">
+      <div class="title">밀롱가별 한 줄 분위기 묘사 (Important)</div>
+      <div class="desc">
+      Schedule 섹션에 BTE식으로 "Welcome embrace, daylight to dusk" 같은 한 줄 묘사를 넣기로 함.
+      이거 6개 밀롱가 × 한/영 = 12개 카피 미작성.<br>
+      <strong>해결</strong>: <code>content/*.json</code>의 schedule 부분에 미리 작성.
+      </div>
+    </div>
+    <div><span class="badge warn">WARN</span></div>
+  </div>
+
+  <div class="check-item warn">
+    <div class="icon">⚠️</div>
+    <div class="body">
+      <div class="title">DJ별 약력 1~2줄 (Nice-to-have)</div>
+      <div class="desc">
+      Belgrade Tango Encuentro처럼 DJ마다 짧은 소개. 운영기준에 없으니 운영팀(존)에게 받아야 할 수도.<br>
+      <strong>해결</strong>: 일단 placeholder로 두고, 운영팀에 요청 카톡 초안 같이 패키지에.
+      </div>
+    </div>
+    <div><span class="badge opt">NICE</span></div>
+  </div>
+
+  <!-- ============ DESIGN ============ -->
+  <h2 id="design"><span class="section-num">③</span>디자인 측면 점검</h2>
+
+  <table>
+    <tr><th>항목</th><th>상태</th><th>비고</th></tr>
+    <tr><td>V1 디자인 토큰 (컬러)</td><td><span class="badge ok">완비</span></td><td>Mustard #F2C94C / Burgundy #8B1A2B 등</td></tr>
+    <tr><td>폰트 패밀리 (5개)</td><td><span class="badge ok">완비</span></td><td>Noto Serif KR / Pretendard / Playfair / Inter / Oswald</td></tr>
+    <tr><td>스페이싱·라디우스·섀도</td><td><span class="badge ok">완비</span></td><td>디자인 README에 정확히</td></tr>
+    <tr><td>다이아몬드 패턴</td><td><span class="badge ok">완비</span></td><td>SVG inline 또는 CSS gradient 가이드</td></tr>
+    <tr><td>그레인 텍스처</td><td><span class="badge ok">완비</span></td><td>grain.svg 자산</td></tr>
+    <tr><td>반도네온 일러스트</td><td><span class="badge ok">완비</span></td><td>cream + dark 두 버전</td></tr>
+    <tr><td>로고 (5종)</td><td><span class="badge ok">완비</span></td><td>official + mark + stacked + horizontal</td></tr>
+    <tr><td>오케스트라 사진</td><td><span class="badge ok">완비</span></td><td>Tango Bardo + Misteriosa</td></tr>
+    <tr><td>DJ 사진 (6명)</td><td><span class="badge ok">완비</span></td><td>전부 있음</td></tr>
+    <tr><td>댄서팀 사진</td><td><span class="badge miss">없음</span></td><td>운영기준 §6의 4팀 사진 미수집 → placeholder + 요청</td></tr>
+    <tr><td>춘천/봄내체육관 사진</td><td><span class="badge miss">없음</span></td><td>Venue 섹션에 필요 → 답사 사진 또는 무료 이미지</td></tr>
+    <tr><td>벨라스테이 사진</td><td><span class="badge miss">없음</span></td><td>Accommodation 미니에 필요</td></tr>
+    <tr><td>Hero 새 시안 specs</td><td><span class="badge ok">완비</span></td><td>새_Hero_시안.html에 모바일+데스크톱 둘 다</td></tr>
+    <tr><td>Favicon</td><td><span class="badge miss">미정</span></td><td>logo-mark.svg를 활용 → favicon.ico 변환 필요</td></tr>
+    <tr><td>Open Graph 이미지</td><td><span class="badge miss">미정</span></td><td>카톡/SNS 공유용 1200×630 이미지 → 포스터 활용</td></tr>
+    <tr><td>인쇄 브로셔 톤</td><td><span class="badge ok">참고 가능</span></td><td>final-brochure-v1.pdf로 일관성 검증</td></tr>
+  </table>
+
+  <h3>발견 — 디자인 자산 부족 3건</h3>
+  <div class="alert yellow">
+    <strong>댄서팀 + 봄내체육관 + 벨라스테이 사진이 없습니다.</strong>
+    <ul class="tight" style="margin-top:6px;">
+      <li>댄서팀 4팀 — 존 또는 댄서 SNS에서 받기 (요청 카톡 초안 패키지에)</li>
+      <li>봄내체육관 — 답사 사진(존·흰곰 갖고 있을 수 있음) 또는 시 공식 사진</li>
+      <li>벨라스테이 — 호텔 공식 사진 사용 허락 받기</li>
+    </ul>
+    <p style="margin-top:6px;"><strong>대응</strong>: placeholder 박스로 빌드 시작 → 사진 받는 대로 교체. 빌드 멈추지 않음.</p>
+  </div>
+
+  <!-- ============ TECH ============ -->
+  <h2 id="tech"><span class="section-num">④</span>기술 측면 점검</h2>
+
+  <table>
+    <tr><th>스택</th><th>상태</th><th>비고</th></tr>
+    <tr><td>Next.js 14 App Router</td><td><span class="badge ok">결정</span></td><td>최신 안정</td></tr>
+    <tr><td>TypeScript</td><td><span class="badge ok">결정</span></td><td>타입 안전성</td></tr>
+    <tr><td>Tailwind CSS</td><td><span class="badge ok">결정</span></td><td>디자인 토큰 → tailwind.config.ts</td></tr>
+    <tr><td>next-intl (ko/en)</td><td><span class="badge ok">결정</span></td><td>i18n 라우팅</td></tr>
+    <tr><td>Vercel 배포</td><td><span class="badge ok">결정</span></td><td>무료, 자동 preview</td></tr>
+    <tr><td>패키지 매니저</td><td><span class="badge add">pnpm 추천</span></td><td>속도+디스크 효율, CLAUDE.md에 명시</td></tr>
+    <tr><td>Google Fonts 로딩</td><td><span class="badge ok">결정</span></td><td>next/font/google</td></tr>
+    <tr><td>이미지 최적화</td><td><span class="badge ok">결정</span></td><td>next/image (WebP 자동)</td></tr>
+    <tr><td>SEO meta 태그</td><td><span class="badge add">필요</span></td><td>Metadata API + hreflang ko/en</td></tr>
+    <tr><td>sitemap.xml</td><td><span class="badge add">필요</span></td><td>app/sitemap.ts 자동 생성</td></tr>
+    <tr><td>robots.txt</td><td><span class="badge add">필요</span></td><td>app/robots.ts 자동 생성</td></tr>
+    <tr><td>Analytics</td><td><span class="badge warn">결정 필요</span></td><td>옵션: Google Analytics 4 / Vercel Analytics(무료) / 둘 다</td></tr>
+    <tr><td>Error tracking</td><td><span class="badge opt">선택</span></td><td>Sentry 무료 — 정적 사이트라 불필요할 수도</td></tr>
+    <tr><td>카톡/네이버 메타</td><td><span class="badge add">필요</span></td><td>한국 사용자 SNS 공유 — 별도 og:image</td></tr>
+  </table>
+
+  <div class="alert blue">
+    <strong>Analytics 추천</strong>: <strong>Vercel Analytics (무료) + Google Analytics 4</strong> 둘 다.
+    Vercel은 자동, GA4는 운영자가 트래픽 분석할 때. CLAUDE.md에 환경 변수 자리 미리 만들어 두기.
+  </div>
+
+  <!-- ============ EXTERNAL ============ -->
+  <h2 id="ext"><span class="section-num">⑤</span>외부 의존성 — 미정 처리</h2>
+
+  <p>운영기준 §11의 미정 항목들이 어떻게 처리될지:</p>
+
+  <table>
+    <tr>
+      <th>미정 항목</th>
+      <th>담당</th>
+      <th>홈페이지 영향</th>
+      <th>패키지 처리</th>
+    </tr>
+    <tr>
+      <td>회차 (제3회?)</td>
+      <td>이종화/조앤</td>
+      <td>Hero eyebrow + footer</td>
+      <td>flag로 on/off — 결정 전엔 표기 X</td>
+    </tr>
+    <tr>
+      <td>콘서트 장소 (예술회관?)</td>
+      <td>흰곰</td>
+      <td>Venue 섹션</td>
+      <td>봄내체육관만 표기, "콘서트 장소 곧 공개"</td>
+    </tr>
+    <tr>
+      <td>워크샵 운영 여부</td>
+      <td>조앤</td>
+      <td>Lessons 섹션 자체</td>
+      <td>boolean flag로 섹션 자체 on/off</td>
+    </tr>
+    <tr>
+      <td>마에스트로 라인업</td>
+      <td>조앤</td>
+      <td>Lessons 섹션 (워크샵 운영 시)</td>
+      <td>"강사진 곧 공개" placeholder</td>
+    </tr>
+    <tr>
+      <td>댄서팀 4번째</td>
+      <td>존</td>
+      <td>Dancers 섹션</td>
+      <td>3팀 + "TBA" 카드 1개</td>
+    </tr>
+    <tr>
+      <td>얼리버드 마감일</td>
+      <td>흰곰</td>
+      <td>Tickets 카운트다운</td>
+      <td>마감일 미표시, "얼리 ₩190,000"만</td>
+    </tr>
+    <tr>
+      <td>호텔 패키지 가격</td>
+      <td>흰곰</td>
+      <td>Tickets (풀팩+2박/3박)</td>
+      <td>"패키지 안내 곧 공개"</td>
+    </tr>
+    <tr>
+      <td>댄서팀/봄내체육관 사진</td>
+      <td>존/흰곰</td>
+      <td>Dancers/Venue 섹션</td>
+      <td>placeholder 박스</td>
+    </tr>
+  </table>
+
+  <div class="alert green">
+    <strong>핵심 원칙</strong>: <strong>모든 미정 항목은 빌드를 멈추지 않는다.</strong>
+    환경 변수 또는 boolean flag로 기능을 on/off 가능하게 설계.
+    결정이 떨어지면 환경 변수만 변경 → 자동 반영.
+  </div>
+
+  <!-- ============ DEPLOY ============ -->
+  <h2 id="deploy"><span class="section-num">⑥</span>배포·운영 측면 점검</h2>
+
+  <table>
+    <tr>
+      <th>항목</th>
+      <th>상태</th>
+      <th>비고</th>
+    </tr>
+    <tr><td>GitHub repo 가이드</td><td><span class="badge add">필요</span></td><td>CLAUDE.md에 git init·push 명령 포함</td></tr>
+    <tr><td>Vercel 연결 가이드</td><td><span class="badge add">필요</span></td><td>스크린샷 또는 단계 명령</td></tr>
+    <tr><td>환경 변수 (.env.example)</td><td><span class="badge add">필요</span></td><td>외부 결정 미정 항목들 flag</td></tr>
+    <tr><td>도메인 변경 가이드 (이종화용)</td><td><span class="badge add">필요</span></td><td>Vercel 알려준 A/CNAME 값으로 DNS 변경</td></tr>
+    <tr><td>preview URL 비교 매뉴얼</td><td><span class="badge add">필요</span></td><td>운영팀(존·흰곰·조앤)이 검수할 체크리스트</td></tr>
+    <tr><td>운영자 콘텐츠 업데이트 매뉴얼</td><td><span class="badge add">필요 (Critical)</span></td><td>가격·라인업 변경 시 어떻게 사이트 반영?</td></tr>
+    <tr><td>archive.kcctf.org 처리</td><td><span class="badge warn">결정 필요</span></td><td>이전 사이트 보존? 그냥 사라지게?</td></tr>
+  </table>
+
+  <div class="alert red">
+    <strong>운영자 콘텐츠 업데이트 매뉴얼이 가장 중요</strong> — 사이트 빌드 후에도 가격·라인업이 바뀔 수 있음.
+    그때마다 Claude Code 다시 띄워야 하는지, 또는 더 쉬운 방법이 있는지.<br><br>
+    <strong>두 가지 옵션</strong>:
+    <ul class="tight" style="margin-top:6px;">
+      <li><strong>옵션 A — 코드 직접 수정</strong>: <code>content/ko.json</code> 한 줄 바꾸고 git push. 5분. 기술 익숙해지면 쉬움.</li>
+      <li><strong>옵션 B — Sanity/Notion CMS 연동</strong>: 운영자가 GUI로 수정. 설정 비용 1일, 익숙해지면 쉬움.</li>
+    </ul>
+    <p style="margin-top:6px;"><strong>일단 A로 시작 권장</strong> — 운영기준이 자주 바뀌지 않고, 패키지 단순.</p>
+  </div>
+
+  <!-- ============ LEARN ============ -->
+  <h2 id="learn"><span class="section-num">⑦</span>학습·UX 측면 점검</h2>
+
+  <p>사용자(포올님)가 처음 다뤄볼 가능성 있는 도구들:</p>
+
+  <table>
+    <tr><th>도구</th><th>처음?</th><th>패키지 가이드 필요?</th></tr>
+    <tr><td>터미널 (zsh/bash)</td><td>아마</td><td><span class="badge ok">기본 명령어 cheatsheet</span></td></tr>
+    <tr><td>Claude Code</td><td>처음일 듯</td><td><span class="badge ok">첫 명령 + 자주 쓰는 패턴</span></td></tr>
+    <tr><td>Git / GitHub</td><td>아마</td><td><span class="badge ok">init·push 명령만</span></td></tr>
+    <tr><td>Vercel</td><td>아마</td><td><span class="badge ok">계정 만들기 + import</span></td></tr>
+    <tr><td>Next.js / React</td><td>몰라도 됨</td><td><span class="badge opt">알 필요 없음 — Claude Code가</span></td></tr>
+    <tr><td>Tailwind CSS</td><td>몰라도 됨</td><td><span class="badge opt">알 필요 없음</span></td></tr>
+  </table>
+
+  <div class="alert blue">
+    <strong>패키지에 들어갈 학습 보조</strong>: <code>HOW_TO_USE.md</code> 한 파일에 압축.<br>
+    터미널 → claude → git → Vercel → 도메인 변경. 각 단계 30초 안 걸리는 짧은 가이드. 스크린샷 없이 텍스트.
+  </div>
+
+  <!-- ============ MISSING SUMMARY ============ -->
+  <h2 id="missing"><span class="section-num">⑧</span>빠진 것 종합 (15건)</h2>
+
+  <h3>🔴 Critical (5건) — 반드시 패키지에 추가</h3>
+  <div class="check-item miss">
+    <div class="icon">🔴</div>
+    <div class="body">
+      <div class="title">1. 한/영 카피 (8개 섹션 × 2언어 = 16묶음)</div>
+      <div class="desc">미리 작성해서 <code>content/ko.json + content/en.json</code>으로 패키지에 포함.
+      디자인 톤(시적·단정조) + 운영기준 데이터 결합.</div>
+    </div>
+    <div><span class="badge crit">CRIT</span></div>
+  </div>
+  <div class="check-item miss">
+    <div class="icon">🔴</div>
+    <div class="body">
+      <div class="title">2. 법적 페이지 텍스트 (이용약관·개인정보·환불)</div>
+      <div class="desc">현재 kcctf.org에서 텍스트 추출 → <code>_brief/legal/</code>에 3개 .md.
+      사용자가 이번주 안에 현재 사이트에서 복사해서 보내줘야 함.</div>
+    </div>
+    <div><span class="badge crit">CRIT</span></div>
+  </div>
+  <div class="check-item miss">
+    <div class="icon">🔴</div>
+    <div class="body">
+      <div class="title">3. Favicon</div>
+      <div class="desc"><code>_design/assets/logo-mark.svg</code>를 <code>public/favicon.ico</code>로 변환.
+      32×32, 180×180(apple-touch), 512×512(android) 자동 생성.</div>
+    </div>
+    <div><span class="badge crit">CRIT</span></div>
+  </div>
+  <div class="check-item miss">
+    <div class="icon">🔴</div>
+    <div class="body">
+      <div class="title">4. Open Graph 이미지 (1200×630)</div>
+      <div class="desc">카톡·SNS 공유 시 보이는 이미지. 포스터(reference-poster-2026.jpeg)를 1200×630으로 크롭/리사이즈.
+      <code>public/og-image.jpg</code>로.</div>
+    </div>
+    <div><span class="badge crit">CRIT</span></div>
+  </div>
+  <div class="check-item miss">
+    <div class="icon">🔴</div>
+    <div class="body">
+      <div class="title">5. 운영자 콘텐츠 업데이트 매뉴얼</div>
+      <div class="desc">가격·라인업 변경 시 어떻게 반영할지. <code>HOW_TO_UPDATE.md</code>로 패키지에.</div>
+    </div>
+    <div><span class="badge crit">CRIT</span></div>
+  </div>
+
+  <h3>🟡 Important (6건) — 패키지에 추가 권장</h3>
+  <div class="check-item warn">
+    <div class="icon">🟡</div>
+    <div class="body">
+      <div class="title">6. 밀롱가별 한 줄 분위기 묘사 (×6 × 2언어)</div>
+      <div class="desc">Schedule 섹션. content/*.json에 미리.</div>
+    </div>
+    <div><span class="badge warn">IMPT</span></div>
+  </div>
+  <div class="check-item warn">
+    <div class="icon">🟡</div>
+    <div class="body">
+      <div class="title">7. FAQ 8~10개 (해외 참가자용)</div>
+      <div class="desc">비자/공항/현금/언어/환불/입금/외국 카드 등.</div>
+    </div>
+    <div><span class="badge warn">IMPT</span></div>
+  </div>
+  <div class="check-item warn">
+    <div class="icon">🟡</div>
+    <div class="body">
+      <div class="title">8. 외부 결정 미정 환경 변수 .env.example</div>
+      <div class="desc">SHOW_LESSONS=false / EARLYBIRD_DEADLINE=null 등.</div>
+    </div>
+    <div><span class="badge warn">IMPT</span></div>
+  </div>
+  <div class="check-item warn">
+    <div class="icon">🟡</div>
+    <div class="body">
+      <div class="title">9. SEO 메타 + sitemap + robots.txt</div>
+      <div class="desc">Metadata API + hreflang. CLAUDE.md에 명시.</div>
+    </div>
+    <div><span class="badge warn">IMPT</span></div>
+  </div>
+  <div class="check-item warn">
+    <div class="icon">🟡</div>
+    <div class="body">
+      <div class="title">10. 운영팀에 사진 요청 카톡 초안</div>
+      <div class="desc">댄서팀 사진 (존), 봄내체육관 답사 사진 (흰곰), 벨라스테이 사진 (흰곰).</div>
+    </div>
+    <div><span class="badge warn">IMPT</span></div>
+  </div>
+  <div class="check-item warn">
+    <div class="icon">🟡</div>
+    <div class="body">
+      <div class="title">11. HOW_TO_USE.md (학습 보조)</div>
+      <div class="desc">터미널 → Claude Code → Git → Vercel 30초 가이드.</div>
+    </div>
+    <div><span class="badge warn">IMPT</span></div>
+  </div>
+
+  <h3>🔵 Nice-to-have (4건) — 시간 되면</h3>
+  <div class="check-item">
+    <div class="icon">🔵</div>
+    <div class="body">
+      <div class="title">12. DJ 약력 1~2줄 (×6 × 2언어)</div>
+      <div class="desc">존에게 받기 — 패키지에는 placeholder.</div>
+    </div>
+    <div><span class="badge opt">NICE</span></div>
+  </div>
+  <div class="check-item">
+    <div class="icon">🔵</div>
+    <div class="body">
+      <div class="title">13. Past Editions / 2025 자료</div>
+      <div class="desc">이종화 답에 따라.</div>
+    </div>
+    <div><span class="badge opt">NICE</span></div>
+  </div>
+  <div class="check-item">
+    <div class="icon">🔵</div>
+    <div class="body">
+      <div class="title">14. Visiting Chuncheon 페이지 콘텐츠</div>
+      <div class="desc">춘천 가이드 (닭갈비/남이섬/ITX). P1.</div>
+    </div>
+    <div><span class="badge opt">NICE</span></div>
+  </div>
+  <div class="check-item">
+    <div class="icon">🔵</div>
+    <div class="body">
+      <div class="title">15. 카운트다운 위젯 / 라이브 채팅 / 뉴스레터 등</div>
+      <div class="desc">필요 시 나중에 추가.</div>
+    </div>
+    <div><span class="badge opt">NICE</span></div>
+  </div>
+
+  <!-- ============ OPTIONS ============ -->
+  <h2 id="options"><span class="section-num">⑨</span>패키지 빌드 — 3가지 옵션</h2>
+
+  <div class="stage">
+    <div class="lbl">옵션 1 — 단순 (당초 계획)</div>
+    <div class="name">기존 자료만 묶기 · 30분 소요</div>
+    <div class="desc">
+      운영/ 폴더 보고서 + design/ 자산 + 간단한 CLAUDE.md.<br>
+      <strong>문제</strong>: Critical 5건 누락 → 빌드 도중 막힘.
+    </div>
+  </div>
+
+  <div class="stage" style="border-left-color:var(--green);">
+    <div class="lbl">옵션 2 — 보강 (추천)</div>
+    <div class="name">Critical 5건 + Important 6건 보강 · 2~3시간</div>
+    <div class="desc">
+      옵션 1 + 한/영 카피 미리 작성 + 법적 페이지 텍스트 + Favicon/OG 변환 + 운영자 매뉴얼 + 환경 변수 + SEO + 학습 가이드.<br>
+      <strong>장점</strong>: Claude Code가 처음부터 끝까지 막힘 없이 빌드 가능. 사용자도 헷갈림 적음.
+    </div>
+  </div>
+
+  <div class="stage" style="border-left-color:var(--blue);">
+    <div class="lbl">옵션 3 — 풀 보강</div>
+    <div class="name">Nice-to-have까지 모두 · 1일+</div>
+    <div class="desc">
+      옵션 2 + DJ 약력 + Past Editions + Visiting Chuncheon + 추가 위젯.<br>
+      <strong>단점</strong>: 미정 항목 많아서 placeholder 폭증, 의미 없음.
+    </div>
+  </div>
+
+  <div class="alert green">
+    <strong>강력 추천 — 옵션 2</strong>. Critical은 반드시, Important는 거의 다 포함, Nice-to-have는 패스.
+    저는 2~3시간 안에 보강 패키지 만들 수 있습니다. 단, <strong>법적 페이지 텍스트(이용약관·개인정보·환불)만은 포올님이 현재 사이트에서 복사해 주셔야</strong> 함 — 이건 운영팀이 작성한 콘텐츠라 제가 만들면 안 됨.
+  </div>
+
+  <!-- ============ FINAL ============ -->
+  <h2 id="final"><span class="section-num">⑩</span>최종 패키지 구조 (옵션 2)</h2>
+
+  <pre>kcctf-website/                              ← 노트북에서 새로 만들 폴더
+│
+├── CLAUDE.md                               🗺 마스터 명세서
+│   ├ 미션 / 절대금지 / 진실의 출처
+│   ├ 기술 스택 / 디자인 토큰 / 사이트 구조
+│   ├ 컴포넌트 specs (8개 섹션)
+│   ├ 외부 결정 미정 처리 방안
+│   ├ 환경 변수 사용 가이드
+│   └ 첫 명령 / 단계별 명령
+│
+├── README.md                               👤 사람용 빠른 안내
+│
+├── HOW_TO_USE.md                           📚 학습 가이드
+│   터미널 / Claude Code / Git / Vercel 30초
+│
+├── HOW_TO_UPDATE.md                        🔧 운영자 콘텐츠 업데이트 매뉴얼
+│   가격 변경·라인업 변경 시 어디 무엇을
+│
+├── content/                                ✍️ 미리 작성된 카피
+│   ├── ko.json                             한국어 (8개 섹션 + FAQ)
+│   ├── en.json                             영어 (동일)
+│   └── README.md                           카피 구조 설명
+│
+├── _brief/                                 📚 컨텍스트 문서 (참고용)
+│   ├── 운영기준.md
+│   ├── 디자인_리뷰.html
+│   ├── 새_Hero_시안.html
+│   ├── 사이트맵_와이어프레임.html
+│   ├── 실행계획.html
+│   ├── 스테이징_교체_기획.html
+│   ├── 아키텍처_분리.html
+│   ├── legal/                              ⚠️ 법적 텍스트 (포올님 채워주실 것)
+│   │   ├── terms.md                        이용약관
+│   │   ├── privacy.md                      개인정보처리방침
+│   │   └── refund.md                       환불 규정
+│   └── messages/                           📨 운영팀 카톡 초안
+│       ├── 이종화_도메인.md
+│       ├── 흰곰_장소_등록.md
+│       ├── 조앤_워크샵_라인업.md
+│       └── 존_댄서팀_사진.md
+│
+├── _design/                                🎨 디자인 자산
+│   ├── README.md                           디자인 토큰 specs
+│   ├── assets/                             27개 이미지·SVG
+│   ├── prototypes/marketing-site-v2/       JSX 9개 (참고)
+│   └── brochure-final/
+│
+└── _public-assets/                         🖼 빌드 시 public/으로 복사할 것
+    ├── favicon.ico                         Favicon (32×32)
+    ├── apple-touch-icon.png                Apple 180×180
+    ├── android-chrome-192.png
+    ├── android-chrome-512.png
+    └── og-image.jpg                        Open Graph 1200×630</pre>
+
+  <h3>패키지 만드는 작업 분담</h3>
+  <table>
+    <tr><th>항목</th><th>누가</th><th>예상 시간</th></tr>
+    <tr><td>CLAUDE.md (마스터 명세서)</td><td>저 (Claude)</td><td>30분</td></tr>
+    <tr><td>README.md / HOW_TO_USE.md / HOW_TO_UPDATE.md</td><td>저</td><td>30분</td></tr>
+    <tr><td>content/ko.json + en.json (한/영 카피)</td><td>저</td><td>1시간</td></tr>
+    <tr><td>_brief/ 보고서 복사</td><td>저</td><td>5분</td></tr>
+    <tr><td>_brief/messages/ 카톡 초안 4개</td><td>저</td><td>10분</td></tr>
+    <tr><td>_design/ 자산 복사</td><td>저</td><td>5분</td></tr>
+    <tr><td>Favicon / OG 이미지 생성</td><td>저</td><td>15분</td></tr>
+    <tr><td>zip 압축 + 다운로드 링크</td><td>저</td><td>5분</td></tr>
+    <tr><td><strong>법적 페이지 텍스트 추출</strong></td><td><strong>포올님 (현재 사이트에서)</strong></td><td>10분</td></tr>
+    <tr><td><strong>총</strong></td><td></td><td><strong>약 3시간 (제 작업)</strong></td></tr>
+  </table>
+
+  <!-- ============ NEXT ============ -->
+  <h2 id="next"><span class="section-num">⑪</span>다음 액션</h2>
+
+  <div class="alert gold">
+    <strong>포올님 답변 부탁드릴 4가지</strong>
+    <ol style="margin:8px 0 0 22px;">
+      <li><strong>옵션 2(보강)로 진행 OK</strong>인지? (3시간 작업)</li>
+      <li><strong>법적 페이지 텍스트</strong> — 현재 kcctf.org/terms, /privacy, /refund 들어가서 텍스트 복사해서 보내주실 수 있는지? (이번 주 안에)</li>
+      <li><strong>Analytics</strong> — Vercel Analytics(무료, 자동) + GA4(트래픽 분석용)? 둘 다 OK?</li>
+      <li><strong>Open Graph 이미지</strong> — 받은 포스터(reference-poster-2026.jpeg)를 1200×630으로 크롭해서 OG로? 또는 별도 디자인 필요?</li>
+    </ol>
+  </div>
+
+  <h3>병렬로 운영팀에 던질 카톡 (이번 주 안)</h3>
+  <div class="alert blue">
+    <ul class="tight">
+      <li><strong>이종화</strong>: 도메인·Firebase·이전 회차 자료 (5가지 — 이미 초안 있음)</li>
+      <li><strong>흰곰</strong>: 콘서트 장소·등록 방식·얼리버드 마감일·호텔 가격 (4가지)</li>
+      <li><strong>조앤</strong>: 회차·워크샵 운영·M2 시간·라인업 확정 (4가지)</li>
+      <li><strong>존</strong>: 댄서팀 사진·4번째 댄서 확정 (2가지)</li>
+    </ul>
+    <p style="margin-top:6px;">→ 답이 늦어도 빌드는 placeholder로 진행. 답 떨어지는 대로 환경 변수만 변경.</p>
+  </div>
+
+  <div class="alert green">
+    <strong>저(Claude)가 받을 신호</strong>:
+    <ul class="tight" style="margin-top:8px;">
+      <li><strong>"옵션 2로 가, 패키지 만들어"</strong> → 즉시 3시간 작업 시작.<br>
+      법적 텍스트는 비워두고, 받는 대로 채워 넣을 수 있게 placeholder 구조만.</li>
+      <li><strong>"법적 텍스트 먼저 보낼게, 받고 시작해"</strong> → 텍스트 받은 후 시작.</li>
+      <li><strong>"옵션 1으로 가, 단순하게"</strong> → 30분 작업, 단 빌드 도중 카피 작성 단계 추가됨.</li>
+    </ul>
+  </div>
+
+  <div class="meta-footer">
+    KCCTF 2026 패키지 사전 검수 v1.0 · 2026-05-09 · 🔬 Critic + Director 합동
+  </div>
+
+</div>
+
+</body>
+</html>

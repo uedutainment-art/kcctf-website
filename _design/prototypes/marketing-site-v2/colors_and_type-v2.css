@@ -1,0 +1,65 @@
+/* colors_and_type-v2.css — 호숫가의 탱고 (Lakeside Tango)
+   Inspired by Belgrade Tango Encuentro's editorial fullbleed mood,
+   transposed to Chuncheon's misty lake / golden hour atmosphere. */
+
+:root {
+  /* Cream base — kept from v1 */
+  --cream-100: #FDFAF5;
+  --cream-200: #F9F3E8;
+  --cream-300: #F5F0E8;
+  --cream-400: #ECE3D2;
+
+  /* Lake ink — NEW, the deep teal of Soyang Lake at dawn */
+  --ink-100: #2A4D5F;
+  --ink-200: #1F3A4A;
+  --ink-300: #15293A;
+  --ink-400: #0E1E2A;
+
+  /* Mist blue — NEW, soft hazy lake */
+  --mist-100: #E8EFF3;
+  --mist-200: #C7D7DF;
+  --mist-300: #9BB5C2;
+  --mist-400: #6B9BB8;
+
+  /* Wine — kept from v1 */
+  --wine-300: #8B1A2B;
+  --wine-400: #6B0F1F;
+  --wine-500: #460913;
+
+  /* Gold — kept from v1 */
+  --gold-200: #E8C25E;
+  --gold-300: #D4A017;
+  --gold-400: #A37D0F;
+
+  /* Semantic */
+  --bg: var(--cream-100);
+  --bg-deep: var(--ink-300);
+  --bg-mist: var(--mist-100);
+  --fg: #1A1A1A;
+  --fg-on-dark: var(--cream-100);
+  --fg-muted: #5A6670;
+  --fg-muted-dark: rgba(253,250,245,0.65);
+  --accent: var(--wine-300);
+  --accent-2: var(--gold-300);
+  --accent-3: var(--mist-400);
+}
+
+/* Type — same families, more editorial usage */
+.display-huge { font-family: 'Noto Serif KR', serif; font-weight: 800; font-size: clamp(72px, 10vw, 132px); line-height: 0.95; letter-spacing: -0.04em; }
+.display-en { font-family: 'Playfair Display', serif; font-style: italic; font-weight: 500; font-size: clamp(36px, 5vw, 64px); line-height: 1.1; letter-spacing: -0.01em; }
+.condensed { font-family: 'Bebas Neue', 'Pretendard', sans-serif; font-weight: 400; letter-spacing: 0.04em; text-transform: uppercase; }
+
+/* Pill button — round, Belgrade-style but in our palette */
+.btn-pill {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 16px 32px; border-radius: 999px; border: none;
+  background: var(--gold-300); color: var(--ink-300);
+  font-family: 'Pretendard', sans-serif; font-weight: 700;
+  font-size: 14px; letter-spacing: 0.18em; text-transform: uppercase;
+  cursor: pointer; white-space: nowrap;
+  transition: all 240ms cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+.btn-pill:hover { transform: translateY(-1px); box-shadow: 0 8px 22px rgba(212,160,23,0.35); }
+.btn-pill--wine { background: var(--wine-300); color: var(--cream-100); }
+.btn-pill--wine:hover { box-shadow: 0 8px 22px rgba(139,26,43,0.35); }
+.btn-pill--ghost { background: transparent; color: var(--cream-100); border: 1.5px solid rgba(253,250,245,0.4); }

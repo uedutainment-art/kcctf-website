@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KCCTF 2026 — 플랫폼/홈페이지 아키텍처 분리 분석</title>
+<style>
+  :root {
+    --gold: #C9A84C;
+    --gold-light: #E8C96A;
+    --dark: #1A1410;
+    --dark2: #252018;
+    --dark3: #2E2820;
+    --brown: #3D3020;
+    --text: #E8E0D0;
+    --text-muted: #A09880;
+    --green: #4CAF7D;
+    --yellow: #E8B84B;
+    --red: #E05555;
+    --blue: #5B9BD5;
+    --purple: #9B7BD5;
+    --orange: #E8844B;
+    --border: #3D3020;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Apple SD Gothic Neo', 'Malgun Gothic', Arial, sans-serif;
+    background: var(--dark); color: var(--text); min-height: 100vh; line-height: 1.6; }
+
+  .header { background: linear-gradient(135deg, var(--dark2), var(--brown));
+    border-bottom: 2px solid var(--gold); padding: 28px 32px; text-align: center; }
+  .header h1 { font-size: 22px; color: var(--gold); letter-spacing: 1px; }
+  .header .sub { font-size: 13px; color: var(--text-muted); margin-top: 6px; }
+  .header .meta { font-size: 11px; color: var(--text-muted); margin-top: 4px; }
+  .header .tag { display: inline-block; margin-top: 10px;
+    padding: 3px 10px; border: 1px solid var(--gold); border-radius: 20px;
+    font-size: 11px; color: var(--gold); letter-spacing: 1px; }
+
+  .main { max-width: 1100px; margin: 0 auto; padding: 28px 24px; }
+
+  .nav { display: flex; flex-wrap: wrap; gap: 8px; padding: 14px 20px;
+    background: var(--dark2); border: 1px solid var(--border); border-radius: 8px;
+    margin-bottom: 28px; font-size: 12px; }
+  .nav a { color: var(--gold); text-decoration: none; padding: 4px 10px;
+    border-radius: 4px; transition: background 0.15s; }
+  .nav a:hover { background: var(--brown); }
+
+  h2 { font-size: 19px; color: var(--gold); margin: 32px 0 16px;
+    padding-bottom: 8px; border-bottom: 2px solid var(--gold); }
+  h3 { font-size: 15px; color: var(--gold-light); margin: 20px 0 10px; }
+  h4 { font-size: 13px; color: var(--text); margin: 14px 0 8px; font-weight: 700; }
+  p { margin-bottom: 10px; font-size: 13px; }
+
+  .section-num { color: var(--gold); font-weight: 700; margin-right: 8px; }
+
+  .alert { border-radius: 8px; padding: 14px 18px; margin: 14px 0;
+    font-size: 13px; line-height: 1.6; }
+  .alert.gold { background: #3d3010; border-left: 4px solid var(--gold); }
+  .alert.green { background: #1a3d2a; border-left: 4px solid var(--green); }
+  .alert.red { background: #3d1a1a; border-left: 4px solid var(--red); }
+  .alert.blue { background: #1a2d3d; border-left: 4px solid var(--blue); }
+  .alert.yellow { background: #3d3010; border-left: 4px solid var(--yellow); }
+
+  table { width: 100%; border-collapse: collapse; font-size: 12px; margin: 14px 0; }
+  th { background: var(--brown); color: var(--gold); padding: 9px 12px;
+    text-align: left; font-weight: 600; border-bottom: 1px solid var(--gold); }
+  td { padding: 9px 12px; border-bottom: 1px solid var(--border); vertical-align: top; }
+  tr:hover td { background: var(--dark2); }
+
+  .badge { display: inline-block; padding: 2px 8px; border-radius: 3px;
+    font-size: 10px; font-weight: 700; }
+  .badge.rec { background: #1a3d2a; color: var(--green); }
+  .badge.alt { background: #3d3010; color: var(--yellow); }
+  .badge.bad { background: #3d1a1a; color: var(--red); }
+  .badge.info { background: #1a2d3d; color: var(--blue); }
+  .badge.platform { background: #1a2d3d; color: var(--blue); }
+  .badge.website { background: #3d2010; color: var(--orange); }
+  .badge.warn { background: #3d1a1a; color: var(--red); }
+
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  @media (max-width: 760px) { .grid-2 { grid-template-columns: 1fr; } }
+
+  /* === Architecture diagram === */
+  .arch { background: var(--dark2); border: 1px solid var(--border);
+    border-radius: 10px; padding: 20px; margin: 18px 0; overflow-x: auto; }
+  .arch-title { font-size: 12px; color: var(--gold); font-weight: 700;
+    margin-bottom: 16px; letter-spacing: 1px; text-transform: uppercase;
+    text-align: center; }
+  .arch-row { display: flex; gap: 12px; align-items: stretch;
+    justify-content: center; flex-wrap: wrap; min-width: 600px; }
+  .arch-box { background: var(--brown); border: 2px solid var(--border);
+    border-radius: 8px; padding: 14px 16px; min-width: 220px; flex: 1; }
+  .arch-box.platform { border-color: var(--blue); background: #1a2d3d; }
+  .arch-box.website { border-color: var(--orange); background: #3d2010; }
+  .arch-box.shared { border-color: var(--gold); background: #3d3010; }
+  .arch-box.bad { border-color: var(--red); background: #3d1a1a;
+    border-style: dashed; }
+  .arch-box .name { font-size: 14px; color: var(--gold-light); font-weight: 700;
+    margin-bottom: 6px; }
+  .arch-box .meta { font-size: 11px; color: var(--text-muted);
+    text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; }
+  .arch-box ul { margin: 6px 0 0 18px; }
+  .arch-box li { font-size: 11px; margin-bottom: 3px; color: var(--text); }
+  .arch-arrow { display: flex; align-items: center; color: var(--gold);
+    font-size: 18px; font-weight: 700; }
+
+  /* === Option card === */
+  .opt { background: var(--dark2); border: 1px solid var(--border);
+    border-radius: 10px; padding: 16px 18px; margin: 12px 0; }
+  .opt.recommended { border: 2px solid var(--green); background: #15291f; }
+  .opt-head { display: flex; align-items: center; gap: 10px; margin-bottom: 12px;
+    flex-wrap: wrap; }
+  .opt-letter { width: 32px; height: 32px; border-radius: 6px;
+    background: var(--gold); color: var(--dark); font-weight: 800;
+    display: flex; align-items: center; justify-content: center; font-size: 14px;
+    flex-shrink: 0; }
+  .opt-name { font-size: 15px; color: var(--gold); font-weight: 700;
+    flex: 1; min-width: 200px; }
+  .opt-row { display: grid; grid-template-columns: 90px 1fr; gap: 10px;
+    margin-bottom: 6px; align-items: flex-start; }
+  @media (max-width: 700px) { .opt-row { grid-template-columns: 1fr; gap: 2px; } }
+  .opt-row .lbl { font-size: 10px; color: var(--gold);
+    text-transform: uppercase; letter-spacing: 1px; padding-top: 3px; }
+  .opt-row .val { font-size: 12px; color: var(--text); }
+
+  /* === Step === */
+  .step { display: flex; gap: 14px; padding: 14px; background: var(--dark2);
+    border-radius: 8px; margin-bottom: 10px; align-items: flex-start; }
+  .step .num { flex-shrink: 0; width: 30px; height: 30px; border-radius: 50%;
+    background: var(--gold); color: var(--dark); font-weight: 700;
+    display: flex; align-items: center; justify-content: center; font-size: 13px; }
+  .step .body { flex: 1; font-size: 13px; }
+  .step .body .title { font-weight: 700; color: var(--gold-light);
+    margin-bottom: 4px; font-size: 14px; }
+  .step .body .desc { font-size: 12px; color: var(--text); }
+
+  /* === Reason card === */
+  .reason { background: var(--dark2); border-left: 3px solid var(--gold);
+    border-radius: 6px; padding: 14px 18px; margin: 10px 0; }
+  .reason .title { font-size: 13px; color: var(--gold-light); font-weight: 700;
+    margin-bottom: 6px; }
+  .reason .desc { font-size: 12px; line-height: 1.6; color: var(--text); }
+
+  pre { background: #0E0A06; color: var(--gold-light); padding: 12px 16px;
+    border-radius: 6px; font-size: 11px; font-family: 'Menlo', monospace;
+    overflow-x: auto; line-height: 1.55; border: 1px solid var(--border);
+    margin: 10px 0; }
+  code { background: var(--dark3); color: var(--gold-light); padding: 2px 6px;
+    border-radius: 3px; font-size: 11px; font-family: 'Menlo', monospace; }
+
+  ul.tight { margin: 6px 0 8px 22px; }
+  ul.tight li { margin-bottom: 3px; font-size: 12px; }
+
+  .meta-footer { font-size: 11px; color: var(--text-muted); margin-top: 36px;
+    padding-top: 14px; border-top: 1px solid var(--border); text-align: center; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>🏗 아키텍처 분리 분석 — 플랫폼 vs 홈페이지</h1>
+  <div class="sub">왜 지금 분리해야 하는가 · 어떻게 분리할 것인가</div>
+  <div class="meta">2026-05-09 · 5/12 얼리버드 오픈을 앞두고 작성</div>
+  <div class="tag">🏗 ARCHITECTURE DECISION</div>
+</div>
+
+<div class="main">
+
+  <div class="nav">
+    <a href="#summary">📌 한눈 결론</a>
+    <a href="#diag">① 현재 진단</a>
+    <a href="#why">② 왜 분리</a>
+    <a href="#options">③ 3가지 방향</a>
+    <a href="#after">④ 분리 후 모습</a>
+    <a href="#data">⑤ 데이터·도메인</a>
+    <a href="#migrate">⑥ 마이그레이션</a>
+    <a href="#risk">⑦ 위험·완화</a>
+    <a href="#next">⑧ 다음 액션</a>
+  </div>
+
+  <!-- ============ SUMMARY ============ -->
+  <h2 id="summary"><span class="section-num">📌</span>한눈 결론</h2>
+
+  <div class="alert green">
+    <strong>결론: 분리하세요. 그것도 가장 단순한 방식 — 두 개의 별도 repo로.</strong>
+    <ul class="tight" style="margin-top:8px;">
+      <li><strong>플랫폼</strong> (현재 폴더): 그대로 두고 5/12 얼리버드 오픈 준비 진행. 손대지 말 것.</li>
+      <li><strong>홈페이지</strong> (새 폴더): 별도 repo로 새로 빌드. V1 디자인, Next.js 14, Vercel.</li>
+      <li>두 앱은 <strong>도메인 + URL 링크</strong>로만 연결. 코드 공유 없음.</li>
+      <li>홈페이지의 "예약하기" CTA → 플랫폼의 신청 페이지 URL로 점프.</li>
+    </ul>
+  </div>
+
+  <div class="alert blue">
+    <strong>왜 monorepo 아니고 완전 분리인가?</strong> 플랫폼은 이미 production 운영 단계 (5/12 D-3),
+    홈페이지는 새로 빌드. 두 앱의 라이프사이클·릴리스 주기·기술 요구가 완전히 다름.
+    monorepo로 묶는 것은 <strong>나중에 정말 필요할 때</strong> 하는 게 맞음. 지금 묶으면 오버엔지니어링.
+  </div>
+
+  <!-- ============ DIAGNOSIS ============ -->
+  <h2 id="diag"><span class="section-num">①</span>현재 상황 진단</h2>
+
+  <h3>현재 폴더에 있는 것 (사용자 점검 결과 기반)</h3>
+
+  <table>
+    <tr>
+      <th>분류</th>
+      <th>구체</th>
+      <th>본질</th>
+    </tr>
+    <tr>
+      <td><strong>플랫폼 (운영 시스템)</strong></td>
+      <td>
+        <code>app/api/admin/events/[slug]/operations/...</code><br>
+        SMS 발송 (E.164 47개국)<br>
+        sms-log audit trail<br>
+        운영자 알림 (배너/칩)<br>
+        자동 점검 (npm run check)<br>
+        GitHub Actions
+      </td>
+      <td><span class="badge platform">PLATFORM</span><br>이벤트 운영 SaaS급. multi-tenant 구조 (events/[slug]).</td>
+    </tr>
+    <tr>
+      <td><strong>홈페이지 (마케팅)</strong></td>
+      <td>
+        신청 폼 (전화번호, 탱고 역할)<br>
+        다국어 KO/EN<br>
+        가격 안내 (₩190,000)<br>
+        계좌 안내 (신한 100-038-582544)
+      </td>
+      <td><span class="badge website">WEBSITE</span><br>실제로는 폼 = 플랫폼 진입점. 마케팅 페이지는 따로 없음.</td>
+    </tr>
+    <tr>
+      <td><strong>혼재되어 있는 것</strong></td>
+      <td>
+        둘이 같은 repo · 같은 빌드 · 같은 배포<br>
+        kcctf.org 도메인 한 곳을 둘이 공유<br>
+        가격·일정 데이터가 코드 곳곳에 산재
+      </td>
+      <td><span class="badge warn">RISK</span><br>한쪽 변경이 다른 쪽 영향. 책임 경계 흐림.</td>
+    </tr>
+  </table>
+
+  <div class="arch">
+    <div class="arch-title">현재 — 한 폴더 안에 둘이 섞여 있음</div>
+    <div class="arch-row">
+      <div class="arch-box bad">
+        <div class="name">kcctf-old (가칭) — 한 repo</div>
+        <div class="meta">한 도메인, 한 배포, 한 git</div>
+        <ul>
+          <li>운영 어드민 (events/[slug]/operations)</li>
+          <li>SMS 발송 시스템 (E.164)</li>
+          <li>신청 폼 (한국·국제)</li>
+          <li>가격·계좌 등 마케팅 정보</li>
+          <li>다국어 KO/EN</li>
+          <li>GitHub Actions / 빌드 캐시</li>
+        </ul>
+        <p style="font-size:10px;color:var(--text-muted);margin-top:8px;">
+        문제: 마케팅 카피 한 줄 바꾸려고 운영 시스템을 다시 빌드.<br>
+        문제: 마케팅 트래픽이 운영 어드민 성능에 영향.<br>
+        문제: 두 책임이 하나의 코드/배포에 묶임.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <h3>핵심 발견 — 사용자 직관이 옳음</h3>
+  <div class="alert gold">
+    <strong>"플랫폼은 이벤트 운영을 다룬다. 홈페이지는 마케팅을 다룬다. 둘은 본질이 다르다."</strong>
+    <br><br>
+    Eventbrite / Splash / Lu.ma처럼 <strong>이벤트 운영 SaaS는 별도 도메인 + 마케팅 사이트는 별도</strong>가 업계 표준.
+    플랫폼이 multi-tenant 구조 (events/[slug])라면 더더욱 마케팅과 분리 — 다른 페스티벌도 같은 플랫폼 위에서 운영 가능해지므로.
+  </div>
+
+  <!-- ============ WHY ============ -->
+  <h2 id="why"><span class="section-num">②</span>왜 지금 분리해야 하는가 — 6가지 이유</h2>
+
+  <div class="reason">
+    <div class="title">1. 라이프사이클이 완전히 다르다</div>
+    <div class="desc">
+    홈페이지는 <strong>주마다 변경</strong> (가격, 라인업, 카피, 사진, 회차).
+    플랫폼은 <strong>안정성·안전성 중심</strong> — 한 번 잘 만들면 거의 안 건드림.
+    두 주기를 한 배포에 묶으면 <strong>마케팅 변경이 플랫폼 안정성을 위협</strong>하고,
+    <strong>플랫폼 수정이 마케팅 deploy를 막음</strong>.
+    </div>
+  </div>
+
+  <div class="reason">
+    <div class="title">2. 책임의 경계가 다르다</div>
+    <div class="desc">
+    홈페이지 = <strong>디자인 + 콘텐츠 + SEO + 컨버전</strong>. 디자이너·운영진의 영역.<br>
+    플랫폼 = <strong>auth + DB + API + SMS + 결제 + 보안</strong>. 엔지니어의 영역.<br>
+    한 코드베이스 안에 있으면 누가 무엇을 책임지는지 흐려짐.
+    </div>
+  </div>
+
+  <div class="reason">
+    <div class="title">3. 기술 스택이 다르다</div>
+    <div class="desc">
+    홈페이지 = <strong>정적 SSG + 빠른 빌드 + CDN + 가벼운 JS</strong>. Lighthouse 90+ 목표.<br>
+    플랫폼 = <strong>SSR + DB + API + auth + 서버 로직</strong>. 보안·트랜잭션 중요.<br>
+    한 앱에 두 종류 페이지를 섞으면 둘 다 절충됨 — 마케팅도 무거워지고 플랫폼도 정적화 어려움.
+    </div>
+  </div>
+
+  <div class="reason">
+    <div class="title">4. 트래픽 패턴이 다르다</div>
+    <div class="desc">
+    홈페이지 = <strong>피크 사용 (홍보 시작·기사 노출 시 폭주)</strong>. 익명 사용자 많음.<br>
+    플랫폼 = <strong>지속적 적은 트래픽 (운영자 위주)</strong>.<br>
+    합쳐 있으면 마케팅 폭주가 운영 어드민 응답 지연 유발 가능.
+    </div>
+  </div>
+
+  <div class="reason">
+    <div class="title">5. 재사용성·확장성</div>
+    <div class="desc">
+    플랫폼이 <strong>multi-tenant (events/[slug] 구조)</strong>라면 — 다른 페스티벌도 입주 가능.
+    "엘마르", "마리포사", "DITM" 등 한국 탱고 행사들이 같은 플랫폼 안에 입주하면 SaaS가 됨.
+    이때 <strong>각 페스티벌 마케팅 사이트는 자기들 톤·도메인으로 별도</strong>가 정답.
+    플랫폼은 backend, 마케팅은 frontend per event.
+    </div>
+  </div>
+
+  <div class="reason">
+    <div class="title">6. 5/12 얼리버드 오픈이 코앞이다</div>
+    <div class="desc">
+    플랫폼은 production 가까움 (D-3). <strong>지금 손대면 안 됨</strong>.
+    그런데 새 홈페이지(V1 디자인)는 시간 들여 만들어야 함.
+    완전 분리하면 <strong>플랫폼은 그대로 5/12 오픈, 홈페이지는 따로 천천히</strong> 빌드.
+    한 repo에 합치면 — 새 홈페이지 작업이 플랫폼 안정성 흔들 위험.
+    </div>
+  </div>
+
+  <!-- ============ OPTIONS ============ -->
+  <h2 id="options"><span class="section-num">③</span>3가지 분리 방향 비교</h2>
+
+  <!-- Option 1 -->
+  <div class="opt">
+    <div class="opt-head">
+      <div class="opt-letter">1</div>
+      <div class="opt-name">monorepo (한 폴더 안에 두 앱)</div>
+      <div><span class="badge alt">대안 — 나중에</span></div>
+    </div>
+    <div class="opt-row">
+      <div class="lbl">구조</div>
+      <div class="val">
+<pre>kcctf/
+├── apps/
+│   ├── platform/   ← 기존 코드
+│   └── website/    ← 새 홈페이지
+├── packages/       ← 공유 (디자인 토큰, 타입)
+└── package.json    (pnpm workspaces 또는 turborepo)</pre>
+      </div>
+    </div>
+    <div class="opt-row">
+      <div class="lbl">장점</div>
+      <div class="val">한 곳에서 관리, 공유 코드 가능, 일괄 PR</div>
+    </div>
+    <div class="opt-row">
+      <div class="lbl">단점</div>
+      <div class="val">
+        <ul class="tight" style="margin:0;">
+          <li>설정 복잡 — turborepo, workspaces, 공유 패키지 빌드 순서</li>
+          <li>5/12 오픈 직전인 플랫폼 코드 이동 리스크</li>
+          <li>배포 분리 → 둘 다 신경 써야 함 (Vercel projects 별도)</li>
+          <li>지금 단계에서 오버엔지니어링</li>
+        </ul>
+      </div>
+    </div>
+    <div class="opt-row">
+      <div class="lbl">언제</div>
+      <div class="val">두 앱이 모두 안정화된 후 + 공유 자원이 명확히 생긴 후</div>
+    </div>
+  </div>
+
+  <!-- Option 2 -->
+  <div class="opt recommended">
+    <div class="opt-head">
+      <div class="opt-letter">2</div>
+      <div class="opt-name">완전 분리 — 두 개의 별도 repo</div>
+      <div><span class="badge rec">추천</span></div>
+    </div>
+    <div class="opt-row">
+      <div class="lbl">구조</div>
+      <div class="val">
+<pre>~/projects/kcctf-platform/   ← 기존 그대로 (손대지 말 것)
+~/projects/kcctf-website/    ← 새 폴더 (이번 작업)
+
+# Git: 두 개의 독립 repo
+# Vercel: 두 개의 독립 project
+# 도메인: kcctf.org (홈페이지) + apply.kcctf.org (플랫폼)</pre>
+      </div>
+    </div>
+    <div class="opt-row">
+      <div class="lbl">장점</div>
+      <div class="val">
+        <ul class="tight" style="margin:0;">
+          <li><strong>플랫폼은 손 안 대도 됨</strong> → 5/12 오픈 안전</li>
+          <li>홈페이지는 깨끗한 새 시작</li>
+          <li>두 앱이 서로 영향 0</li>
+          <li>설정 단순 — 표준 Next.js 두 개</li>
+          <li>누가 무엇을 책임지는지 명확</li>
+          <li>나중에 monorepo로 옮길지는 그때 결정</li>
+        </ul>
+      </div>
+    </div>
+    <div class="opt-row">
+      <div class="lbl">단점</div>
+      <div class="val">
+        공유 데이터 동기화는 수동 (가격·일정 등) — 단, 자주 바뀌는 게 아니라서 큰 부담 없음.
+        디자인 토큰 공유 안 되지만 — 두 앱이 톤 다른 게 오히려 자연스러움 (마케팅 V1 vs 어드민 미니멀).
+      </div>
+    </div>
+    <div class="opt-row">
+      <div class="lbl">언제</div>
+      <div class="val">지금. 가장 단순하고 가장 안전한 첫걸음.</div>
+    </div>
+  </div>
+
+  <!-- Option 3 -->
+  <div class="opt">
+    <div class="opt-head">
+      <div class="opt-letter">3</div>
+      <div class="opt-name">현 폴더 안에서 디렉토리만 분리</div>
+      <div><span class="badge bad">비추</span></div>
+    </div>
+    <div class="opt-row">
+      <div class="lbl">구조</div>
+      <div class="val">
+<pre>kcctf/
+├── platform/   ← 기존 코드 이동
+└── website/    ← 새 홈페이지
+# 같은 git, 같은 빌드?</pre>
+      </div>
+    </div>
+    <div class="opt-row">
+      <div class="lbl">단점</div>
+      <div class="val">
+        <strong>어중간함</strong> — 결국 monorepo로 가야 함. 한 repo에 두 빌드 모드 섞이면 CI 복잡, 배포 꼬임.
+        Option 1 또는 Option 2가 정답.
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ AFTER ============ -->
+  <h2 id="after"><span class="section-num">④</span>분리 후 — 두 앱의 모습</h2>
+
+  <div class="arch">
+    <div class="arch-title">분리 후 — 두 앱이 도메인으로만 만남</div>
+    <div class="arch-row">
+      <div class="arch-box website">
+        <div class="meta">🌹 마케팅 사이트</div>
+        <div class="name">kcctf-website</div>
+        <p style="font-size:11px;color:var(--text-muted);margin:6px 0;">
+        <code>kcctf.org</code></p>
+        <ul>
+          <li>Hero (V1 디자인)</li>
+          <li>Two Orchestras 섹션</li>
+          <li>Schedule, DJs, Dancers</li>
+          <li>Venue, Tickets 안내</li>
+          <li>About, Contact</li>
+          <li>다국어 KO/EN</li>
+          <li>SEO 최적화</li>
+        </ul>
+        <p style="font-size:10px;color:var(--gold-light);margin-top:8px;font-weight:700;">
+        Next.js 14 SSG · Vercel · Tailwind</p>
+      </div>
+
+      <div class="arch-arrow">→</div>
+
+      <div class="arch-box platform">
+        <div class="meta">⚙️ 운영 플랫폼</div>
+        <div class="name">kcctf-platform</div>
+        <p style="font-size:11px;color:var(--text-muted);margin:6px 0;">
+        <code>apply.kcctf.org</code> (또는 <code>kcctf.app</code>)</p>
+        <ul>
+          <li>신청 폼 (KO/EN)</li>
+          <li>SMS 발송 (E.164 국제)</li>
+          <li>운영자 어드민</li>
+          <li>sms-log audit trail</li>
+          <li>큐알 입장 처리</li>
+          <li>events/[slug] multi-tenant</li>
+          <li>결제·환불 처리</li>
+        </ul>
+        <p style="font-size:10px;color:var(--gold-light);margin-top:8px;font-weight:700;">
+        Next.js + DB + API · 현재 그대로</p>
+      </div>
+    </div>
+
+    <div style="margin-top:16px;padding:12px;background:var(--dark3);border-radius:6px;font-size:11px;color:var(--text-muted);text-align:center;">
+    홈페이지의 <strong style="color:var(--gold);">"예약하기"</strong> CTA →
+    플랫폼의 <strong style="color:var(--gold);">apply.kcctf.org/events/chuncheon-2026/register</strong> 으로 점프.
+    <br>
+    <strong style="color:var(--gold);">큐알 코드</strong>는 플랫폼이 발급하고 입장 시 검증.
+    홈페이지는 마케팅과 첫 입구만.
+    </div>
+  </div>
+
+  <h3>책임 매트릭스</h3>
+  <table>
+    <tr>
+      <th>책임</th>
+      <th>홈페이지 (kcctf-website)</th>
+      <th>플랫폼 (kcctf-platform)</th>
+    </tr>
+    <tr><td>방문자 첫 인상 / 브랜드</td><td>✅</td><td>—</td></tr>
+    <tr><td>SEO / 검색 노출</td><td>✅</td><td>—</td></tr>
+    <tr><td>다국어 마케팅 (KO/EN)</td><td>✅</td><td>(폼 다국어만)</td></tr>
+    <tr><td>가격·라인업·일정 노출</td><td>✅ (정적)</td><td>(폼에서 표시 검증용)</td></tr>
+    <tr><td>등록 폼 / 데이터 수집</td><td>—</td><td>✅</td></tr>
+    <tr><td>SMS / 이메일 발송</td><td>—</td><td>✅</td></tr>
+    <tr><td>운영자 어드민</td><td>—</td><td>✅</td></tr>
+    <tr><td>큐알 발급 / 입장 처리</td><td>—</td><td>✅</td></tr>
+    <tr><td>결제 / 환불</td><td>—</td><td>✅</td></tr>
+    <tr><td>이벤트 archive</td><td>(연도별 페이지)</td><td>(데이터)</td></tr>
+  </table>
+
+  <!-- ============ DATA ============ -->
+  <h2 id="data"><span class="section-num">⑤</span>데이터·도메인 전략</h2>
+
+  <h3>도메인 설계</h3>
+  <table>
+    <tr><th>역할</th><th>도메인</th><th>호스팅</th><th>비고</th></tr>
+    <tr>
+      <td>마케팅 사이트</td>
+      <td><code>kcctf.org</code></td>
+      <td>Vercel (새)</td>
+      <td>현재 도메인을 새 사이트로 옮김</td>
+    </tr>
+    <tr>
+      <td>운영 플랫폼</td>
+      <td><code>apply.kcctf.org</code></td>
+      <td>현재 그대로</td>
+      <td>서브도메인 추가만 하면 됨</td>
+    </tr>
+    <tr>
+      <td>스테이징 (홈페이지 비교)</td>
+      <td><code>kcctf-2026.vercel.app</code></td>
+      <td>Vercel 기본</td>
+      <td>도메인 swap 전 비교용</td>
+    </tr>
+    <tr>
+      <td>이전 사이트 archive</td>
+      <td><code>archive.kcctf.org</code> (선택)</td>
+      <td>Firebase 그대로</td>
+      <td>2024·2025 자료 보존</td>
+    </tr>
+  </table>
+
+  <h3>공유 데이터 — 어디가 진실인가</h3>
+
+  <div class="alert gold">
+    <strong>진실의 출처 = <code>운영기준.md</code></strong> (Cowork 폴더의 마스터 문서)<br><br>
+    가격·라인업·일정·장소 등은 <strong>운영기준.md를 보고 두 앱에 각자 하드코딩</strong>.
+    자주 바뀌지 않으니 (얼리버드 마감 같은 건 한 번 정해지면 끝) 수동 동기화로 충분.
+    <br><br>
+    <strong>나중에 필요하면</strong>: 플랫폼이 가격·일정 API 제공 → 홈페이지가 빌드 시 fetch.
+    또는 Sanity·Notion API 같은 headless CMS. 지금은 오버엔지니어링.
+  </div>
+
+  <h3>유저 흐름</h3>
+  <pre>1. 방문자가 kcctf.org 접속 → 마케팅 사이트 (V1 디자인) 노출
+2. "예약하기" 클릭 → apply.kcctf.org/events/chuncheon-2026/register 이동
+3. 플랫폼 폼 작성 (전화·국적·역할 등) → 입금 안내
+4. 입금 확인 후 운영자가 어드민에서 승인 → 큐알 발급 → SMS/이메일
+5. 행사장 입장 시 플랫폼 큐알 검증
+6. 행사 종료 후 플랫폼은 데이터 archive, 홈페이지는 "2026 다시 보기" 페이지로 변환</pre>
+
+  <!-- ============ MIGRATE ============ -->
+  <h2 id="migrate"><span class="section-num">⑥</span>마이그레이션 단계 (이번 주 + 다음 주)</h2>
+
+  <div class="alert blue">
+    <strong>핵심 원칙</strong>: 플랫폼은 <strong>5/12 얼리버드 오픈까지 절대 손대지 않는다</strong>.
+    홈페이지는 별도로 만들고, 5/12 이후에 도메인 swap 고민.
+  </div>
+
+  <div class="step">
+    <div class="num">1</div>
+    <div class="body">
+      <div class="title">이번 주 (5/9~5/11) — 플랫폼 안정화 우선</div>
+      <div class="desc">
+      플랫폼은 발신번호 정책 결정(시나리오 A vs B) + E2E 테스트 + 얼리버드 오픈 준비.
+      홈페이지 작업은 <strong>새 폴더에서 병렬 진행</strong>이지만 플랫폼 코드는 절대 안 건드림.
+      </div>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="num">2</div>
+    <div class="body">
+      <div class="title">5/12 얼리버드 오픈 (월) — D-Day</div>
+      <div class="desc">
+      플랫폼 기존 도메인(kcctf.org/현 사이트)으로 그대로 오픈.
+      이때 마케팅은 현재 사이트 그대로.<br>
+      <strong>이 시점에 새 홈페이지는 아직 라이브 X</strong> — 스테이징에만.
+      </div>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="num">3</div>
+    <div class="body">
+      <div class="title">5/12 이후 — 홈페이지 본격 빌드</div>
+      <div class="desc">
+      얼리버드 발신번호 안정화 후, 새 폴더 <code>~/projects/kcctf-website/</code>에서 V1 디자인 새 사이트 작업.
+      Claude Code로 진행. CLAUDE.md 따라가면 자동.
+      </div>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="num">4</div>
+    <div class="body">
+      <div class="title">홈페이지 빌드 완료 → 스테이징에서 운영팀 비교</div>
+      <div class="desc">
+      <code>kcctf-2026.vercel.app</code>로 배포 → 운영팀 검수.<br>
+      이때 플랫폼은 <code>kcctf.org/register?slug=chuncheon-2026</code>으로 라이브 운영 중.
+      </div>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="num">5</div>
+    <div class="body">
+      <div class="title">도메인 분리 — 두 단계로</div>
+      <div class="desc">
+      <strong>5-1.</strong> 플랫폼을 <code>apply.kcctf.org</code>로 옮김 (서브도메인 DNS 추가).<br>
+      <strong>5-2.</strong> <code>kcctf.org</code>를 새 홈페이지(Vercel)로 변경.<br>
+      플랫폼의 기존 URL 패턴(<code>events/[slug]</code>)은 <code>apply.kcctf.org/events/[slug]</code>로 자연스럽게 이전.
+      </div>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="num">6</div>
+    <div class="body">
+      <div class="title">기존 폼 URL Redirect 설정</div>
+      <div class="desc">
+      이미 발송된 카톡·홍보물의 <code>kcctf.org/...</code> 링크가 새 도메인으로 자동 리디렉트되도록.
+      Vercel rewrites 또는 Next.js redirects 활용.
+      </div>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="num">7</div>
+    <div class="body">
+      <div class="title">홈페이지 → 플랫폼 CTA 연결</div>
+      <div class="desc">
+      홈페이지 "예약하기" 버튼이 <code>apply.kcctf.org/events/chuncheon-2026/register</code>으로 점프하도록.
+      서브도메인 + URL 파라미터로 자연스럽게.
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ RISK ============ -->
+  <h2 id="risk"><span class="section-num">⑦</span>위험 요소 + 완화책</h2>
+
+  <table>
+    <tr>
+      <th>위험</th>
+      <th>완화책</th>
+    </tr>
+    <tr>
+      <td>도메인 변경 시 SEO 일시 하락</td>
+      <td>301 redirect 정확히 설정. Google Search Console에 새 사이트 제출. 한 달이면 회복.</td>
+    </tr>
+    <tr>
+      <td>이미 발송된 홍보물·SMS의 <code>kcctf.org/...</code> 링크가 끊김</td>
+      <td>Vercel rewrites로 옛 경로(<code>/register</code> 등)를 새 플랫폼 URL로 자동 리디렉트.</td>
+    </tr>
+    <tr>
+      <td>플랫폼 도메인 이전 시 다운타임</td>
+      <td>5/12 얼리버드 오픈 후, <strong>트래픽 적은 시간(새벽)</strong>에 DNS 변경. TTL 짧게 설정.</td>
+    </tr>
+    <tr>
+      <td>가격·일정 정보가 두 앱에 따로 — 불일치 위험</td>
+      <td>운영기준.md를 master로. 두 앱 변경할 때 <strong>같은 PR 또는 같은 commit message에 cross-ref</strong>. 또는 하나로 옮길 때 함께.</td>
+    </tr>
+    <tr>
+      <td>홈페이지·플랫폼 톤이 달라 보임</td>
+      <td>실제로 그래도 됨 — 마케팅 사이트는 V1 인쇄물 톤(감성), 플랫폼은 미니멀 어드민 톤(실용). 둘이 같을 필요 없음.</td>
+    </tr>
+    <tr>
+      <td>두 repo 관리 부담</td>
+      <td>당장은 두 곳만 보면 됨. 부담스럽지 않음. <strong>나중에 정말 필요하면 monorepo로 합치기 가능</strong> (반대 방향은 어려움).</td>
+    </tr>
+    <tr>
+      <td>이종화 이사장의 도메인 권한 협조</td>
+      <td>한 번만 협조 받으면 됨 (DNS 추가 + 변경). 카톡으로 정확히 어떤 변경 필요한지 정리해 보냄.</td>
+    </tr>
+  </table>
+
+  <!-- ============ NEXT ============ -->
+  <h2 id="next"><span class="section-num">⑧</span>다음 액션</h2>
+
+  <div class="alert gold">
+    <strong>제 강력 추천 — 이 순서대로</strong>
+    <ol style="margin:8px 0 0 22px;">
+      <li>이번 주 (5/9~5/11): <strong>플랫폼 그대로 두고 5/12 얼리버드 오픈 준비 집중</strong>. 발신번호 정책 결정 + E2E 테스트.</li>
+      <li>5/12 (월): 얼리버드 오픈 — 현재 사이트 그대로.</li>
+      <li>5/13 이후: 새 폴더 <code>~/projects/kcctf-website/</code>에서 V1 디자인 새 홈페이지 빌드 시작. Claude Code로.</li>
+      <li>홈페이지 완성 → 스테이징에서 비교 → 운영팀 컨펌 → 도메인 분리 (플랫폼 → apply.kcctf.org, 홈페이지 → kcctf.org).</li>
+    </ol>
+  </div>
+
+  <h3>지금 바로 할 일 (포올님)</h3>
+  <ul class="tight">
+    <li><strong>이번 주는 플랫폼만 봐주세요</strong>. 발신번호(시나리오 A/B), E2E 테스트, 5/12 오픈 준비.</li>
+    <li>이 리포트를 보고 <strong>분리 방향(Option 2 추천)에 동의하시는지</strong> 결정.</li>
+    <li>이종화 이사장께 <strong>도메인 분리 가능성 미리 언급</strong> (지금 결정은 아니고, 5/13 이후 진행).</li>
+  </ul>
+
+  <h3>저(Claude)에게 신호 주실 것</h3>
+  <ul class="tight">
+    <li><strong>"Option 2로 가자"</strong> → 5/13에 시작할 새 홈페이지용 패키지 + CLAUDE.md 미리 만들어 둠. 5/13에 노트북에서 바로 시작 가능.</li>
+    <li><strong>"monorepo로 가고 싶다"</strong> → 이유 들어보고 다시 분석.</li>
+    <li><strong>"5/12 오픈 후 다시 얘기하자"</strong> → 이번 주는 플랫폼 안정화에 집중. 다음 주 다시.</li>
+  </ul>
+
+  <div class="alert green">
+    <strong>제일 중요한 한 가지</strong>: <strong>지금 새 홈페이지 작업 시작하지 마세요.</strong>
+    플랫폼 5/12 오픈이 더 중요. 새 홈페이지는 D+5~D+30 사이에 충분히 만들 수 있음.
+    분리 결정만 지금 해두고, 빌드는 5/13 이후로.
+  </div>
+
+  <div class="meta-footer">
+    KCCTF 2026 아키텍처 분리 분석 v1.0 · 2026-05-09 · 5/12 얼리버드 D-3
+  </div>
+
+</div>
+
+</body>
+</html>

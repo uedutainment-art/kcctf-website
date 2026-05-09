@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KCCTF 2026 — 스테이징·교체 + Claude Code 작업 기획</title>
+<style>
+  :root {
+    --gold: #C9A84C;
+    --gold-light: #E8C96A;
+    --dark: #1A1410;
+    --dark2: #252018;
+    --dark3: #2E2820;
+    --brown: #3D3020;
+    --text: #E8E0D0;
+    --text-muted: #A09880;
+    --green: #4CAF7D;
+    --yellow: #E8B84B;
+    --red: #E05555;
+    --blue: #5B9BD5;
+    --purple: #9B7BD5;
+    --orange: #E8844B;
+    --border: #3D3020;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Apple SD Gothic Neo', 'Malgun Gothic', Arial, sans-serif;
+    background: var(--dark); color: var(--text); min-height: 100vh; line-height: 1.6; }
+
+  .header { background: linear-gradient(135deg, var(--dark2), var(--brown));
+    border-bottom: 2px solid var(--gold); padding: 28px 32px; text-align: center; }
+  .header h1 { font-size: 22px; color: var(--gold); letter-spacing: 1px; }
+  .header .sub { font-size: 13px; color: var(--text-muted); margin-top: 6px; }
+  .header .meta { font-size: 11px; color: var(--text-muted); margin-top: 4px; }
+  .header .tag { display: inline-block; margin-top: 10px;
+    padding: 3px 10px; border: 1px solid var(--gold); border-radius: 20px;
+    font-size: 11px; color: var(--gold); letter-spacing: 1px; }
+
+  .main { max-width: 1100px; margin: 0 auto; padding: 28px 24px; }
+
+  .nav { display: flex; flex-wrap: wrap; gap: 8px; padding: 14px 20px;
+    background: var(--dark2); border: 1px solid var(--border); border-radius: 8px;
+    margin-bottom: 28px; font-size: 12px; }
+  .nav a { color: var(--gold); text-decoration: none; padding: 4px 10px;
+    border-radius: 4px; transition: background 0.15s; }
+  .nav a:hover { background: var(--brown); }
+
+  h2 { font-size: 19px; color: var(--gold); margin: 32px 0 16px;
+    padding-bottom: 8px; border-bottom: 2px solid var(--gold); }
+  h3 { font-size: 15px; color: var(--gold-light); margin: 20px 0 10px; }
+  h4 { font-size: 13px; color: var(--text); margin: 14px 0 8px; font-weight: 700; }
+  p { margin-bottom: 10px; font-size: 13px; }
+
+  .section-num { color: var(--gold); font-weight: 700; margin-right: 8px; }
+
+  .alert { border-radius: 8px; padding: 14px 18px; margin: 14px 0;
+    font-size: 13px; line-height: 1.6; }
+  .alert.gold { background: #3d3010; border-left: 4px solid var(--gold); }
+  .alert.green { background: #1a3d2a; border-left: 4px solid var(--green); }
+  .alert.red { background: #3d1a1a; border-left: 4px solid var(--red); }
+  .alert.blue { background: #1a2d3d; border-left: 4px solid var(--blue); }
+  .alert.yellow { background: #3d3010; border-left: 4px solid var(--yellow); }
+
+  table { width: 100%; border-collapse: collapse; font-size: 12px; margin: 14px 0; }
+  th { background: var(--brown); color: var(--gold); padding: 9px 12px;
+    text-align: left; font-weight: 600; border-bottom: 1px solid var(--gold); }
+  td { padding: 9px 12px; border-bottom: 1px solid var(--border); vertical-align: top; }
+  tr:hover td { background: var(--dark2); }
+
+  .badge { display: inline-block; padding: 2px 8px; border-radius: 3px;
+    font-size: 10px; font-weight: 700; }
+  .badge.rec { background: #1a3d2a; color: var(--green); }
+  .badge.alt { background: #3d3010; color: var(--yellow); }
+  .badge.bad { background: #3d1a1a; color: var(--red); }
+  .badge.info { background: #1a2d3d; color: var(--blue); }
+  .badge.persona { background: #2d2a3d; color: var(--purple); }
+
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  @media (max-width: 760px) { .grid-2 { grid-template-columns: 1fr; } }
+
+  .card { background: var(--dark2); border: 1px solid var(--border);
+    border-radius: 8px; padding: 16px; margin: 10px 0; }
+  .card h4 { color: var(--gold); margin-top: 0; }
+  .card .small { font-size: 11px; color: var(--text-muted); }
+
+  /* === Option card === */
+  .opt { background: var(--dark2); border: 1px solid var(--border);
+    border-radius: 10px; padding: 16px 18px; margin: 12px 0; }
+  .opt.recommended { border: 2px solid var(--green); background: #15291f; }
+  .opt-head { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; flex-wrap: wrap; }
+  .opt-letter { width: 32px; height: 32px; border-radius: 6px;
+    background: var(--gold); color: var(--dark); font-weight: 800;
+    display: flex; align-items: center; justify-content: center; font-size: 14px; flex-shrink: 0; }
+  .opt-name { font-size: 15px; color: var(--gold); font-weight: 700; flex: 1; min-width: 200px; }
+  .opt-row { display: grid; grid-template-columns: 90px 1fr; gap: 10px;
+    margin-bottom: 6px; align-items: flex-start; }
+  @media (max-width: 700px) { .opt-row { grid-template-columns: 1fr; gap: 2px; } }
+  .opt-row .lbl { font-size: 10px; color: var(--gold);
+    text-transform: uppercase; letter-spacing: 1px; padding-top: 3px; }
+  .opt-row .val { font-size: 12px; color: var(--text); }
+
+  /* === Step === */
+  .step { display: flex; gap: 14px; padding: 14px; background: var(--dark2);
+    border-radius: 8px; margin-bottom: 10px; align-items: flex-start; }
+  .step .num { flex-shrink: 0; width: 30px; height: 30px; border-radius: 50%;
+    background: var(--gold); color: var(--dark); font-weight: 700;
+    display: flex; align-items: center; justify-content: center; font-size: 13px; }
+  .step .body { flex: 1; font-size: 13px; }
+  .step .body .title { font-weight: 700; color: var(--gold-light);
+    margin-bottom: 4px; font-size: 14px; }
+  .step .body .desc { font-size: 12px; color: var(--text); }
+
+  /* === Code block === */
+  pre { background: #0E0A06; color: var(--gold-light); padding: 14px 16px;
+    border-radius: 6px; font-size: 11px; font-family: 'Menlo', 'Consolas', monospace;
+    overflow-x: auto; line-height: 1.55; border: 1px solid var(--border);
+    margin: 10px 0; }
+  pre.term::before { content: '$ '; color: var(--green); }
+  code { background: var(--dark3); color: var(--gold-light); padding: 2px 6px;
+    border-radius: 3px; font-size: 11px; font-family: 'Menlo', monospace; }
+
+  /* === Diagram === */
+  .diagram { background: var(--dark2); border: 1px solid var(--border);
+    border-radius: 8px; padding: 18px; margin: 14px 0; overflow-x: auto; }
+  .flow-row { display: grid; grid-template-columns: 1fr auto 1fr auto 1fr;
+    gap: 8px; align-items: center; min-width: 700px; }
+  .flow-box { background: var(--brown); border: 1px solid var(--gold);
+    border-radius: 6px; padding: 10px 12px; text-align: center; font-size: 12px; }
+  .flow-box .name { color: var(--gold); font-weight: 700; }
+  .flow-box .sub { font-size: 10px; color: var(--text-muted); margin-top: 4px; }
+  .flow-box.current { background: #1a2d3d; border-color: var(--blue); }
+  .flow-box.current .name { color: var(--blue); }
+  .flow-box.new { background: #15291f; border-color: var(--green); }
+  .flow-box.new .name { color: var(--green); }
+  .flow-arrow { color: var(--gold); font-size: 18px; text-align: center;
+    font-weight: 700; }
+
+  ul.tight { margin: 6px 0 8px 22px; }
+  ul.tight li { margin-bottom: 3px; font-size: 12px; }
+
+  .meta-footer { font-size: 11px; color: var(--text-muted); margin-top: 36px;
+    padding-top: 14px; border-top: 1px solid var(--border); text-align: center; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>🚀 KCCTF 2026 — 스테이징·교체 전략 + Claude Code 작업 기획</h1>
+  <div class="sub">현재 사이트 보존 · 별도 빌드 · 비교 후 교체</div>
+  <div class="meta">2026-05-09 · 노트북 Claude Code 진행용</div>
+  <div class="tag">📋 PLANNING — NO PRODUCTION DEPLOY</div>
+</div>
+
+<div class="main">
+
+  <div class="nav">
+    <a href="#summary">📌 요약</a>
+    <a href="#current">① 현재 사이트</a>
+    <a href="#options">② 4가지 옵션</a>
+    <a href="#flow">③ 진행 흐름</a>
+    <a href="#package">④ 노트북 패키지</a>
+    <a href="#claudemd">⑤ CLAUDE.md</a>
+    <a href="#decisions">⑥ 운영팀 확인</a>
+    <a href="#next">⑦ 다음 액션</a>
+  </div>
+
+  <!-- ============ SUMMARY ============ -->
+  <h2 id="summary"><span class="section-num">📌</span>한눈 요약</h2>
+
+  <div class="alert green">
+    <strong>핵심 원칙</strong>:
+    <ul class="tight" style="margin-top:6px;">
+      <li>현재 kcctf.org는 <strong>그대로 둔다</strong> (서비스 중단 0)</li>
+      <li>새 사이트는 <strong>별도 URL에 빌드</strong> → 운영팀이 비교 가능하게</li>
+      <li>OK 떨어지면 <strong>도메인만 swap</strong> (DNS 변경)</li>
+      <li>이전 사이트는 <strong>archive로 보존</strong> 가능 (또는 이종화 이사장 시스템에 그대로)</li>
+    </ul>
+  </div>
+
+  <div class="alert blue">
+    <strong>추천 옵션 = Option A</strong>: <code>kcctf-2026.vercel.app</code> 임시 URL로 빌드 → 비교 → 컨펌되면 kcctf.org DNS 변경.
+    DNS 권한 없어도 진행 가능, 비용 0, Vercel 표준 흐름.
+  </div>
+
+  <div class="alert gold">
+    <strong>실제 코딩</strong>: 노트북 Claude Code에서 진행.<br>
+    이 Cowork에서는 <strong>패키지(자산 + 명세서) 만들기</strong>까지. 노트북에 옮기면 Claude Code가 명세서 따라 빌드.
+  </div>
+
+  <!-- ============ CURRENT SITE ANALYSIS ============ -->
+  <h2 id="current"><span class="section-num">①</span>현재 사이트 분석</h2>
+
+  <p>외부에서 확인 가능한 정보로 분석한 결과입니다 (코드 접근 권한이 있으면 더 정확하게 보충 가능).</p>
+
+  <table>
+    <tr>
+      <th>항목</th>
+      <th>현재 상태</th>
+      <th>의미</th>
+    </tr>
+    <tr>
+      <td>도메인</td>
+      <td><code>kcctf.org</code></td>
+      <td>커스텀 도메인 — DNS는 누가 관리하는지 확인 필요 (이종화 이사장?)</td>
+    </tr>
+    <tr>
+      <td>실제 호스팅</td>
+      <td><code>kcctf-5047d.web.app</code></td>
+      <td>Firebase Hosting. <code>kcctf-5047d</code>는 Firebase 프로젝트 ID.</td>
+    </tr>
+    <tr>
+      <td>Canonical URL</td>
+      <td><code>kcctf-5047d.web.app/events/<strong>chuncheon-citf-2026</strong></code></td>
+      <td><strong>multi-event 구조</strong> — KCCTF는 더 큰 시스템의 한 이벤트 페이지일 가능성.<br>
+      "events/" 경로는 다른 이벤트도 호스팅 가능하게 설계됨.</td>
+    </tr>
+    <tr>
+      <td>프레임워크</td>
+      <td>Next.js (이미지 URL이 <code>/_next/image?url=...</code> 형태)</td>
+      <td>현재 사이트도 Next.js. 우리도 같은 스택으로 가서 호환성 좋음.</td>
+    </tr>
+    <tr>
+      <td>i18n</td>
+      <td><code>?lang=ko</code> / <code>?lang=en</code></td>
+      <td>쿼리 파라미터 방식. 우리는 <code>/ko</code> / <code>/en</code> 라우트 방식으로 가는 게 SEO 더 좋음.</td>
+    </tr>
+    <tr>
+      <td>이미지 자산 위치</td>
+      <td><code>/images/events/chuncheon-citf-2026/*</code></td>
+      <td>이벤트별로 폴더 분리. 우리 새 사이트는 단일 이벤트라 <code>/public</code> 직접.</td>
+    </tr>
+  </table>
+
+  <h3>이전 작업 방식 추정</h3>
+  <div class="alert yellow">
+    <strong>추정</strong>: 누군가(이종화 이사장 또는 협력 개발자)가 만든 <strong>multi-event Firebase 프로젝트</strong>에
+    KCCTF 페이지를 한 이벤트로 추가. <code>kcctf.org</code> 도메인을 그 프로젝트로 매핑.<br><br>
+    <strong>확인 필요</strong>:
+    <ul class="tight" style="margin-top:8px;">
+      <li>Firebase 프로젝트 <code>kcctf-5047d</code>의 소유자/관리자가 누구인지</li>
+      <li>도메인 <code>kcctf.org</code> 등록자(registrar)와 DNS 관리자가 누구인지</li>
+      <li>이전에 다른 회차(2024, 2025)는 같은 시스템 안에서 어떻게 보존되었는지</li>
+    </ul>
+    <p style="margin-top:8px;">→ 이종화 이사장에게 확인. 운영기준에는 이 정보 없음.</p>
+  </div>
+
+  <!-- ============ OPTIONS ============ -->
+  <h2 id="options"><span class="section-num">②</span>비교 후 교체 — 4가지 옵션</h2>
+
+  <p>새 사이트를 어디에 빌드해서 운영팀이 비교할지의 옵션들입니다.</p>
+
+  <!-- Option A -->
+  <div class="opt recommended">
+    <div class="opt-head">
+      <div class="opt-letter">A</div>
+      <div class="opt-name">Vercel 기본 URL — kcctf-2026.vercel.app</div>
+      <div><span class="badge rec">추천</span></div>
+    </div>
+    <div class="opt-row">
+      <div class="lbl">방식</div>
+      <div class="val">노트북 Claude Code → GitHub repo 푸시 → Vercel에 자동 배포 → <code>kcctf-2026.vercel.app</code> 받음</div>
+    </div>
+    <div class="opt-row">
+      <div class="lbl">장점</div>
+      <div class="val">
+        <ul class="tight" style="margin:0;">
+          <li>DNS 권한 없어도 즉시 가능</li>
+          <li>비용 0 (Vercel 무료 티어 충분)</li>
+          <li>매 PR마다 preview URL 자동 생성 — 변경 사항 비교 쉬움</li>
+          <li>운영팀에 URL 공유만 하면 됨 (이사장 협조 최소)</li>
+        </ul>
+      </div>
+    </div>
+    <div class="opt-row">
+      <div class="lbl">단점</div>
+      <div class="val">URL이 <code>.vercel.app</code> — 커스텀 도메인 아님 (비교 단계에서만)</div>
+    </div>
+    <div class="opt-row">
+      <div class="lbl">교체</div>
+      <div class="val">컨펌 후 kcctf.org DNS A/CNAME을 Vercel로 변경 (이종화 협조 필요, 5분 작업)</div>
+    </div>
+  </div>
+
+  <!-- Option B -->
+  <div class="opt">
+    <div class="opt-head">
+      <div class="opt-letter">B</div>
+      <div class="opt-name">서브도메인 — next.kcctf.org 또는 v2.kcctf.org</div>
+      <div><span class="badge alt">대안</span></div>
+    </div>
+    <div class="opt-row">
+      <div class="lbl">방식</div>
+      <div class="val">Vercel에 빌드 + DNS에 서브도메인 추가 (CNAME → vercel)</div>
+    </div>
+    <div class="opt-row">
+      <div class="lbl">장점</div>
+      <div class="val">"느낌"이 좋음 — 운영팀이 보기에 진짜 사이트 같음. URL 공유 자연스러움.</div>
+    </div>
+    <div class="opt-row">
+      <div class="lbl">단점</div>
+      <div class="val">DNS 권한 필요 (이종화 이사장 협조 필요, 한 번)</div>
+    </div>
+    <div class="opt-row">
+      <div class="lbl">교체</div>
+      <div class="val">메인 도메인 DNS만 추가 변경 (서브도메인은 그대로 두거나 archive로)</div>
+    </div>
+  </div>
+
+  <!-- Option C -->
+  <div class="opt">
+    <div class="opt-head">
+      <div class="opt-letter">C</div>
+      <div class="opt-name">새 도메인 구매 — kcctf2026.com 또는 .org</div>
+      <div><span class="badge alt">대안</span></div>
+    </div>
+    <div class="opt-row">
+      <div class="lbl">방식</div>
+      <div class="val">새 도메인 등록 (₩15-30만/년) + Vercel 연결</div>
+    </div>
+    <div class="opt-row">
+      <div class="lbl">장점</div>
+      <div class="val">이종화 협조 0 — 완전 독립적으로 진행 가능</div>
+    </div>
+    <div class="opt-row">
+      <div class="lbl">단점</div>
+      <div class="val">비용 발생, 메인 도메인과 헷갈릴 수 있음, 향후 연도별 도메인 관리 부담</div>
+    </div>
+  </div>
+
+  <!-- Option D -->
+  <div class="opt">
+    <div class="opt-head">
+      <div class="opt-letter">D</div>
+      <div class="opt-name">현재 시스템 안에서 수정</div>
+      <div><span class="badge bad">비추</span></div>
+    </div>
+    <div class="opt-row">
+      <div class="lbl">방식</div>
+      <div class="val">기존 Firebase 프로젝트의 <code>chuncheon-citf-2026</code> 페이지 직접 편집</div>
+    </div>
+    <div class="opt-row">
+      <div class="lbl">장점</div>
+      <div class="val">도메인·DNS 작업 없음</div>
+    </div>
+    <div class="opt-row">
+      <div class="lbl">단점</div>
+      <div class="val">
+        <ul class="tight" style="margin:0;">
+          <li>기존 코드베이스 접근 권한 필요 (이종화 협력 개발자)</li>
+          <li>multi-event 시스템 안의 다른 이벤트와 충돌 위험</li>
+          <li>별도 빌드 → 비교 모델 자체가 안 됨 (live 사이트 직접 수정)</li>
+          <li>실수 시 즉시 사용자 노출</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <h3>최종 추천</h3>
+  <div class="alert green">
+    <strong>1차 — Option A (Vercel 기본 URL)</strong> 로 시작.<br>
+    빌드 완료 + 운영팀 컨펌 후 <strong>2차 — DNS 변경</strong>으로 kcctf.org를 Vercel로.<br>
+    <br>
+    Option B/C는 "비교 단계가 길어질 때" 또는 "이전 사이트와 동시 운영이 필요할 때" 선택. 일단은 A로 단순하게.
+  </div>
+
+  <!-- ============ FLOW ============ -->
+  <h2 id="flow"><span class="section-num">③</span>전체 진행 흐름 (Cowork → 노트북 → 운영진)</h2>
+
+  <div class="diagram">
+    <div class="flow-row">
+      <div class="flow-box current">
+        <div class="name">현재 kcctf.org</div>
+        <div class="sub">Firebase · 손대지 않음</div>
+      </div>
+      <div class="flow-arrow">⟶</div>
+      <div class="flow-box">
+        <div class="name">노트북 Claude Code</div>
+        <div class="sub">신규 빌드</div>
+      </div>
+      <div class="flow-arrow">⟶</div>
+      <div class="flow-box new">
+        <div class="name">kcctf-2026.vercel.app</div>
+        <div class="sub">스테이징 (비교용)</div>
+      </div>
+    </div>
+    <div style="text-align:center;margin:14px 0;color:var(--gold);">⬇ 운영팀 컨펌 ⬇</div>
+    <div class="flow-row">
+      <div class="flow-box current">
+        <div class="name">현재 kcctf.org</div>
+        <div class="sub">archive 또는 정리</div>
+      </div>
+      <div class="flow-arrow">⟶</div>
+      <div class="flow-box">
+        <div class="name">DNS 변경</div>
+        <div class="sub">5분 작업</div>
+      </div>
+      <div class="flow-arrow">⟶</div>
+      <div class="flow-box new">
+        <div class="name">kcctf.org (NEW)</div>
+        <div class="sub">새 사이트 라이브</div>
+      </div>
+    </div>
+  </div>
+
+  <h3>단계별 액션</h3>
+
+  <div class="step">
+    <div class="num">1</div>
+    <div class="body">
+      <div class="title">Cowork에서 패키지 만들기 (오늘)</div>
+      <div class="desc">자산(design 폴더) + 명세서(CLAUDE.md) + 운영기준 + 와이어프레임 → 단일 폴더로 zip. 노트북에 옮길 준비.</div>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="num">2</div>
+    <div class="body">
+      <div class="title">노트북에 패키지 풀기</div>
+      <div class="desc"><code>~/projects/kcctf-2026</code> 같은 작업 폴더 만들고 zip 풀기. 자산이 <code>./_brief/</code> 또는 <code>./_design/</code> 하위에 정리됨.</div>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="num">3</div>
+    <div class="body">
+      <div class="title">노트북에서 Claude Code 시작</div>
+      <div class="desc">터미널에서 <code>cd ~/projects/kcctf-2026 &amp;&amp; claude</code> → 첫 메시지에 "CLAUDE.md 읽고 Phase 4 (스캐폴딩) 시작해줘"</div>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="num">4</div>
+    <div class="body">
+      <div class="title">Claude Code가 자동으로 빌드</div>
+      <div class="desc">CLAUDE.md 따라 Next.js 프로젝트 생성 → 디자인 토큰 → 컴포넌트 → 데이터 채우기. 중간중간 멈추고 확인 요청.</div>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="num">5</div>
+    <div class="body">
+      <div class="title">GitHub repo 만들고 Vercel 연결</div>
+      <div class="desc">Claude Code가 <code>git init</code> → GitHub에 푸시 → Vercel 가져오기 → <code>kcctf-2026.vercel.app</code> 자동 생성.</div>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="num">6</div>
+    <div class="body">
+      <div class="title">스테이징 URL 운영팀 공유</div>
+      <div class="desc">존·흰곰·조앤·지이에게 카톡으로 URL + 체크리스트 공유. 사실관계 확인 + 디자인 피드백 받음.</div>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="num">7</div>
+    <div class="body">
+      <div class="title">수정 반복 (이 단계 길어질 수 있음)</div>
+      <div class="desc">운영팀 피드백 → Claude Code로 수정 → git push → 자동 재배포. 같은 URL에서 갱신.</div>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="num">8</div>
+    <div class="body">
+      <div class="title">컨펌 후 도메인 swap</div>
+      <div class="desc">이종화 이사장에게 DNS 변경 요청 (Vercel이 알려준 A/CNAME 값). 5~30분 후 kcctf.org가 새 사이트로.</div>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="num">9</div>
+    <div class="body">
+      <div class="title">이전 사이트 처리</div>
+      <div class="desc">옵션: archive.kcctf.org에 보존 / 그대로 Firebase에 두고 사용 안 함 / 완전 삭제. <strong>archive 권장</strong> (이전 회차 자료 보존).</div>
+    </div>
+  </div>
+
+  <!-- ============ PACKAGE ============ -->
+  <h2 id="package"><span class="section-num">④</span>노트북에 옮길 패키지 구성</h2>
+
+  <p>이 Cowork에서 만든 자료를 노트북으로 옮길 때 이 폴더 구조로:</p>
+
+  <pre>kcctf-2026/                              ← 노트북 작업 폴더
+├── CLAUDE.md                            ← 프로젝트 명세 (Claude Code 시작점)
+├── README.md                            ← 사람용 빠른 안내
+│
+├── _brief/                              ← 컨텍스트 (참고용, 코드 X)
+│   ├── 운영기준.md                       ← 콘텐츠의 진실
+│   ├── 디자인_리뷰.html                  ← 7가지 충돌 정리
+│   ├── 실행계획.html                     ← 8 Phase 플랜
+│   ├── 사이트맵_와이어프레임.html         ← Director v0.1
+│   └── 새_Hero_시안.html                 ← 새 Hero 디자인
+│
+├── _design/                             ← 받은 디자인 시스템
+│   ├── README.md                        ← 디자인 토큰 + 섹션 specs
+│   ├── assets/                          ← 이미지·SVG·로고 (40개)
+│   ├── prototypes/marketing-site-v2/    ← JSX 9개 (참고)
+│   └── brochure-final/
+│
+└── (이후 Claude Code가 만들 것)
+    ├── package.json
+    ├── next.config.js
+    ├── tailwind.config.ts
+    ├── app/
+    │   ├── [locale]/
+    │   │   ├── layout.tsx
+    │   │   └── page.tsx                 ← Home (단일 페이지 SPA)
+    │   └── ...
+    ├── components/
+    │   ├── Hero.tsx                     ← 새 시안 기준
+    │   ├── Orchestras.tsx
+    │   ├── Schedule.tsx
+    │   ├── Djs.tsx
+    │   ├── Dancers.tsx
+    │   ├── Venue.tsx
+    │   ├── Tickets.tsx
+    │   └── Footer.tsx
+    ├── content/
+    │   ├── ko.json                      ← 한국어 카피
+    │   └── en.json                      ← 영어 카피
+    └── public/                          ← _design/assets/ 복사본
+</pre>
+
+  <h3>패키지 만들기 (지금 — 한 번 더 신호 주시면)</h3>
+  <div class="alert blue">
+    이 신호 주시면 자동으로:
+    <ol style="margin:8px 0 0 22px;">
+      <li>운영 폴더에 <code>kcctf-2026/</code> 새 폴더 생성</li>
+      <li>위 구조대로 자료 복사</li>
+      <li><code>CLAUDE.md</code> 작성 (다음 섹션 내용)</li>
+      <li><code>kcctf-2026.zip</code>으로 압축</li>
+      <li>다운로드 링크 제공</li>
+    </ol>
+  </div>
+
+  <!-- ============ CLAUDE.md ============ -->
+  <h2 id="claudemd"><span class="section-num">⑤</span>CLAUDE.md — 노트북 Claude Code 명세서</h2>
+
+  <p>아래 내용을 그대로 <code>CLAUDE.md</code>로 만들 예정. 노트북 Claude Code가 이 파일을 첫 컨텍스트로 읽음.</p>
+
+  <h3>들어갈 항목</h3>
+  <table>
+    <tr><th>섹션</th><th>내용</th></tr>
+    <tr>
+      <td>① 프로젝트 미션</td>
+      <td>"KCCTF 2026 공식 홈페이지 신규 구축. 디자인은 V1 Mustard 톤. 콘텐츠는 _brief/운영기준.md가 진실."</td>
+    </tr>
+    <tr>
+      <td>② 절대 금지</td>
+      <td>지원금 노출 / 임의 데이터 (마에스트로 3팀 등) / 가격 변경 / 회차 임의 / "Friday session" 같은 요일 오류</td>
+    </tr>
+    <tr>
+      <td>③ 진실의 출처</td>
+      <td><code>_brief/운영기준.md</code> §3, §4, §5, §6, §7 — 충돌 시 운영기준이 정답</td>
+    </tr>
+    <tr>
+      <td>④ 기술 스택</td>
+      <td>Next.js 14 App Router · TypeScript · Tailwind CSS · next-intl (ko/en) · Vercel 배포 · pnpm</td>
+    </tr>
+    <tr>
+      <td>⑤ 디자인 토큰</td>
+      <td>V1 컬러(Mustard #F2C94C / Burgundy #8B1A2B / Cream #F5EBD8 / Gold #D4A017 등) + 폰트(Noto Serif KR / Pretendard / Playfair / Inter / Oswald)</td>
+    </tr>
+    <tr>
+      <td>⑥ 사이트 구조</td>
+      <td>SPA 단일 페이지 + 앵커 (Hero / Orchestras / Schedule / DJs / Dancers / Venue / Tickets / Footer)</td>
+    </tr>
+    <tr>
+      <td>⑦ Hero 새 시안</td>
+      <td>한글 워드마크 + USP 띠 + 두 오케스트라 듀오 카드 + 임팩트 숫자 + 날짜 밴드 + CTA. 모바일 우선.</td>
+    </tr>
+    <tr>
+      <td>⑧ 카피 톤</td>
+      <td>한글: 호스트가 친구를 부르는 / 영문: 시적이지만 가볍지 않게. 단정조. 과장 X.</td>
+    </tr>
+    <tr>
+      <td>⑨ 데이터 모델</td>
+      <td>orchestras, djs, dancers, schedule, packages — TypeScript types로 정의</td>
+    </tr>
+    <tr>
+      <td>⑩ 외부 결정 미정 처리</td>
+      <td>marquesros 라인업, 콘서트 장소, 등록 방식 등 — placeholder + "곧 공개"</td>
+    </tr>
+    <tr>
+      <td>⑪ 배포</td>
+      <td><code>git push</code> → Vercel 자동 배포 → kcctf-2026.vercel.app</td>
+    </tr>
+    <tr>
+      <td>⑫ QA 체크리스트</td>
+      <td>모바일 320px / 한글-영어 양쪽 / 운영기준 일치 / Lighthouse 90+ / WCAG AA</td>
+    </tr>
+    <tr>
+      <td>⑬ 첫 명령</td>
+      <td>"Phase 4 시작 — Next.js 스캐폴딩 + 디자인 토큰 + 폰트 로딩까지"</td>
+    </tr>
+  </table>
+
+  <p>이 명세서는 <strong>다음 단계에서 별도 파일</strong>로 만들 예정 (이 기획 OK 받으면).</p>
+
+  <!-- ============ DECISIONS ============ -->
+  <h2 id="decisions"><span class="section-num">⑥</span>운영팀 확인 필요사항</h2>
+
+  <p>본격 시작 전 이종화 이사장에게 확인:</p>
+
+  <table>
+    <tr>
+      <th>#</th>
+      <th>질문</th>
+      <th>왜 필요한가</th>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td><strong>도메인 <code>kcctf.org</code>의 등록자/관리자가 누구인지</strong></td>
+      <td>최종 DNS 변경 시 협조 필요</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td><strong>Firebase 프로젝트 <code>kcctf-5047d</code>의 소유자가 누구인지</strong></td>
+      <td>이전 사이트 archive 처리 또는 코드 참조 시 필요</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td><strong>이전 회차(2024, 2025) 사이트 자료가 어디 있는지</strong></td>
+      <td>archive.kcctf.org에 보존 가능. 사진·영상도 받아 새 사이트 Gallery에 활용</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td><strong>현재 사이트 빌드한 분(개발자)이 따로 있는지 / 추가 협조 가능한지</strong></td>
+      <td>이전 코드 참고 또는 매끄러운 인계</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td><strong>이메일 <code>info@kcctf.org</code> / <code>contact@kcctf.org</code> 어느 게 정답인지</strong></td>
+      <td>현재 사이트 푸터에 둘 다 있음 (불일치)</td>
+    </tr>
+  </table>
+
+  <h3>이종화 이사장께 보낼 카톡 초안</h3>
+  <div class="alert blue">
+    이사장님, 홈페이지 리뉴얼 작업 시작합니다. 본격 진행 전 5가지 확인 부탁드려요.<br><br>
+    1) <code>kcctf.org</code> 도메인 누가 관리하나요? (DNS 변경 시 필요)<br>
+    2) Firebase 프로젝트 <code>kcctf-5047d</code> 소유자 누구인가요?<br>
+    3) 이전 회차(2024, 2025) 사이트 자료 어디에 있나요? 받을 수 있나요?<br>
+    4) 현재 사이트 만든 개발자 따로 있나요? 협조 가능한가요?<br>
+    5) 공식 이메일이 <code>info@kcctf.org</code>인가요 <code>contact@kcctf.org</code>인가요?<br><br>
+    이번엔 별도 URL에 새로 빌드해서 비교 후 도메인 옮기는 방식으로 진행합니다.
+  </div>
+
+  <!-- ============ NEXT ACTIONS ============ -->
+  <h2 id="next"><span class="section-num">⑦</span>다음 액션 — 4가지 신호 중 하나</h2>
+
+  <div class="alert gold">
+    <strong>지금 답변만 주시면 바로 진행:</strong>
+    <ol style="margin:8px 0 0 22px;">
+      <li><strong>"패키지 만들어 줘"</strong> → <code>kcctf-2026/</code> 폴더 + <code>CLAUDE.md</code> + zip 생성. 노트북에 옮기기 준비 완료.</li>
+      <li><strong>"CLAUDE.md만 먼저 보여줘"</strong> → 명세서 초안 작성 → 검토 후 패키지로.</li>
+      <li><strong>"Option A 말고 B/C가 좋은데"</strong> → 옵션 변경 후 진행.</li>
+      <li><strong>"이종화 이사장 답 먼저 받고 시작"</strong> → 위 5가지 답 들어올 때까지 대기.</li>
+    </ol>
+    <p style="margin-top:10px;">
+    개인적으로는 <strong>(1) 패키지 만들어 줘</strong> 추천. 이종화 이사장 답은 병렬로 받으면 됩니다 — 코드 빌드는 답 없어도 진행 가능, 마지막 도메인 swap에서만 필요.
+    </p>
+  </div>
+
+  <h3>이 시점의 작업 분리 정리</h3>
+  <table>
+    <tr><th>위치</th><th>주체</th><th>역할</th></tr>
+    <tr>
+      <td><strong>이 Cowork (지금)</strong></td>
+      <td>저 + 포올</td>
+      <td>기획·자산 정리·명세서 작성·패키지 빌드 → 노트북에 넘기기</td>
+    </tr>
+    <tr>
+      <td><strong>노트북 Claude Code</strong></td>
+      <td>Claude Code (CLAUDE.md 따라)</td>
+      <td>실제 코드 작성·빌드·로컬 테스트·git/GitHub/Vercel 연결</td>
+    </tr>
+    <tr>
+      <td><strong>Vercel preview</strong></td>
+      <td>운영팀 (포올·존·흰곰·조앤)</td>
+      <td>스테이징 URL 검토·사실관계 확인·피드백</td>
+    </tr>
+    <tr>
+      <td><strong>최종 배포</strong></td>
+      <td>이종화 이사장</td>
+      <td>kcctf.org DNS 변경 (5분 작업)</td>
+    </tr>
+  </table>
+
+  <div class="meta-footer">
+    KCCTF 2026 스테이징·교체 기획 v1.0 · 2026-05-09 · 노트북 Claude Code 인계 준비
+  </div>
+
+</div>
+
+</body>
+</html>

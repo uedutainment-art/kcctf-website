@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#E8EFF3"></stop>
+      <stop offset="40%" stop-color="#D4DCE2"></stop>
+      <stop offset="70%" stop-color="#9BB5C2"></stop>
+      <stop offset="100%" stop-color="#6B9BB8"></stop>
+    </linearGradient>
+    <linearGradient id="lake" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#6B9BB8"></stop>
+      <stop offset="50%" stop-color="#3E6B82"></stop>
+      <stop offset="100%" stop-color="#1F3A4A"></stop>
+    </linearGradient>
+    <linearGradient id="goldhour" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#FDFAF5" stop-opacity="0"></stop>
+      <stop offset="60%" stop-color="#E8C25E" stop-opacity="0.18"></stop>
+      <stop offset="100%" stop-color="#D4A017" stop-opacity="0.32"></stop>
+    </linearGradient>
+    <radialGradient id="sun" cx="0.72" cy="0.32" r="0.22">
+      <stop offset="0%" stop-color="#FDFAF5" stop-opacity="0.85"></stop>
+      <stop offset="40%" stop-color="#E8C25E" stop-opacity="0.4"></stop>
+      <stop offset="100%" stop-color="#E8C25E" stop-opacity="0"></stop>
+    </radialGradient>
+    <filter id="mist" x="-10%" y="-10%" width="120%" height="120%">
+      <feGaussianBlur stdDeviation="6"></feGaussianBlur>
+    </filter>
+  </defs>
+
+  
+  <rect width="1600" height="900" fill="url(#sky)"></rect>
+
+  
+  <rect width="1600" height="900" fill="url(#sun)"></rect>
+
+  
+  <path filter="url(#mist)" opacity="0.55" fill="#7A95A6" d="M0,540 L80,510 L180,495 L260,520 L340,490 L440,510 L540,478 L640,500 L740,470 L840,495 L940,475 L1040,505 L1140,485 L1240,510 L1340,480 L1440,500 L1540,485 L1600,500 L1600,560 L0,560 Z"></path>
+
+  
+  <path filter="url(#mist)" opacity="0.78" fill="#445E72" d="M0,580 L60,560 L160,545 L240,575 L320,540 L420,570 L520,535 L620,565 L720,540 L820,575 L920,545 L1020,580 L1120,555 L1220,585 L1320,560 L1420,580 L1520,560 L1600,575 L1600,620 L0,620 Z"></path>
+
+  
+  <path opacity="0.95" fill="#1F3A4A" d="M0,635 L100,610 L220,590 L320,625 L420,605 L540,635 L640,610 L760,625 L860,600 L980,630 L1080,615 L1200,635 L1320,610 L1440,625 L1560,615 L1600,625 L1600,680 L0,680 Z"></path>
+
+  
+  <rect x="0" y="660" width="1600" height="240" fill="url(#lake)"></rect>
+
+  
+  <path opacity="0.35" fill="#1F3A4A" d="M0,680 L100,705 L220,725 L320,690 L420,710 L540,680 L640,705 L760,690 L860,715 L980,685 L1080,700 L1200,680 L1320,705 L1440,690 L1560,700 L1600,690 L1600,720 L0,720 Z"></path>
+
+  
+  <line x1="0" y1="700" x2="1600" y2="700" stroke="#FDFAF5" stroke-opacity="0.18" stroke-width="1"></line>
+  <line x1="0" y1="740" x2="1600" y2="740" stroke="#FDFAF5" stroke-opacity="0.12" stroke-width="1"></line>
+  <line x1="0" y1="780" x2="1600" y2="780" stroke="#FDFAF5" stroke-opacity="0.08" stroke-width="1"></line>
+  <line x1="0" y1="820" x2="1600" y2="820" stroke="#FDFAF5" stroke-opacity="0.05" stroke-width="1"></line>
+
+  
+  <rect width="1600" height="900" fill="url(#goldhour)"></rect>
+
+  
+  <g opacity="0.5" fill="#FDFAF5">
+    <circle cx="240" cy="420" r="2"></circle>
+    <circle cx="380" cy="380" r="1.5"></circle>
+    <circle cx="520" cy="450" r="2.5"></circle>
+    <circle cx="680" cy="400" r="1.5"></circle>
+    <circle cx="850" cy="430" r="2"></circle>
+    <circle cx="1020" cy="390" r="1.5"></circle>
+    <circle cx="1200" cy="440" r="2.5"></circle>
+    <circle cx="1340" cy="410" r="1.5"></circle>
+  </g>
+</svg>

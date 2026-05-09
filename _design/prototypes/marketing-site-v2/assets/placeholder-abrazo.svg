@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <linearGradient id="abr" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#15293A"></stop>
+      <stop offset="50%" stop-color="#1F3A4A"></stop>
+      <stop offset="100%" stop-color="#0E1E2A"></stop>
+    </linearGradient>
+    <radialGradient id="warm" cx="0.6" cy="0.4" r="0.55">
+      <stop offset="0%" stop-color="#E8C25E" stop-opacity="0.22"></stop>
+      <stop offset="100%" stop-color="#8B1A2B" stop-opacity="0"></stop>
+    </radialGradient>
+  </defs>
+  <rect width="800" height="800" fill="url(#abr)"></rect>
+  <rect width="800" height="800" fill="url(#warm)"></rect>
+  <text x="400" y="410" text-anchor="middle" font-family="&#39;Playfair Display&#39;, serif" font-style="italic" font-size="22" fill="#FDFAF5" opacity="0.55">[ abrazo ]</text>
+</svg>

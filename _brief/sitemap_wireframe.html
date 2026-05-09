@@ -1,0 +1,1057 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KCCTF 2026 — 사이트맵 & 와이어프레임 (Director)</title>
+<style>
+  :root {
+    --gold: #C9A84C;
+    --gold-light: #E8C96A;
+    --dark: #1A1410;
+    --dark2: #252018;
+    --dark3: #2E2820;
+    --brown: #3D3020;
+    --text: #E8E0D0;
+    --text-muted: #A09880;
+    --green: #4CAF7D;
+    --yellow: #E8B84B;
+    --red: #E05555;
+    --blue: #5B9BD5;
+    --purple: #9B7BD5;
+    --border: #3D3020;
+
+    /* wireframe 전용 색상 (블루프린트 톤) */
+    --wf-bg: #1F1A14;
+    --wf-box: #2A2520;
+    --wf-box2: #322C24;
+    --wf-line: #4A4030;
+    --wf-text: #8A8270;
+    --wf-accent: #C9A84C;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Apple SD Gothic Neo', 'Malgun Gothic', Arial, sans-serif;
+    background: var(--dark); color: var(--text); min-height: 100vh; line-height: 1.6; }
+
+  .header { background: linear-gradient(135deg, var(--dark2), var(--brown));
+    border-bottom: 2px solid var(--gold); padding: 32px; text-align: center; }
+  .header h1 { font-size: 24px; color: var(--gold); letter-spacing: 1px; }
+  .header .sub { font-size: 14px; color: var(--text-muted); margin-top: 8px; }
+  .header .meta { font-size: 12px; color: var(--text-muted); margin-top: 6px; }
+  .header .director-tag { display: inline-block; margin-top: 12px;
+    padding: 4px 12px; border: 1px solid var(--gold); border-radius: 20px;
+    font-size: 11px; color: var(--gold); letter-spacing: 1px; }
+
+  .main { max-width: 1200px; margin: 0 auto; padding: 32px 28px; }
+
+  .nav { display: flex; flex-wrap: wrap; gap: 8px; padding: 14px 20px;
+    background: var(--dark2); border: 1px solid var(--border); border-radius: 8px;
+    margin-bottom: 32px; font-size: 12px; }
+  .nav a { color: var(--gold); text-decoration: none; padding: 4px 10px;
+    border-radius: 4px; transition: background 0.15s; }
+  .nav a:hover { background: var(--brown); }
+
+  h2 { font-size: 20px; color: var(--gold); margin: 36px 0 18px;
+    padding-bottom: 10px; border-bottom: 2px solid var(--gold); }
+  h3 { font-size: 16px; color: var(--gold-light); margin: 24px 0 12px; }
+  h4 { font-size: 14px; color: var(--text); margin: 16px 0 8px; font-weight: 700; }
+  p { margin-bottom: 12px; font-size: 14px; }
+
+  .section-num { color: var(--gold); font-weight: 700; margin-right: 8px; }
+
+  .alert { border-radius: 8px; padding: 14px 18px; margin: 16px 0;
+    font-size: 13px; line-height: 1.6; }
+  .alert.gold { background: #3d3010; border-left: 4px solid var(--gold); }
+  .alert.green { background: #1a3d2a; border-left: 4px solid var(--green); }
+  .alert.blue { background: #1a2d3d; border-left: 4px solid var(--blue); }
+
+  /* === Vision === */
+  .vision-card { background: linear-gradient(135deg, var(--dark2), var(--dark3));
+    border: 1px solid var(--gold); border-radius: 12px; padding: 28px 32px;
+    margin: 20px 0 32px; }
+  .vision-card .label { font-size: 11px; color: var(--gold);
+    letter-spacing: 2px; text-transform: uppercase; margin-bottom: 12px; }
+  .vision-card .statement { font-size: 18px; color: var(--text);
+    line-height: 1.7; font-weight: 300; }
+  .vision-card .statement strong { color: var(--gold-light); font-weight: 600; }
+  .vision-card .keywords { display: flex; gap: 12px; margin-top: 20px;
+    flex-wrap: wrap; }
+  .keyword { background: var(--brown); color: var(--gold); padding: 6px 16px;
+    border-radius: 20px; font-size: 12px; font-weight: 600; letter-spacing: 1px; }
+
+  /* === Site Map Tree === */
+  .tree { background: var(--wf-bg); border: 1px solid var(--wf-line);
+    border-radius: 12px; padding: 32px 24px; margin: 20px 0;
+    overflow-x: auto; }
+  .tree-root { display: flex; flex-direction: column; align-items: center;
+    min-width: 900px; }
+  .tree-node { background: var(--wf-box); border: 1px solid var(--wf-line);
+    border-radius: 6px; padding: 10px 16px; font-size: 13px;
+    color: var(--text); position: relative; }
+  .tree-node.root { background: var(--brown); color: var(--gold);
+    font-weight: 700; font-size: 14px; padding: 12px 24px; }
+  .tree-node.group { background: var(--dark3); color: var(--gold-light);
+    font-weight: 700; font-size: 13px; }
+  .tree-node.p0 { border-color: var(--gold); }
+  .tree-node.p1 { border-color: var(--yellow); border-style: dashed; }
+  .tree-node.p2 { border-color: var(--text-muted); border-style: dotted; opacity: 0.7; }
+  .tree-node .meta { font-size: 10px; color: var(--text-muted);
+    margin-top: 2px; }
+  .tree-line { width: 2px; height: 20px; background: var(--wf-line); }
+  .tree-row { display: flex; gap: 14px; align-items: flex-start;
+    margin-top: 0; }
+  .tree-col { display: flex; flex-direction: column; align-items: center;
+    flex: 1; min-width: 200px; }
+  .tree-children { display: flex; gap: 12px; margin-top: 16px; flex-wrap: wrap;
+    justify-content: center; }
+  .tree-children .tree-node { font-size: 12px; padding: 8px 12px; }
+
+  .legend { display: flex; gap: 16px; margin-top: 16px; font-size: 11px;
+    color: var(--text-muted); flex-wrap: wrap; }
+  .legend .item { display: flex; align-items: center; gap: 6px; }
+  .legend .swatch { width: 18px; height: 12px; border-radius: 2px;
+    border: 1px solid var(--wf-line); }
+  .legend .p0 { border: 1px solid var(--gold); background: var(--wf-box); }
+  .legend .p1 { border: 1px dashed var(--yellow); background: var(--wf-box); }
+  .legend .p2 { border: 1px dotted var(--text-muted); background: var(--wf-box); opacity: 0.7; }
+
+  /* === Wireframe Boxes === */
+  .wireframe { background: var(--wf-bg); border: 1px solid var(--wf-line);
+    border-radius: 8px; padding: 16px; margin: 12px 0; }
+  .wf-title { font-size: 12px; color: var(--gold); font-weight: 700;
+    margin-bottom: 12px; letter-spacing: 1px; text-transform: uppercase; }
+  .wf-frame { background: var(--wf-box); border: 1px solid var(--wf-line);
+    border-radius: 6px; padding: 12px; }
+  .wf-section { background: var(--wf-box2); border: 1px dashed var(--wf-line);
+    padding: 10px 12px; margin-bottom: 8px; border-radius: 4px;
+    font-size: 11px; color: var(--wf-text); position: relative;
+    min-height: 32px; display: flex; align-items: center; }
+  .wf-section.tall { min-height: 80px; }
+  .wf-section.taller { min-height: 120px; }
+  .wf-section.hero { min-height: 140px; background: var(--brown);
+    color: var(--gold); border: 1px solid var(--wf-accent); font-weight: 600; }
+  .wf-section.cta { background: var(--wf-accent); color: var(--dark);
+    border: 1px solid var(--wf-accent); justify-content: center;
+    font-weight: 700; font-size: 12px; }
+  .wf-label { color: var(--gold-light); font-weight: 600; font-size: 10px;
+    margin-right: 8px; text-transform: uppercase; letter-spacing: 1px; }
+  .wf-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .wf-grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
+  .wf-grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+  .wf-stat { background: var(--wf-box2); padding: 12px 8px; text-align: center;
+    border-radius: 4px; border: 1px dashed var(--wf-line); }
+  .wf-stat .num { color: var(--gold); font-weight: 700; font-size: 18px; }
+  .wf-stat .lbl { font-size: 9px; color: var(--wf-text); margin-top: 2px;
+    text-transform: uppercase; letter-spacing: 1px; }
+  .wf-card { background: var(--wf-box2); border: 1px dashed var(--wf-line);
+    padding: 10px 8px; text-align: center; border-radius: 4px;
+    font-size: 10px; color: var(--wf-text); min-height: 80px;
+    display: flex; flex-direction: column; align-items: center; justify-content: center; }
+  .wf-card.img { background: linear-gradient(45deg, var(--wf-line), var(--wf-box));
+    color: var(--text-muted); }
+  .wf-mini { font-size: 9px; color: var(--text-muted); margin-top: 4px; }
+
+  .device-row { display: grid; grid-template-columns: 2fr 1fr; gap: 16px;
+    align-items: flex-start; margin: 16px 0; }
+  @media (max-width: 900px) {
+    .device-row { grid-template-columns: 1fr; }
+  }
+  .device { border: 8px solid var(--wf-line); border-radius: 12px;
+    background: var(--wf-bg); padding: 12px; }
+  .device-label { font-size: 10px; color: var(--text-muted);
+    text-transform: uppercase; letter-spacing: 2px; margin-bottom: 8px;
+    text-align: center; }
+
+  /* === Page section === */
+  .page-block { background: var(--dark2); border: 1px solid var(--border);
+    border-radius: 10px; padding: 24px; margin: 24px 0; }
+  .page-header { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+  .page-num { width: 32px; height: 32px; border-radius: 50%;
+    background: var(--gold); color: var(--dark); font-weight: 700;
+    display: flex; align-items: center; justify-content: center; font-size: 14px; }
+  .page-title { font-size: 18px; color: var(--gold); font-weight: 700; }
+  .page-sub { font-size: 12px; color: var(--text-muted); margin-left: auto; }
+
+  .page-meta { display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
+    margin: 12px 0; font-size: 12px; }
+  @media (max-width: 700px) { .page-meta { grid-template-columns: 1fr; } }
+  .meta-card { background: var(--dark3); border-radius: 6px; padding: 10px 14px; }
+  .meta-card .lbl { color: var(--gold); font-size: 10px;
+    text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px; }
+  .meta-card .val { color: var(--text); font-size: 12px; line-height: 1.5; }
+
+  .director-note { background: #2a2510; border-left: 3px solid var(--gold);
+    padding: 12px 16px; margin: 12px 0; border-radius: 4px;
+    font-size: 12px; color: var(--text); font-style: italic; }
+  .director-note::before { content: '🎬 Director: '; color: var(--gold);
+    font-weight: 700; font-style: normal; }
+
+  .badge { display: inline-block; padding: 3px 8px; border-radius: 4px;
+    font-size: 10px; font-weight: 600; }
+  .badge.p0 { background: #3d2010; color: var(--orange); }
+  .badge.p1 { background: #3d3010; color: var(--yellow); }
+  .badge.p2 { background: #2a2a2a; color: var(--text-muted); }
+
+  ul.tight { margin: 8px 0 12px 22px; }
+  ul.tight li { margin-bottom: 4px; font-size: 13px; }
+
+  code { background: var(--dark3); color: var(--gold-light); padding: 2px 6px;
+    border-radius: 3px; font-size: 12px; font-family: 'Menlo', monospace; }
+
+  .meta-footer { font-size: 11px; color: var(--text-muted); margin-top: 40px;
+    padding-top: 16px; border-top: 1px solid var(--border); text-align: center; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>🌹 KCCTF 2026 — 사이트맵 & 와이어프레임</h1>
+  <div class="sub">2026.10.3(토) ~ 10.5(월) · kcctf.org · v0.1 초안</div>
+  <div class="meta">2026-05-09 · Director 모드 산출물</div>
+  <div class="director-tag">🎬 DIRECTOR PERSONA</div>
+</div>
+
+<div class="main">
+
+  <div class="nav">
+    <a href="#vision">🎬 Director Vision</a>
+    <a href="#sitemap">① 사이트맵</a>
+    <a href="#global">② 글로벌 컴포넌트</a>
+    <a href="#home">③ Home 와이어프레임</a>
+    <a href="#program">④ Program</a>
+    <a href="#artists">⑤ Artists</a>
+    <a href="#register">⑥ Register</a>
+    <a href="#venue">⑦ Venue</a>
+    <a href="#hotel">⑧ Accommodation</a>
+    <a href="#about">⑨ About</a>
+    <a href="#principles">⑩ 디자인 원칙</a>
+  </div>
+
+  <!-- ============ VISION ============ -->
+  <h2 id="vision"><span class="section-num">🎬</span>Director Vision</h2>
+
+  <div class="vision-card">
+    <div class="label">CORE STATEMENT</div>
+    <div class="statement">
+      KCCTF 2026은 <strong>한국 탱고씬에 처음 오는 두 개의 별 — Tango Bardo와 Misteriosa Buenos Aires</strong>를
+      맞이하는 단 한 번의 3일이다.<br>
+      우리는 이걸 "이벤트"가 아니라 <strong>"한국에서만 가능한 순간"</strong>으로 판매한다.<br>
+      춘천이라는 도시의 호흡 — 호수, 가을, 그리고 1박2일의 시간 — 위에 부에노스아이레스의 음악이 얹힌다.
+    </div>
+    <div class="keywords">
+      <div class="keyword">정통 (Authentic)</div>
+      <div class="keyword">임박 (Imminent)</div>
+      <div class="keyword">충만 (Abundant)</div>
+    </div>
+  </div>
+
+  <div class="alert gold">
+    <strong>Director's 3 Filters</strong> — 모든 페이지·카피·디자인 결정은 이 3개를 통과해야 함.
+    <ul class="tight" style="margin-top:8px;">
+      <li><strong>정통</strong>: 진짜 부에노스아이레스에서 온 사람이 봐도 부끄럽지 않은가?</li>
+      <li><strong>임박</strong>: "올해를 놓치면 다시는 없을지도 모른다"는 감각이 들게 하는가?</li>
+      <li><strong>충만</strong>: 3일이 짧지 않게 느껴지도록 모든 것이 꽉 차 있는가?</li>
+    </ul>
+  </div>
+
+  <h3>타겟별 메시지 비중</h3>
+  <div class="page-meta">
+    <div class="meta-card">
+      <div class="lbl">국내 탱게로스 (60%)</div>
+      <div class="val">"Tango Bardo와 Misteriosa를 한국에서 직접 만나는 단 한 번의 기회. 춘천에서 보내는 가을 3일."</div>
+    </div>
+    <div class="meta-card">
+      <div class="lbl">해외 탱게로스 (40%)</div>
+      <div class="val">"Korea's flagship international tango festival in autumn. Full board with hotel from Korean ₩190,000."</div>
+    </div>
+  </div>
+
+  <!-- ============ SITE MAP ============ -->
+  <h2 id="sitemap"><span class="section-num">①</span>사이트맵</h2>
+
+  <p>현재 단일 페이지 구조 → <strong>3 그룹 / 9 페이지</strong>로 재구성. P0(필수) = 7페이지, P1(2차) = 2페이지.</p>
+
+  <div class="tree">
+    <div class="tree-root">
+
+      <!-- Root -->
+      <div class="tree-node root">🌹 KCCTF.ORG</div>
+      <div class="tree-line"></div>
+
+      <!-- Home (single) -->
+      <div class="tree-node p0">HOME<div class="meta">랜딩 / Hero / 개요</div></div>
+      <div class="tree-line"></div>
+
+      <!-- 3 Groups -->
+      <div class="tree-row" style="width:100%;justify-content:center;">
+
+        <div class="tree-col">
+          <div class="tree-node group">🎭 FESTIVAL</div>
+          <div class="tree-line"></div>
+          <div class="tree-children">
+            <div class="tree-node p0">Program<div class="meta">3일 일정</div></div>
+            <div class="tree-node p0">Artists<div class="meta">오케스트라·DJ·댄서</div></div>
+            <div class="tree-node p0">Register<div class="meta">등록·가격</div></div>
+          </div>
+        </div>
+
+        <div class="tree-col">
+          <div class="tree-node group">🏛 LOGISTICS</div>
+          <div class="tree-line"></div>
+          <div class="tree-children">
+            <div class="tree-node p0">Venue<div class="meta">장소</div></div>
+            <div class="tree-node p0">Accommodation<div class="meta">호텔</div></div>
+            <div class="tree-node p1">Visiting Chuncheon<div class="meta">여행 가이드</div></div>
+          </div>
+        </div>
+
+        <div class="tree-col">
+          <div class="tree-node group">ℹ️ INFO</div>
+          <div class="tree-line"></div>
+          <div class="tree-children">
+            <div class="tree-node p0">About / Contact<div class="meta">재단·연락처</div></div>
+            <div class="tree-node p1">FAQ<div class="meta">자주 묻는 질문</div></div>
+            <div class="tree-node p2">Gallery<div class="meta">자료 있을 때</div></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="legend">
+      <div class="item"><div class="swatch p0"></div><span>P0 — 1차 오픈 필수</span></div>
+      <div class="item"><div class="swatch p1"></div><span>P1 — 2차 추가</span></div>
+      <div class="item"><div class="swatch p2"></div><span>P2 — 자료 있으면</span></div>
+    </div>
+  </div>
+
+  <h3>URL 구조 (한/영)</h3>
+  <table style="width:100%;border-collapse:collapse;font-size:13px;margin:12px 0;">
+    <tr style="background:var(--brown);color:var(--gold);">
+      <th style="padding:8px 12px;text-align:left;">페이지</th>
+      <th style="padding:8px 12px;text-align:left;">한국어</th>
+      <th style="padding:8px 12px;text-align:left;">영어</th>
+    </tr>
+    <tr><td style="padding:8px 12px;border-bottom:1px solid var(--border);">Home</td>
+        <td style="padding:8px 12px;border-bottom:1px solid var(--border);"><code>/?lang=ko</code></td>
+        <td style="padding:8px 12px;border-bottom:1px solid var(--border);"><code>/?lang=en</code></td></tr>
+    <tr><td style="padding:8px 12px;border-bottom:1px solid var(--border);">Program</td>
+        <td style="padding:8px 12px;border-bottom:1px solid var(--border);"><code>/program?lang=ko</code></td>
+        <td style="padding:8px 12px;border-bottom:1px solid var(--border);"><code>/program?lang=en</code></td></tr>
+    <tr><td style="padding:8px 12px;border-bottom:1px solid var(--border);">Artists</td>
+        <td style="padding:8px 12px;border-bottom:1px solid var(--border);"><code>/artists</code></td>
+        <td style="padding:8px 12px;border-bottom:1px solid var(--border);">동일 (lang 토글)</td></tr>
+    <tr><td style="padding:8px 12px;border-bottom:1px solid var(--border);">Register</td>
+        <td style="padding:8px 12px;border-bottom:1px solid var(--border);"><code>/register</code></td>
+        <td style="padding:8px 12px;border-bottom:1px solid var(--border);">동일</td></tr>
+    <tr><td style="padding:8px 12px;border-bottom:1px solid var(--border);">Venue</td>
+        <td style="padding:8px 12px;border-bottom:1px solid var(--border);"><code>/venue</code></td>
+        <td style="padding:8px 12px;border-bottom:1px solid var(--border);">동일</td></tr>
+    <tr><td style="padding:8px 12px;border-bottom:1px solid var(--border);">Accommodation</td>
+        <td style="padding:8px 12px;border-bottom:1px solid var(--border);"><code>/accommodation</code></td>
+        <td style="padding:8px 12px;border-bottom:1px solid var(--border);">동일</td></tr>
+    <tr><td style="padding:8px 12px;border-bottom:1px solid var(--border);">About</td>
+        <td style="padding:8px 12px;border-bottom:1px solid var(--border);"><code>/about</code></td>
+        <td style="padding:8px 12px;border-bottom:1px solid var(--border);">동일</td></tr>
+  </table>
+
+  <!-- ============ GLOBAL COMPONENTS ============ -->
+  <h2 id="global"><span class="section-num">②</span>글로벌 컴포넌트</h2>
+
+  <p>모든 페이지에 공통으로 들어가는 헤더 / 푸터. 일관성을 위해 단일 컴포넌트로 관리.</p>
+
+  <div class="device-row">
+    <div class="device">
+      <div class="device-label">📺 DESKTOP — Header (1100px+)</div>
+      <div class="wireframe" style="margin:0;padding:0;background:transparent;border:none;">
+        <div class="wf-frame">
+          <div class="wf-section" style="display:grid;grid-template-columns:auto 1fr auto auto;gap:14px;min-height:48px;">
+            <div style="color:var(--gold);font-weight:700;">🌹 KCCTF</div>
+            <div style="display:flex;gap:14px;font-size:10px;color:var(--wf-text);">
+              <span>Festival ▾</span><span>Logistics ▾</span><span>Info ▾</span>
+            </div>
+            <div style="font-size:10px;color:var(--wf-text);">KO / EN</div>
+            <div style="background:var(--wf-accent);color:var(--dark);padding:4px 12px;border-radius:4px;font-size:10px;font-weight:700;">REGISTER</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="device" style="max-width:280px;margin:0 auto;">
+      <div class="device-label">📱 MOBILE</div>
+      <div class="wireframe" style="margin:0;padding:0;background:transparent;border:none;">
+        <div class="wf-frame">
+          <div class="wf-section" style="display:flex;justify-content:space-between;align-items:center;min-height:44px;">
+            <div style="color:var(--gold);font-weight:700;font-size:11px;">🌹 KCCTF</div>
+            <div style="display:flex;gap:8px;align-items:center;">
+              <span style="font-size:9px;color:var(--wf-text);">EN</span>
+              <span style="font-size:14px;color:var(--wf-text);">☰</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="director-note">
+    헤더는 항상 sticky. 스크롤하면 어두운 반투명 배경(rgba(26,20,16,0.92))으로 가벼워짐.
+    Register CTA는 어디서든 한 클릭 거리. 모바일 햄버거는 풀스크린 메뉴로.
+  </div>
+
+  <h3>Footer</h3>
+  <div class="wireframe">
+    <div class="wf-frame">
+      <div class="wf-grid-4" style="margin-bottom:10px;">
+        <div class="wf-section tall"><span class="wf-label">FESTIVAL</span><br><span style="font-size:9px;">Home·Program·Artists·Register</span></div>
+        <div class="wf-section tall"><span class="wf-label">LOGISTICS</span><br><span style="font-size:9px;">Venue·Hotel·Visiting</span></div>
+        <div class="wf-section tall"><span class="wf-label">INFO</span><br><span style="font-size:9px;">About·FAQ·Contact·Terms</span></div>
+        <div class="wf-section tall"><span class="wf-label">FOLLOW</span><br><span style="font-size:9px;">IG · FB · YT · Email</span></div>
+      </div>
+      <div class="wf-section" style="text-align:center;display:block;">
+        <span class="wf-label">SPONSORS</span>
+        <span style="font-size:10px;color:var(--wf-text);"> 춘천문화재단 · 춘천시 · 주한아르헨티나 대사관</span>
+      </div>
+      <div class="wf-section" style="background:transparent;border:none;font-size:9px;text-align:center;justify-content:center;">
+        © 2026 사단법인 춘천국제탱고페스티벌 · 이용약관 · 개인정보처리방침 · 환불 규정
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ HOME ============ -->
+  <h2 id="home"><span class="section-num">③</span>Page 1 — Home (랜딩)</h2>
+
+  <div class="page-block">
+    <div class="page-header">
+      <div class="page-num">1</div>
+      <div class="page-title">Home / 랜딩</div>
+      <div class="page-sub"><span class="badge p0">P0</span> · 가장 중요한 페이지</div>
+    </div>
+
+    <div class="page-meta">
+      <div class="meta-card">
+        <div class="lbl">목표</div>
+        <div class="val">3초 안에 "와야 한다"는 감각 만들기. 등록 페이지로 즉시 이동 유도.</div>
+      </div>
+      <div class="meta-card">
+        <div class="lbl">데이터 출처</div>
+        <div class="val">운영기준 §3 (행사 정보), §6 (라인업), 조앤브리핑</div>
+      </div>
+    </div>
+
+    <div class="device-row">
+      <!-- Desktop wireframe -->
+      <div class="device">
+        <div class="device-label">📺 DESKTOP</div>
+        <div class="wf-frame">
+          <div class="wf-section" style="min-height:40px;background:var(--wf-line);">
+            <span class="wf-label">HEADER</span> sticky · 메뉴 · 한/영 · CTA
+          </div>
+
+          <div class="wf-section hero" style="flex-direction:column;align-items:flex-start;justify-content:flex-end;padding:20px;">
+            <div style="font-size:9px;letter-spacing:2px;opacity:0.7;">2026.10.3 — 10.5 · CHUNCHEON, KOREA</div>
+            <div style="font-size:18px;font-weight:700;margin:8px 0;">CHUNCHEON INTERNATIONAL TANGO FESTIVAL</div>
+            <div style="font-size:11px;opacity:0.85;font-style:italic;">"한국에서 만나는 부에노스아이레스의 두 별"</div>
+            <div style="margin-top:12px;display:flex;gap:8px;">
+              <span style="background:var(--wf-accent);color:var(--dark);padding:5px 12px;border-radius:4px;font-size:10px;font-weight:700;">REGISTER NOW</span>
+              <span style="border:1px solid var(--gold);padding:5px 12px;border-radius:4px;font-size:10px;">VIEW PROGRAM</span>
+            </div>
+          </div>
+
+          <div class="wf-grid-4" style="margin-top:8px;">
+            <div class="wf-stat"><div class="num">2</div><div class="lbl">Orchestras</div></div>
+            <div class="wf-stat"><div class="num">6</div><div class="lbl">DJs</div></div>
+            <div class="wf-stat"><div class="num">4</div><div class="lbl">Dance Teams</div></div>
+            <div class="wf-stat"><div class="num">3</div><div class="lbl">Days</div></div>
+          </div>
+
+          <div class="wf-section tall" style="margin-top:8px;flex-direction:column;align-items:flex-start;">
+            <span class="wf-label">ABOUT (3-4줄)</span>
+            <span style="font-size:10px;line-height:1.5;color:var(--wf-text);margin-top:6px;">
+              "춘천국제탱고페스티벌은 콘서트·소셜 댄스·워크샵을 결합합니다.<br>
+              메인 콘서트: Tango Bardo &amp; Misteriosa Buenos Aires.<br>
+              3일간의 페스티벌 프로그램. 글로벌 탱고 커뮤니티와의 연결."
+            </span>
+          </div>
+
+          <div class="wf-section taller" style="margin-top:8px;">
+            <span class="wf-label" style="position:absolute;top:8px;left:10px;">⭐ HEADLINER PREVIEW</span>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;width:100%;margin-top:18px;">
+              <div class="wf-card img" style="min-height:90px;">📸 Tango Bardo<br><span class="wf-mini">Argentina</span></div>
+              <div class="wf-card img" style="min-height:90px;">📸 Misteriosa B.A.<br><span class="wf-mini">Argentina</span></div>
+            </div>
+          </div>
+
+          <div class="wf-section tall" style="margin-top:8px;flex-direction:column;align-items:flex-start;">
+            <span class="wf-label">PROGRAM AT A GLANCE</span>
+            <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;width:100%;margin-top:8px;">
+              <div class="wf-card" style="min-height:50px;font-size:9px;">10/3 SAT<br>Opening + M1·M2</div>
+              <div class="wf-card" style="min-height:50px;font-size:9px;">10/4 SUN<br>M3 + M4</div>
+              <div class="wf-card" style="min-height:50px;font-size:9px;">10/5 MON<br>City Tour + M5·M6</div>
+            </div>
+          </div>
+
+          <div class="wf-grid-2" style="margin-top:8px;">
+            <div class="wf-card" style="min-height:60px;font-size:10px;">📍 Venue Preview<br><span class="wf-mini">→ Venue</span></div>
+            <div class="wf-card" style="min-height:60px;font-size:10px;">🏨 Hotel + Package<br><span class="wf-mini">→ Stay</span></div>
+          </div>
+
+          <div class="wf-section cta" style="margin-top:12px;">
+            REGISTER FOR EARLY BIRD ₩190,000 · COUNTDOWN 30 DAYS
+          </div>
+
+          <div class="wf-section" style="min-height:40px;background:var(--wf-line);margin-top:8px;">
+            <span class="wf-label">FOOTER</span> 4컬럼 + 후원사 + 법인정보
+          </div>
+        </div>
+      </div>
+
+      <!-- Mobile wireframe -->
+      <div class="device" style="max-width:280px;">
+        <div class="device-label">📱 MOBILE</div>
+        <div class="wf-frame">
+          <div class="wf-section" style="min-height:32px;font-size:9px;">HEADER ☰</div>
+          <div class="wf-section hero" style="min-height:200px;flex-direction:column;align-items:flex-start;padding:14px;">
+            <div style="font-size:8px;opacity:0.7;">2026.10.3-5</div>
+            <div style="font-size:13px;font-weight:700;margin-top:6px;">CHUNCHEON<br>INT'L TANGO FESTIVAL</div>
+            <div style="font-size:9px;font-style:italic;margin-top:4px;">"한국에서 만나는<br>부에노스아이레스의 두 별"</div>
+            <div style="background:var(--wf-accent);color:var(--dark);padding:6px 12px;border-radius:4px;font-size:9px;font-weight:700;margin-top:8px;">REGISTER →</div>
+          </div>
+          <div class="wf-grid-2" style="margin-top:6px;">
+            <div class="wf-stat"><div class="num">2</div><div class="lbl">Orch</div></div>
+            <div class="wf-stat"><div class="num">6</div><div class="lbl">DJ</div></div>
+            <div class="wf-stat"><div class="num">4</div><div class="lbl">Team</div></div>
+            <div class="wf-stat"><div class="num">3</div><div class="lbl">Days</div></div>
+          </div>
+          <div class="wf-section tall" style="margin-top:6px;font-size:9px;">ABOUT (3줄)</div>
+          <div class="wf-card img" style="min-height:80px;margin-top:6px;">📸 Tango Bardo</div>
+          <div class="wf-card img" style="min-height:80px;margin-top:4px;">📸 Misteriosa B.A.</div>
+          <div class="wf-section tall" style="margin-top:6px;font-size:9px;">10/3·10/4·10/5 카드</div>
+          <div class="wf-card" style="min-height:50px;margin-top:6px;font-size:9px;">📍 Venue</div>
+          <div class="wf-card" style="min-height:50px;margin-top:4px;font-size:9px;">🏨 Hotel</div>
+          <div class="wf-section cta" style="margin-top:8px;font-size:9px;">REGISTER ₩190K</div>
+          <div class="wf-section" style="min-height:32px;font-size:9px;margin-top:6px;">FOOTER</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="director-note">
+      Hero에 영상 백그라운드 권장 (2025 또는 부에노스아이레스 영상 5초 루프). 영상 없으면 큰 사진 1장 + 어두운 오버레이.
+      Hero 텍스트는 한국어/영어 동시 노출 (이중언어가 글로벌함을 보여줌).
+      "Headliner Preview"는 Tango Bardo + Misteriosa 두 팀만. DJ/댄서 자랑은 Artists 페이지에서.
+      Countdown은 얼리버드 마감 기준 (흰곰 결정 후 활성화).
+    </div>
+  </div>
+
+  <!-- ============ PROGRAM ============ -->
+  <h2 id="program"><span class="section-num">④</span>Page 2 — Program</h2>
+
+  <div class="page-block">
+    <div class="page-header">
+      <div class="page-num">2</div>
+      <div class="page-title">Program / 일정</div>
+      <div class="page-sub"><span class="badge p0">P0</span></div>
+    </div>
+
+    <div class="page-meta">
+      <div class="meta-card">
+        <div class="lbl">목표</div>
+        <div class="val">3일이 풍성하다는 인상. 각 밀롱가의 분위기 차이 전달.</div>
+      </div>
+      <div class="meta-card">
+        <div class="lbl">데이터 출처</div>
+        <div class="val">운영기준 §7 (요일 오류 수정 후), §6 (DJ 배정)</div>
+      </div>
+    </div>
+
+    <div class="wireframe">
+      <div class="wf-frame">
+        <div class="wf-section" style="min-height:32px;"><span class="wf-label">HEADER</span></div>
+        <div class="wf-section hero" style="min-height:80px;">"3 days of orchestras, milongas, and unforgettable nights."</div>
+
+        <!-- Day tabs -->
+        <div class="wf-grid-3" style="margin-top:10px;">
+          <div class="wf-card" style="background:var(--brown);color:var(--gold);min-height:40px;">10/3 SAT — Day 1</div>
+          <div class="wf-card" style="min-height:40px;">10/4 SUN — Day 2</div>
+          <div class="wf-card" style="min-height:40px;">10/5 MON — Day 3</div>
+        </div>
+
+        <!-- Day 1 sessions -->
+        <div class="wf-section" style="margin-top:10px;flex-direction:column;align-items:flex-start;min-height:auto;padding:14px;">
+          <div style="color:var(--gold);font-size:11px;font-weight:700;margin-bottom:8px;">DAY 1 — 2026.10.3 SAT</div>
+          <div style="display:grid;grid-template-columns:80px 1fr 100px;gap:10px;width:100%;font-size:10px;color:var(--text);">
+            <div>13:00–14:40</div>
+            <div><strong style="color:var(--gold-light);">Opening Orchestra Concert</strong><br><span class="wf-mini">Tango Bardo · 문화예술회관</span></div>
+            <div style="color:var(--green);">🎼 Concert</div>
+
+            <div style="margin-top:6px;">15:00–20:00</div>
+            <div style="margin-top:6px;"><strong style="color:var(--gold-light);">Marathon Milonga 1</strong><br><span class="wf-mini">DJ Becca · "Welcome embrace, daylight to dusk"</span></div>
+            <div style="color:var(--blue);margin-top:6px;">💃 Day Milonga</div>
+
+            <div style="margin-top:6px;">21:00–03:00</div>
+            <div style="margin-top:6px;"><strong style="color:var(--gold-light);">Marathon Milonga 2 (Gran Milonga)</strong><br><span class="wf-mini">DJ Carlos · "The first night, fully open"</span></div>
+            <div style="color:var(--purple);margin-top:6px;">✨ Gran Milonga</div>
+          </div>
+        </div>
+
+        <!-- Day 2 / Day 3 placeholder -->
+        <div class="wf-section tall" style="margin-top:8px;">[Day 2 — 10/4 SUN: M3·M4]</div>
+        <div class="wf-section tall" style="margin-top:6px;">[Day 3 — 10/5 MON: City Tour · M5·M6]</div>
+
+        <div class="wf-section cta" style="margin-top:10px;">DOWNLOAD PROGRAM PDF · ADD TO CALENDAR</div>
+      </div>
+    </div>
+
+    <div class="director-note">
+      각 밀롱가에 BTE식 한 줄 분위기 묘사 — "Welcome embrace", "The first night fully open", "Closing afterparty" 식.
+      DJ 이름은 클릭하면 Artists 페이지의 해당 DJ로 점프.
+      <strong>요일 오류 절대 재현 금지</strong> — "Friday session" 같은 표기 금지. 운영기준 §7 그대로 따라가기.
+      Add to Calendar는 .ics 파일 다운로드. Google Calendar 직접 추가 옵션도.
+    </div>
+  </div>
+
+  <!-- ============ ARTISTS ============ -->
+  <h2 id="artists"><span class="section-num">⑤</span>Page 3 — Artists</h2>
+
+  <div class="page-block">
+    <div class="page-header">
+      <div class="page-num">3</div>
+      <div class="page-title">Artists / 라인업</div>
+      <div class="page-sub"><span class="badge p0">P0</span></div>
+    </div>
+
+    <div class="page-meta">
+      <div class="meta-card">
+        <div class="lbl">목표</div>
+        <div class="val">"이 라인업을 한 곳에서 본 적 없다"는 압도감.</div>
+      </div>
+      <div class="meta-card">
+        <div class="lbl">데이터 출처</div>
+        <div class="val">운영기준 §6, 조앤브리핑 (사진 + 바이오 필요)</div>
+      </div>
+    </div>
+
+    <div class="wireframe">
+      <div class="wf-frame">
+        <div class="wf-section" style="min-height:32px;"><span class="wf-label">HEADER</span></div>
+        <div class="wf-section hero" style="min-height:80px;">"From Buenos Aires to Chuncheon, the masters that move the floor."</div>
+
+        <!-- Section nav (sticky) -->
+        <div class="wf-grid-3" style="margin-top:10px;">
+          <div class="wf-card" style="min-height:32px;background:var(--brown);color:var(--gold);">🎼 Orchestras (2)</div>
+          <div class="wf-card" style="min-height:32px;">💃 Dance Teams (4)</div>
+          <div class="wf-card" style="min-height:32px;">🎧 DJs (6)</div>
+        </div>
+
+        <!-- Orchestras (큰 카드) -->
+        <div class="wf-section" style="margin-top:12px;background:transparent;border:none;padding:0;">
+          <div class="wf-grid-2" style="width:100%;">
+            <div class="wf-card img" style="min-height:160px;flex-direction:column;padding:14px;">
+              📸 Tango Bardo
+              <span style="color:var(--gold);font-weight:700;margin-top:8px;">TANGO BARDO</span>
+              <span class="wf-mini">Buenos Aires · 6+ members</span>
+              <span class="wf-mini" style="margin-top:4px;">Leading tango orchestra blending tradition &amp; expression</span>
+            </div>
+            <div class="wf-card img" style="min-height:160px;flex-direction:column;padding:14px;">
+              📸 Misteriosa Buenos Aires
+              <span style="color:var(--gold);font-weight:700;margin-top:8px;">MISTERIOSA B.A.</span>
+              <span class="wf-mini">Buenos Aires Ensemble</span>
+              <span class="wf-mini" style="margin-top:4px;">Powerful stage presence, modern interpretation</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Dance teams -->
+        <div class="wf-section" style="margin-top:12px;background:transparent;border:none;padding:0;">
+          <div class="wf-grid-4">
+            <div class="wf-card img" style="min-height:120px;">📸<br>London Hong &amp; Sol<br><span class="wf-mini">Korea</span></div>
+            <div class="wf-card img" style="min-height:120px;">📸<br>Hyemi &amp; Wonjun<br><span class="wf-mini">Korea</span></div>
+            <div class="wf-card img" style="min-height:120px;">📸<br>Team Ryu<br><span class="wf-mini">Korea</span></div>
+            <div class="wf-card img" style="min-height:120px;">📸<br>+1 TBA<br><span class="wf-mini">존 확정 대기</span></div>
+          </div>
+        </div>
+
+        <!-- DJs grid -->
+        <div class="wf-section" style="margin-top:12px;background:transparent;border:none;padding:0;">
+          <div class="wf-grid-3">
+            <div class="wf-card img" style="min-height:90px;">Becca · Korea</div>
+            <div class="wf-card img" style="min-height:90px;">Carlos · Korea</div>
+            <div class="wf-card img" style="min-height:90px;">Hagoon · Korea</div>
+            <div class="wf-card img" style="min-height:90px;">Stone · Korea</div>
+            <div class="wf-card img" style="min-height:90px;">Wang Wei · China</div>
+            <div class="wf-card img" style="min-height:90px;">Nathalie · HK</div>
+          </div>
+        </div>
+
+        <div class="wf-section cta" style="margin-top:12px;">→ See Program · Register</div>
+      </div>
+    </div>
+
+    <div class="director-note">
+      오케스트라 = 큰 카드 + 1~2분짜리 영상 클립 임베드(YouTube). 가능하면 그들의 대표 곡 한 트랙.
+      댄서팀은 정사각형 카드 + 호버 시 영상 미리보기.
+      DJ 카드는 작아도 됨. 클릭하면 모달 또는 전용 섹션에 약력.
+      <strong>존 결정 대기</strong>: 댄서 4번째 팀 미정 → "TBA" 또는 카드 자체 숨김 결정 필요.
+    </div>
+  </div>
+
+  <!-- ============ REGISTER ============ -->
+  <h2 id="register"><span class="section-num">⑥</span>Page 4 — Register</h2>
+
+  <div class="page-block">
+    <div class="page-header">
+      <div class="page-num">4</div>
+      <div class="page-title">Register / 등록</div>
+      <div class="page-sub"><span class="badge p0">P0</span> · 전환 페이지</div>
+    </div>
+
+    <div class="page-meta">
+      <div class="meta-card">
+        <div class="lbl">목표</div>
+        <div class="val">패키지 선택 → 입금 → 확인까지 3단계로 압축. 망설임 제거.</div>
+      </div>
+      <div class="meta-card">
+        <div class="lbl">데이터 출처</div>
+        <div class="val">운영기준 §4 (가격), §5 (호텔 패키지). 흰곰 결정 후 활성화.</div>
+      </div>
+    </div>
+
+    <div class="wireframe">
+      <div class="wf-frame">
+        <div class="wf-section" style="min-height:32px;"><span class="wf-label">HEADER</span></div>
+        <div class="wf-section hero" style="min-height:80px;">"Choose your package. The earlybird closes in [X] days."</div>
+
+        <!-- 가격 카드 3종 -->
+        <div class="wf-grid-3" style="margin-top:12px;">
+          <div class="wf-card" style="min-height:180px;flex-direction:column;padding:14px;background:var(--wf-box2);">
+            <span style="color:var(--gold);font-weight:700;font-size:11px;">FULL PACK</span>
+            <span style="color:var(--gold-light);font-size:18px;font-weight:700;margin-top:8px;">₩190,000</span>
+            <span class="wf-mini">Earlybird</span>
+            <span class="wf-mini" style="margin-top:8px;">Concert + 6 Milongas + City Tour</span>
+            <span style="background:var(--wf-accent);color:var(--dark);padding:4px 8px;border-radius:4px;font-size:10px;font-weight:700;margin-top:auto;">SELECT</span>
+          </div>
+          <div class="wf-card" style="min-height:180px;flex-direction:column;padding:14px;background:var(--wf-box2);border:1px solid var(--gold);">
+            <span style="color:var(--gold);font-weight:700;font-size:11px;">FULL + 2 NIGHTS</span>
+            <span style="color:var(--gold-light);font-size:18px;font-weight:700;margin-top:8px;">₩[?]</span>
+            <span class="wf-mini">흰곰 결정 대기</span>
+            <span class="wf-mini" style="margin-top:8px;">Above + Bella Stay 2N + breakfast</span>
+            <span style="background:var(--wf-accent);color:var(--dark);padding:4px 8px;border-radius:4px;font-size:10px;font-weight:700;margin-top:auto;">SELECT</span>
+          </div>
+          <div class="wf-card" style="min-height:180px;flex-direction:column;padding:14px;background:var(--wf-box2);">
+            <span style="color:var(--gold);font-weight:700;font-size:11px;">FULL + 3 NIGHTS</span>
+            <span style="color:var(--gold-light);font-size:18px;font-weight:700;margin-top:8px;">₩[?]</span>
+            <span class="wf-mini">흰곰 결정 대기</span>
+            <span class="wf-mini" style="margin-top:8px;">Above + Bella Stay 3N + breakfast</span>
+            <span style="background:var(--wf-accent);color:var(--dark);padding:4px 8px;border-radius:4px;font-size:10px;font-weight:700;margin-top:auto;">SELECT</span>
+          </div>
+        </div>
+
+        <!-- Day pass -->
+        <div class="wf-section" style="margin-top:8px;">
+          <span class="wf-label">DAY PASS</span> <span style="font-size:10px;">₩100,000 / 1일</span>
+        </div>
+
+        <!-- Steps -->
+        <div class="wf-grid-3" style="margin-top:12px;">
+          <div class="wf-card" style="min-height:60px;font-size:10px;">① 패키지 선택</div>
+          <div class="wf-card" style="min-height:60px;font-size:10px;">② 정보 입력 + 입금</div>
+          <div class="wf-card" style="min-height:60px;font-size:10px;">③ 이메일 확인</div>
+        </div>
+
+        <div class="wf-section tall" style="margin-top:8px;flex-direction:column;align-items:flex-start;">
+          <span class="wf-label">FAQ MINI</span>
+          <span style="font-size:10px;color:var(--wf-text);margin-top:4px;">환불 정책 · 입금 안내 · 외국 카드 결제 · 단체 등록</span>
+        </div>
+
+        <div class="wf-section cta" style="margin-top:10px;">REGISTER NOW</div>
+      </div>
+    </div>
+
+    <div class="director-note">
+      흰곰 결정 전까지 가격 19만(풀팩) + 일일 10만은 이미 노출 가능.
+      풀팩+2박/3박은 "Coming soon" 또는 "Contact for booking" 버튼으로 우회.
+      등록 시스템 자체가 미정이면 → "이메일 신청" 폼 임시 사용 → 운영진이 수동 처리.
+      <strong>전환 압박 vs 정확성</strong> 사이의 균형 — "확정 정보만 노출" 원칙 지킬 것.
+    </div>
+  </div>
+
+  <!-- ============ VENUE ============ -->
+  <h2 id="venue"><span class="section-num">⑦</span>Page 5 — Venue</h2>
+
+  <div class="page-block">
+    <div class="page-header">
+      <div class="page-num">5</div>
+      <div class="page-title">Venue / 장소</div>
+      <div class="page-sub"><span class="badge p0">P0</span></div>
+    </div>
+
+    <div class="page-meta">
+      <div class="meta-card">
+        <div class="lbl">목표</div>
+        <div class="val">춘천이라는 도시의 매력 + 두 장소의 합리성을 동시에 전달.</div>
+      </div>
+      <div class="meta-card">
+        <div class="lbl">데이터 출처</div>
+        <div class="val">장소기획/공간기획v4.html, 운영기준 §3</div>
+      </div>
+    </div>
+
+    <div class="wireframe">
+      <div class="wf-frame">
+        <div class="wf-section" style="min-height:32px;"><span class="wf-label">HEADER</span></div>
+        <div class="wf-section hero" style="min-height:80px;">"Two homes, one city — Chuncheon's autumn embrace."</div>
+
+        <!-- Venue 1 -->
+        <div class="wf-section" style="margin-top:10px;background:transparent;border:none;padding:0;">
+          <div class="wf-grid-2" style="width:100%;">
+            <div class="wf-card img" style="min-height:160px;">📸 봄내체육관 외관</div>
+            <div class="wf-card" style="min-height:160px;flex-direction:column;align-items:flex-start;padding:14px;">
+              <span style="color:var(--gold);font-weight:700;">봄내체육관</span>
+              <span class="wf-mini" style="margin-top:4px;">MARATHON VENUE · 5 Milongas</span>
+              <span class="wf-mini" style="margin-top:8px;">춘천시 중앙로 ##</span>
+              <span class="wf-mini">📍 Map · 🚗 5 min from KTX 춘천역</span>
+              <span class="wf-mini" style="margin-top:8px;">— 음향 시스템 완비<br>— 댄스 플로어 ##㎡<br>— 휴식공간 별도</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Venue 2 -->
+        <div class="wf-section" style="margin-top:8px;background:transparent;border:none;padding:0;">
+          <div class="wf-grid-2" style="width:100%;">
+            <div class="wf-card" style="min-height:160px;flex-direction:column;align-items:flex-start;padding:14px;">
+              <span style="color:var(--gold);font-weight:700;">춘천문화예술회관</span>
+              <span class="wf-mini" style="margin-top:4px;">CONCERT HALL · 940 seats</span>
+              <span class="wf-mini" style="margin-top:8px;">춘천시 ##</span>
+              <span class="wf-mini">📍 Map · 🚗 봄내체육관 셔틀</span>
+              <span class="wf-mini" style="margin-top:8px;">— Tango Bardo Opening Concert<br>— 940석 대공연장<br>— 전문 무대조명</span>
+            </div>
+            <div class="wf-card img" style="min-height:160px;">📸 문화예술회관 내부</div>
+          </div>
+        </div>
+
+        <!-- Map -->
+        <div class="wf-section taller" style="margin-top:10px;">
+          <span class="wf-label" style="position:absolute;top:8px;left:10px;">🗺 INTERACTIVE MAP</span>
+          <span style="font-size:10px;color:var(--wf-text);">두 장소 + 호텔(벨라스테이) + KTX/ITX 역 표시</span>
+        </div>
+
+        <div class="wf-section cta" style="margin-top:10px;">→ View on Google Maps</div>
+      </div>
+    </div>
+
+    <div class="director-note">
+      <strong>최우선 사진 자원</strong>: 봄내체육관과 문화예술회관의 실제 사진. 답사 사진 활용 가능.
+      구글 맵 임베드는 핀 2개(체육관, 회관) + 호텔 1개. 가능하면 KTX 춘천역도.
+      "Chuncheon's autumn embrace"라는 카피처럼 — 도시 자체의 톤(호수·가을·닭갈비)을 살짝 깔아주기.
+    </div>
+  </div>
+
+  <!-- ============ ACCOMMODATION ============ -->
+  <h2 id="hotel"><span class="section-num">⑧</span>Page 6 — Accommodation</h2>
+
+  <div class="page-block">
+    <div class="page-header">
+      <div class="page-num">6</div>
+      <div class="page-title">Accommodation / 호텔</div>
+      <div class="page-sub"><span class="badge p0">P0</span></div>
+    </div>
+
+    <div class="page-meta">
+      <div class="meta-card">
+        <div class="lbl">목표</div>
+        <div class="val">"호텔 신경 안 써도 된다"는 안심. 패키지 선택 유도.</div>
+      </div>
+      <div class="meta-card">
+        <div class="lbl">데이터 출처</div>
+        <div class="val">운영기준 §5 (벨라스테이 1박 8만 / 조식 1.1만)</div>
+      </div>
+    </div>
+
+    <div class="wireframe">
+      <div class="wf-frame">
+        <div class="wf-section" style="min-height:32px;"><span class="wf-label">HEADER</span></div>
+        <div class="wf-section hero" style="min-height:80px;">"Sleep where the festival sleeps."</div>
+
+        <div class="wf-section" style="margin-top:10px;background:transparent;border:none;padding:0;">
+          <div class="wf-grid-2" style="width:100%;">
+            <div class="wf-card img" style="min-height:200px;">📸 Bella Stay (외관/객실)</div>
+            <div class="wf-card" style="min-height:200px;flex-direction:column;align-items:flex-start;padding:14px;">
+              <span style="color:var(--gold);font-weight:700;">춘천 벨라스테이</span>
+              <span class="wf-mini" style="margin-top:4px;">OFFICIAL HOTEL</span>
+              <span class="wf-mini" style="margin-top:10px;">Twin Room · ₩80,000/night</span>
+              <span class="wf-mini">Breakfast · ₩11,000/person</span>
+              <span class="wf-mini" style="margin-top:10px;">📍 Distance to Venue: ##km</span>
+              <span class="wf-mini">🚐 Festival Shuttle (TBD)</span>
+              <span style="background:var(--wf-accent);color:var(--dark);padding:4px 10px;border-radius:4px;font-size:10px;font-weight:700;margin-top:auto;">VIA REGISTER PAGE</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="wf-section tall" style="margin-top:10px;flex-direction:column;align-items:flex-start;">
+          <span class="wf-label">PACKAGE BREAKDOWN</span>
+          <span style="font-size:10px;color:var(--wf-text);margin-top:6px;">
+          Full Pack: 페스티벌만<br>
+          Full + 2N: 10/3·10/4 호텔 포함<br>
+          Full + 3N: 10/2·10/3·10/4 호텔 포함 (얼리 도착자)
+          </span>
+        </div>
+
+        <div class="wf-section tall" style="margin-top:8px;">
+          <span class="wf-label">ALTERNATIVE</span> 다른 호텔 옵션 (TripAdvisor 링크) — 자유 예약 시
+        </div>
+
+        <div class="wf-section cta" style="margin-top:10px;">→ Book Package on Register</div>
+      </div>
+    </div>
+
+    <div class="director-note">
+      호텔 예약은 등록 페이지에서 패키지로만. 호텔 단독 예약 불가 (운영 단순화).
+      셔틀 운영 여부는 흰곰/존 확인 필요. 없으면 "도보/택시 5분"으로 바꿔 표기.
+      Alternative 섹션은 해외 참가자가 다른 옵션을 찾을 때 우리가 막지 않는다는 신호.
+    </div>
+  </div>
+
+  <!-- ============ ABOUT ============ -->
+  <h2 id="about"><span class="section-num">⑨</span>Page 7 — About / Contact</h2>
+
+  <div class="page-block">
+    <div class="page-header">
+      <div class="page-num">7</div>
+      <div class="page-title">About / Contact</div>
+      <div class="page-sub"><span class="badge p0">P0</span></div>
+    </div>
+
+    <div class="page-meta">
+      <div class="meta-card">
+        <div class="lbl">목표</div>
+        <div class="val">신뢰 — 사단법인, 후원, 연락처. 의심 제거.</div>
+      </div>
+      <div class="meta-card">
+        <div class="lbl">데이터 출처</div>
+        <div class="val">현재 사이트 푸터 + 운영기준 §3</div>
+      </div>
+    </div>
+
+    <div class="wireframe">
+      <div class="wf-frame">
+        <div class="wf-section" style="min-height:32px;"><span class="wf-label">HEADER</span></div>
+        <div class="wf-section hero" style="min-height:60px;">"Built by Korea's tango community, for the world."</div>
+
+        <div class="wf-section taller" style="margin-top:10px;flex-direction:column;align-items:flex-start;">
+          <span class="wf-label">사단법인 춘천국제탱고페스티벌</span>
+          <span style="font-size:10px;color:var(--wf-text);margin-top:8px;">
+          미션 / 2026이 몇 회차인지 / 누가 만들었는지 / 왜 춘천인지<br>
+          (3~4 paragraphs, story-driven)
+          </span>
+        </div>
+
+        <div class="wf-grid-2" style="margin-top:8px;">
+          <div class="wf-card" style="min-height:80px;">🏛 SPONSORS<br><span class="wf-mini">춘천시 · 주한아르헨티나대사관</span></div>
+          <div class="wf-card" style="min-height:80px;">📅 CO-HOST<br><span class="wf-mini">춘천문화재단</span></div>
+        </div>
+
+        <div class="wf-section tall" style="margin-top:8px;flex-direction:column;align-items:flex-start;">
+          <span class="wf-label">CONTACT</span>
+          <span style="font-size:10px;color:var(--wf-text);margin-top:6px;">
+          📧 info@kcctf.org<br>
+          📍 강원특별자치도 춘천시 아침길 17-1<br>
+          🌐 IG · FB · YT
+          </span>
+        </div>
+
+        <div class="wf-section" style="margin-top:8px;">
+          <span class="wf-label">LEGAL</span> 이용약관 · 개인정보 · 환불 규정
+        </div>
+      </div>
+    </div>
+
+    <div class="director-note">
+      About은 짧지만 강해야 함 — "We are Korea's flagship international tango festival."
+      후원사 로고 + 재단 로고는 신뢰의 핵심 시각 신호. 가능하면 바로 이미지로.
+      Contact은 이메일만으로 충분 (전화번호는 운영 부담).
+    </div>
+  </div>
+
+  <!-- ============ DESIGN PRINCIPLES ============ -->
+  <h2 id="principles"><span class="section-num">⑩</span>디자인 원칙 (Aesthetic 인계용)</h2>
+
+  <div class="alert blue">
+    이 원칙들은 다음 단계인 <strong>Aesthetic(디자이너) 모드</strong>에서 정적 HTML 프로토타입을 만들 때 따라가는 가이드입니다.
+  </div>
+
+  <div class="page-meta">
+    <div class="meta-card">
+      <div class="lbl">컬러 (기존 시스템 그대로)</div>
+      <div class="val">
+        Gold #C9A84C · Dark #1A1410 · Brown #3D3020 · Text #E8E0D0<br>
+        대시보드/홍보동선과 일관성 유지. 외부 사이트도 "KCCTF의 시각 언어"로 인식되도록.
+      </div>
+    </div>
+    <div class="meta-card">
+      <div class="lbl">타이포</div>
+      <div class="val">
+        한글: Apple SD Gothic Neo / Pretendard<br>
+        영문: 디스플레이 = Cormorant 또는 Playfair Display (세리프, 정통감)<br>
+        본문 = Inter / system-ui<br>
+        Hero 헤드라인은 무조건 세리프. 본문은 산세리프.
+      </div>
+    </div>
+    <div class="meta-card">
+      <div class="lbl">여백</div>
+      <div class="val">
+        섹션 간 80px (모바일 48px). 컨테이너 max-width 1200px.<br>
+        BTE 수준의 여유 — 정보를 욱여넣지 말 것.
+      </div>
+    </div>
+    <div class="meta-card">
+      <div class="lbl">이미지</div>
+      <div class="val">
+        Hero는 영상 우선, 영상 없으면 큰 사진. 사진 위에 항상 어두운 그라디언트 오버레이.<br>
+        DJ/댄서 카드는 정사각형. 오케스트라는 가로 16:9.
+      </div>
+    </div>
+    <div class="meta-card">
+      <div class="lbl">마이크로인터랙션</div>
+      <div class="val">
+        호버 시 카드 살짝 떠오르기 (translateY -3px + shadow). 페이드인 스크롤 애니메이션.<br>
+        하지만 과하지 않게 — 우아함이 핵심.
+      </div>
+    </div>
+    <div class="meta-card">
+      <div class="lbl">반응형</div>
+      <div class="val">
+        모바일 우선 설계 (320px). 태블릿 768px / 데스크톱 1100px+.<br>
+        해외 참가자는 폰/태블릿으로 보는 비중 높음.
+      </div>
+    </div>
+  </div>
+
+  <!-- Next steps -->
+  <h2><span class="section-num">→</span>다음 단계</h2>
+
+  <div class="alert green">
+    <strong>이 산출물로 결정된 것</strong>
+    <ul class="tight" style="margin-top:8px;">
+      <li>사이트맵: 1 + 3 그룹 / 9 페이지 (P0 7 / P1 2)</li>
+      <li>핵심 비전: "한국에서 만나는 부에노스아이레스의 두 별"</li>
+      <li>3 필터: 정통 · 임박 · 충만</li>
+      <li>모든 페이지의 와이어프레임 골격</li>
+    </ul>
+  </div>
+
+  <div class="alert gold">
+    <strong>다음에 만들 것 (포올 선택)</strong>
+    <ul class="tight" style="margin-top:8px;">
+      <li><strong>옵션 A — Wordsmith 모드</strong>: Hero 카피 후보 5개 (한/영) + About 내러티브 초안</li>
+      <li><strong>옵션 B — Aesthetic 모드</strong>: Home 페이지 정적 HTML 프로토타입 (실제 모양으로)</li>
+      <li><strong>옵션 C — Critic 모드</strong>: 현재 kcctf.org vs 운영기준 오류 전수 점검 리스트</li>
+    </ul>
+    <p style="margin-top:10px;">개인적으로는 <strong>B(프로토타입)</strong> 추천 — 실제 모양 보면 카피·디자인이 훨씬 정확해짐.</p>
+  </div>
+
+  <div class="meta-footer">
+    KCCTF 2026 사이트맵 &amp; 와이어프레임 v0.1 · 2026-05-09 · 🎬 Director 산출물
+  </div>
+
+</div>
+
+</body>
+</html>

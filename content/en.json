@@ -1,0 +1,416 @@
+{
+  "common": {
+    "festival": "Chuncheon International Tango Festival",
+    "festivalShort": "KCCTF",
+    "year": "2026",
+    "dates": "Oct 3–5, 2026",
+    "datesLong": "Saturday, October 3 — Monday, October 5, 2026",
+    "venue": "Chuncheon Bomnae Complex",
+    "country": "Chuncheon, Gangwon, South Korea"
+  },
+
+  "nav": {
+    "home": "Home",
+    "lineup": "Lineup",
+    "schedule": "Program",
+    "venue": "Venue",
+    "tickets": "Tickets",
+    "register": "Register",
+    "languageSwitch": "KR",
+    "menuOpen": "Open menu",
+    "menuClose": "Close menu"
+  },
+
+  "hero": {
+    "eyebrow": "2026 · CHUNCHEON",
+    "titleLine1": "CHUNCHEON",
+    "titleLine2": "TANGO FESTIVAL",
+    "subtitleEn": "INTERNATIONAL\nTANGO FESTIVAL",
+    "tagline": "Two orchestras. Three nights. One stadium.\nThe Asian tango lineup that doesn't exist anywhere else.",
+    "uspBand": "TWO LIVE ORCHESTRAS · THREE NIGHTS",
+    "stats": {
+      "orchestras": { "num": "2", "label": "Orchestras" },
+      "nights": { "num": "3", "label": "Nights" },
+      "milongas": { "num": "6", "label": "Milongas" },
+      "djs": { "num": "6", "label": "DJs" }
+    },
+    "dateBand": {
+      "datePrimary": "10.03 — 10.05",
+      "dateSecondary": "SAT · SUN · MON · 2026",
+      "venuePrimary": "Chuncheon Bomnae Complex",
+      "venueSecondary": "GANGWON · SOUTH KOREA"
+    },
+    "cta": "Register →",
+    "scrollHint": "Scroll"
+  },
+
+  "orchestras": {
+    "eyebrow": "★ TWO LIVE ORCHESTRAS ★",
+    "subtitleEn": "From Buenos Aires",
+    "title": "One stage, two orchestras.",
+    "lede": "Two living tango groups, flown directly from Buenos Aires. A lineup that doesn't exist anywhere else in Asia.",
+    "items": [
+      {
+        "id": "tango-bardo",
+        "name": "Tango Bardo",
+        "nameEn": "Tango Bardo",
+        "role": "Orquesta Típica",
+        "origin": "Buenos Aires",
+        "description": "A leading Buenos Aires tango orchestra, blending traditional roots with modern expression.",
+        "liveBadge": "LIVE"
+      },
+      {
+        "id": "misteriosa-buenos-aires",
+        "name": "Misteriosa Buenos Aires",
+        "nameEn": "Misteriosa Buenos Aires",
+        "role": "Tango Ensemble",
+        "origin": "Buenos Aires",
+        "description": "A Buenos Aires-based ensemble known for powerful, atmospheric stage performances.",
+        "liveBadge": "LIVE"
+      }
+    ]
+  },
+
+  "schedule": {
+    "eyebrow": "PROGRAM",
+    "title": "Three days, one breath.",
+    "lede": "An opening orchestra concert, six milongas across three days, and a city tour to close.",
+    "tabs": {
+      "day1": "10/3 SAT — Day 1",
+      "day2": "10/4 SUN — Day 2",
+      "day3": "10/5 MON — Day 3"
+    },
+    "items": [
+      {
+        "day": "10/3",
+        "dow": "SAT",
+        "time": "13:00 — 14:40",
+        "type": "concert",
+        "title": "Opening Orchestra Concert",
+        "subtitle": "오프닝 오케스트라 콘서트",
+        "performer": "Tango Bardo",
+        "mood": "The festival begins with a live stage.",
+        "featured": true
+      },
+      {
+        "day": "10/3",
+        "dow": "SAT",
+        "time": "15:00 — 20:00",
+        "type": "milonga",
+        "title": "M1 · Welcome Milonga",
+        "subtitle": "환영 밀롱가",
+        "djId": "becca",
+        "djName": "DJ Becca",
+        "mood": "From sunlight to dusk — the first embrace."
+      },
+      {
+        "day": "10/3",
+        "dow": "SAT",
+        "time": "22:00 — 04:00",
+        "type": "milonga",
+        "title": "M2 · First Night",
+        "subtitle": "첫째 밤 밀롱가",
+        "djId": "carlos",
+        "djName": "DJ Carlos",
+        "mood": "The longest, deepest dive of the three days."
+      },
+      {
+        "day": "10/4",
+        "dow": "SUN",
+        "time": "14:00 — 19:00",
+        "type": "milonga",
+        "title": "M3 · Sunday Afternoon",
+        "subtitle": "일요 오후 밀롱가",
+        "djId": "hagoon",
+        "djName": "DJ Hagoon",
+        "mood": "The hour between days."
+      },
+      {
+        "day": "10/4",
+        "dow": "SUN",
+        "time": "21:00 — 03:00",
+        "type": "milonga",
+        "title": "M4 · Grand Milonga",
+        "subtitle": "그란 밀롱가",
+        "djId": "wangwei",
+        "djName": "DJ Wang Wei",
+        "mood": "The peak of the festival. The most luminous night.",
+        "featured": true
+      },
+      {
+        "day": "10/5",
+        "dow": "MON",
+        "time": "11:00 — 14:00",
+        "type": "tour",
+        "title": "Chuncheon City Tour",
+        "subtitle": "춘천 시티투어",
+        "mood": "A walk through the lakeside city's autumn together."
+      },
+      {
+        "day": "10/5",
+        "dow": "MON",
+        "time": "15:00 — 20:00",
+        "type": "milonga",
+        "title": "M5 · Farewell Afternoon",
+        "subtitle": "작별의 오후",
+        "djId": "stone",
+        "djName": "DJ Stone",
+        "mood": "Under the last sunlight."
+      },
+      {
+        "day": "10/5",
+        "dow": "MON",
+        "time": "20:00 — 24:00",
+        "type": "afterparty",
+        "title": "M6 · After Party & Milonga",
+        "subtitle": "애프터 파티 & 밀롱가",
+        "djId": "natalie",
+        "djName": "DJ Nathalie",
+        "mood": "One last tanda to close three days.",
+        "featured": true
+      }
+    ],
+    "downloadPdf": "Download program PDF",
+    "addToCalendar": "Add to calendar"
+  },
+
+  "djs": {
+    "eyebrow": "MOOD MAKERS",
+    "title": "Six DJs.",
+    "subtitleEn": "여섯 명의 디제이",
+    "lede": "The flow of the milonga begins at the DJ's fingertips. Six curators invited from Korea, China, and Hong Kong.",
+    "items": [
+      { "id": "hagoon",  "nameKo": "하군",     "nameEn": "Hagoon",         "city": "Seoul",    "country": "Korea" },
+      { "id": "stone",   "nameKo": "스톤",     "nameEn": "Stone",          "city": "Busan",    "country": "Korea" },
+      { "id": "carlos",  "nameKo": "까를로스", "nameEn": "Carlos",         "city": "Seoul",    "country": "Korea" },
+      { "id": "becca",   "nameKo": "베카",     "nameEn": "Becca",          "city": "Seoul",    "country": "Korea" },
+      { "id": "wangwei", "nameKo": "왕웨이",   "nameEn": "Wang Wei",       "city": "Shanghai", "country": "China" },
+      { "id": "natalie", "nameKo": "나탈리",   "nameEn": "Nathalie Cheng", "city": "Hong Kong","country": "Hong Kong" }
+    ]
+  },
+
+  "dancers": {
+    "eyebrow": "PERFORMERS",
+    "title": "Dance Performances",
+    "subtitleEn": "댄서팀",
+    "lede": "Four teams representing the Korean tango scene.",
+    "items": [
+      {
+        "id": "london-sol",
+        "name": "London Hong & Sol",
+        "origin": "Korea",
+        "isTBA": false
+      },
+      {
+        "id": "hyemi-wonjun",
+        "name": "Hyemi Seo & Wonjun Seol",
+        "origin": "Korea",
+        "isTBA": false
+      },
+      {
+        "id": "team-ryu",
+        "name": "Team Ryu",
+        "origin": "Korea",
+        "isTBA": false
+      },
+      {
+        "id": "tba",
+        "name": "Coming Soon",
+        "origin": "TBA",
+        "isTBA": true
+      }
+    ]
+  },
+
+  "venue": {
+    "eyebrow": "VENUE",
+    "title": "Bomnae Complex",
+    "subtitleEn": "춘천 봄내체육관",
+    "tagline": "A large space at the city's heart.\nProfessional sound. Overwhelming scale.",
+    "address": "Chuncheon, Gangwon, South Korea",
+    "features": [
+      { "icon": "🚄", "text": "About 60 minutes from Seoul by ITX" },
+      { "icon": "🎵", "text": "Professional sound system" },
+      { "icon": "🏛", "text": "Large dance floor in the city center" },
+      { "icon": "🅿️", "text": "Parking available" }
+    ],
+    "mapLink": "View on Google Maps",
+    "concertVenueNote": "Concert venue details coming soon."
+  },
+
+  "tickets": {
+    "eyebrow": "TICKETS",
+    "title": "Choose your three days.",
+    "subtitleEn": "당신의 사흘을 고르세요",
+    "lede": "Earlybird is available for a limited time only.",
+    "items": [
+      {
+        "id": "fullpack-early",
+        "name": "Earlybird Full Pack",
+        "nameEn": "얼리버드 풀팩",
+        "price": 190000,
+        "priceLabel": "₩190,000 (~USD 140)",
+        "description": "All three days, every program. The smartest choice.",
+        "includes": [
+          "Opening Orchestra Concert",
+          "Six milongas (M1–M6)",
+          "Chuncheon City Tour"
+        ],
+        "note": "Limited quantity · First come first served",
+        "featured": true,
+        "cta": "Register"
+      },
+      {
+        "id": "fullpack-onsite",
+        "name": "On-site Full Pack",
+        "nameEn": "현장 풀팩",
+        "price": 240000,
+        "priceLabel": "₩240,000 (~USD 175)",
+        "description": "Standard price after earlybird closes.",
+        "includes": [
+          "Opening Orchestra Concert",
+          "Six milongas (M1–M6)",
+          "Chuncheon City Tour"
+        ],
+        "note": "On-site registration available (subject to availability)",
+        "featured": false,
+        "cta": "Register"
+      },
+      {
+        "id": "daypass",
+        "name": "Day Pass",
+        "nameEn": "일일권",
+        "price": 100000,
+        "priceLabel": "₩100,000 (~USD 75)",
+        "description": "One day of programs of your choice.",
+        "includes": [
+          "All milongas of the chosen day",
+          "Concert (Oct 3 only)"
+        ],
+        "note": "Available at the door",
+        "featured": false,
+        "cta": "Register"
+      }
+    ],
+    "hotelPackageNote": "Hotel packages (Full Pack + 2 nights / + 3 nights) coming soon.",
+    "paymentInfo": {
+      "title": "Payment",
+      "bank": "Shinhan Bank",
+      "account": "100-038-582544",
+      "holder": "Chuncheon International Tango Festival Foundation",
+      "note": "Reservation confirmed upon payment within 7 days"
+    },
+    "registerExternalNote": "Registration is handled on a separate page."
+  },
+
+  "accommodation": {
+    "eyebrow": "STAY",
+    "title": "Chuncheon Bella Stay",
+    "subtitleEn": "춘천 벨라스테이",
+    "tagline": "Sleep where the festival sleeps.",
+    "details": [
+      { "label": "Room", "value": "Twin" },
+      { "label": "Per night", "value": "From ₩80,000" },
+      { "label": "Breakfast", "value": "₩11,000 per person (optional)" }
+    ],
+    "packageNote": "Available as Full Pack + 2 nights / + 3 nights packages (prices coming soon)",
+    "moreOptionsLink": "See other lodging options"
+  },
+
+  "about": {
+    "eyebrow": "ABOUT",
+    "title": "Chuncheon International Tango Festival",
+    "subtitleEn": "춘천국제땅고페스티벌",
+    "body": "KCCTF is a three-day festival combining live orchestra concerts with social dance (milongas). Two orchestras flown directly from Buenos Aires, six DJs from Korea, China, and Hong Kong — three nights of tango together. A meeting place for the global tango community in Chuncheon's autumn.",
+    "organization": {
+      "name": "Chuncheon International Tango Festival Foundation",
+      "nameEn": "사단법인 춘천국제탱고페스티벌",
+      "address": "1F, 17-1 Achim-gil, Chuncheon, Gangwon, South Korea",
+      "businessNumber": "848-82-00766",
+      "registrationNumber": "140121-0000800",
+      "representative": "Lee Jong-hwa"
+    },
+    "sponsors": {
+      "title": "Hosted & Supported by",
+      "items": [
+        { "label": "Host", "value": "Chuncheon International Tango Festival Foundation" },
+        { "label": "Co-host", "value": "Chuncheon Cultural Foundation" },
+        { "label": "Supported by", "value": "Chuncheon City · Embassy of Argentina in Korea" }
+      ]
+    }
+  },
+
+  "contact": {
+    "eyebrow": "CONTACT",
+    "title": "See you in Chuncheon.",
+    "subtitleEn": "춘천에서 만나요",
+    "email": "info@kcctf.org",
+    "social": {
+      "instagram": "@kcctf_official",
+      "facebook": "Chuncheon International Tango Festival"
+    }
+  },
+
+  "faq": {
+    "title": "Frequently Asked Questions",
+    "subtitleEn": "자주 묻는 질문",
+    "items": [
+      {
+        "q": "How do I register?",
+        "a": "Click the Register button to be taken to the application page. Reservation is confirmed upon payment within 7 days of submission."
+      },
+      {
+        "q": "What is the refund policy?",
+        "a": "Please see the Refund Policy page. Partial refund available up to 30 days before the festival; refunds become difficult thereafter."
+      },
+      {
+        "q": "Where do I send payment?",
+        "a": "Shinhan Bank, account 100-038-582544 (holder: Chuncheon International Tango Festival Foundation)."
+      },
+      {
+        "q": "Can I pay with a foreign credit card?",
+        "a": "Currently we operate primarily with bank transfers. For foreign card payments, please contact info@kcctf.org for separate guidance."
+      },
+      {
+        "q": "How do I get to Chuncheon?",
+        "a": "About 60 minutes from Seoul by ITX-Cheongchun or KTX, or about 80 minutes by intercity bus. From Incheon Airport, around 2-3 hours via airport bus or ITX transfer."
+      },
+      {
+        "q": "How do I book accommodation?",
+        "a": "The most convenient option is the official hotel (Chuncheon Bella Stay) booked through our Full Pack + 2/3 nights packages. You may also book other accommodations independently."
+      },
+      {
+        "q": "Are there workshops?",
+        "a": "Workshop availability will be announced soon."
+      },
+      {
+        "q": "Can I register on-site?",
+        "a": "On-site registration is possible but may be limited if capacity is reached. Advance reservation is strongly recommended."
+      }
+    ]
+  },
+
+  "footer": {
+    "tagline": "See you in Chuncheon",
+    "taglineEn": "춘천에서 만나요",
+    "navTitle": "Site",
+    "infoTitle": "Info",
+    "followTitle": "Follow",
+    "sponsorsTitle": "Hosted & Supported by",
+    "legal": {
+      "terms": "Terms of Service",
+      "privacy": "Privacy Policy",
+      "refund": "Refund Policy"
+    },
+    "copyright": "© 2026 Chuncheon International Tango Festival Foundation. All rights reserved.",
+    "emailHarvestNotice": "Unauthorized collection of email addresses on this website using email harvesting programs or other technical means is strictly prohibited and subject to legal action under Korean Information and Communications Network Act."
+  },
+
+  "meta": {
+    "title": "Chuncheon International Tango Festival 2026 — KCCTF",
+    "description": "Two orchestras. Three nights. One stadium. Tango Bardo and Misteriosa Buenos Aires, live in Chuncheon, Korea. Oct 3–5, 2026.",
+    "ogTitle": "Chuncheon International Tango Festival 2026",
+    "ogDescription": "Two orchestras. Three nights. One stadium.",
+    "keywords": "tango, festival, Korea, Chuncheon, Buenos Aires, Tango Bardo, Misteriosa, milonga, live orchestra"
+  }
+}
