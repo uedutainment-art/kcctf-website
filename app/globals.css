@@ -26,6 +26,20 @@
   --color-live:          #D42656;
 }
 
+@layer components {
+  /* Hero: mustard + diamond grid pattern (inline SVG data URL) */
+  .diamond-bg {
+    background-color: #F2C94C;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='48' viewBox='0 0 48 48'%3E%3Cpath d='M24 0 L48 24 L24 48 L0 24 Z' fill='none' stroke='%23E8B83C' stroke-width='0.5' opacity='0.6'/%3E%3C/svg%3E");
+  }
+
+  /* Grain noise overlay (mix-blend-mode: multiply) */
+  .grain-overlay {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='0.9'/%3E%3CfeColorMatrix values='0 0 0 0 0.3 0 0 0 0 0.15 0 0 0 0 0.07 0 0 0 0.4 0'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
+    mix-blend-mode: multiply;
+  }
+}
+
 @layer base {
   html {
     scroll-behavior: smooth;
