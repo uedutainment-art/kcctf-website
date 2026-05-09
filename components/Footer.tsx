@@ -25,32 +25,26 @@ export default function Footer() {
     <footer id="about" className="bg-night text-warm-white pt-16 pb-10">
       <div className="max-w-[1200px] mx-auto px-6 md:px-10">
 
-        {/* Top row: tagline + bandoneon */}
-        <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-6 mb-12 border-b border-warm-white/10 pb-10">
-          <div>
-            <p
-              className="font-kr-serif font-black text-warm-white leading-[1.0] tracking-[-0.04em]"
-              style={{ fontSize: 'clamp(32px, 5vw, 56px)' }}
-            >
-              {t('tagline')}
-            </p>
-            <p className="font-en-display italic text-[18px] text-gold-soft mt-2">
-              {t('taglineEn')}
-            </p>
-          </div>
-          <div className="opacity-60" aria-hidden>
-            <Image
-              src="/images/illustration-bandoneon-dark.png"
-              alt=""
-              width={100}
-              height={100}
-              style={{ width: '100px', height: 'auto' }}
-            />
-          </div>
+        {/* Top: centred bandoneon + tagline */}
+        <div className="flex flex-col items-center text-center mb-12 pb-10 border-b border-warm-white/10">
+          <Image
+            src="/images/illustration-bandoneon-dark.png"
+            alt=""
+            width={200}
+            height={200}
+            style={{ height: '200px', width: 'auto', opacity: 0.65 }}
+            aria-hidden
+          />
+          <p
+            className="font-en-display italic font-black text-gold mt-6 leading-none"
+            style={{ fontSize: 'clamp(28px, 4vw, 40px)' }}
+          >
+            {t('tagline')} · {t('taglineEn')}
+          </p>
         </div>
 
-        {/* Links grid */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 gap-8 mb-12">
+        {/* 4-column links */}
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-8 mb-12 text-center sm:text-left">
 
           {/* Sitemap */}
           <div>
@@ -62,7 +56,7 @@ export default function Footer() {
                 <li key={key}>
                   <a
                     href={href}
-                    className="font-kr-sans text-[14px] text-warm-white/65 hover:text-warm-white transition-colors"
+                    className="font-kr-sans text-[14px] text-warm-white/60 hover:text-warm-white transition-colors"
                   >
                     {tn(key)}
                   </a>
@@ -71,7 +65,7 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Info */}
+          {/* Info / Legal */}
           <div>
             <p className="font-en-body font-bold text-[10px] tracking-[0.3em] uppercase text-gold mb-4">
               {t('infoTitle')}
@@ -81,7 +75,7 @@ export default function Footer() {
                 <li key={key}>
                   <Link
                     href={href}
-                    className="font-kr-sans text-[14px] text-warm-white/65 hover:text-warm-white transition-colors"
+                    className="font-kr-sans text-[14px] text-warm-white/60 hover:text-warm-white transition-colors"
                   >
                     {t(`legal.${key}`)}
                   </Link>
@@ -90,7 +84,7 @@ export default function Footer() {
               <li>
                 <a
                   href={`mailto:${contactEmail}`}
-                  className="font-en-body text-[14px] text-warm-white/65 hover:text-warm-white transition-colors"
+                  className="font-en-body text-[13px] text-warm-white/60 hover:text-warm-white transition-colors"
                 >
                   {contactEmail}
                 </a>
@@ -98,17 +92,32 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Sponsors / organizers */}
-          <div className="col-span-2 sm:col-span-1">
+          {/* Follow placeholder */}
+          <div>
+            <p className="font-en-body font-bold text-[10px] tracking-[0.3em] uppercase text-gold mb-4">
+              {t('followTitle')}
+            </p>
+            <ul className="flex flex-col gap-2">
+              <li>
+                <span className="font-kr-sans text-[14px] text-warm-white/30">Instagram</span>
+              </li>
+              <li>
+                <span className="font-kr-sans text-[14px] text-warm-white/30">Facebook</span>
+              </li>
+            </ul>
+          </div>
+
+          {/* Sponsors */}
+          <div>
             <p className="font-en-body font-bold text-[10px] tracking-[0.3em] uppercase text-gold mb-4">
               {t('sponsorsTitle')}
             </p>
-            <div className="flex flex-col gap-2">
-              <p className="font-kr-sans text-[11px] text-warm-white/30 uppercase tracking-[0.15em]">주최·주관</p>
+            <div className="flex flex-col gap-1">
+              <p className="font-kr-sans text-[10px] text-warm-white/30 uppercase tracking-[0.12em]">주최·주관</p>
               <p className="font-kr-sans text-[13px] text-warm-white/55 leading-[1.6]">
                 춘천문화재단<br />(사)춘천국제탱고페스티벌
               </p>
-              <p className="font-kr-sans text-[11px] text-warm-white/30 uppercase tracking-[0.15em] mt-1">후원</p>
+              <p className="font-kr-sans text-[10px] text-warm-white/30 uppercase tracking-[0.12em] mt-2">후원</p>
               <p className="font-kr-sans text-[13px] text-warm-white/55 leading-[1.6]">
                 춘천시<br />주한아르헨티나 대사관
               </p>
@@ -118,10 +127,10 @@ export default function Footer() {
 
         {/* Bottom bar */}
         <div className="border-t border-warm-white/10 pt-6 flex flex-col sm:flex-row sm:items-start gap-4">
-          <p className="font-kr-sans text-[11px] text-warm-white/35 leading-[1.5] flex-1">
+          <p className="font-kr-sans text-[11px] text-warm-white/30 leading-[1.5] flex-1">
             {t('copyright')}
           </p>
-          <p className="font-kr-sans text-[10px] text-warm-white/20 leading-[1.5] max-w-xs">
+          <p className="font-kr-sans text-[10px] text-warm-white/15 leading-[1.5] max-w-xs">
             {t('emailHarvestNotice')}
           </p>
         </div>
