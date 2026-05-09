@@ -166,12 +166,12 @@ export default function Hero() {
           {stats.map(({ num, label }) => (
             <div
               key={label}
-              className="bg-warm-white border-2 border-ink-soft px-3 py-[10px] text-center rounded-[4px]"
+              className="bg-burgundy px-3 py-[10px] text-center rounded-[4px] shadow-stamp"
             >
-              <div className="font-en-display italic font-black text-[22px] text-burgundy leading-none">
+              <div className="font-en-display italic font-black text-[22px] text-gold-soft leading-none">
                 {num}
               </div>
-              <div className="font-en-body font-bold text-[8px] tracking-[0.2em] uppercase text-ink-soft mt-1">
+              <div className="font-en-body font-bold text-[8px] tracking-[0.2em] uppercase text-warm-white/75 mt-1">
                 {label}
               </div>
             </div>
@@ -216,7 +216,7 @@ function OrchestraDuoCard({ bardo, misteriosa, captionText }: OrchestraDuoCardPr
       <div className="grid grid-cols-2 gap-1 overflow-hidden" style={{ aspectRatio: '16/7' }}>
         {[
           { src: orqPhoto(bardo),      alt: bardo.nameEn,      tag: bardo.nameEn      },
-          { src: orqPhoto(misteriosa), alt: misteriosa.nameEn, tag: 'Misteriosa BA'   },
+          { src: orqPhoto(misteriosa), alt: misteriosa.nameEn, tag: misteriosa.nameEn },
         ].map(({ src, alt, tag }) => (
           <div key={alt} className="relative overflow-hidden">
             <Image
@@ -257,12 +257,12 @@ function StatsRow({ stats }: StatsRowProps) {
       {stats.map(({ num, label }) => (
         <div
           key={label}
-          className="bg-warm-white border-2 border-ink-soft px-3 py-[10px] text-center rounded-[4px]"
+          className="bg-burgundy px-3 py-[10px] text-center rounded-[4px] shadow-stamp"
         >
-          <div className="font-en-display italic font-black text-[28px] text-burgundy leading-none">
+          <div className="font-en-display italic font-black text-[28px] text-gold-soft leading-none">
             {num}
           </div>
-          <div className="font-en-body font-bold text-[9px] tracking-[0.2em] uppercase text-ink-soft mt-1">
+          <div className="font-en-body font-bold text-[9px] tracking-[0.2em] uppercase text-warm-white/75 mt-1">
             {label}
           </div>
         </div>

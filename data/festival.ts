@@ -79,7 +79,7 @@ export const ORCHESTRAS: Orchestra[] = [
   {
     id: 'misteriosa-ba',
     nameKo: '미스테리오사 부에노스 아이레스',
-    nameEn: 'Misteriosa Buenos Aires',
+    nameEn: 'Orquesta Tipica Misteriosa Buenos Aires',
     roleKo: '탱고 앙상블',
     roleEn: 'Tango Ensemble',
     origin: 'Buenos Aires',

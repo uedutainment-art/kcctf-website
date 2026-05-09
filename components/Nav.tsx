@@ -52,12 +52,11 @@ export default function Nav() {
             {/* Logo */}
             <Link href="/" className="flex-shrink-0">
               <Image
-                src="/images/logo-official-dark.png"
+                src="/images/illustration-bandoneon-dark.png"
                 alt="춘천국제탱고페스티벌"
-                width={180}
-                height={48}
-                style={{ height: '44px', width: 'auto' }}
-                className="sm:h-10"
+                width={44}
+                height={44}
+                style={{ height: '40px', width: 'auto' }}
                 priority
               />
             </Link>
@@ -132,9 +131,9 @@ export default function Nav() {
         <div className="flex items-center justify-between px-5 pt-5 pb-4">
           <Link href="/" onClick={() => setMenuOpen(false)}>
             <Image
-              src="/images/logo-official-dark.png"
+              src="/images/illustration-bandoneon-dark.png"
               alt="춘천국제탱고페스티벌"
-              width={160}
+              width={40}
               height={40}
               style={{ height: '40px', width: 'auto' }}
               priority
