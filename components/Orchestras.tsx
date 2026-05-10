@@ -56,7 +56,7 @@ export default function Orchestras() {
                 className="absolute inset-0 pointer-events-none"
                 style={{
                   background:
-                    'linear-gradient(90deg, rgba(15,41,58,0.92) 0%, rgba(15,41,58,0.5) 30%, transparent 60%)',
+                    'linear-gradient(90deg, rgba(15,41,58,0.96) 0%, rgba(15,41,58,0.65) 38%, transparent 65%)',
                 }}
               />
 
@@ -78,7 +78,7 @@ export default function Orchestras() {
                   >
                     {locale === 'ko' ? item.nameEn : orq.nameEn}
                   </h3>
-                  <p className="font-kr-sans text-[14px] text-warm-white/80 leading-[1.55] hidden sm:block">
+                  <p className="font-kr-sans text-[15px] text-warm-white/85 leading-[1.55] hidden sm:block">
                     {item.description}
                   </p>
                 </div>

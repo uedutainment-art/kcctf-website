@@ -81,7 +81,7 @@ export default function Schedule() {
               <div
                 key={item.idx}
                 className={[
-                  'flex flex-col sm:flex-row sm:items-start gap-1 sm:gap-4 px-6 py-5',
+                  'flex flex-col sm:flex-row sm:items-start gap-2 sm:gap-4 px-6 py-6',
                   rowIdx < dayItems.length - 1 ? 'border-b border-stone-300' : '',
                   item.featured ? 'bg-mustard/30' : '',
                 ].join(' ')}

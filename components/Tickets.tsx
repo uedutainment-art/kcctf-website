@@ -49,14 +49,14 @@ export default function Tickets() {
         </div>
 
         {/* Ticket cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-5 mb-10">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-10">
           {TICKET_TIERS.map((tier, i) => {
             const item = items[i];
             return (
               <div
                 key={tier.id}
                 className={[
-                  'relative rounded-lg p-6 flex flex-col',
+                  'relative rounded-lg p-8 flex flex-col',
                   tier.featured
                     ? 'bg-burgundy text-warm-white shadow-stamp'
                     : 'bg-warm-white border-2 border-ink-soft/10',

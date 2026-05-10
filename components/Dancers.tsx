@@ -46,7 +46,7 @@ export default function Dancers() {
                 </div>
               ) : (
                 <div
-                  className="relative mx-auto mb-4 w-20 h-20 sm:w-24 sm:h-24 rounded-full overflow-hidden flex items-center justify-center"
+                  className="relative mx-auto mb-4 w-20 h-20 sm:w-24 sm:h-24 rounded-full overflow-hidden flex flex-col items-center justify-center gap-1"
                   style={{ background: '#F2C94C' }}
                 >
                   {/* grain overlay inside circle */}
@@ -59,13 +59,15 @@ export default function Dancers() {
                     }}
                     aria-hidden
                   />
-                  <span
-                    className="font-en-display italic font-black text-ink-soft/40 leading-none relative z-10"
-                    style={{ fontSize: '40px' }}
+                  {/* ornament-divider watermark */}
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src="/images/ornament-divider.svg"
+                    alt=""
                     aria-hidden
-                  >
-                    ★
-                  </span>
+                    className="relative z-10 opacity-30"
+                    style={{ width: '60px', height: 'auto' }}
+                  />
                 </div>
               )}
 
