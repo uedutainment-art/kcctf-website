@@ -52,7 +52,7 @@ export default function Nav() {
             {/* Logo */}
             <Link href="/" className="flex-shrink-0">
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/images/KCCTF_logo/KCCTF.svg" alt="춘천국제탱고페스티벌" style={{ height: '52px', width: 'auto', mixBlendMode: 'multiply' }} />
+              <img src="/images/KCCTF_logo/KCCTF.svg" alt="춘천국제탱고페스티벌" style={{ height: '42px', width: 'auto', mixBlendMode: 'multiply' }} />
             </Link>
 
             {/* Desktop nav links */}
@@ -125,7 +125,7 @@ export default function Nav() {
         <div className="flex items-center justify-between px-5 pt-5 pb-4">
           <Link href="/" onClick={() => setMenuOpen(false)}>
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/images/KCCTF_logo/KCCTF.svg" alt="춘천국제탱고페스티벌" style={{ height: '44px', width: 'auto' }} />
+            <img src="/images/KCCTF_logo/KCCTF.svg" alt="춘천국제탱고페스티벌" style={{ height: '44px', width: 'auto', mixBlendMode: 'multiply' }} />
           </Link>
           <button
             onClick={() => setMenuOpen(false)}
@@ -141,11 +141,11 @@ export default function Nav() {
         {/* Bandoneon illustration */}
         <div className="flex justify-center pt-4 pb-2 opacity-50 pointer-events-none" aria-hidden>
           <Image
-            src="/images/illustration-bandoneon-cream.png"
+            src="/images/illustration-bandoneon-dark.png"
             alt=""
             width={160}
             height={160}
-            style={{ width: '160px', height: 'auto' }}
+            style={{ width: '160px', height: 'auto', mixBlendMode: 'multiply' }}
           />
         </div>
 
