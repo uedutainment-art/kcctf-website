@@ -32,7 +32,7 @@ export default function Footer() {
             alt=""
             width={200}
             height={200}
-            style={{ height: '200px', width: 'auto', opacity: 0.65 }}
+            style={{ height: '200px', width: 'auto', opacity: 0.8, mixBlendMode: 'screen' }}
             aria-hidden
           />
           <p

@@ -72,9 +72,18 @@ export default function Hero() {
                 alt="반도네온 일러스트"
                 width={400}
                 height={400}
-                style={{ width: 'clamp(260px, 36vw, 400px)', height: 'auto' }}
+                style={{ width: 'clamp(260px, 36vw, 400px)', height: 'auto', mixBlendMode: 'multiply' }}
                 priority
               />
+            </div>
+          </div>
+
+          {/* USP band */}
+          <div className="flex justify-center mb-6">
+            <div className="inline-flex items-center gap-3 bg-burgundy text-warm-white font-en-body font-bold text-[12px] tracking-[0.18em] uppercase px-5 py-[10px] shadow-[4px_4px_0_#4A2418]">
+              <span className="text-gold-soft">★</span>
+              {t('uspBand')}
+              <span className="text-gold-soft">★</span>
             </div>
           </div>
 
@@ -138,7 +147,7 @@ export default function Hero() {
             alt=""
             width={200}
             height={200}
-            style={{ width: '180px', height: 'auto' }}
+            style={{ width: '180px', height: 'auto', mixBlendMode: 'multiply' }}
           />
         </div>
 
@@ -149,6 +158,15 @@ export default function Hero() {
         >
           CHUNCHEON INTERNATIONAL TANGO FESTIVAL
         </p>
+
+        {/* USP band */}
+        <div className="flex justify-center mb-4">
+          <div className="inline-flex items-center gap-2 bg-burgundy text-warm-white font-en-body font-bold text-[10px] tracking-[0.16em] uppercase px-4 py-2 shadow-[3px_3px_0_#4A2418]">
+            <span className="text-gold-soft">★</span>
+            {t('uspBand')}
+            <span className="text-gold-soft">★</span>
+          </div>
+        </div>
 
         {/* Stats 2×2 */}
         <div className="grid grid-cols-2 gap-[10px] mb-4">
