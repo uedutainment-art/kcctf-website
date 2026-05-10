@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import { useTranslations } from 'next-intl';
 
 export default function Hero() {
@@ -16,7 +17,7 @@ export default function Hero() {
       {/* Grain overlay */}
       <div className="grain-overlay absolute inset-0 opacity-25 pointer-events-none" aria-hidden />
 
-      {/* 춘천시 logo — corner badge, sits above both layouts */}
+      {/* 춘천시 badge — top-right corner */}
       <div className="absolute top-[80px] right-4 md:right-8 z-20">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src="/images/KCCTF_logo/춘천시.svg" alt="춘천시" style={{ height: '52px', width: 'auto' }} />
@@ -27,55 +28,52 @@ export default function Hero() {
         <div className="max-w-[1200px] mx-auto px-6 md:px-10 pt-10 pb-0">
 
           {/* Eyebrow */}
-          <p className="font-en-body font-bold text-[11px] tracking-[0.45em] uppercase text-burgundy mb-7">
+          <p className="font-en-body font-bold text-[11px] tracking-[0.45em] uppercase text-burgundy mb-8">
             <span className="text-gold">★</span>{' '}3RD EDITION · 2026{' '}<span className="text-gold">★</span>
           </p>
 
-          {/* Main grid: title left / KCCTF logo right */}
-          <div className="grid grid-cols-[1fr_auto] gap-10 items-start mb-8">
+          {/* Main: wordmark left / bandoneon right */}
+          <div className="grid grid-cols-[1.15fr_1fr] gap-8 items-center mb-8">
 
-            {/* Left: Korean wordmark + English subtitle */}
+            {/* Left — 3-line Korean wordmark + English */}
             <div>
-              {/* 춘천 · 국제탱고 / 페스티벌 */}
-              <div className="flex items-start gap-3 mb-5 leading-none">
-                <span
-                  className="font-kr-serif font-black text-burgundy leading-[0.88] tracking-[-0.04em]"
-                  style={{ fontSize: 'clamp(80px, 11vw, 148px)' }}
-                >
-                  춘천
-                </span>
-                <div className="flex flex-col justify-center pt-[0.08em]">
-                  <span
-                    className="font-kr-serif font-black text-burgundy leading-[0.95] tracking-[-0.03em]"
-                    style={{ fontSize: 'clamp(38px, 5.2vw, 72px)' }}
-                  >
-                    국제탱고
-                  </span>
-                  <span
-                    className="font-kr-serif font-black text-burgundy leading-[0.95] tracking-[-0.03em]"
-                    style={{ fontSize: 'clamp(38px, 5.2vw, 72px)' }}
-                  >
-                    페스티벌
-                  </span>
-                </div>
+              <div
+                className="font-kr-serif font-black text-burgundy leading-[0.92] tracking-[-0.06em]"
+                style={{ fontSize: 'clamp(56px, 8vw, 92px)' }}
+              >
+                춘천
+              </div>
+              <div
+                className="font-kr-serif font-black text-burgundy leading-[0.92] tracking-[-0.06em]"
+                style={{ fontSize: 'clamp(56px, 8vw, 92px)' }}
+              >
+                국제땅고
+              </div>
+              <div
+                className="font-kr-serif font-black text-burgundy leading-[0.92] tracking-[-0.06em] mb-6"
+                style={{ fontSize: 'clamp(56px, 8vw, 92px)' }}
+              >
+                페스티벌
               </div>
 
-              {/* English subtitle — block caps */}
+              {/* English block caps */}
               <p
                 className="font-en-condensed font-black text-burgundy uppercase leading-[1.1] tracking-[0.02em]"
-                style={{ fontSize: 'clamp(20px, 2.4vw, 32px)' }}
+                style={{ fontSize: 'clamp(18px, 2.2vw, 28px)' }}
               >
                 CHUNCHEON<br />INTERNATIONAL<br />TANGO FESTIVAL
               </p>
             </div>
 
-            {/* Right: official KCCTF logo illustration */}
-            <div className="flex-shrink-0 flex items-start justify-center">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src="/images/KCCTF_logo/KCCTF.svg"
-                alt="KCCTF 로고"
-                style={{ height: 'clamp(200px, 28vw, 340px)', width: 'auto' }}
+            {/* Right — bandoneon illustration */}
+            <div className="flex justify-center items-center">
+              <Image
+                src="/images/illustration-bandoneon-cream.png"
+                alt="반도네온 일러스트"
+                width={400}
+                height={400}
+                style={{ width: 'clamp(260px, 36vw, 400px)', height: 'auto' }}
+                priority
               />
             </div>
           </div>
@@ -100,7 +98,6 @@ export default function Hero() {
               </a>
             </div>
           </div>
-
         </div>
       </div>
 
@@ -108,52 +105,50 @@ export default function Hero() {
       <div className="lg:hidden relative z-10 px-5 pt-6 pb-0">
 
         {/* Eyebrow */}
-        <p className="font-en-body font-bold text-[9px] tracking-[0.4em] uppercase text-burgundy text-center mb-4">
+        <p className="font-en-body font-bold text-[9px] tracking-[0.4em] uppercase text-burgundy text-center mb-5">
           <span className="text-gold">★</span>{' '}3RD EDITION · 2026{' '}<span className="text-gold">★</span>
         </p>
 
-        {/* Title + logo side by side on mobile */}
-        <div className="flex items-start gap-2 mb-4">
-          <div className="flex-1 min-w-0">
-            {/* 춘천 */}
-            <div
-              className="font-kr-serif font-black text-burgundy leading-[0.88] tracking-[-0.04em]"
-              style={{ fontSize: 'clamp(64px, 17vw, 96px)' }}
-            >
-              춘천
-            </div>
-            {/* 국제탱고 / 페스티벌 */}
-            <div
-              className="font-kr-serif font-black text-burgundy leading-[0.95] tracking-[-0.03em]"
-              style={{ fontSize: 'clamp(28px, 7.5vw, 48px)' }}
-            >
-              국제탱고
-            </div>
-            <div
-              className="font-kr-serif font-black text-burgundy leading-[0.95] tracking-[-0.03em] mb-3"
-              style={{ fontSize: 'clamp(28px, 7.5vw, 48px)' }}
-            >
-              페스티벌
-            </div>
-            {/* English subtitle */}
-            <p
-              className="font-en-condensed font-black text-burgundy uppercase leading-[1.1] tracking-[0.02em]"
-              style={{ fontSize: 'clamp(13px, 3.2vw, 18px)' }}
-            >
-              CHUNCHEON<br />INTERNATIONAL<br />TANGO FESTIVAL
-            </p>
+        {/* 3-line wordmark — centered */}
+        <div className="text-center mb-1">
+          <div
+            className="font-kr-serif font-black text-burgundy leading-[0.92] tracking-[-0.06em]"
+            style={{ fontSize: 'clamp(52px, 14vw, 80px)' }}
+          >
+            춘천
           </div>
-
-          {/* KCCTF logo — right of title */}
-          <div className="flex-shrink-0">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src="/images/KCCTF_logo/KCCTF.svg"
-              alt="KCCTF 로고"
-              style={{ height: 'clamp(120px, 30vw, 180px)', width: 'auto' }}
-            />
+          <div
+            className="font-kr-serif font-black text-burgundy leading-[0.92] tracking-[-0.06em]"
+            style={{ fontSize: 'clamp(52px, 14vw, 80px)' }}
+          >
+            국제땅고
+          </div>
+          <div
+            className="font-kr-serif font-black text-burgundy leading-[0.92] tracking-[-0.06em]"
+            style={{ fontSize: 'clamp(52px, 14vw, 80px)' }}
+          >
+            페스티벌
           </div>
         </div>
+
+        {/* Bandoneon — centered, between wordmark and English subtitle */}
+        <div className="flex justify-center my-4 opacity-90" aria-hidden>
+          <Image
+            src="/images/illustration-bandoneon-cream.png"
+            alt=""
+            width={200}
+            height={200}
+            style={{ width: '180px', height: 'auto' }}
+          />
+        </div>
+
+        {/* English subtitle — centered */}
+        <p
+          className="font-en-condensed font-black text-burgundy uppercase leading-[1.1] tracking-[0.02em] text-center mb-5"
+          style={{ fontSize: 'clamp(14px, 3.8vw, 20px)' }}
+        >
+          CHUNCHEON INTERNATIONAL TANGO FESTIVAL
+        </p>
 
         {/* Stats 2×2 */}
         <div className="grid grid-cols-2 gap-[10px] mb-4">
@@ -163,12 +158,8 @@ export default function Hero() {
               className="bg-warm-white border-2 border-ink-soft px-3 py-[10px] text-center"
               style={{ transform: `rotate(${STAT_ROTATIONS[i]})` }}
             >
-              <div className="font-en-display italic font-black text-[28px] text-burgundy leading-none">
-                {num}
-              </div>
-              <div className="font-en-body font-bold text-[8px] tracking-[0.2em] uppercase text-ink-soft mt-1">
-                {label}
-              </div>
+              <div className="font-en-display italic font-black text-[28px] text-burgundy leading-none">{num}</div>
+              <div className="font-en-body font-bold text-[8px] tracking-[0.2em] uppercase text-ink-soft mt-1">{label}</div>
             </div>
           ))}
         </div>
@@ -226,42 +217,23 @@ function StatsRow({ stats }: StatsRowProps) {
 }
 
 type DateBandProps = {
-  datePrimary: string;
-  dateSecondary: string;
-  venuePrimary: string;
-  venueSecondary: string;
+  datePrimary: string; dateSecondary: string;
+  venuePrimary: string; venueSecondary: string;
   mobile?: boolean;
 };
 
 function DateBand({ datePrimary, dateSecondary, venuePrimary, venueSecondary, mobile }: DateBandProps) {
   return (
-    <div
-      className={[
-        'bg-ink text-warm-white px-5 py-[14px] shadow-stamp',
-        mobile ? 'flex flex-col gap-2' : 'flex items-center justify-between flex-wrap gap-3',
-      ].join(' ')}
-    >
+    <div className={['bg-ink text-warm-white px-5 py-[14px] shadow-stamp', mobile ? 'flex flex-col gap-2' : 'flex items-center justify-between flex-wrap gap-3'].join(' ')}>
       <div>
-        <p
-          className="font-en-display italic font-black text-gold-soft leading-none"
-          style={{ fontSize: mobile ? '22px' : '32px' }}
-        >
+        <p className="font-en-display italic font-black text-gold-soft leading-none" style={{ fontSize: mobile ? '22px' : '32px' }}>
           {datePrimary}
         </p>
-        <p className="font-en-body font-bold text-[9px] tracking-[0.4em] uppercase text-gold-soft/85 mt-1">
-          {dateSecondary}
-        </p>
+        <p className="font-en-body font-bold text-[9px] tracking-[0.4em] uppercase text-gold-soft/85 mt-1">{dateSecondary}</p>
       </div>
       <div className={mobile ? '' : 'text-right'}>
-        <p
-          className="font-kr-serif font-bold text-warm-white leading-none"
-          style={{ fontSize: mobile ? '13px' : '16px' }}
-        >
-          {venuePrimary}
-        </p>
-        <p className="font-en-body font-semibold text-[9px] tracking-[0.3em] uppercase text-warm-white/65 mt-1">
-          {venueSecondary}
-        </p>
+        <p className="font-kr-serif font-bold text-warm-white leading-none" style={{ fontSize: mobile ? '13px' : '16px' }}>{venuePrimary}</p>
+        <p className="font-en-body font-semibold text-[9px] tracking-[0.3em] uppercase text-warm-white/65 mt-1">{venueSecondary}</p>
       </div>
     </div>
   );
