@@ -44,19 +44,19 @@ export default function Footer() {
         </div>
 
         {/* 4-column links */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-8 mb-12 text-center sm:text-left">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-10 mb-14 text-center sm:text-left">
 
           {/* Sitemap */}
           <div>
-            <p className="font-en-body font-bold text-[10px] tracking-[0.3em] uppercase text-gold mb-4">
+            <p className="font-en-body font-bold text-[16px] tracking-[0.2em] uppercase text-gold mb-5">
               {t('navTitle')}
             </p>
-            <ul className="flex flex-col gap-2">
+            <ul className="flex flex-col gap-3">
               {NAV_LINKS.map(({ href, key }) => (
                 <li key={key}>
                   <a
                     href={href}
-                    className="font-kr-sans text-[14px] text-warm-white/60 hover:text-warm-white transition-colors"
+                    className="font-kr-sans text-[14px] text-warm-white/65 hover:text-warm-white transition-colors"
                   >
                     {tn(key)}
                   </a>
@@ -67,15 +67,15 @@ export default function Footer() {
 
           {/* Info / Legal */}
           <div>
-            <p className="font-en-body font-bold text-[10px] tracking-[0.3em] uppercase text-gold mb-4">
+            <p className="font-en-body font-bold text-[16px] tracking-[0.2em] uppercase text-gold mb-5">
               {t('infoTitle')}
             </p>
-            <ul className="flex flex-col gap-2">
+            <ul className="flex flex-col gap-3">
               {LEGAL_LINKS.map(({ href, key }) => (
                 <li key={key}>
                   <Link
                     href={href}
-                    className="font-kr-sans text-[14px] text-warm-white/60 hover:text-warm-white transition-colors"
+                    className="font-kr-sans text-[14px] text-warm-white/65 hover:text-warm-white transition-colors"
                   >
                     {t(`legal.${key}`)}
                   </Link>
@@ -84,7 +84,7 @@ export default function Footer() {
               <li>
                 <a
                   href={`mailto:${contactEmail}`}
-                  className="font-en-body text-[13px] text-warm-white/60 hover:text-warm-white transition-colors"
+                  className="font-en-body text-[13px] text-warm-white/65 hover:text-warm-white transition-colors"
                 >
                   {contactEmail}
                 </a>
@@ -94,10 +94,10 @@ export default function Footer() {
 
           {/* Follow placeholder */}
           <div>
-            <p className="font-en-body font-bold text-[10px] tracking-[0.3em] uppercase text-gold mb-4">
+            <p className="font-en-body font-bold text-[16px] tracking-[0.2em] uppercase text-gold mb-5">
               {t('followTitle')}
             </p>
-            <ul className="flex flex-col gap-2">
+            <ul className="flex flex-col gap-3">
               <li>
                 <span className="font-kr-sans text-[14px] text-warm-white/30">Instagram</span>
               </li>
@@ -109,16 +109,16 @@ export default function Footer() {
 
           {/* Sponsors */}
           <div>
-            <p className="font-en-body font-bold text-[10px] tracking-[0.3em] uppercase text-gold mb-4">
+            <p className="font-en-body font-bold text-[16px] tracking-[0.2em] uppercase text-gold mb-5">
               {t('sponsorsTitle')}
             </p>
             <div className="flex flex-col gap-1">
-              <p className="font-kr-sans text-[10px] text-warm-white/30 uppercase tracking-[0.12em]">주최·주관</p>
-              <p className="font-kr-sans text-[13px] text-warm-white/55 leading-[1.6]">
+              <p className="font-kr-sans text-[11px] text-warm-white/35 uppercase tracking-[0.12em]">주최·주관</p>
+              <p className="font-kr-sans text-[14px] text-warm-white/65 leading-[1.6]">
                 춘천문화재단<br />(사)춘천국제탱고페스티벌
               </p>
-              <p className="font-kr-sans text-[10px] text-warm-white/30 uppercase tracking-[0.12em] mt-2">후원</p>
-              <p className="font-kr-sans text-[13px] text-warm-white/55 leading-[1.6]">
+              <p className="font-kr-sans text-[11px] text-warm-white/35 uppercase tracking-[0.12em] mt-3">후원</p>
+              <p className="font-kr-sans text-[14px] text-warm-white/65 leading-[1.6]">
                 춘천시<br />주한아르헨티나 대사관
               </p>
             </div>
