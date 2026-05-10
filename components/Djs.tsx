@@ -30,28 +30,28 @@ export default function Djs() {
         </div>
 
         {/* 3×2 grid (desktop) / 2×3 (mobile) */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 gap-8 sm:gap-10">
+        <div className="grid grid-cols-2 sm:grid-cols-3 gap-5 sm:gap-8">
           {DJS.map((dj) => (
-            <div key={dj.id} className="flex flex-col items-center text-center group">
+            <div key={dj.id} className="flex flex-col items-center text-center group bg-cream rounded-xl py-6 px-4 shadow-[0_2px_12px_rgba(26,20,16,0.07)] hover:shadow-[0_4px_20px_rgba(26,20,16,0.12)] transition-shadow duration-200">
               {/* Circular photo */}
-              <div className="relative w-28 h-28 sm:w-36 sm:h-36 rounded-full overflow-hidden border-2 border-ink-soft/15 mb-4 transition-transform duration-300 group-hover:scale-[1.03]">
+              <div className="relative w-32 h-32 sm:w-40 sm:h-40 rounded-full overflow-hidden border-2 border-ink-soft/15 mb-4 transition-transform duration-300 group-hover:scale-[1.04]">
                 <Image
                   src={dj.image}
                   alt={`${dj.nameKo} (${dj.nameEn})`}
                   fill
                   className="object-cover object-[center_25%] transition-[filter] duration-300 group-hover:saturate-[1.15]"
-                  sizes="(max-width: 640px) 112px, 144px"
+                  sizes="(max-width: 640px) 128px, 160px"
                 />
               </div>
 
               {/* Label */}
-              <p className="font-kr-sans font-bold text-[16px] text-ink leading-[1.2]">
+              <p className="font-kr-sans font-bold text-[17px] text-ink leading-[1.2]">
                 {dj.nameKo}
               </p>
-              <p className="font-en-body text-[13px] text-charcoal/70 mt-0.5">
+              <p className="font-en-body text-[14px] text-charcoal/70 mt-1">
                 {dj.nameEn}
               </p>
-              <p className="font-en-body text-[12px] text-charcoal/50 mt-1">
+              <p className="font-en-body text-[13px] text-charcoal/50 mt-1">
                 {locale === 'ko' ? `${dj.city} · ${dj.country}` : `${dj.cityEn} · ${dj.country}`}
               </p>
             </div>
