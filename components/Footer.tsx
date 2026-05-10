@@ -118,8 +118,16 @@ export default function Footer() {
                 춘천문화재단<br />(사)춘천국제탱고페스티벌
               </p>
               <p className="font-kr-sans text-[11px] text-warm-white/35 uppercase tracking-[0.12em] mt-3">후원</p>
+              {/* 춘천시 로고 */}
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="/images/KCCTF_logo/춘천시.svg"
+                alt="춘천시"
+                style={{ height: '44px', width: 'auto', opacity: 0.75, filter: 'brightness(0) invert(1)' }}
+                className="mt-1 mb-2"
+              />
               <p className="font-kr-sans text-[14px] text-warm-white/65 leading-[1.6]">
-                춘천시<br />주한아르헨티나 대사관
+                주한아르헨티나 대사관
               </p>
             </div>
           </div>

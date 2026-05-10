@@ -33,47 +33,54 @@ export default function Dancers() {
             <div
               key={team.id}
               className={[
-                'rounded-lg p-6 text-center transition-shadow duration-200',
+                'relative rounded-lg p-6 text-center overflow-hidden transition-transform duration-200',
                 team.isTBA
                   ? 'border-2 border-dashed border-ink-soft/25 bg-transparent'
-                  : 'bg-cream border-2 border-ink-soft/10 hover:shadow-lift',
+                  : 'bg-cream shadow-[4px_4px_0_#8B1A2B] hover:-translate-y-[3px]',
               ].join(' ')}
             >
+              {/* Grain overlay on non-TBA cards */}
+              {!team.isTBA && (
+                <div
+                  className="absolute inset-0 opacity-[0.12] pointer-events-none"
+                  style={{
+                    backgroundImage: "url('/images/grain.svg')",
+                    backgroundSize: '160px 160px',
+                    mixBlendMode: 'multiply',
+                  }}
+                  aria-hidden
+                />
+              )}
+
               {/* Photo placeholder / TBA */}
               {team.isTBA ? (
-                <div className="mx-auto mb-4 w-20 h-20 sm:w-24 sm:h-24 rounded-full border-2 border-dashed border-ink-soft/25 bg-transparent flex items-center justify-center">
+                <div className="mx-auto mb-4 w-24 h-24 rounded-full border-2 border-dashed border-ink-soft/25 bg-transparent flex items-center justify-center">
                   <span className="text-2xl text-ink-soft/30" aria-hidden>?</span>
                 </div>
               ) : (
-                <div
-                  className="relative mx-auto mb-4 w-20 h-20 sm:w-24 sm:h-24 rounded-full overflow-hidden flex flex-col items-center justify-center gap-1"
-                  style={{ background: '#F2C94C' }}
-                >
-                  {/* grain overlay inside circle */}
-                  <div
-                    className="absolute inset-0 opacity-40 pointer-events-none"
-                    style={{
-                      backgroundImage: "url('/images/grain.svg')",
-                      backgroundSize: '160px 160px',
-                      mixBlendMode: 'multiply',
-                    }}
-                    aria-hidden
-                  />
-                  {/* ornament-divider watermark */}
+                <div className="relative mx-auto mb-5 flex flex-col items-center gap-2">
+                  {/* ornament top */}
                   {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    src="/images/ornament-divider.svg"
-                    alt=""
+                  <img src="/images/ornament-divider.svg" alt="" aria-hidden className="opacity-25 w-20" />
+
+                  {/* Big star */}
+                  <span
+                    className="font-en-display italic font-black text-gold-soft leading-none"
+                    style={{ fontSize: '72px' }}
                     aria-hidden
-                    className="relative z-10 opacity-30"
-                    style={{ width: '60px', height: 'auto' }}
-                  />
+                  >
+                    ★
+                  </span>
+
+                  {/* ornament bottom */}
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src="/images/ornament-divider.svg" alt="" aria-hidden className="opacity-25 w-20" />
                 </div>
               )}
 
               <p
                 className={[
-                  'font-en-body font-bold text-[15px] leading-[1.3]',
+                  'font-en-body font-bold text-[15px] leading-[1.3] relative z-10',
                   team.isTBA ? 'text-ink-soft/40' : 'text-ink-soft',
                 ].join(' ')}
               >
@@ -81,7 +88,7 @@ export default function Dancers() {
               </p>
               <p
                 className={[
-                  'font-en-body text-[12px] mt-1',
+                  'font-en-body text-[12px] mt-1 relative z-10',
                   team.isTBA ? 'text-charcoal/30' : 'text-charcoal/60',
                 ].join(' ')}
               >
