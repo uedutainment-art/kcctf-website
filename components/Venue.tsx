@@ -60,15 +60,32 @@ export default function Venue() {
             </a>
           </div>
 
-          {/* Right: photo placeholder — diamond mustard pattern */}
+          {/* Right: photo placeholder */}
           <div
-            className="diamond-bg rounded-lg overflow-hidden border-2 border-ink-soft/15 flex flex-col items-center justify-center gap-3"
-            style={{ minHeight: '280px' }}
+            className="diamond-bg rounded-lg overflow-hidden border-2 border-ink-soft/15 flex flex-col items-center justify-center gap-4 relative"
+            style={{ minHeight: '300px' }}
           >
-            <span className="font-en-display italic font-black text-[48px] text-ink-soft/20 leading-none" aria-hidden>★</span>
-            <p className="font-kr-sans text-[14px] text-ink-soft/40 text-center px-6">
-              Photo Coming Soon
-            </p>
+            {/* grain inside placeholder */}
+            <div
+              className="absolute inset-0 opacity-20 pointer-events-none"
+              style={{ backgroundImage: "url('/images/grain.svg')", backgroundSize: '160px 160px', mixBlendMode: 'multiply' }}
+              aria-hidden
+            />
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/images/logo-mark.svg"
+              alt=""
+              aria-hidden
+              style={{ width: '96px', height: '96px', opacity: 0.18 }}
+            />
+            <div className="text-center px-6 relative z-10">
+              <p className="font-kr-sans text-[13px] text-ink-soft/50 tracking-[0.18em] uppercase">
+                사진 곧 공개
+              </p>
+              <p className="font-en-body text-[11px] text-ink-soft/35 tracking-[0.14em] uppercase mt-1">
+                Photo Coming Soon
+              </p>
+            </div>
           </div>
         </div>
 
