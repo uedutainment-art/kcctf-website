@@ -12,9 +12,35 @@ export default function Nav() {
 
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [activeHref, setActiveHref] = useState('');
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
+  useEffect(() => {
+    const sections = ['orchestras', 'schedule', 'djs', 'dancers', 'venue', 'tickets'];
+    const sectionToHref: Record<string, string> = {
+      orchestras: '#orchestras',
+      schedule:   '#schedule',
+      djs:        '#schedule',
+      dancers:    '#schedule',
+      venue:      '#venue',
+      tickets:    '#tickets',
+    };
+    const onScroll = () => {
+      let current = '';
+      for (const id of sections) {
+        const el = document.getElementById(id);
+        if (el && el.getBoundingClientRect().top <= 80) {
+          current = sectionToHref[id];
+        }
+      }
+      setActiveHref(current);
+    };
     window.addEventListener('scroll', onScroll, { passive: true });
     onScroll();
     return () => window.removeEventListener('scroll', onScroll);
@@ -61,7 +87,12 @@ export default function Nav() {
                 <a
                   key={href}
                   href={href}
-                  className="font-kr-sans text-[14px] text-ink-soft hover:text-burgundy transition-colors duration-200"
+                  className={[
+                    'font-kr-sans text-[14px] transition-colors duration-200 relative pb-[2px]',
+                    activeHref === href
+                      ? 'text-burgundy after:absolute after:bottom-0 after:left-0 after:right-0 after:h-[2px] after:bg-burgundy after:rounded-full'
+                      : 'text-ink-soft hover:text-burgundy',
+                  ].join(' ')}
                 >
                   {label}
                 </a>
@@ -156,7 +187,10 @@ export default function Nav() {
               key={href}
               href={href}
               onClick={() => setMenuOpen(false)}
-              className="font-kr-serif font-black text-[26px] text-ink-soft hover:text-burgundy tracking-[-0.02em] transition-colors"
+              className={[
+                'font-kr-serif font-black text-[26px] tracking-[-0.02em] transition-colors',
+                activeHref === href ? 'text-burgundy' : 'text-ink-soft hover:text-burgundy',
+              ].join(' ')}
             >
               {label}
             </a>

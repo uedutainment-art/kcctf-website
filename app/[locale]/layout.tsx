@@ -5,6 +5,7 @@ import { notFound } from 'next/navigation';
 import { routing } from '@/i18n/routing';
 import Nav from '@/components/Nav';
 import Footer from '@/components/Footer';
+import FloatingCTA from '@/components/FloatingCTA';
 
 const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://kcctf.org';
 
@@ -51,6 +52,7 @@ export default async function LocaleLayout({
       <Nav />
       <main>{children}</main>
       <Footer />
+      <FloatingCTA />
     </NextIntlClientProvider>
   );
 }
