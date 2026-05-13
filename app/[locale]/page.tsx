@@ -1,5 +1,4 @@
 import Hero from '@/components/Hero';
-import QuickLinks from '@/components/QuickLinks';
 import Schedule from '@/components/Schedule';
 import Orchestras from '@/components/Orchestras';
 import Djs from '@/components/Djs';
@@ -11,7 +10,6 @@ export default function HomePage() {
   return (
     <>
       <Hero />
-      <QuickLinks />
       <Schedule />
       <Orchestras />
       <Djs />
