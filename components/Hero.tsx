@@ -1,23 +1,28 @@
 import Image from 'next/image';
 import { useTranslations } from 'next-intl';
 
+function calcDaysLeft(deadline: string): number | null {
+  const d = new Date(deadline + 'T00:00:00');
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  const diff = Math.round((d.getTime() - today.getTime()) / 86_400_000);
+  return diff >= 0 ? diff : null;
+}
+
 export default function Hero() {
   const t = useTranslations('hero');
   const registerUrl = process.env.NEXT_PUBLIC_REGISTER_URL ?? '#tickets';
 
-  const stats = [
-    { num: t('stats.orchestras.num'), label: t('stats.orchestras.label') },
-    { num: t('stats.nights.num'),     label: t('stats.nights.label')     },
-    { num: t('stats.milongas.num'),   label: t('stats.milongas.label')   },
-    { num: t('stats.djs.num'),        label: t('stats.djs.label')        },
-  ];
+  const earlybirdDeadline = process.env.NEXT_PUBLIC_EARLYBIRD_DEADLINE ?? '';
+  const daysLeft = earlybirdDeadline ? calcDaysLeft(earlybirdDeadline) : null;
+  const showEarlybird = daysLeft !== null;
 
   return (
     <section id="hero" className="diamond-bg relative pt-[72px] pb-0 overflow-hidden">
       {/* Grain overlay */}
       <div className="grain-overlay absolute inset-0 opacity-25 pointer-events-none" aria-hidden />
 
-      {/* 춘천시 badge — top-right corner */}
+      {/* 춘천시 badge */}
       <div className="absolute top-[80px] right-4 md:right-8 z-20">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src="/images/KCCTF_logo/춘천시.svg" alt="춘천시" style={{ height: '52px', width: 'auto' }} />
@@ -32,10 +37,8 @@ export default function Hero() {
             <span className="text-gold">★</span>{' '}3RD EDITION · 2026{' '}<span className="text-gold">★</span>
           </p>
 
-          {/* Main: wordmark left / bandoneon right */}
+          {/* Wordmark left / bandoneon right */}
           <div className="grid grid-cols-[1.15fr_1fr] gap-8 items-center mb-8">
-
-            {/* Left — 3-line Korean wordmark + English */}
             <div>
               <div
                 className="font-kr-serif font-black text-burgundy leading-[0.92] tracking-[-0.06em]"
@@ -55,8 +58,6 @@ export default function Hero() {
               >
                 페스티벌
               </div>
-
-              {/* English block caps */}
               <p
                 className="font-en-condensed font-black text-burgundy uppercase leading-[1.1] tracking-[0.02em]"
                 style={{ fontSize: 'clamp(18px, 2.2vw, 28px)' }}
@@ -65,21 +66,20 @@ export default function Hero() {
               </p>
             </div>
 
-            {/* Right — bandoneon illustration */}
             <div className="flex justify-center items-center">
               <Image
                 src="/images/illustration-bandoneon-cream.png"
                 alt="반도네온 일러스트"
                 width={400}
                 height={400}
-                style={{ width: 'clamp(260px, 36vw, 400px)', height: 'auto', mixBlendMode: 'multiply' }}
+                style={{ width: 'clamp(240px, 32vw, 380px)', height: 'auto', mixBlendMode: 'multiply' }}
                 priority
               />
             </div>
           </div>
 
           {/* USP band */}
-          <div className="flex justify-center mb-6">
+          <div className="flex justify-center mb-5">
             <div className="inline-flex items-center gap-3 bg-burgundy text-warm-white font-en-body font-bold text-[12px] tracking-[0.18em] uppercase px-5 py-[10px] shadow-[4px_4px_0_#4A2418]">
               <span className="text-gold-soft">★</span>
               {t('uspBand')}
@@ -87,25 +87,34 @@ export default function Hero() {
             </div>
           </div>
 
-          {/* Stats + date band + CTA */}
-          <div className="relative z-10">
-            <StatsRow stats={stats} />
-            <div className="flex items-stretch gap-4">
-              <div className="flex-1">
-                <DateBand
-                  datePrimary={t('dateBand.datePrimary')}
-                  dateSecondary={t('dateBand.dateSecondary')}
-                  venuePrimary={t('dateBand.venuePrimary')}
-                  venueSecondary={t('dateBand.venueSecondary')}
-                />
-              </div>
+          {/* Date band */}
+          <DateBand
+            datePrimary={t('dateBand.datePrimary')}
+            dateSecondary={t('dateBand.dateSecondary')}
+            venuePrimary={t('dateBand.venuePrimary')}
+            venueSecondary={t('dateBand.venueSecondary')}
+          />
+
+          {/* Big centered CTA */}
+          <div className="flex flex-col items-center gap-3 py-6">
+            <a
+              href={registerUrl}
+              className="bg-burgundy text-warm-white font-en-body font-bold text-[20px] tracking-[0.22em] uppercase px-20 py-5 rounded-md transition-all duration-150 shadow-[0_6px_0_#5A0E1B] hover:shadow-[0_2px_0_#5A0E1B] hover:translate-y-[4px]"
+            >
+              {t('cta')}
+            </a>
+
+            {showEarlybird && (
               <a
                 href={registerUrl}
-                className="shrink-0 self-center bg-burgundy text-warm-white font-en-body font-bold text-[16px] tracking-[0.22em] uppercase px-9 py-4 rounded-md transition-all duration-150 shadow-[0_4px_0_#5A0E1B] hover:shadow-[0_2px_0_#5A0E1B] hover:translate-y-[2px]"
+                className="inline-flex items-center gap-3 bg-gold/10 border border-gold/50 text-ink-soft font-kr-sans text-[13px] px-6 py-[10px] rounded-full hover:bg-gold/20 transition-colors"
               >
-                {t('cta')}
+                <span className="bg-gold text-ink font-en-body font-bold text-[10px] tracking-[0.15em] uppercase px-2 py-[3px] rounded-sm">
+                  D-{daysLeft}
+                </span>
+                얼리버드 마감 · {t('earlybird.deadline')}
               </a>
-            </div>
+            )}
           </div>
         </div>
       </div>
@@ -118,7 +127,7 @@ export default function Hero() {
           <span className="text-gold">★</span>{' '}3RD EDITION · 2026{' '}<span className="text-gold">★</span>
         </p>
 
-        {/* 3-line wordmark — centered */}
+        {/* 3-line wordmark */}
         <div className="text-center mb-1">
           <div
             className="font-kr-serif font-black text-burgundy leading-[0.92] tracking-[-0.06em]"
@@ -140,20 +149,20 @@ export default function Hero() {
           </div>
         </div>
 
-        {/* Bandoneon — centered, between wordmark and English subtitle */}
-        <div className="flex justify-center my-4 opacity-90" aria-hidden>
+        {/* Bandoneon — decorative */}
+        <div className="flex justify-center my-3 opacity-90" aria-hidden>
           <Image
             src="/images/illustration-bandoneon-cream.png"
             alt=""
-            width={200}
-            height={200}
-            style={{ width: '180px', height: 'auto', mixBlendMode: 'multiply' }}
+            width={160}
+            height={160}
+            style={{ width: '150px', height: 'auto', mixBlendMode: 'multiply' }}
           />
         </div>
 
-        {/* English subtitle — centered */}
+        {/* English subtitle */}
         <p
-          className="font-en-condensed font-black text-burgundy uppercase leading-[1.1] tracking-[0.02em] text-center mb-5"
+          className="font-en-condensed font-black text-burgundy uppercase leading-[1.1] tracking-[0.02em] text-center mb-4"
           style={{ fontSize: 'clamp(14px, 3.8vw, 20px)' }}
         >
           CHUNCHEON INTERNATIONAL TANGO FESTIVAL
@@ -168,20 +177,6 @@ export default function Hero() {
           </div>
         </div>
 
-        {/* Stats 2×2 */}
-        <div className="grid grid-cols-2 gap-[10px] mb-4">
-          {stats.map(({ num, label }, i) => (
-            <div
-              key={label}
-              className="bg-warm-white border-2 border-ink-soft px-3 py-[10px] text-center"
-              style={{ transform: `rotate(${STAT_ROTATIONS[i]})` }}
-            >
-              <div className="font-en-display italic font-black text-[28px] text-burgundy leading-none">{num}</div>
-              <div className="font-en-body font-bold text-[8px] tracking-[0.2em] uppercase text-ink-soft mt-1">{label}</div>
-            </div>
-          ))}
-        </div>
-
         {/* Date band */}
         <DateBand
           datePrimary={t('dateBand.datePrimary')}
@@ -191,14 +186,26 @@ export default function Hero() {
           mobile
         />
 
-        {/* CTA */}
-        <div className="py-5">
+        {/* Big CTA */}
+        <div className="flex flex-col items-center gap-3 py-5">
           <a
             href={registerUrl}
-            className="block w-full bg-burgundy text-warm-white font-en-body font-bold text-[16px] tracking-[0.22em] uppercase text-center py-4 rounded-md transition-all duration-150 shadow-[0_4px_0_#5A0E1B] hover:shadow-[0_2px_0_#5A0E1B] hover:translate-y-[2px]"
+            className="block w-full bg-burgundy text-warm-white font-en-body font-bold text-[18px] tracking-[0.22em] uppercase text-center py-5 rounded-md transition-all duration-150 shadow-[0_5px_0_#5A0E1B] hover:shadow-[0_2px_0_#5A0E1B] hover:translate-y-[3px]"
           >
             {t('cta')}
           </a>
+
+          {showEarlybird && (
+            <a
+              href={registerUrl}
+              className="inline-flex items-center gap-2 bg-gold/10 border border-gold/50 text-ink-soft font-kr-sans text-[12px] px-5 py-[9px] rounded-full"
+            >
+              <span className="bg-gold text-ink font-en-body font-bold text-[9px] tracking-[0.15em] uppercase px-2 py-[2px] rounded-sm">
+                D-{daysLeft}
+              </span>
+              얼리버드 마감 · {t('earlybird.deadline')}
+            </a>
+          )}
         </div>
       </div>
 
@@ -213,26 +220,6 @@ export default function Hero() {
 }
 
 // ── Sub-components ────────────────────────────────────────────────────────────
-
-type StatsRowProps = { stats: { num: string; label: string }[] };
-const STAT_ROTATIONS = ['-2deg', '1deg', '-1deg', '2deg'];
-
-function StatsRow({ stats }: StatsRowProps) {
-  return (
-    <div className="grid grid-cols-4 gap-[10px] mb-4">
-      {stats.map(({ num, label }, i) => (
-        <div
-          key={label}
-          className="bg-warm-white border-2 border-ink-soft px-3 py-[12px] text-center"
-          style={{ transform: `rotate(${STAT_ROTATIONS[i]})` }}
-        >
-          <div className="font-en-display italic font-black text-[36px] text-burgundy leading-none">{num}</div>
-          <div className="font-en-body font-bold text-[9px] tracking-[0.25em] uppercase text-ink-soft mt-1">{label}</div>
-        </div>
-      ))}
-    </div>
-  );
-}
 
 type DateBandProps = {
   datePrimary: string; dateSecondary: string;

@@ -50,8 +50,20 @@
       "venuePrimary": "춘천 봄내체육관",
       "venueSecondary": "CHUNCHEON BOMNAE COMPLEX"
     },
+    "earlybird": {
+      "deadline": "5월 18일까지",
+      "cta": "얼리버드 신청하기 →"
+    },
     "cta": "예약하기 →",
     "scrollHint": "아래로"
+  },
+  "quickLinks": {
+    "orchestras": "오케스트라 소개",
+    "schedule": "행사 스케줄",
+    "performers": "공연자 소개",
+    "djs": "DJ 라인업",
+    "info": "콘서트·밀롱가·숙소",
+    "venue": "찾아오는 길"
   },
   "orchestras": {
     "eyebrow": "★ TWO LIVE ORCHESTRAS ★",

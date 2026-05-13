@@ -50,8 +50,20 @@
       "venuePrimary": "Chuncheon Bomnae Complex",
       "venueSecondary": "GANGWON · SOUTH KOREA"
     },
+    "earlybird": {
+      "deadline": "Until May 18",
+      "cta": "Early Bird Registration →"
+    },
     "cta": "Register →",
     "scrollHint": "Scroll"
+  },
+  "quickLinks": {
+    "orchestras": "Orchestras",
+    "schedule": "Schedule",
+    "performers": "Performers",
+    "djs": "DJ Lineup",
+    "info": "Tickets & Info",
+    "venue": "Getting Here"
   },
   "orchestras": {
     "eyebrow": "★ TWO LIVE ORCHESTRAS ★",
