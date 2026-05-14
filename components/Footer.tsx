@@ -5,7 +5,7 @@ import { Link } from '@/i18n/navigation';
 const NAV_LINKS = [
   { href: '#orchestras', key: 'lineup'   },
   { href: '#schedule',   key: 'schedule' },
-  { href: '#djs',        key: 'tickets'  },
+  { href: '#tickets',    key: 'tickets'  },
   { href: '#venue',      key: 'venue'    },
   { href: '#tickets',    key: 'register' },
 ] as const;
@@ -22,22 +22,22 @@ export default function Footer() {
   const contactEmail = process.env.NEXT_PUBLIC_CONTACT_EMAIL ?? 'info@kcctf.org';
 
   return (
-    <footer id="about" className="bg-night text-warm-white pt-16 pb-10">
+    <footer id="about" className="bg-night text-warm-white pt-12 pb-10">
       <div className="max-w-[1200px] mx-auto px-6 md:px-10">
 
         {/* Top: centred bandoneon + tagline */}
-        <div className="flex flex-col items-center text-center mb-12 pb-10 border-b border-warm-white/10">
+        <div className="flex flex-col items-center text-center mb-10 pb-9 border-b border-warm-white/10">
           <Image
-            src="/images/illustration-bandoneon-dark.png"
+            src="/images/illustration-bandoneon-dark-transparent.png"
             alt=""
-            width={200}
-            height={200}
-            style={{ height: '200px', width: 'auto', opacity: 0.8, mixBlendMode: 'screen' }}
+            width={132}
+            height={92}
+            style={{ height: '104px', width: 'auto', opacity: 0.7, filter: 'drop-shadow(0 12px 18px rgba(0,0,0,0.28))' }}
             aria-hidden
           />
           <p
             className="font-en-display italic font-black text-gold mt-6 leading-none"
-            style={{ fontSize: 'clamp(28px, 4vw, 40px)' }}
+            style={{ fontSize: 'clamp(24px, 3.2vw, 34px)' }}
           >
             {t('tagline')} · {t('taglineEn')}
           </p>
@@ -121,9 +121,9 @@ export default function Footer() {
               {/* 춘천시 로고 */}
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
-                src="/images/KCCTF_logo/춘천시.svg"
+                src="/images/city-chuncheon-logo-white-trim.png"
                 alt="춘천시"
-                style={{ height: '44px', width: 'auto', opacity: 0.75, filter: 'brightness(0) invert(1)' }}
+                style={{ width: '84px', height: 'auto', opacity: 0.58 }}
                 className="mt-1 mb-2"
               />
               <p className="font-kr-sans text-[14px] text-warm-white/65 leading-[1.6]">

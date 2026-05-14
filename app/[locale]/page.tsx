@@ -1,4 +1,5 @@
 import Hero from '@/components/Hero';
+import FeelingStrip from '@/components/FeelingStrip';
 import Schedule from '@/components/Schedule';
 import Orchestras from '@/components/Orchestras';
 import Djs from '@/components/Djs';
@@ -10,10 +11,11 @@ export default function HomePage() {
   return (
     <>
       <Hero />
-      <Schedule />
+      <FeelingStrip />
       <Orchestras />
-      <Djs />
+      <Schedule />
       <Dancers />
+      <Djs />
       <Venue />
       <Tickets />
     </>

@@ -112,7 +112,7 @@ export default function Nav() {
                     onFocus={() => setOpenGroup(group.key)}
                     onClick={() => setOpenGroup(isOpen ? null : group.key)}
                     className={[
-                      'font-en-body font-bold text-[11px] tracking-[0.22em] uppercase transition-colors duration-200 relative px-3 py-4',
+                      'font-en-body font-bold text-[11px] tracking-[0.22em] uppercase transition-colors duration-200 relative px-3 py-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-burgundy/35 focus-visible:ring-offset-2 focus-visible:ring-offset-mustard',
                       isActive || isOpen
                         ? 'text-burgundy after:absolute after:bottom-[11px] after:left-3 after:right-3 after:h-[2px] after:bg-burgundy after:rounded-full'
                         : 'text-ink-soft hover:text-burgundy',
@@ -126,30 +126,25 @@ export default function Nav() {
 
             {activeGroup && (
               <div
-                className="hidden lg:block absolute left-1/2 top-[72px] w-[720px] -translate-x-1/2 pt-2"
+                className="hidden lg:block absolute left-1/2 top-[72px] w-[560px] -translate-x-1/2 pt-2"
                 onMouseEnter={() => setOpenGroup(activeGroup.key)}
                 onMouseLeave={() => setOpenGroup(null)}
               >
-                <div className="grid grid-cols-[0.95fr_1.6fr] gap-6 rounded-md border border-ink-soft/15 bg-warm-white/95 p-5 shadow-[0_18px_44px_rgba(26,20,16,0.16)] backdrop-blur-sm">
-                  <div className="bg-mustard-soft/65 px-5 py-4">
-                    <p className="font-en-body font-bold text-[11px] tracking-[0.34em] uppercase text-gold mb-3">
-                      {activeGroup.label}
-                    </p>
-                    <p className="font-kr-serif font-black text-[26px] leading-[1.08] text-ink-soft">
-                      KCCTF 2026
-                    </p>
-                  </div>
-                  <div className="grid grid-cols-2 gap-2 self-center">
+                <div className="border-t-4 border-burgundy bg-ink/95 px-5 py-4 shadow-[0_14px_34px_rgba(26,20,16,0.24)] backdrop-blur-sm">
+                  <p className="font-en-body font-bold text-[11px] tracking-[0.34em] uppercase text-gold mb-2">
+                    {activeGroup.label}
+                  </p>
+                  <div className="grid grid-cols-2 gap-x-6">
                     {activeGroup.items.map((item) => (
                       <a
                         key={`${activeGroup.key}-${item.label}`}
                         href={item.href}
                         onClick={() => setOpenGroup(null)}
                         className={[
-                          'group flex min-h-[44px] items-center justify-between border-b border-ink-soft/10 px-2 font-kr-sans text-[14px] transition-colors',
+                          'group flex min-h-[40px] items-center justify-between border-b border-warm-white/12 font-kr-sans text-[14px] transition-colors',
                           activeHref === item.href
-                            ? 'text-burgundy'
-                            : 'text-ink-soft hover:text-burgundy',
+                            ? 'text-gold'
+                            : 'text-warm-white/82 hover:text-gold',
                         ].join(' ')}
                       >
                         <span>{item.label}</span>

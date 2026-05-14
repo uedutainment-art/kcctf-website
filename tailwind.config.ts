@@ -31,6 +31,7 @@ const config: Config = {
         'kr-serif':     ['var(--font-noto-serif-kr)', 'Noto Serif KR', 'serif'],
         // Pretendard loaded via @fontsource in globals.css
         'kr-sans':      ['Pretendard', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
+        'kr-poster':    ['Black Han Sans', 'Pretendard', 'sans-serif'],
         'en-display':   ['var(--font-playfair)', 'Playfair Display', 'serif'],
         'en-body':      ['var(--font-inter)', 'Inter', 'sans-serif'],
         'en-condensed': ['var(--font-oswald)', 'Oswald', 'sans-serif'],

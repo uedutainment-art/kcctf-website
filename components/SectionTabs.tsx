@@ -16,7 +16,7 @@ const TABS = [
   { href: '#venue',      sectionId: 'venue',       key: 'venue'      },
 ] as const;
 
-const ALL_SECTIONS = ['orchestras', 'schedule', 'djs', 'dancers', 'venue', 'tickets'];
+const ALL_SECTIONS = ['orchestras', 'schedule', 'dancers', 'djs', 'venue', 'tickets'];
 const SECTION_TO_TAB: Record<string, string> = {
   orchestras: '#orchestras',
   schedule:   '#schedule',
@@ -78,7 +78,7 @@ export default function SectionTabs() {
     <div
       className={[
         'fixed inset-x-0 top-[72px] z-40 transition-transform duration-300 ease-out',
-        visible ? 'translate-y-0' : '-translate-y-[200%]',
+        visible ? 'translate-y-0' : '-translate-y-[calc(100%+72px)]',
       ].join(' ')}
       aria-hidden={!visible}
     >

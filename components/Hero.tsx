@@ -1,78 +1,66 @@
 import Image from 'next/image';
 import { useTranslations } from 'next-intl';
 
-function calcDaysLeft(deadline: string): number | null {
-  const d = new Date(deadline + 'T00:00:00');
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
-  const diff = Math.round((d.getTime() - today.getTime()) / 86_400_000);
-  return diff >= 0 ? diff : null;
-}
-
 export default function Hero() {
   const t = useTranslations('hero');
   const registerUrl = process.env.NEXT_PUBLIC_REGISTER_URL ?? '#tickets';
-
-  const earlybirdDeadline = process.env.NEXT_PUBLIC_EARLYBIRD_DEADLINE ?? '';
-  const daysLeft = earlybirdDeadline ? calcDaysLeft(earlybirdDeadline) : null;
-  const showEarlybird = daysLeft !== null;
 
   return (
     <section id="hero" className="diamond-bg relative pt-[72px] pb-0 overflow-hidden">
       {/* Grain overlay */}
       <div className="grain-overlay absolute inset-0 opacity-25 pointer-events-none" aria-hidden />
 
-      {/* 춘천시 badge */}
-      <div className="absolute top-[80px] right-4 md:right-8 z-20">
+      {/* City logo, placed like the poster reference */}
+      <div className="absolute top-[102px] right-6 md:right-12 z-20 opacity-60">
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src="/images/KCCTF_logo/춘천시.svg" alt="춘천시" style={{ height: '52px', width: 'auto' }} />
+        <img src="/images/city-chuncheon-logo-trim.png" alt="춘천시" style={{ width: '96px', height: 'auto' }} />
       </div>
 
       {/* ── DESKTOP (lg+) ─────────────────────────────────────────────── */}
       <div className="hidden lg:block relative z-10">
-        <div className="max-w-[1200px] mx-auto px-6 md:px-10 pt-10 pb-0">
+        <div className="max-w-[1840px] mx-auto px-[clamp(32px,4vw,76px)] pt-10 pb-0">
 
           {/* Eyebrow */}
-          <p className="font-en-body font-bold text-[11px] tracking-[0.45em] uppercase text-burgundy mb-8">
-            <span className="text-gold">★</span>{' '}3RD EDITION · 2026{' '}<span className="text-gold">★</span>
+          <p
+            className="inline-flex items-center justify-center gap-3 font-en-body font-black text-[13px] tracking-[0.42em] uppercase text-burgundy mb-6"
+            style={{ minWidth: 'min(620px, 48vw)' }}
+          >
+            <span>★</span>{' '}3RD EDITION · 2026{' '}<span>★</span>
           </p>
 
-          {/* Wordmark left / bandoneon right */}
-          <div className="grid grid-cols-[1.15fr_1fr] gap-8 items-center mb-8">
-            <div>
-              <div
-                className="font-kr-serif font-black text-burgundy leading-[0.92] tracking-[-0.06em]"
-                style={{ fontSize: 'clamp(56px, 8vw, 92px)' }}
-              >
-                춘천
-              </div>
-              <div
-                className="font-kr-serif font-black text-burgundy leading-[0.92] tracking-[-0.06em]"
-                style={{ fontSize: 'clamp(56px, 8vw, 92px)' }}
-              >
-                국제땅고
-              </div>
-              <div
-                className="font-kr-serif font-black text-burgundy leading-[0.92] tracking-[-0.06em] mb-6"
-                style={{ fontSize: 'clamp(56px, 8vw, 92px)' }}
-              >
-                페스티벌
+          {/* Poster-style wordmark and bandoneon */}
+          <div className="grid grid-cols-[minmax(0,1fr)_440px] gap-12 items-end mb-8">
+            <div className="min-w-0">
+              <div className="flex items-end gap-7 mb-7">
+                <h1
+                  className="font-kr-poster text-burgundy leading-[0.78] tracking-[-0.1em]"
+                  style={{ fontSize: 'clamp(150px, 16vw, 250px)', transform: 'scaleX(1.08)' }}
+                >
+                  춘천
+                </h1>
+                <div
+                  className="font-kr-poster text-burgundy leading-[0.86] tracking-[-0.09em] pb-2"
+                  style={{ fontSize: 'clamp(70px, 6.9vw, 116px)', transform: 'scaleX(1.04)' }}
+                >
+                  <div>국제땅고</div>
+                  <div>페스티벌</div>
+                </div>
               </div>
               <p
                 className="font-en-condensed font-black text-burgundy uppercase leading-[1.1] tracking-[0.02em]"
-                style={{ fontSize: 'clamp(18px, 2.2vw, 28px)' }}
+                style={{ fontSize: 'clamp(42px, 4.4vw, 68px)' }}
               >
                 CHUNCHEON<br />INTERNATIONAL<br />TANGO FESTIVAL
               </p>
             </div>
 
-            <div className="flex justify-center items-center">
+            <div className="flex justify-center items-end pb-5">
               <Image
-                src="/images/illustration-bandoneon-cream.png"
+                src="/images/illustration-bandoneon-dark-transparent.png"
                 alt="반도네온 일러스트"
                 width={400}
                 height={400}
-                style={{ width: 'clamp(240px, 32vw, 380px)', height: 'auto', mixBlendMode: 'multiply' }}
+                style={{ width: 'clamp(320px, 30vw, 440px)', height: 'auto', filter: 'drop-shadow(0 14px 20px rgba(74,36,24,0.18))' }}
                 priority
               />
             </div>
@@ -104,17 +92,6 @@ export default function Hero() {
               {t('cta')}
             </a>
 
-            {showEarlybird && (
-              <a
-                href={registerUrl}
-                className="inline-flex items-center gap-3 bg-gold/10 border border-gold/50 text-ink-soft font-kr-sans text-[13px] px-6 py-[10px] rounded-full hover:bg-gold/20 transition-colors"
-              >
-                <span className="bg-gold text-ink font-en-body font-bold text-[10px] tracking-[0.15em] uppercase px-2 py-[3px] rounded-sm">
-                  D-{daysLeft}
-                </span>
-                얼리버드 마감 · {t('earlybird.deadline')}
-              </a>
-            )}
           </div>
         </div>
       </div>
@@ -123,40 +100,35 @@ export default function Hero() {
       <div className="lg:hidden relative z-10 px-5 pt-6 pb-0">
 
         {/* Eyebrow */}
-        <p className="font-en-body font-bold text-[9px] tracking-[0.4em] uppercase text-burgundy text-center mb-5">
-          <span className="text-gold">★</span>{' '}3RD EDITION · 2026{' '}<span className="text-gold">★</span>
+        <p className="font-en-body font-black text-[10px] tracking-[0.42em] uppercase text-burgundy text-center mb-5">
+          <span>★</span>{' '}3RD EDITION · 2026{' '}<span>★</span>
         </p>
 
-        {/* 3-line wordmark */}
-        <div className="text-center mb-1">
-          <div
-            className="font-kr-serif font-black text-burgundy leading-[0.92] tracking-[-0.06em]"
-            style={{ fontSize: 'clamp(52px, 14vw, 80px)' }}
+        {/* Poster-style mobile wordmark */}
+        <div className="text-center mb-2">
+          <h1
+            className="font-kr-poster text-burgundy leading-[0.82] tracking-[-0.1em]"
+            style={{ fontSize: 'clamp(88px, 25vw, 116px)', transform: 'scaleX(1.06)' }}
           >
             춘천
-          </div>
+          </h1>
           <div
-            className="font-kr-serif font-black text-burgundy leading-[0.92] tracking-[-0.06em]"
-            style={{ fontSize: 'clamp(52px, 14vw, 80px)' }}
+            className="font-kr-poster text-burgundy leading-[0.88] tracking-[-0.09em]"
+            style={{ fontSize: 'clamp(44px, 12vw, 60px)' }}
           >
-            국제땅고
-          </div>
-          <div
-            className="font-kr-serif font-black text-burgundy leading-[0.92] tracking-[-0.06em]"
-            style={{ fontSize: 'clamp(52px, 14vw, 80px)' }}
-          >
-            페스티벌
+            <div>국제땅고</div>
+            <div>페스티벌</div>
           </div>
         </div>
 
         {/* Bandoneon — decorative */}
         <div className="flex justify-center my-3 opacity-90" aria-hidden>
           <Image
-            src="/images/illustration-bandoneon-cream.png"
+            src="/images/illustration-bandoneon-dark-transparent.png"
             alt=""
             width={160}
             height={160}
-            style={{ width: '150px', height: 'auto', mixBlendMode: 'multiply' }}
+            style={{ width: '150px', height: 'auto', filter: 'drop-shadow(0 10px 16px rgba(74,36,24,0.14))' }}
           />
         </div>
 
@@ -195,17 +167,6 @@ export default function Hero() {
             {t('cta')}
           </a>
 
-          {showEarlybird && (
-            <a
-              href={registerUrl}
-              className="inline-flex items-center gap-2 bg-gold/10 border border-gold/50 text-ink-soft font-kr-sans text-[12px] px-5 py-[9px] rounded-full"
-            >
-              <span className="bg-gold text-ink font-en-body font-bold text-[9px] tracking-[0.15em] uppercase px-2 py-[2px] rounded-sm">
-                D-{daysLeft}
-              </span>
-              얼리버드 마감 · {t('earlybird.deadline')}
-            </a>
-          )}
         </div>
       </div>
 
@@ -229,7 +190,13 @@ type DateBandProps = {
 
 function DateBand({ datePrimary, dateSecondary, venuePrimary, venueSecondary, mobile }: DateBandProps) {
   return (
-    <div className={['bg-ink text-warm-white px-5 py-[14px] shadow-stamp', mobile ? 'flex flex-col gap-2' : 'flex items-center justify-between flex-wrap gap-3'].join(' ')}>
+    <div
+      className={['bg-ink text-warm-white px-5 py-[14px] shadow-stamp', mobile ? 'flex flex-col gap-2' : 'flex items-center justify-between flex-wrap gap-3'].join(' ')}
+      style={mobile ? undefined : {
+        width: 'calc(100% + clamp(32px, 4vw, 76px) * 2)',
+        marginLeft: 'calc(clamp(32px, 4vw, 76px) * -1)',
+      }}
+    >
       <div>
         <p className="font-en-display italic font-black text-gold-soft leading-none" style={{ fontSize: mobile ? '22px' : '32px' }}>
           {datePrimary}

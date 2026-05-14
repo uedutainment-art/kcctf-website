@@ -29,7 +29,7 @@ export default function Orchestras() {
       </div>
 
       {/* ── Orchestra cards ────────────────────────────────────────────── */}
-      <div className="flex flex-col gap-4 pb-16 max-w-[1200px] mx-auto px-6 md:px-10">
+      <div className="flex flex-col gap-4 pb-16">
         {ORCHESTRAS.map((orq, i) => {
           const item = t.raw(`items.${i}`) as {
             name: string; nameEn: string; role: string; description: string; liveBadge: string;
@@ -37,10 +37,9 @@ export default function Orchestras() {
           return (
             <article
               key={orq.id}
-              className="relative overflow-hidden bg-night rounded-sm"
+              className="relative overflow-hidden bg-night"
               style={{ height: 'clamp(280px, 40vw, 480px)' }}
             >
-              {/* Photo */}
               <Image
                 src={orq.image}
                 alt={orq.nameEn}
@@ -51,7 +50,6 @@ export default function Orchestras() {
                 priority={i === 0}
               />
 
-              {/* Left gradient for text legibility */}
               <div
                 className="absolute inset-0 pointer-events-none"
                 style={{
@@ -60,21 +58,19 @@ export default function Orchestras() {
                 }}
               />
 
-              {/* Bottom gradient — always visible for mobile + safety */}
               <div
                 className="absolute inset-0 pointer-events-none"
                 style={{ background: 'linear-gradient(180deg, transparent 45%, rgba(14,8,20,0.6) 100%)' }}
               />
 
-              {/* Text overlay */}
               <div className="absolute inset-0 flex items-center">
                 <div className="px-6 sm:px-10 max-w-sm">
-                  <p className="font-en-body font-bold text-[11px] tracking-[0.32em] uppercase text-gold mb-2">
+                  <p className="font-en-body font-bold text-[11px] tracking-[0.4em] uppercase text-gold mb-5">
                     {orq.roleEn}
                   </p>
                   <h3
-                    className="font-en-display italic font-black text-warm-white leading-[1.0] mb-2 drop-shadow-md"
-                    style={{ fontSize: 'clamp(28px, 4vw, 56px)' }}
+                    className="font-en-display font-black text-warm-white leading-[0.95] mb-4"
+                    style={{ fontSize: 'clamp(34px, 5vw, 64px)' }}
                   >
                     {locale === 'ko' ? item.nameEn : orq.nameEn}
                   </h3>
@@ -84,12 +80,12 @@ export default function Orchestras() {
                 </div>
               </div>
 
-              {/* LIVE badge — rotated paper label */}
               <div
-                className="absolute top-5 right-5 bg-warm-white px-3 py-1 shadow-md"
+                className="absolute top-5 right-5 bg-warm-white px-4 py-2 text-burgundy shadow-[5px_5px_0_rgba(90,14,27,0.75)] ring-2 ring-warm-white ring-offset-2 ring-offset-transparent"
                 style={{ transform: 'rotate(-8deg)' }}
+                aria-label={item.liveBadge}
               >
-                <span className="font-en-condensed font-black text-[18px] text-ink tracking-wide">
+                <span className="font-en-condensed font-black text-[34px] leading-none tracking-[0.08em]">
                   {item.liveBadge}
                 </span>
               </div>

@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import { useTranslations } from 'next-intl';
 
 export default function Venue() {
@@ -7,101 +8,97 @@ export default function Venue() {
   const features = t.raw('features') as { icon: string; text: string }[];
 
   return (
-    <section id="venue" className="bg-warm-white py-16">
-      <div className="max-w-[1200px] mx-auto px-6 md:px-10">
+    <section
+      id="venue"
+      className="bg-night text-warm-white"
+      style={{
+        background:
+          'linear-gradient(180deg, #0E0814 0%, #160611 52%, #0E0814 100%)',
+      }}
+    >
+      <div className="mx-auto max-w-[1600px] px-0">
 
         {/* Header */}
-        <div className="text-center mb-12">
+        <div className="mx-auto max-w-[920px] px-6 pt-16 pb-10 text-center md:px-10">
           <p className="font-en-body font-bold text-[11px] tracking-[0.4em] uppercase text-gold mb-3">
             {t('eyebrow')}
           </p>
           <h2
-            className="font-kr-serif font-black text-ink-soft leading-[1.0] tracking-[-0.04em] mb-2"
-            style={{ fontSize: 'clamp(28px, 4vw, 48px)' }}
+            className="font-kr-serif font-black text-warm-white leading-[1.0] tracking-[-0.04em] mb-2"
+            style={{ fontSize: 'clamp(36px, 5vw, 68px)' }}
           >
             {t('title')}
           </h2>
-          <p className="font-en-display italic text-[22px] text-gold mb-4">
+          <p className="font-en-display italic text-[24px] text-gold mb-6">
             {t('subtitleEn')}
+          </p>
+          <p className="font-kr-serif text-[19px] leading-[1.6] text-warm-white/78 whitespace-pre-line md:text-[22px]">
+            {t('tagline')}
           </p>
         </div>
 
-        {/* Main venue card */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
-
-          {/* Left: info */}
-          <div>
-            <p className="font-kr-serif font-medium text-[18px] text-ink-soft leading-[1.6] mb-6 whitespace-pre-line">
-              {t('tagline')}
-            </p>
-
-            <p className="font-kr-sans text-[14px] text-charcoal/60 mb-6">
-              {t('address')}
-            </p>
-
-            {/* Feature list */}
-            <ul className="flex flex-col gap-3 mb-8">
-              {features.map((f, i) => (
-                <li key={i} className="flex items-center gap-3">
-                  <span className="text-xl w-7 shrink-0" aria-hidden>{f.icon}</span>
-                  <span className="font-kr-sans text-[15px] text-charcoal/80">{f.text}</span>
-                </li>
-              ))}
-            </ul>
-
-            {/* Map link placeholder */}
-            <a
-              href="https://maps.google.com/?q=춘천봄내체육관"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-block font-en-body font-bold text-[12px] tracking-[0.18em] uppercase text-burgundy border-b-2 border-burgundy pb-[2px] hover:text-burgundy-deep hover:border-burgundy-deep transition-colors"
-            >
-              {t('mapLink')} ↗
-            </a>
-          </div>
-
-          {/* Right: photo placeholder */}
-          <div
-            className="diamond-bg rounded-lg overflow-hidden border-2 border-ink-soft/15 flex flex-col items-center justify-center gap-4 relative"
-            style={{ minHeight: '300px' }}
-          >
-            {/* grain inside placeholder */}
-            <div
-              className="absolute inset-0 opacity-20 pointer-events-none"
-              style={{ backgroundImage: "url('/images/grain.svg')", backgroundSize: '160px 160px', mixBlendMode: 'multiply' }}
-              aria-hidden
+        {/* Full-width scale photo */}
+        <div className="mx-auto px-0 md:px-10">
+          <div className="relative min-h-[520px] overflow-hidden border-y border-warm-white/10 bg-night md:min-h-[70vh] md:border md:border-warm-white/10 md:shadow-[10px_10px_0_#8B1A2B]">
+            <Image
+              src="/images/venue-bomnae-dance.jpg"
+              alt="봄내체육관에서 많은 댄서들이 함께 춤추는 장면"
+              fill
+              className="object-cover"
+              style={{ objectPosition: '50% 54%' }}
+              sizes="100vw"
             />
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src="/images/logo-mark.svg"
-              alt=""
-              aria-hidden
-              style={{ width: '96px', height: '96px', opacity: 0.18 }}
-            />
-            <div className="text-center px-6 relative z-10">
-              <p className="font-kr-sans text-[13px] text-ink-soft/50 tracking-[0.18em] uppercase">
-                사진 곧 공개
+            <div className="absolute inset-0 bg-gradient-to-r from-night/88 via-night/32 to-night/5" />
+            <div className="absolute inset-0 bg-gradient-to-t from-night/82 via-transparent to-night/20" />
+
+            <div className="absolute left-0 right-0 top-[18%] p-6 md:top-1/2 md:max-w-[760px] md:-translate-y-1/2 md:p-12 lg:p-16">
+              <p className="font-en-body font-black text-[11px] tracking-[0.42em] uppercase text-gold mb-3">
+                BOMNAE COMPLEX
               </p>
-              <p className="font-en-body text-[11px] text-ink-soft/35 tracking-[0.14em] uppercase mt-1">
-                Photo Coming Soon
+              <p
+                className="font-kr-serif font-black text-warm-white leading-[1.05] tracking-[-0.04em]"
+                style={{ fontSize: 'clamp(36px, 6vw, 76px)' }}
+              >
+                큰 플로어, 좋은 사운드, 꽉 찬 밤
               </p>
+              <p className="mt-5 max-w-xl font-kr-sans text-[15px] leading-[1.75] text-warm-white/76 md:text-[17px]">
+                {t('address')} · 사흘 동안 라이브 오케스트라와 밀롱가가 한 공간에서 울립니다.
+              </p>
+              <a
+                href="https://maps.google.com/?q=춘천봄내체육관"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-7 inline-block border-b-2 border-gold pb-[3px] font-en-body text-[12px] font-bold uppercase tracking-[0.18em] text-gold transition-colors hover:border-warm-white hover:text-warm-white"
+              >
+                {t('mapLink')} ↗
+              </a>
             </div>
           </div>
         </div>
 
+        {/* Feature bar */}
+        <div className="mx-auto grid max-w-[1320px] grid-cols-1 gap-px px-6 py-10 md:grid-cols-4 md:px-10">
+          {features.map((f, i) => (
+            <div key={i} className="flex min-h-[104px] items-center gap-4 bg-warm-white/[0.055] px-5 py-5 ring-1 ring-warm-white/10">
+              <span className="text-2xl" aria-hidden>{f.icon}</span>
+              <p className="font-kr-sans text-[15px] leading-[1.45] text-warm-white/82">{f.text}</p>
+            </div>
+          ))}
+        </div>
+
         {/* Concert venue — flag-gated */}
         {showConcertVenue ? (
-          <div className="mt-10 p-6 bg-cream rounded-lg border-2 border-ink-soft/10">
+          <div className="mx-auto mb-16 max-w-[1320px] border border-warm-white/12 bg-warm-white/[0.055] p-6">
             <p className="font-en-body font-bold text-[11px] tracking-[0.4em] uppercase text-burgundy mb-2">
               CONCERT VENUE
             </p>
-            <p className="font-kr-sans text-[15px] text-charcoal/70">
+            <p className="font-kr-sans text-[15px] text-warm-white/70">
               춘천문화예술회관
             </p>
           </div>
         ) : (
-          <div className="mt-10 p-5 border-2 border-dashed border-ink-soft/20 rounded-lg text-center">
-            <p className="font-kr-sans text-[14px] text-charcoal/40">
+          <div className="mx-auto mb-16 max-w-[1320px] border border-dashed border-warm-white/18 p-5 text-center">
+            <p className="font-kr-sans text-[14px] text-warm-white/35">
               {t('concertVenueNote')}
             </p>
           </div>
