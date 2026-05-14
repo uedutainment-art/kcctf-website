@@ -17,7 +17,35 @@
     "register": "예약하기",
     "languageSwitch": "EN",
     "menuOpen": "메뉴 열기",
-    "menuClose": "메뉴 닫기"
+    "menuClose": "메뉴 닫기",
+    "groups": {
+      "festival": {
+        "label": "Festival",
+        "items": [
+          { "label": "오케스트라", "href": "#orchestras" },
+          { "label": "공연자", "href": "#dancers" },
+          { "label": "DJ", "href": "#djs" },
+          { "label": "프로그램", "href": "#schedule" }
+        ]
+      },
+      "info": {
+        "label": "Info",
+        "items": [
+          { "label": "예매", "href": "#tickets" },
+          { "label": "가격", "href": "#tickets" },
+          { "label": "숙소", "href": "#tickets" },
+          { "label": "장소", "href": "#venue" }
+        ]
+      },
+      "travel": {
+        "label": "Travel",
+        "items": [
+          { "label": "찾아오는 길", "href": "#venue" },
+          { "label": "춘천 즐기기", "href": "#venue" },
+          { "label": "FAQ", "href": "#tickets" }
+        ]
+      }
+    }
   },
   "hero": {
     "eyebrow": "3RD EDITION · 2026",
@@ -68,8 +96,8 @@
   "orchestras": {
     "eyebrow": "★ TWO LIVE ORCHESTRAS ★",
     "subtitleEn": "From Buenos Aires",
-    "title": "한 무대, 두 오케스트라",
-    "lede": "부에노스 아이레스에서 직접 오는 두 팀의 살아있는 탱고. 다른 어디에도 없는 단 한 번의 무대.",
+    "title": "부에노스 아이레스에서 온 두 오케스트라",
+    "lede": "Misteriosa Buenos Aires와 Tango Bardo가 춘천에서 라이브로 연주합니다.",
     "items": [
       {
         "id": "tango-bardo",
@@ -93,7 +121,7 @@
   },
   "schedule": {
     "eyebrow": "PROGRAM",
-    "title": "사흘의 호흡",
+    "title": "3일간의 프로그램",
     "lede": "오프닝 콘서트로 시작해 여섯 번의 밀롱가, 그리고 시티투어까지.",
     "tabs": {
       "day1": "10/3 SAT — Day 1",

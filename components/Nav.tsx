@@ -5,6 +5,17 @@ import Image from 'next/image';
 import { useTranslations, useLocale } from 'next-intl';
 import { Link, usePathname } from '@/i18n/navigation';
 
+type NavItem = {
+  label: string;
+  href: string;
+};
+
+type NavGroup = {
+  key: string;
+  label: string;
+  items: NavItem[];
+};
+
 export default function Nav() {
   const t = useTranslations('nav');
   const locale = useLocale();
@@ -13,6 +24,7 @@ export default function Nav() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [activeHref, setActiveHref] = useState('');
+  const [openGroup, setOpenGroup] = useState<string | null>(null);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
@@ -22,12 +34,12 @@ export default function Nav() {
   }, []);
 
   useEffect(() => {
-    const sections = ['orchestras', 'schedule', 'djs', 'dancers', 'venue', 'tickets'];
+    const sections = ['orchestras', 'schedule', 'dancers', 'djs', 'venue', 'tickets'];
     const sectionToHref: Record<string, string> = {
       orchestras: '#orchestras',
       schedule:   '#schedule',
-      djs:        '#schedule',
-      dancers:    '#schedule',
+      djs:        '#djs',
+      dancers:    '#dancers',
       venue:      '#venue',
       tickets:    '#tickets',
     };
@@ -51,12 +63,12 @@ export default function Nav() {
     return () => { document.body.style.overflow = ''; };
   }, [menuOpen]);
 
-  const navLinks = [
-    { href: '#orchestras', label: t('lineup')   },
-    { href: '#schedule',   label: t('schedule') },
-    { href: '#venue',      label: t('venue')    },
-    { href: '#tickets',    label: t('tickets')  },
-  ];
+  const rawGroups = t.raw('groups') as Record<string, Omit<NavGroup, 'key'>>;
+  const navGroups = ['festival', 'info', 'travel'].map((key) => ({
+    key,
+    ...rawGroups[key],
+  }));
+  const activeGroup = navGroups.find((group) => group.key === openGroup) ?? null;
 
   const registerUrl = process.env.NEXT_PUBLIC_REGISTER_URL ?? '#tickets';
   const altLocale = locale === 'ko' ? 'en' : 'ko';
@@ -65,6 +77,7 @@ export default function Nav() {
     <>
       {/* ── Sticky header ─────────────────────────────────────────────── */}
       <header
+        onMouseLeave={() => setOpenGroup(null)}
         className={[
           'fixed top-0 inset-x-0 z-50 transition-all duration-300',
           scrolled
@@ -78,26 +91,77 @@ export default function Nav() {
             {/* Logo */}
             <Link href="/" className="flex-shrink-0">
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/images/KCCTF_logo/KCCTF.svg" alt="춘천국제탱고페스티벌" style={{ height: '42px', width: 'auto', mixBlendMode: 'multiply' }} />
+              <img src="/images/kcctf-nav-logo.png" alt="춘천국제탱고페스티벌" style={{ height: '38px', width: 'auto' }} />
             </Link>
 
             {/* Desktop nav links */}
-            <nav className="hidden lg:flex items-center gap-8" aria-label="Main navigation">
-              {navLinks.map(({ href, label }) => (
-                <a
-                  key={href}
-                  href={href}
-                  className={[
-                    'font-kr-sans text-[14px] transition-colors duration-200 relative pb-[2px]',
-                    activeHref === href
-                      ? 'text-burgundy after:absolute after:bottom-0 after:left-0 after:right-0 after:h-[2px] after:bg-burgundy after:rounded-full'
-                      : 'text-ink-soft hover:text-burgundy',
-                  ].join(' ')}
-                >
-                  {label}
-                </a>
-              ))}
+            <nav
+              className="hidden lg:flex items-center gap-2"
+              aria-label="Main navigation"
+            >
+              {navGroups.map((group) => {
+                const isActive = group.items.some((item) => item.href === activeHref);
+                const isOpen = openGroup === group.key;
+
+                return (
+                  <button
+                    key={group.key}
+                    type="button"
+                    aria-expanded={isOpen}
+                    onMouseEnter={() => setOpenGroup(group.key)}
+                    onFocus={() => setOpenGroup(group.key)}
+                    onClick={() => setOpenGroup(isOpen ? null : group.key)}
+                    className={[
+                      'font-en-body font-bold text-[11px] tracking-[0.22em] uppercase transition-colors duration-200 relative px-3 py-4',
+                      isActive || isOpen
+                        ? 'text-burgundy after:absolute after:bottom-[11px] after:left-3 after:right-3 after:h-[2px] after:bg-burgundy after:rounded-full'
+                        : 'text-ink-soft hover:text-burgundy',
+                    ].join(' ')}
+                  >
+                    {group.label}
+                  </button>
+                );
+              })}
             </nav>
+
+            {activeGroup && (
+              <div
+                className="hidden lg:block absolute left-1/2 top-[72px] w-[720px] -translate-x-1/2 pt-2"
+                onMouseEnter={() => setOpenGroup(activeGroup.key)}
+                onMouseLeave={() => setOpenGroup(null)}
+              >
+                <div className="grid grid-cols-[0.95fr_1.6fr] gap-6 rounded-md border border-ink-soft/15 bg-warm-white/95 p-5 shadow-[0_18px_44px_rgba(26,20,16,0.16)] backdrop-blur-sm">
+                  <div className="bg-mustard-soft/65 px-5 py-4">
+                    <p className="font-en-body font-bold text-[11px] tracking-[0.34em] uppercase text-gold mb-3">
+                      {activeGroup.label}
+                    </p>
+                    <p className="font-kr-serif font-black text-[26px] leading-[1.08] text-ink-soft">
+                      KCCTF 2026
+                    </p>
+                  </div>
+                  <div className="grid grid-cols-2 gap-2 self-center">
+                    {activeGroup.items.map((item) => (
+                      <a
+                        key={`${activeGroup.key}-${item.label}`}
+                        href={item.href}
+                        onClick={() => setOpenGroup(null)}
+                        className={[
+                          'group flex min-h-[44px] items-center justify-between border-b border-ink-soft/10 px-2 font-kr-sans text-[14px] transition-colors',
+                          activeHref === item.href
+                            ? 'text-burgundy'
+                            : 'text-ink-soft hover:text-burgundy',
+                        ].join(' ')}
+                      >
+                        <span>{item.label}</span>
+                        <span className="font-en-body text-[13px] opacity-40 transition-transform group-hover:translate-x-1" aria-hidden>
+                          →
+                        </span>
+                      </a>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            )}
 
             {/* Desktop right: lang + CTA */}
             <div className="hidden lg:flex items-center gap-4">
@@ -156,7 +220,7 @@ export default function Nav() {
         <div className="flex items-center justify-between px-5 pt-5 pb-4">
           <Link href="/" onClick={() => setMenuOpen(false)}>
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/images/KCCTF_logo/KCCTF.svg" alt="춘천국제탱고페스티벌" style={{ height: '44px', width: 'auto', mixBlendMode: 'multiply' }} />
+            <img src="/images/kcctf-nav-logo.png" alt="춘천국제탱고페스티벌" style={{ height: '44px', width: 'auto' }} />
           </Link>
           <button
             onClick={() => setMenuOpen(false)}
@@ -172,33 +236,47 @@ export default function Nav() {
         {/* Bandoneon illustration */}
         <div className="flex justify-center pt-4 pb-2 opacity-50 pointer-events-none" aria-hidden>
           <Image
-            src="/images/illustration-bandoneon-dark.png"
+            src="/images/illustration-bandoneon-dark-transparent.png"
             alt=""
-            width={160}
-            height={160}
-            style={{ width: '160px', height: 'auto', mixBlendMode: 'multiply' }}
+            width={140}
+            height={140}
+            style={{ width: '140px', height: 'auto', filter: 'drop-shadow(0 10px 16px rgba(74,36,24,0.14))' }}
           />
         </div>
 
         {/* Menu links */}
-        <nav className="flex-1 flex flex-col items-center justify-center gap-7" aria-label="Mobile navigation">
-          {navLinks.map(({ href, label }) => (
-            <a
-              key={href}
-              href={href}
-              onClick={() => setMenuOpen(false)}
-              className={[
-                'font-kr-serif font-black text-[26px] tracking-[-0.02em] transition-colors',
-                activeHref === href ? 'text-burgundy' : 'text-ink-soft hover:text-burgundy',
-              ].join(' ')}
-            >
-              {label}
-            </a>
-          ))}
+        <nav className="flex-1 overflow-y-auto px-6 py-4" aria-label="Mobile navigation">
+          <div className="mx-auto flex max-w-sm flex-col gap-8">
+            {navGroups.map((group) => (
+              <div key={group.key}>
+                <p className="font-en-body font-bold text-[11px] tracking-[0.34em] uppercase text-gold mb-3">
+                  {group.label}
+                </p>
+                <div className="flex flex-col border-t border-ink-soft/15">
+                  {group.items.map((item) => (
+                    <a
+                      key={`${group.key}-${item.label}`}
+                      href={item.href}
+                      onClick={() => setMenuOpen(false)}
+                      className={[
+                        'flex items-center justify-between border-b border-ink-soft/15 py-4 font-kr-sans text-[18px] transition-colors',
+                        activeHref === item.href ? 'text-burgundy' : 'text-ink-soft hover:text-burgundy',
+                      ].join(' ')}
+                    >
+                      <span>{item.label}</span>
+                      <span className="font-en-body text-[14px] opacity-45" aria-hidden>
+                        →
+                      </span>
+                    </a>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
         </nav>
 
         {/* CTA */}
-        <div className="px-5 pb-10">
+        <div className="px-5 pb-10 pt-4">
           <a
             href={registerUrl}
             onClick={() => setMenuOpen(false)}

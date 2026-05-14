@@ -17,7 +17,35 @@
     "register": "Register",
     "languageSwitch": "KR",
     "menuOpen": "Open menu",
-    "menuClose": "Close menu"
+    "menuClose": "Close menu",
+    "groups": {
+      "festival": {
+        "label": "Festival",
+        "items": [
+          { "label": "Orchestras", "href": "#orchestras" },
+          { "label": "Performers", "href": "#dancers" },
+          { "label": "DJs", "href": "#djs" },
+          { "label": "Program", "href": "#schedule" }
+        ]
+      },
+      "info": {
+        "label": "Info",
+        "items": [
+          { "label": "Registration", "href": "#tickets" },
+          { "label": "Prices", "href": "#tickets" },
+          { "label": "Accommodation", "href": "#tickets" },
+          { "label": "Venue", "href": "#venue" }
+        ]
+      },
+      "travel": {
+        "label": "Travel",
+        "items": [
+          { "label": "Getting Here", "href": "#venue" },
+          { "label": "Enjoy Chuncheon", "href": "#venue" },
+          { "label": "FAQ", "href": "#tickets" }
+        ]
+      }
+    }
   },
   "hero": {
     "eyebrow": "3RD EDITION · 2026",
@@ -68,8 +96,8 @@
   "orchestras": {
     "eyebrow": "★ TWO LIVE ORCHESTRAS ★",
     "subtitleEn": "From Buenos Aires",
-    "title": "One stage, two orchestras.",
-    "lede": "Two living tango groups, flown directly from Buenos Aires. A lineup that doesn't exist anywhere else in Asia.",
+    "title": "Two orchestras from Buenos Aires.",
+    "lede": "Misteriosa Buenos Aires and Tango Bardo perform live in Chuncheon.",
     "items": [
       {
         "id": "tango-bardo",
@@ -93,7 +121,7 @@
   },
   "schedule": {
     "eyebrow": "PROGRAM",
-    "title": "Three days, one breath.",
+    "title": "Three-day program.",
     "lede": "An opening orchestra concert, six milongas across three days, and a city tour to close.",
     "tabs": {
       "day1": "10/3 SAT — Day 1",
