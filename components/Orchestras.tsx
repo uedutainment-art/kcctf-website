@@ -64,8 +64,11 @@ export default function Orchestras() {
               />
 
               <div className="absolute inset-0 flex items-center">
-                <div className="px-6 sm:px-10 max-w-sm">
-                  <p className="font-en-body font-bold text-[11px] tracking-[0.4em] uppercase text-gold mb-5">
+                <div className="px-6 sm:px-10 max-w-[440px]">
+                  <p className="font-en-condensed font-black text-gold leading-none tracking-[0.08em] mb-4" style={{ fontSize: 'clamp(38px, 6vw, 76px)' }}>
+                    LIVE ORCHESTRA
+                  </p>
+                  <p className="font-en-body font-bold text-[11px] tracking-[0.4em] uppercase text-gold/85 mb-5">
                     {orq.roleEn}
                   </p>
                   <h3
@@ -78,16 +81,6 @@ export default function Orchestras() {
                     {item.description}
                   </p>
                 </div>
-              </div>
-
-              <div
-                className="absolute top-5 right-5 bg-warm-white px-4 py-2 text-burgundy shadow-[5px_5px_0_rgba(90,14,27,0.75)] ring-2 ring-warm-white ring-offset-2 ring-offset-transparent"
-                style={{ transform: 'rotate(-8deg)' }}
-                aria-label={item.liveBadge}
-              >
-                <span className="font-en-condensed font-black text-[34px] leading-none tracking-[0.08em]">
-                  {item.liveBadge}
-                </span>
               </div>
             </article>
           );

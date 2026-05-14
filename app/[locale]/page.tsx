@@ -4,6 +4,7 @@ import Schedule from '@/components/Schedule';
 import Orchestras from '@/components/Orchestras';
 import Djs from '@/components/Djs';
 import Dancers from '@/components/Dancers';
+import TheNights from '@/components/TheNights';
 import Venue from '@/components/Venue';
 import Tickets from '@/components/Tickets';
 
@@ -15,6 +16,7 @@ export default function HomePage() {
       <Orchestras />
       <Schedule />
       <Dancers />
+      <TheNights />
       <Djs />
       <Venue />
       <Tickets />

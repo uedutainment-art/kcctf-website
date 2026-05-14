@@ -5,6 +5,7 @@ import { DJS } from '@/data/festival';
 export default function Djs() {
   const t = useTranslations('djs');
   const locale = useLocale();
+  const isKo = locale === 'ko';
 
   return (
     <section
@@ -16,7 +17,7 @@ export default function Djs() {
       }}
     >
       <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gold/35" aria-hidden />
-      <div className="max-w-[1320px] mx-auto px-6 md:px-10">
+      <div className="max-w-[1180px] mx-auto px-6 md:px-10">
 
         {/* Header */}
         <div className="text-center mb-12">
@@ -37,29 +38,42 @@ export default function Djs() {
           </p>
         </div>
 
+        <div className="relative mb-12 min-h-[300px] overflow-hidden bg-ink ring-1 ring-gold/16">
+          <Image
+            src="/images/2025년 이미지/1012__0459.jpg"
+            alt="2025 춘천국제탱고페스티벌 밀롱가 분위기"
+            fill
+            className="object-cover"
+            style={{ objectPosition: '50% 42%' }}
+            sizes="(max-width: 1024px) 100vw, 1180px"
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-night/92 via-night/55 to-night/10" />
+          <div className="absolute bottom-0 left-0 max-w-2xl p-6 md:p-10">
+            <p className="font-en-body font-black text-[11px] tracking-[0.4em] uppercase text-gold mb-3">
+              MILONGA FLOW
+            </p>
+            <p className="font-kr-serif text-[24px] font-black leading-[1.25] text-warm-white md:text-[36px]">
+              {isKo ? '좋은 DJ는 밤의 속도를 만듭니다.' : 'A good DJ shapes the pace of the night.'}
+            </p>
+          </div>
+        </div>
+
         {/* 3×2 grid (desktop) / 2×3 (mobile) */}
-        <div className="grid grid-cols-2 lg:grid-cols-6 gap-4 sm:gap-5">
-          {DJS.map((dj, index) => (
+        <div className="grid grid-cols-2 gap-5 md:grid-cols-3 md:gap-6">
+          {DJS.map((dj) => (
             <div
               key={dj.id}
-              className={[
-                'group bg-warm-white/[0.045] border border-gold/18 p-3 sm:p-4 text-center transition-transform duration-300 hover:-translate-y-1',
-                index % 2 ? 'lg:mt-10' : '',
-              ].join(' ')}
+              className="group text-center"
             >
-              {/* Circular photo */}
-              <div className="relative mx-auto w-36 h-36 sm:w-44 sm:h-44 lg:w-full lg:h-auto lg:aspect-[4/5] overflow-hidden border-2 border-gold/45 mb-4 bg-ink transition-transform duration-300 group-hover:scale-[1.025]">
+              <div className="relative mx-auto mb-4 aspect-[4/5] w-full max-w-[250px] overflow-hidden bg-ink ring-1 ring-gold/22 transition-transform duration-300 group-hover:-translate-y-1">
                 <Image
                   src={dj.image}
                   alt={`${dj.nameKo} (${dj.nameEn})`}
                   fill
                   className="object-cover object-[center_20%] grayscale-[12%] contrast-[1.04] transition-[filter] duration-300 group-hover:saturate-[1.18] group-hover:grayscale-0"
-                  sizes="(max-width: 640px) 144px, (max-width: 1024px) 176px, 190px"
+                  sizes="(max-width: 640px) 44vw, (max-width: 1024px) 28vw, 250px"
                 />
-                <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-night/80 to-transparent" />
-                <span className="absolute left-2 top-2 bg-burgundy text-warm-white font-en-body font-black text-[10px] tracking-[0.2em] px-2 py-1">
-                  DJ
-                </span>
+                <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-night/85 to-transparent" />
               </div>
 
               {/* Label */}
