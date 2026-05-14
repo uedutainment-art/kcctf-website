@@ -3,18 +3,11 @@ import { useTranslations } from 'next-intl';
 
 export default function Hero() {
   const t = useTranslations('hero');
-  const registerUrl = process.env.NEXT_PUBLIC_REGISTER_URL ?? '#tickets';
 
   return (
     <section id="hero" className="diamond-bg relative pt-[72px] pb-0 overflow-hidden">
       {/* Grain overlay */}
       <div className="grain-overlay absolute inset-0 opacity-25 pointer-events-none" aria-hidden />
-
-      {/* City logo, placed like the poster reference */}
-      <div className="absolute top-[102px] right-6 md:right-12 z-20 opacity-60">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src="/images/city-chuncheon-logo-trim.png" alt="춘천시" style={{ width: '96px', height: 'auto' }} />
-      </div>
 
       {/* ── DESKTOP (lg+) ─────────────────────────────────────────────── */}
       <div className="hidden lg:block relative z-10">
@@ -79,20 +72,7 @@ export default function Hero() {
           <DateBand
             datePrimary={t('dateBand.datePrimary')}
             dateSecondary={t('dateBand.dateSecondary')}
-            venuePrimary={t('dateBand.venuePrimary')}
-            venueSecondary={t('dateBand.venueSecondary')}
           />
-
-          {/* Big centered CTA */}
-          <div className="flex flex-col items-center gap-3 py-6">
-            <a
-              href={registerUrl}
-              className="bg-burgundy text-warm-white font-en-body font-bold text-[20px] tracking-[0.22em] uppercase px-20 py-5 rounded-md transition-all duration-150 shadow-[0_6px_0_#5A0E1B] hover:shadow-[0_2px_0_#5A0E1B] hover:translate-y-[4px]"
-            >
-              {t('cta')}
-            </a>
-
-          </div>
         </div>
       </div>
 
@@ -153,21 +133,8 @@ export default function Hero() {
         <DateBand
           datePrimary={t('dateBand.datePrimary')}
           dateSecondary={t('dateBand.dateSecondary')}
-          venuePrimary={t('dateBand.venuePrimary')}
-          venueSecondary={t('dateBand.venueSecondary')}
           mobile
         />
-
-        {/* Big CTA */}
-        <div className="flex flex-col items-center gap-3 py-5">
-          <a
-            href={registerUrl}
-            className="block w-full bg-burgundy text-warm-white font-en-body font-bold text-[18px] tracking-[0.22em] uppercase text-center py-5 rounded-md transition-all duration-150 shadow-[0_5px_0_#5A0E1B] hover:shadow-[0_2px_0_#5A0E1B] hover:translate-y-[3px]"
-          >
-            {t('cta')}
-          </a>
-
-        </div>
       </div>
 
       {/* Gradient fade → Orchestras burgundy */}
@@ -183,29 +150,27 @@ export default function Hero() {
 // ── Sub-components ────────────────────────────────────────────────────────────
 
 type DateBandProps = {
-  datePrimary: string; dateSecondary: string;
-  venuePrimary: string; venueSecondary: string;
+  datePrimary: string;
+  dateSecondary: string;
   mobile?: boolean;
 };
 
-function DateBand({ datePrimary, dateSecondary, venuePrimary, venueSecondary, mobile }: DateBandProps) {
+function DateBand({ datePrimary, dateSecondary, mobile }: DateBandProps) {
   return (
     <div
-      className={['bg-ink text-warm-white px-5 py-[14px] shadow-stamp', mobile ? 'flex flex-col gap-2' : 'flex items-center justify-between flex-wrap gap-3'].join(' ')}
+      className={[
+        'bg-ink text-warm-white px-5 py-[14px] shadow-stamp',
+        mobile ? 'mx-auto flex max-w-[300px] flex-col items-center text-center gap-1' : 'mx-auto flex w-fit min-w-[420px] items-center justify-center text-center',
+      ].join(' ')}
       style={mobile ? undefined : {
-        width: 'calc(100% + clamp(32px, 4vw, 76px) * 2)',
-        marginLeft: 'calc(clamp(32px, 4vw, 76px) * -1)',
+        marginTop: '-2px',
       }}
     >
       <div>
-        <p className="font-en-display italic font-black text-gold-soft leading-none" style={{ fontSize: mobile ? '22px' : '32px' }}>
+        <p className="font-en-display italic font-black text-gold-soft leading-none" style={{ fontSize: mobile ? '22px' : '30px' }}>
           {datePrimary}
         </p>
         <p className="font-en-body font-bold text-[9px] tracking-[0.4em] uppercase text-gold-soft/85 mt-1">{dateSecondary}</p>
-      </div>
-      <div className={mobile ? '' : 'text-right'}>
-        <p className="font-kr-serif font-bold text-warm-white leading-none" style={{ fontSize: mobile ? '13px' : '16px' }}>{venuePrimary}</p>
-        <p className="font-en-body font-semibold text-[9px] tracking-[0.3em] uppercase text-warm-white/65 mt-1">{venueSecondary}</p>
       </div>
     </div>
   );

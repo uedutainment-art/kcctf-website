@@ -1,8 +1,10 @@
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import { TICKET_TIERS } from '@/data/festival';
 
 export default function Tickets() {
   const t = useTranslations('tickets');
+  const locale = useLocale();
+  const isKo = locale === 'ko';
   const showHotelPackages = process.env.NEXT_PUBLIC_SHOW_HOTEL_PACKAGES === 'true';
   const registerUrl = process.env.NEXT_PUBLIC_REGISTER_URL ?? '#tickets';
 
@@ -24,6 +26,8 @@ export default function Tickets() {
     holder: string;
     note: string;
   };
+  const earlybirdTier = TICKET_TIERS[0];
+  const earlybirdItem = items[0];
 
   return (
     <section id="tickets" className="bg-mustard-soft py-16">
@@ -48,101 +52,56 @@ export default function Tickets() {
           </p>
         </div>
 
-        {/* Ticket cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-10">
-          {TICKET_TIERS.map((tier, i) => {
-            const item = items[i];
-            return (
-              <div
-                key={tier.id}
-                className={[
-                  'relative rounded-lg p-8 flex flex-col',
-                  tier.featured
-                    ? 'bg-burgundy text-warm-white shadow-stamp'
-                    : 'bg-warm-white border-2 border-ink-soft/10',
-                ].join(' ')}
-              >
-                {tier.featured && (
-                  <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-gold text-ink font-en-body font-bold text-[10px] tracking-[0.2em] uppercase px-3 py-1 rounded-full">
-                    EARLYBIRD
+        {/* Ticket card */}
+        <div className="mx-auto mb-10 grid max-w-[980px] grid-cols-1 overflow-hidden rounded-lg bg-burgundy text-warm-white shadow-stamp md:grid-cols-[0.95fr_1.05fr]">
+          <div className="relative p-8 md:p-10">
+            <span className="mb-6 inline-flex bg-gold text-ink font-en-body font-bold text-[10px] tracking-[0.2em] uppercase px-3 py-1 rounded-full">
+              EARLYBIRD
+            </span>
+            <p className="font-en-body font-bold text-[11px] tracking-[0.3em] uppercase mb-3 text-gold-soft">
+              {earlybirdItem.name}
+            </p>
+            <p
+              className="font-en-display italic font-black leading-none mb-5 text-gold-soft"
+              style={{ fontSize: 'clamp(42px, 7vw, 72px)' }}
+            >
+              {earlybirdItem.priceLabel}
+            </p>
+            <p className="font-kr-sans text-[15px] leading-[1.65] text-warm-white/82">
+              {earlybirdItem.description}
+            </p>
+          </div>
+
+          <div className="flex flex-col border-t border-warm-white/15 p-8 md:border-l md:border-t-0 md:p-10">
+            <ul className="mb-7 grid flex-1 gap-3">
+              {earlybirdItem.includes.map((inc, j) => (
+                <li key={j} className="flex items-start gap-3">
+                  <span className="mt-[4px] shrink-0 text-[11px] text-gold-soft" aria-hidden>
+                    ★
                   </span>
-                )}
-
-                <p
-                  className={[
-                    'font-en-body font-bold text-[11px] tracking-[0.3em] uppercase mb-2',
-                    tier.featured ? 'text-gold-soft' : 'text-burgundy',
-                  ].join(' ')}
-                >
-                  {item.name}
-                </p>
-
-                <p
-                  className={[
-                    'font-en-display italic font-black leading-none mb-3',
-                    tier.featured ? 'text-gold-soft' : 'text-ink-soft',
-                  ].join(' ')}
-                  style={{ fontSize: 'clamp(28px, 4vw, 36px)' }}
-                >
-                  {item.priceLabel}
-                </p>
-
-                <p
-                  className={[
-                    'font-kr-sans text-[13px] leading-[1.5] mb-4',
-                    tier.featured ? 'text-warm-white/80' : 'text-charcoal/70',
-                  ].join(' ')}
-                >
-                  {item.description}
-                </p>
-
-                <ul className="flex flex-col gap-2 mb-5 flex-1">
-                  {item.includes.map((inc, j) => (
-                    <li key={j} className="flex items-start gap-2">
-                      <span
-                        className={[
-                          'mt-[3px] shrink-0 text-[10px]',
-                          tier.featured ? 'text-gold-soft' : 'text-burgundy',
-                        ].join(' ')}
-                        aria-hidden
-                      >
-                        ★
-                      </span>
-                      <span
-                        className={[
-                          'font-kr-sans text-[13px]',
-                          tier.featured ? 'text-warm-white/85' : 'text-charcoal/80',
-                        ].join(' ')}
-                      >
-                        {inc}
-                      </span>
-                    </li>
-                  ))}
-                </ul>
-
-                <p
-                  className={[
-                    'font-en-body text-[11px] mb-4',
-                    tier.featured ? 'text-warm-white/55' : 'text-charcoal/45',
-                  ].join(' ')}
-                >
-                  {item.note}
-                </p>
-
-                <a
-                  href={registerUrl}
-                  className={[
-                    'block text-center font-en-body font-bold text-[13px] tracking-[0.2em] uppercase py-3 rounded transition-all duration-150',
-                    tier.featured
-                      ? 'bg-warm-white text-burgundy shadow-[0_3px_0_rgba(253,250,245,0.4)] hover:shadow-[0_1px_0_rgba(253,250,245,0.4)] hover:translate-y-[2px]'
-                      : 'bg-burgundy text-warm-white shadow-[0_3px_0_#5A0E1B] hover:shadow-[0_1px_0_#5A0E1B] hover:translate-y-[2px]',
-                  ].join(' ')}
-                >
-                  {item.cta} →
-                </a>
-              </div>
-            );
-          })}
+                  <span className="font-kr-sans text-[15px] text-warm-white/88">
+                    {inc}
+                  </span>
+                </li>
+              ))}
+            </ul>
+            <p className="mb-5 font-en-body text-[12px] text-warm-white/58">
+              {earlybirdItem.note}
+            </p>
+            <a
+              href={registerUrl}
+              className="block rounded bg-warm-white py-4 text-center font-en-body text-[14px] font-bold uppercase tracking-[0.2em] text-burgundy shadow-[0_3px_0_rgba(253,250,245,0.4)] transition-all duration-150 hover:translate-y-[2px] hover:shadow-[0_1px_0_rgba(253,250,245,0.4)]"
+            >
+              {earlybirdItem.cta} →
+            </a>
+            <p className="mt-4 font-kr-sans text-[12px] leading-[1.6] text-warm-white/45">
+              {earlybirdTier.id === 'fullpack-early'
+                ? isKo
+                  ? '추가 예약 옵션은 추후 별도 안내됩니다.'
+                  : 'Additional registration options will be announced later.'
+                : null}
+            </p>
+          </div>
         </div>
 
         {/* Hotel packages — flag-gated */}

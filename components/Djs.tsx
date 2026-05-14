@@ -40,7 +40,7 @@ export default function Djs() {
 
         <div className="relative mb-12 min-h-[300px] overflow-hidden bg-ink ring-1 ring-gold/16">
           <Image
-            src="/images/2025년 이미지/1012__0459.jpg"
+            src="/images/2025/milonga-flow.jpg"
             alt="2025 춘천국제탱고페스티벌 밀롱가 분위기"
             fill
             className="object-cover"

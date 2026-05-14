@@ -332,9 +332,9 @@
   },
   "tickets": {
     "eyebrow": "TICKETS",
-    "title": "당신의 사흘을 고르세요",
-    "subtitleEn": "Choose your three days",
-    "lede": "얼리버드는 한정된 기간만 진행됩니다.",
+    "title": "얼리버드 풀팩",
+    "subtitleEn": "Earlybird Full Pack",
+    "lede": "지금은 사흘 전체 프로그램을 포함한 풀팩만 예약 가능합니다.",
     "items": [
       {
         "id": "fullpack-early",
@@ -346,7 +346,8 @@
         "includes": [
           "오프닝 오케스트라 콘서트",
           "여섯 번의 밀롱가 (M1–M6)",
-          "춘천 시티투어"
+          "춘천 시티투어",
+          "애프터 파티"
         ],
         "note": "한정 수량 · 입금 순 마감",
         "featured": true,

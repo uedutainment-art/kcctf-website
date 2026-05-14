@@ -40,21 +40,23 @@ export default function Orchestras() {
               className="relative overflow-hidden bg-night"
               style={{ height: 'clamp(280px, 40vw, 480px)' }}
             >
-              <Image
-                src={orq.image}
-                alt={orq.nameEn}
-                fill
-                className="object-cover saturate-90"
-                style={{ objectPosition: '50% 15%' }}
-                sizes="(max-width: 1280px) 100vw, 1280px"
-                priority={i === 0}
-              />
+              <div className="absolute inset-0 md:left-[36%]">
+                <Image
+                  src={orq.image}
+                  alt={orq.nameEn}
+                  fill
+                  className="object-cover saturate-90"
+                  style={{ objectPosition: i === 0 ? '58% 16%' : '55% 18%' }}
+                  sizes="(max-width: 768px) 100vw, 68vw"
+                  priority={i === 0}
+                />
+              </div>
 
               <div
                 className="absolute inset-0 pointer-events-none"
                 style={{
                   background:
-                    'linear-gradient(90deg, rgba(15,41,58,0.96) 0%, rgba(15,41,58,0.65) 38%, transparent 65%)',
+                    'linear-gradient(90deg, rgba(15,41,58,1) 0%, rgba(15,41,58,0.96) 34%, rgba(15,41,58,0.48) 56%, transparent 78%)',
                 }}
               />
 
@@ -64,8 +66,8 @@ export default function Orchestras() {
               />
 
               <div className="absolute inset-0 flex items-center">
-                <div className="px-6 sm:px-10 max-w-[440px]">
-                  <p className="font-en-condensed font-black text-gold leading-none tracking-[0.08em] mb-4" style={{ fontSize: 'clamp(38px, 6vw, 76px)' }}>
+                <div className="px-6 sm:px-10 max-w-[400px] md:max-w-[36%]">
+                  <p className="font-en-condensed font-black text-gold leading-[0.88] tracking-[0.08em] mb-4" style={{ fontSize: 'clamp(34px, 5vw, 62px)' }}>
                     LIVE ORCHESTRA
                   </p>
                   <p className="font-en-body font-bold text-[11px] tracking-[0.4em] uppercase text-gold/85 mb-5">

@@ -332,9 +332,9 @@
   },
   "tickets": {
     "eyebrow": "TICKETS",
-    "title": "Choose your three days.",
-    "subtitleEn": "당신의 사흘을 고르세요",
-    "lede": "Earlybird is available for a limited time only.",
+    "title": "Earlybird Full Pack",
+    "subtitleEn": "얼리버드 풀팩",
+    "lede": "For now, registration is open for the full three-day pass only.",
     "items": [
       {
         "id": "fullpack-early",
@@ -346,7 +346,8 @@
         "includes": [
           "Opening Orchestra Concert",
           "Six milongas (M1–M6)",
-          "Chuncheon City Tour"
+          "Chuncheon City Tour",
+          "After Party"
         ],
         "note": "Limited quantity · First come first served",
         "featured": true,
