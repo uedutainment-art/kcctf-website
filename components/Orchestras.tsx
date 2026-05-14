@@ -38,16 +38,16 @@ export default function Orchestras() {
             <article
               key={orq.id}
               className="relative overflow-hidden bg-night"
-              style={{ height: 'clamp(280px, 40vw, 480px)' }}
+              style={{ height: i === 0 ? 'clamp(430px, 45vw, 580px)' : 'clamp(520px, 50vw, 660px)' }}
             >
-              <div className="absolute inset-0 md:left-[36%]">
+              <div className="absolute inset-0 md:left-[38%]">
                 <Image
                   src={orq.image}
                   alt={orq.nameEn}
                   fill
                   className="object-cover saturate-90"
-                  style={{ objectPosition: i === 0 ? '58% 16%' : '55% 18%' }}
-                  sizes="(max-width: 768px) 100vw, 68vw"
+                  style={{ objectPosition: i === 0 ? '60% 18%' : '58% 18%' }}
+                  sizes="(max-width: 768px) 100vw, 66vw"
                   priority={i === 0}
                 />
               </div>
@@ -56,7 +56,7 @@ export default function Orchestras() {
                 className="absolute inset-0 pointer-events-none"
                 style={{
                   background:
-                    'linear-gradient(90deg, rgba(15,41,58,1) 0%, rgba(15,41,58,0.96) 34%, rgba(15,41,58,0.48) 56%, transparent 78%)',
+                    'linear-gradient(90deg, rgba(15,41,58,1) 0%, rgba(15,41,58,0.98) 36%, rgba(15,41,58,0.5) 58%, transparent 82%)',
                 }}
               />
 
@@ -66,16 +66,16 @@ export default function Orchestras() {
               />
 
               <div className="absolute inset-0 flex items-center">
-                <div className="px-6 sm:px-10 max-w-[400px] md:max-w-[36%]">
-                  <p className="font-en-condensed font-black text-gold leading-[0.88] tracking-[0.08em] mb-4" style={{ fontSize: 'clamp(34px, 5vw, 62px)' }}>
+                <div className="px-6 sm:px-10 max-w-[410px] md:max-w-[36%]">
+                  <p className="font-en-condensed font-black text-gold leading-[0.88] tracking-[0.08em] mb-4" style={{ fontSize: i === 0 ? 'clamp(32px, 4.7vw, 58px)' : 'clamp(30px, 4.4vw, 54px)' }}>
                     LIVE ORCHESTRA
                   </p>
-                  <p className="font-en-body font-bold text-[11px] tracking-[0.4em] uppercase text-gold/85 mb-5">
+                  <p className="font-en-body font-bold text-[11px] tracking-[0.4em] uppercase text-gold/85 mb-4">
                     {orq.roleEn}
                   </p>
                   <h3
                     className="font-en-display font-black text-warm-white leading-[0.95] mb-4"
-                    style={{ fontSize: 'clamp(34px, 5vw, 64px)' }}
+                    style={{ fontSize: i === 0 ? 'clamp(34px, 5vw, 64px)' : 'clamp(30px, 4.3vw, 54px)' }}
                   >
                     {locale === 'ko' ? item.nameEn : orq.nameEn}
                   </h3>
