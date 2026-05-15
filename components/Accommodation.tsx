@@ -214,7 +214,9 @@ return (
             </p>
             {pricePerNight && (
               <p className="font-kr-sans text-[12px] text-charcoal/50">
-                {isKo ? `1박 ₩${pricePerNight.toLocaleString()}` : `₩${pricePerNight.toLocaleString()} / night`}
+                {isKo
+                  ? `1박 ₩${pricePerNight.toLocaleString()} · 숙박만`
+                  : `₩${pricePerNight.toLocaleString()} / night · room only`}
               </p>
             )}
           </div>
@@ -294,6 +296,9 @@ return (
                   <p className={`font-en-display italic font-black text-[26px] leading-none ${pkg.default ? 'text-gold-soft' : 'text-ink-soft'}`}>
                     ₩{pkg.priceTotal.toLocaleString()}
                   </p>
+                  <p className={`font-kr-sans text-[10px] mt-1 ${pkg.default ? 'text-warm-white/50' : 'text-charcoal/40'}`}>
+                    {isKo ? '숙박만 · 참가비 별도' : 'room only · pass separate'}
+                  </p>
                 </div>
               ))}
             </div>
@@ -319,8 +324,17 @@ return (
           </div>
         )}
 
+        {/* Pricing note */}
+        {avail?.enabled && (
+          <p className="font-kr-sans text-[12px] text-charcoal/45 text-center mt-4 mb-2">
+            {isKo
+              ? '※ 위 숙박 금액은 객실 비용만입니다. 참가비(풀패스 ₩190,000)는 별도이며, 신청 폼에서 합산 금액이 표시됩니다.'
+              : '※ Accommodation prices are room costs only. Festival pass (₩190,000) is separate — the total is shown at checkout.'}
+          </p>
+        )}
+
         {/* Amenities note */}
-        <p className="font-kr-sans text-[12px] text-charcoal/40 text-center mt-6">
+        <p className="font-kr-sans text-[12px] text-charcoal/40 text-center mt-3">
           {isKo
             ? '전 객실 공통: 인덕션·전기포트·세탁기·냉장고(유료) · 샤워용품·드라이어·타월 제공'
             : 'All rooms: induction cooker, kettle, washer, fridge (fee) · toiletries, hairdryer, towels'}
