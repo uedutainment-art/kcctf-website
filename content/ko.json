@@ -225,7 +225,7 @@
     "eyebrow": "MOOD MAKERS",
     "title": "여섯 DJ.",
     "subtitleEn": "SIX DJs",
-    "lede": "한국·중국·홍콩에서 모셨습니다.\n3일의 밀롱가를 함께합니다.",
+    "lede": "한국·중국·홍콩에서 초대했습니다.\n3일의 밀롱가를 함께합니다.",
     "items": [
       {
         "id": "hagoon",
@@ -307,7 +307,7 @@
     "eyebrow": "VENUE",
     "title": "봄내체육관",
     "subtitleEn": "Chuncheon Bomnae Complex",
-    "tagline": "넓고 층고 높은 댄스 플로어.\n콘서트급 음향 시스템.\n라이브를 위한 무대.",
+    "tagline": "압도적 규모의 댄스 플로어.\n콘서트급 음향 시스템.\n라이브를 위한 무대.",
     "address": "강원특별자치도 춘천시",
     "features": [
       {
@@ -320,7 +320,7 @@
       },
       {
         "icon": "🏛",
-        "text": "넓고 층고 높은 댄스 플로어"
+        "text": "압도적 규모의 댄스 플로어"
       },
       {
         "icon": "🅿️",

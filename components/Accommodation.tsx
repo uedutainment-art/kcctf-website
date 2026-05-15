@@ -3,7 +3,6 @@
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { useLocale } from 'next-intl';
-import RegisterButton from './RegisterButton';
 
 // ── EventLink API types ────────────────────────────────────────────────────────
 
@@ -110,7 +109,6 @@ function AvailBadge({ room }: { room: RoomType }) {
 export default function Accommodation() {
   const locale = useLocale();
   const isKo = locale === 'ko';
-  const registerUrl = process.env.NEXT_PUBLIC_REGISTER_URL ?? '#tickets';
   const hotelPdfUrl = process.env.NEXT_PUBLIC_HOTEL_PDF_URL ?? '';
 
   const [avail, setAvail] = useState<AvailabilityData | null>(null);
@@ -184,25 +182,16 @@ return (
               </dl>
             </div>
 
-            <div className="flex flex-col gap-3">
-              <RegisterButton
-                href={registerUrl}
-                className="block w-full bg-burgundy text-warm-white font-en-body font-bold text-[13px] tracking-[0.2em] uppercase text-center py-[13px] rounded-md shadow-[0_3px_0_#5A0E1B] hover:shadow-[0_1px_0_#5A0E1B] hover:translate-y-[2px] transition-all duration-150"
+            {hotelPdfUrl && (
+              <a
+                href={hotelPdfUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block w-full border-2 border-ink-soft/20 text-ink-soft font-kr-sans text-[13px] text-center py-[11px] rounded-md hover:border-ink-soft/40 hover:text-ink transition-colors"
               >
-                {isKo ? '숙박 포함 예약하기 →' : 'Book with Accommodation →'}
-              </RegisterButton>
-
-              {hotelPdfUrl && (
-                <a
-                  href={hotelPdfUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="block w-full border-2 border-ink-soft/20 text-ink-soft font-kr-sans text-[13px] text-center py-[11px] rounded-md hover:border-ink-soft/40 hover:text-ink transition-colors"
-                >
-                  호텔 안내문 PDF 다운로드 ↓
-                </a>
-              )}
-            </div>
+                호텔 안내문 PDF 다운로드 ↓
+              </a>
+            )}
           </div>
         </div>
 
@@ -302,14 +291,9 @@ return (
                 </div>
               ))}
             </div>
-            <div className="text-center">
-              <RegisterButton
-                href={registerUrl}
-                className="inline-block bg-burgundy text-warm-white font-en-body font-bold text-[13px] tracking-[0.2em] uppercase px-10 py-3 rounded-md shadow-[0_3px_0_#5A0E1B] hover:shadow-[0_1px_0_#5A0E1B] hover:translate-y-[2px] transition-all duration-150"
-              >
-                {isKo ? '숙박 패키지 예약하기 →' : 'Book Accommodation Package →'}
-              </RegisterButton>
-            </div>
+            <p className="font-kr-sans text-[12px] text-charcoal/45 text-center mt-2">
+              {isKo ? '예약은 티켓 신청 시 함께 진행됩니다.' : 'Accommodation is booked together with your festival pass.'}
+            </p>
           </div>
         )}
 

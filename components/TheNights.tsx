@@ -5,20 +5,20 @@ const nightImages = [
   {
     src: '/images/2025/night-performance.jpg',
     kicker: 'LIVE SOUND',
-    labelKo: '라이브가 무대를 밀어 올리고',
-    labelEn: 'Live music lifts the stage',
+    labelKo: '살아있는 음악',
+    labelEn: 'Music alive on stage.',
   },
   {
     src: '/images/2025/night-floor.jpg',
     kicker: 'FULL FLOOR',
-    labelKo: '큰 플로어가 사람으로 차고',
-    labelEn: 'The floor fills with dancers',
+    labelKo: '가득 찬 플로어',
+    labelEn: 'A floor full of people.',
   },
   {
     src: '/images/2025/night-close.jpg',
     kicker: 'LATE NIGHT',
-    labelKo: '밤은 더 가까워집니다',
-    labelEn: 'The night comes closer',
+    labelKo: '깊어지는 밤',
+    labelEn: 'The night growing closer.',
   },
 ];
 
@@ -32,18 +32,18 @@ export default function TheNights() {
         <div className="grid gap-10 lg:grid-cols-[0.68fr_1.32fr] lg:items-center">
           <div className="max-w-xl">
             <p className="font-en-body font-black text-[11px] tracking-[0.4em] uppercase text-gold mb-4">
-              THE NIGHTS
+              {isKo ? 'THE NIGHTS · 작년의 장면들' : 'THE NIGHTS · From 2025'}
             </p>
             <h2
               className="font-kr-serif font-black leading-[1.02] tracking-[-0.04em] text-warm-white"
               style={{ fontSize: 'clamp(34px, 5vw, 66px)' }}
             >
-              {isKo ? '라이브가 울리고, 밤이 길어지는 사흘' : 'Three nights where live music carries the floor'}
+              {isKo ? '밤이 깊어지는 3일.' : 'Three nights, going deeper.'}
             </h2>
             <p className="mt-5 font-kr-sans text-[16px] leading-[1.75] text-warm-white/72">
               {isKo
-                ? '2025년의 장면들이 말해줍니다. 무대의 에너지, 꽉 찬 플로어, 그리고 마지막 탕다까지 이어지는 밀도.'
-                : 'A glimpse from 2025: stage energy, a full floor, and the density that carries through to the last tanda.'}
+                ? '2025년 페스티벌이 보여준 것들 — 무대의 에너지, 가득 찬 플로어, 마지막 탕다까지.'
+                : 'What 2025 showed — the energy of the stage, a full floor, all the way to the last tanda.'}
             </p>
           </div>
 
