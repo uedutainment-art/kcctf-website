@@ -26,7 +26,10 @@ export default function Tickets() {
     account: string;
     holder: string;
     note: string;
+    swift?: string;
+    intlNote?: string;
   };
+  const procedure = t('procedure');
   const earlybirdTier = TICKET_TIERS[0];
   const earlybirdItem = items[0];
 
@@ -114,6 +117,11 @@ export default function Tickets() {
           </div>
         )}
 
+        {/* Procedure */}
+        <p className="font-kr-sans text-[13px] text-charcoal/60 text-center mb-6">
+          {procedure}
+        </p>
+
         {/* Payment info */}
         <div className="bg-warm-white rounded-lg border-2 border-ink-soft/10 p-6 max-w-md mx-auto">
           <p className="font-en-body font-bold text-[11px] tracking-[0.3em] uppercase text-burgundy mb-4">
@@ -127,6 +135,18 @@ export default function Tickets() {
           <p className="font-kr-sans text-[12px] text-charcoal/45 mt-3">
             {paymentInfo.note}
           </p>
+          {paymentInfo.swift && (
+            <div className="mt-4 pt-4 border-t border-ink-soft/10">
+              <p className="font-en-body text-[11px] text-charcoal/45 mb-1">
+                SWIFT/BIC: <span className="font-bold tracking-wider">{paymentInfo.swift}</span>
+              </p>
+              {paymentInfo.intlNote && (
+                <p className="font-kr-sans text-[12px] text-charcoal/45">
+                  {paymentInfo.intlNote}
+                </p>
+              )}
+            </div>
+          )}
         </div>
 
       </div>

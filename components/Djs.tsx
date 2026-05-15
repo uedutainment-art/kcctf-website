@@ -68,12 +68,14 @@ export default function Djs() {
               </div>
 
               {/* Label */}
-              <p className="font-kr-sans font-bold text-[18px] text-warm-white leading-[1.2]">
-                {dj.nameKo}
+              <p className="font-en-body font-bold text-[18px] text-warm-white leading-[1.2]">
+                {locale === 'ko' ? dj.nameKo : dj.nameEn}
               </p>
-              <p className="font-en-body text-[14px] text-gold mt-1">
-                {dj.nameEn}
-              </p>
+              {locale === 'ko' && (
+                <p className="font-en-body text-[14px] text-gold mt-1">
+                  {dj.nameEn}
+                </p>
+              )}
               <p className="font-en-body text-[12px] text-warm-white/48 mt-1">
                 {locale === 'ko' ? `${dj.city} · ${dj.country}` : `${dj.cityEn} · ${dj.country}`}
               </p>

@@ -7,8 +7,8 @@ export const metadata: Metadata = {
   metadataBase: new URL(
     process.env.NEXT_PUBLIC_SITE_URL ?? 'https://kcctf.org'
   ),
-  title: '춘천국제땅고페스티벌 2026 — Chuncheon International Tango Festival',
-  description: '두 오케스트라, 사흘 밤. 봄내체육관에서. 2026.10.03–10.05.',
+  title: '춘천국제땅고페스티벌 2026 — KCCTF',
+  description: '부에노스 아이레스에서 온 두 오케스트라. Misteriosa Buenos Aires와 Tango Bardo. 2026.10.03–10.05 춘천 봄내체육관.',
   openGraph: {
     images: ['/og-image.jpg'],
     locale: 'ko_KR',

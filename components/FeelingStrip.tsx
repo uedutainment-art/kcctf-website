@@ -1,17 +1,17 @@
 import { useLocale } from 'next-intl';
 
 const koItems = [
-  ['Two Orchestras', '두 오케스트라'],
-  ['Three Nights', '3일 밤'],
-  ['One Stage', '한 무대'],
-  ['Autumn in Chuncheon', '춘천의 가을'],
+  ['TWO ORCHESTRAS', '두 오케스트라'],
+  ['THREE NIGHTS', '3일 밤'],
+  ['LIVE MILONGA', '라이브 밀롱가'],
+  ['AUTUMN IN CHUNCHEON', '춘천의 가을'],
 ];
 
 const enItems = [
-  ['Two Orchestras', 'From Buenos Aires'],
-  ['Three Nights', 'Six milongas'],
-  ['One Stage', 'Bomnae Complex'],
-  ['Autumn in Chuncheon', 'A lakeside city'],
+  ['TWO ORCHESTRAS', 'From Buenos Aires'],
+  ['THREE NIGHTS', 'Six milongas'],
+  ['LIVE MILONGA', 'Bomnae Complex'],
+  ['AUTUMN IN CHUNCHEON', 'A lakeside city'],
 ];
 
 export default function FeelingStrip() {

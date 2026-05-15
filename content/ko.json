@@ -93,6 +93,14 @@
     "info": "콘서트·밀롱가·숙소",
     "venue": "찾아오는 길"
   },
+  "feelingStrip": {
+    "items": [
+      { "label": "TWO ORCHESTRAS", "value": "두 오케스트라" },
+      { "label": "THREE NIGHTS", "value": "3일 밤" },
+      { "label": "LIVE MILONGA", "value": "라이브 밀롱가" },
+      { "label": "AUTUMN IN CHUNCHEON", "value": "춘천의 가을" }
+    ]
+  },
   "orchestras": {
     "eyebrow": "★ TWO LIVE ORCHESTRAS ★ · From Buenos Aires",
     "subtitleEn": "From Buenos Aires",
@@ -117,6 +125,16 @@
         "description": "강렬한 무대 존재감으로 알려진 부에노스 아이레스 기반 앙상블.",
         "liveBadge": "LIVE"
       }
+    ]
+  },
+  "theNights": {
+    "eyebrow": "THE NIGHTS · 작년의 장면들",
+    "title": "밤이 깊어지는 3일.",
+    "lede": "2025년 페스티벌이 보여준 것들 — 무대의 에너지, 가득 찬 플로어, 마지막 탕다까지.",
+    "cards": [
+      { "kicker": "LIVE SOUND", "caption": "살아있는 음악" },
+      { "kicker": "FULL FLOOR", "caption": "가득 찬 플로어" },
+      { "kicker": "LATE NIGHT", "caption": "깊어지는 밤" }
     ]
   },
   "schedule": {
@@ -182,7 +200,7 @@
         "subtitle": "Grand Milonga",
         "djId": "wangwei",
         "djName": "DJ 왕웨이",
-        "mood": "가장 화려한 밤. 전체 일정의 정점.",
+        "mood": "가장 화려한 밤.",
         "featured": true
       },
       {
@@ -214,7 +232,7 @@
         "subtitle": "After Party & Milonga",
         "djId": "natalie",
         "djName": "DJ 나탈리",
-        "mood": "마지막 한 탕다로 닫는 밤.",
+        "mood": "마지막 한 탕다.",
         "featured": true
       }
     ],
@@ -312,7 +330,7 @@
     "features": [
       {
         "icon": "🚄",
-        "text": "서울에서 ITX 약 60분"
+        "text": "서울에서 ITX 60분"
       },
       {
         "icon": "🎵",
@@ -387,35 +405,24 @@
       }
     ],
     "hotelPackageNote": "숙박 패키지(풀팩+2박, 풀팩+3박)는 곧 공개됩니다.",
+    "procedure": "① 신청 → ② 7일 내 입금 → ③ 입금 확인 → ④ QR 코드 이메일 발급",
     "paymentInfo": {
       "title": "입금 안내",
       "bank": "신한은행",
       "account": "100-038-582544",
       "holder": "사단법인 춘천국제탱고페스티벌",
-      "note": "예약 후 7일 이내 입금 확인 시 확정"
+      "note": "예약 후 7일 이내 입금 확인 시 확정",
+      "swift": "SHBKKRSE",
+      "intlNote": "해외 참가자 — 알리페이/위챗: info@kcctf.org"
     },
     "registerExternalNote": "예약은 별도 신청 페이지로 안내됩니다."
   },
   "accommodation": {
-    "eyebrow": "STAY",
-    "title": "더베네치아스위트",
-    "subtitleEn": "The Venezia Suite · Chuncheon",
-    "tagline": "페스티벌과 같은 호흡으로.",
-    "details": [
-      {
-        "label": "주소",
-        "value": "강원특별자치도 춘천시 효자로 136"
-      },
-      {
-        "label": "객실",
-        "value": "더블 · 트윈 · 온돌"
-      },
-      {
-        "label": "연락처",
-        "value": "033-255-9600"
-      }
-    ],
-    "packageNote": "풀팩 + 2박 / 풀팩 + 3박 패키지로 예약 가능 (가격 곧 공개)",
+    "eyebrow": "ACCOMMODATION · 공식 호텔",
+    "title": "벨라스테이",
+    "subtitleEn": "BELLA STAY",
+    "tagline": "페스티벌 공식 호텔.\n봄내체육관까지 셔틀버스 운행.",
+    "packageNote": "풀팩 + 2박 / 풀팩 + 3박 (가격 곧 공개)",
     "moreOptionsLink": "다른 숙소 옵션 보기"
   },
   "about": {
@@ -485,7 +492,7 @@
       },
       {
         "q": "숙소는 어떻게 잡나요?",
-        "a": "공식 호텔(더베네치아스위트)을 풀팩+2박/+3박 패키지로 예약하시면 가장 편리합니다. 다른 숙소도 자유롭게 예약 가능합니다."
+        "a": "공식 호텔(벨라스테이)을 풀팩+2박/+3박 패키지로 예약하시면 가장 편리합니다. 다른 숙소도 자유롭게 예약 가능합니다."
       },
       {
         "q": "워크샵도 운영하나요?",
@@ -513,8 +520,8 @@
     "emailHarvestNotice": "본 웹사이트에 게시된 이메일 주소가 전자우편 수집 프로그램 기타 기술적 장치를 이용하여 무단으로 수집되는 것을 거부하며, 이를 위반시 정보통신망법에 의해 형사 처벌됨을 유념하시기 바랍니다."
   },
   "meta": {
-    "title": "춘천국제땅고페스티벌 2026 — Chuncheon International Tango Festival",
-    "description": "두 오케스트라, 사흘 밤. 봄내체육관에서. 2026.10.03–10.05. 부에노스 아이레스에서 직접 오는 Tango Bardo와 Misteriosa.",
+    "title": "춘천국제땅고페스티벌 2026 — KCCTF",
+    "description": "부에노스 아이레스에서 온 두 오케스트라. Misteriosa Buenos Aires와 Tango Bardo. 2026.10.03–10.05 춘천 봄내체육관.",
     "ogTitle": "춘천국제땅고페스티벌 2026",
     "ogDescription": "두 오케스트라, 사흘 밤. 봄내체육관에서.",
     "keywords": "탱고, 페스티벌, 춘천, 부에노스아이레스, Tango Bardo, Misteriosa, 밀롱가, 라이브 오케스트라"

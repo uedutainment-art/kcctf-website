@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import { useTranslations } from 'next-intl';
+import { useTranslations, useLocale } from 'next-intl';
 import { Link } from '@/i18n/navigation';
 
 const NAV_LINKS = [
@@ -19,6 +19,8 @@ const LEGAL_LINKS = [
 export default function Footer() {
   const t  = useTranslations('footer');
   const tn = useTranslations('nav');
+  const locale = useLocale();
+  const isKo = locale === 'ko';
   const contactEmail = process.env.NEXT_PUBLIC_CONTACT_EMAIL ?? 'info@kcctf.org';
 
   return (
@@ -113,11 +115,17 @@ export default function Footer() {
               {t('sponsorsTitle')}
             </p>
             <div className="flex flex-col gap-1">
-              <p className="font-kr-sans text-[11px] text-warm-white/35 uppercase tracking-[0.12em]">주최·주관</p>
-              <p className="font-kr-sans text-[14px] text-warm-white/65 leading-[1.6]">
-                춘천문화재단<br />(사)춘천국제탱고페스티벌
+              <p className="font-kr-sans text-[11px] text-warm-white/35 uppercase tracking-[0.12em]">
+                {isKo ? '주최·주관' : 'Hosted by'}
               </p>
-              <p className="font-kr-sans text-[11px] text-warm-white/35 uppercase tracking-[0.12em] mt-3">후원</p>
+              <p className="font-kr-sans text-[14px] text-warm-white/65 leading-[1.6]">
+                {isKo
+                  ? <><span>춘천문화재단</span><br /><span>(사)춘천국제탱고페스티벌</span></>
+                  : <><span>Chuncheon Cultural Foundation</span><br /><span>Chuncheon International Tango Festival Foundation</span></>}
+              </p>
+              <p className="font-kr-sans text-[11px] text-warm-white/35 uppercase tracking-[0.12em] mt-3">
+                {isKo ? '후원' : 'Supported by'}
+              </p>
               {/* 춘천시 로고 */}
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
@@ -127,7 +135,7 @@ export default function Footer() {
                 className="mt-1 mb-2"
               />
               <p className="font-kr-sans text-[14px] text-warm-white/65 leading-[1.6]">
-                주한아르헨티나 대사관
+                {isKo ? '주한아르헨티나 대사관' : 'Embassy of Argentina in Korea'}
               </p>
             </div>
           </div>

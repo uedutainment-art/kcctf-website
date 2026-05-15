@@ -134,7 +134,7 @@ return (
         {/* Header */}
         <div className="text-center mb-12">
           <p className="font-en-body font-bold text-[11px] tracking-[0.4em] uppercase text-gold mb-3">
-            STAY
+            {isKo ? 'ACCOMMODATION · 공식 호텔' : 'ACCOMMODATION · Official Hotel'}
           </p>
           <h2
             className="font-kr-serif font-black text-ink-soft leading-[1.0] tracking-[-0.04em] mb-2"
@@ -143,10 +143,10 @@ return (
             {isKo ? '공식 지정 호텔' : 'Official Hotel'}
           </h2>
           <p className="font-en-display italic text-[20px] text-gold mb-1">
-            더베네치아스위트
+            벨라스테이
           </p>
           <p className="font-en-body text-[13px] text-charcoal/55 tracking-[0.12em] uppercase">
-            The Venezia Suite · Chuncheon
+            Bella Stay · Chuncheon
           </p>
         </div>
 
@@ -170,16 +170,11 @@ return (
               <p className="font-en-body font-bold text-[10px] tracking-[0.3em] uppercase text-gold mb-4">
                 HOTEL INFO
               </p>
-              <dl className="grid grid-cols-[auto_1fr] gap-x-4 gap-y-3 font-kr-sans text-[14px]">
-                <dt className="text-charcoal/50 whitespace-nowrap">주소</dt>
-                <dd className="text-ink-soft">강원특별자치도 춘천시 효자로 136</dd>
-                <dt className="text-charcoal/50">연락처</dt>
-                <dd className="text-ink-soft">033-255-9600</dd>
-                <dt className="text-charcoal/50">시설</dt>
-                <dd className="text-ink-soft">1F 로비 라운지 · 14F 테라스</dd>
-                <dt className="text-charcoal/50">주차</dt>
-                <dd className="text-ink-soft">무료 (메가시티 주차장)</dd>
-              </dl>
+              <p className="font-kr-sans text-[15px] text-ink-soft leading-[1.75] whitespace-pre-line">
+                {isKo
+                  ? '페스티벌 공식 호텔.\n봄내체육관까지 셔틀버스 운행.'
+                  : 'Official festival hotel.\nShuttle bus to Bomnae Complex.'}
+              </p>
             </div>
 
             {hotelPdfUrl && (

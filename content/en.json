@@ -93,6 +93,14 @@
     "info": "Tickets & Info",
     "venue": "Getting Here"
   },
+  "feelingStrip": {
+    "items": [
+      { "label": "TWO ORCHESTRAS", "value": "From Buenos Aires" },
+      { "label": "THREE NIGHTS", "value": "Six milongas" },
+      { "label": "LIVE MILONGA", "value": "Bomnae Complex" },
+      { "label": "AUTUMN IN CHUNCHEON", "value": "A lakeside city" }
+    ]
+  },
   "orchestras": {
     "eyebrow": "★ TWO LIVE ORCHESTRAS ★ · From Buenos Aires",
     "subtitleEn": "From Buenos Aires",
@@ -117,6 +125,16 @@
         "description": "A Buenos Aires-based ensemble known for powerful, atmospheric stage performances.",
         "liveBadge": "LIVE"
       }
+    ]
+  },
+  "theNights": {
+    "eyebrow": "THE NIGHTS · From 2025",
+    "title": "Three nights, going deeper.",
+    "lede": "What 2025 showed — the energy of the stage, a full floor, all the way to the last tanda.",
+    "cards": [
+      { "kicker": "LIVE SOUND", "caption": "Music alive on stage." },
+      { "kicker": "FULL FLOOR", "caption": "A floor full of people." },
+      { "kicker": "LATE NIGHT", "caption": "The night growing closer." }
     ]
   },
   "schedule": {
@@ -182,7 +200,7 @@
         "subtitle": "그란 밀롱가",
         "djId": "wangwei",
         "djName": "DJ Wang Wei",
-        "mood": "The most luminous night. The peak.",
+        "mood": "The most luminous night.",
         "featured": true
       },
       {
@@ -214,7 +232,7 @@
         "subtitle": "애프터 파티 & 밀롱가",
         "djId": "natalie",
         "djName": "DJ Nathalie",
-        "mood": "One last tanda to close the festival.",
+        "mood": "One last tanda.",
         "featured": true
       }
     ],
@@ -387,35 +405,24 @@
       }
     ],
     "hotelPackageNote": "Hotel packages (Full Pack + 2 nights / + 3 nights) coming soon.",
+    "procedure": "① Apply → ② Pay within 7 days → ③ Confirmation → ④ QR code sent by email",
     "paymentInfo": {
       "title": "Payment",
       "bank": "Shinhan Bank",
       "account": "100-038-582544",
       "holder": "Chuncheon International Tango Festival Foundation",
-      "note": "Reservation confirmed upon payment within 7 days"
+      "note": "Reservation confirmed upon payment within 7 days",
+      "swift": "SHBKKRSE",
+      "intlNote": "Chinese participants — Alipay/WeChat: info@kcctf.org"
     },
     "registerExternalNote": "Registration is handled on a separate page."
   },
   "accommodation": {
-    "eyebrow": "STAY",
-    "title": "The Venezia Suite",
-    "subtitleEn": "더베네치아스위트 · Chuncheon",
-    "tagline": "Sleep where the festival sleeps.",
-    "details": [
-      {
-        "label": "Address",
-        "value": "136 Hyoja-ro, Chuncheon"
-      },
-      {
-        "label": "Rooms",
-        "value": "Double · Twin · Ondol"
-      },
-      {
-        "label": "Contact",
-        "value": "033-255-9600"
-      }
-    ],
-    "packageNote": "Available as Full Pack + 2 nights / + 3 nights packages (prices coming soon)",
+    "eyebrow": "ACCOMMODATION · Official Hotel",
+    "title": "Bella Stay",
+    "subtitleEn": "BELLA STAY",
+    "tagline": "Official festival hotel.\nShuttle bus to Bomnae Complex.",
+    "packageNote": "Full Pack + 2 nights / Full Pack + 3 nights (price coming soon)",
     "moreOptionsLink": "See other lodging options"
   },
   "about": {
@@ -485,7 +492,7 @@
       },
       {
         "q": "How do I book accommodation?",
-        "a": "The most convenient option is the official hotel (The Venezia Suite) booked through our Full Pack + 2/3 nights packages. You may also book other accommodations independently."
+        "a": "The most convenient option is the official hotel (Bella Stay) booked through our Full Pack + 2/3 nights packages. You may also book other accommodations independently."
       },
       {
         "q": "Are there workshops?",
@@ -514,7 +521,7 @@
   },
   "meta": {
     "title": "Chuncheon International Tango Festival 2026 — KCCTF",
-    "description": "Two orchestras. Three nights. One stadium. Tango Bardo and Misteriosa Buenos Aires, live in Chuncheon, Korea. Oct 3–5, 2026.",
+    "description": "Two orchestras from Buenos Aires. Misteriosa Buenos Aires and Tango Bardo, live in Chuncheon. Oct 3–5, 2026.",
     "ogTitle": "Chuncheon International Tango Festival 2026",
     "ogDescription": "Two orchestras. Three nights. One stadium.",
     "keywords": "tango, festival, Korea, Chuncheon, Buenos Aires, Tango Bardo, Misteriosa, milonga, live orchestra"
