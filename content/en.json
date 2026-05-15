@@ -96,14 +96,14 @@
   "orchestras": {
     "eyebrow": "★ TWO LIVE ORCHESTRAS ★",
     "subtitleEn": "From Buenos Aires",
-    "title": "Two orchestras from Buenos Aires.",
-    "lede": "Misteriosa Buenos Aires and Tango Bardo perform live in Chuncheon.",
+    "title": "Two orchestras. One stage.",
+    "lede": "Tango Bardo — a leading orquesta típica from Buenos Aires.\nMisteriosa Buenos Aires — a Buenos Aires tango ensemble.\nTwo live stages, first time in Korea.",
     "items": [
       {
         "id": "tango-bardo",
         "name": "Tango Bardo",
         "nameEn": "Tango Bardo",
-        "role": "Orquesta Típica",
+        "role": "ORQUESTA TÍPICA · BUENOS AIRES",
         "origin": "Buenos Aires",
         "description": "A leading Buenos Aires tango orchestra, blending traditional roots with modern expression.",
         "liveBadge": "LIVE"
@@ -111,8 +111,8 @@
       {
         "id": "misteriosa-buenos-aires",
         "name": "Misteriosa Buenos Aires",
-        "nameEn": "Orquesta Tipica Misteriosa Buenos Aires",
-        "role": "Tango Ensemble",
+        "nameEn": "Misteriosa Buenos Aires",
+        "role": "ENSEMBLE · BUENOS AIRES",
         "origin": "Buenos Aires",
         "description": "A Buenos Aires-based ensemble known for powerful, atmospheric stage performances.",
         "liveBadge": "LIVE"
@@ -121,8 +121,8 @@
   },
   "schedule": {
     "eyebrow": "PROGRAM",
-    "title": "Three-day program.",
-    "lede": "An opening orchestra concert, six milongas across three days, and a city tour to close.",
+    "title": "Three days, full program.",
+    "lede": "From the opening concert to the milongas, to the city tour.",
     "tabs": {
       "day1": "10/3 SAT — Day 1",
       "day2": "10/4 SUN — Day 2",
@@ -149,7 +149,7 @@
         "subtitle": "환영 밀롱가",
         "djId": "becca",
         "djName": "DJ Becca",
-        "mood": "From sunlight to dusk — the first embrace."
+        "mood": "From sunlight to dusk — the first abrazo."
       },
       {
         "day": "10/3",
@@ -160,7 +160,7 @@
         "subtitle": "첫째 밤 밀롱가",
         "djId": "carlos",
         "djName": "DJ Carlos",
-        "mood": "The longest, deepest dive of the three days."
+        "mood": "The deepest dive of the three nights."
       },
       {
         "day": "10/4",
@@ -182,7 +182,7 @@
         "subtitle": "그란 밀롱가",
         "djId": "wangwei",
         "djName": "DJ Wang Wei",
-        "mood": "The peak of the festival. The most luminous night.",
+        "mood": "The most luminous night. The peak.",
         "featured": true
       },
       {
@@ -192,7 +192,7 @@
         "type": "tour",
         "title": "Chuncheon City Tour",
         "subtitle": "춘천 시티투어",
-        "mood": "A walk through the lakeside city's autumn together."
+        "mood": "Walking through the lakeside city's autumn."
       },
       {
         "day": "10/5",
@@ -214,7 +214,7 @@
         "subtitle": "애프터 파티 & 밀롱가",
         "djId": "natalie",
         "djName": "DJ Nathalie",
-        "mood": "One last tanda to close three days.",
+        "mood": "One last tanda to close the festival.",
         "featured": true
       }
     ],
@@ -224,8 +224,8 @@
   "djs": {
     "eyebrow": "MOOD MAKERS",
     "title": "Six DJs.",
-    "subtitleEn": "여섯 명의 디제이",
-    "lede": "The flow of the milonga begins at the DJ's fingertips. Six curators invited from Korea, China, and Hong Kong.",
+    "subtitleEn": "여섯 DJ",
+    "lede": "Invited from Korea, China, and Hong Kong.\nThey shape three nights of milonga.",
     "items": [
       {
         "id": "hagoon",
@@ -273,9 +273,9 @@
   },
   "dancers": {
     "eyebrow": "PERFORMERS",
-    "title": "Dance Performances",
+    "title": "Four teams on stage.",
     "subtitleEn": "댄서팀",
-    "lede": "Four teams representing the Korean tango scene.",
+    "lede": "Three teams representing Korean tango, plus one international guest team.",
     "items": [
       {
         "id": "london-sol",
@@ -298,7 +298,7 @@
       {
         "id": "tba",
         "name": "Coming Soon",
-        "origin": "TBA",
+        "origin": "International",
         "isTBA": true
       }
     ]
@@ -307,7 +307,7 @@
     "eyebrow": "VENUE",
     "title": "Bomnae Complex",
     "subtitleEn": "춘천 봄내체육관",
-    "tagline": "A large space at the city's heart.\nProfessional sound. Overwhelming scale.",
+    "tagline": "A wide dance floor with high ceilings.\nConcert-grade sound system.\nA stage built for live music.",
     "address": "Chuncheon, Gangwon, South Korea",
     "features": [
       {
@@ -316,11 +316,11 @@
       },
       {
         "icon": "🎵",
-        "text": "Professional sound system"
+        "text": "Concert-grade sound system"
       },
       {
         "icon": "🏛",
-        "text": "Large dance floor in the city center"
+        "text": "Wide dance floor with high ceilings"
       },
       {
         "icon": "🅿️",
@@ -332,9 +332,9 @@
   },
   "tickets": {
     "eyebrow": "TICKETS",
-    "title": "Earlybird Full Pack",
+    "title": "Three-day Pass · Day Pass",
     "subtitleEn": "얼리버드 풀팩",
-    "lede": "For now, registration is open for the full three-day pass only.",
+    "lede": "Earlybird is limited.",
     "items": [
       {
         "id": "fullpack-early",
@@ -342,14 +342,14 @@
         "nameEn": "얼리버드 풀팩",
         "price": 190000,
         "priceLabel": "₩190,000 (~USD 140)",
-        "description": "All three days, every program. The smartest choice.",
+        "description": "All three days. Every program.",
         "includes": [
-          "Opening Orchestra Concert",
-          "Six milongas (M1–M6)",
-          "Chuncheon City Tour",
+          "Opening Concert",
+          "6 Milongas",
+          "City Tour",
           "After Party"
         ],
-        "note": "Limited quantity · First come first served",
+        "note": "Limited · First come first served",
         "featured": true,
         "cta": "Register"
       },
@@ -359,13 +359,14 @@
         "nameEn": "현장 풀팩",
         "price": 240000,
         "priceLabel": "₩240,000 (~USD 175)",
-        "description": "Standard price after earlybird closes.",
+        "description": "Standard price after earlybird.",
         "includes": [
-          "Opening Orchestra Concert",
-          "Six milongas (M1–M6)",
-          "Chuncheon City Tour"
+          "Opening Concert",
+          "6 Milongas",
+          "City Tour",
+          "After Party"
         ],
-        "note": "On-site registration available (subject to availability)",
+        "note": "On-site registration · While available",
         "featured": false,
         "cta": "Register"
       },
@@ -375,7 +376,7 @@
         "nameEn": "일일권",
         "price": 100000,
         "priceLabel": "₩100,000 (~USD 75)",
-        "description": "One day of programs of your choice.",
+        "description": "All programs of the chosen day.",
         "includes": [
           "All milongas of the chosen day",
           "Concert (Oct 3 only)"

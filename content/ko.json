@@ -96,14 +96,14 @@
   "orchestras": {
     "eyebrow": "★ TWO LIVE ORCHESTRAS ★",
     "subtitleEn": "From Buenos Aires",
-    "title": "부에노스 아이레스에서 온 두 오케스트라",
-    "lede": "Misteriosa Buenos Aires와 Tango Bardo가 춘천에서 라이브로 연주합니다.",
+    "title": "두 팀이 한 무대에 섭니다.",
+    "lede": "Tango Bardo — 부에노스 아이레스를 대표하는 정통 탱고 악단.\nMisteriosa Buenos Aires — 부에노스 아이레스의 탱고 앙상블.\n두 팀의 라이브 무대, 한국에서 처음 만납니다.",
     "items": [
       {
         "id": "tango-bardo",
         "name": "땅고 바르도",
         "nameEn": "Tango Bardo",
-        "role": "오르께스따 띠삐까",
+        "role": "ORQUESTA TÍPICA · BUENOS AIRES",
         "origin": "Buenos Aires",
         "description": "전통의 뿌리와 현대적 표현을 잇는 부에노스 아이레스의 대표 탱고 오케스트라.",
         "liveBadge": "LIVE"
@@ -111,8 +111,8 @@
       {
         "id": "misteriosa-buenos-aires",
         "name": "미스테리오사 부에노스 아이레스",
-        "nameEn": "Orquesta Tipica Misteriosa Buenos Aires",
-        "role": "탱고 앙상블",
+        "nameEn": "Misteriosa Buenos Aires",
+        "role": "ENSEMBLE · BUENOS AIRES",
         "origin": "Buenos Aires",
         "description": "강렬한 무대 존재감으로 알려진 부에노스 아이레스 기반 앙상블.",
         "liveBadge": "LIVE"
@@ -121,8 +121,8 @@
   },
   "schedule": {
     "eyebrow": "PROGRAM",
-    "title": "3일간의 프로그램",
-    "lede": "오프닝 콘서트로 시작해 여섯 번의 밀롱가, 그리고 시티투어까지.",
+    "title": "3일의 프로그램",
+    "lede": "콘서트에서 밀롱가 페스티벌, 시티투어까지.",
     "tabs": {
       "day1": "10/3 SAT — Day 1",
       "day2": "10/4 SUN — Day 2",
@@ -149,7 +149,7 @@
         "subtitle": "Welcome Milonga",
         "djId": "becca",
         "djName": "DJ 베카",
-        "mood": "햇빛에서 노을까지 — 첫 포옹."
+        "mood": "햇빛에서 노을까지 — 첫 아브라소."
       },
       {
         "day": "10/3",
@@ -160,7 +160,7 @@
         "subtitle": "First Night Milonga",
         "djId": "carlos",
         "djName": "DJ 까를로스",
-        "mood": "사흘 중 가장 길게 깊이 들어가는 밤."
+        "mood": "가장 깊이 들어가는 밤."
       },
       {
         "day": "10/4",
@@ -182,7 +182,7 @@
         "subtitle": "Grand Milonga",
         "djId": "wangwei",
         "djName": "DJ 왕웨이",
-        "mood": "축제의 정점. 가장 화려한 밤.",
+        "mood": "가장 화려한 밤. 사흘의 정점.",
         "featured": true
       },
       {
@@ -192,7 +192,7 @@
         "type": "tour",
         "title": "춘천 시티투어",
         "subtitle": "Chuncheon City Tour",
-        "mood": "호숫가 도시의 가을을 함께 걷는 시간."
+        "mood": "호숫가 도시의 가을. 함께 걷는 시간."
       },
       {
         "day": "10/5",
@@ -223,9 +223,9 @@
   },
   "djs": {
     "eyebrow": "MOOD MAKERS",
-    "title": "여섯 명의 디제이",
-    "subtitleEn": "Six DJs",
-    "lede": "밀롱가의 흐름은 디제이의 손끝에서 시작됩니다. 한국·중국·홍콩에서 모셔온 여섯 명의 큐레이터.",
+    "title": "여섯 DJ.",
+    "subtitleEn": "SIX DJs",
+    "lede": "한국·중국·홍콩에서 모셨습니다.\n3일의 밀롱가를 함께합니다.",
     "items": [
       {
         "id": "hagoon",
@@ -273,9 +273,9 @@
   },
   "dancers": {
     "eyebrow": "PERFORMERS",
-    "title": "댄서팀",
+    "title": "네 팀의 무대.",
     "subtitleEn": "Dance Performances",
-    "lede": "한국 탱고씬을 대표하는 네 팀의 무대.",
+    "lede": "한국 땅고 대표 세 팀과 해외 초청 한 팀.",
     "items": [
       {
         "id": "london-sol",
@@ -298,7 +298,7 @@
       {
         "id": "tba",
         "name": "Coming Soon",
-        "origin": "TBA",
+        "origin": "International",
         "isTBA": true
       }
     ]
@@ -307,7 +307,7 @@
     "eyebrow": "VENUE",
     "title": "봄내체육관",
     "subtitleEn": "Chuncheon Bomnae Complex",
-    "tagline": "도시 한복판의 큰 공간.\n프로페셔널 음향. 압도적 스케일.",
+    "tagline": "넓고 층고 높은 댄스 플로어.\n콘서트급 음향 시스템.\n라이브를 위한 무대.",
     "address": "강원특별자치도 춘천시",
     "features": [
       {
@@ -316,11 +316,11 @@
       },
       {
         "icon": "🎵",
-        "text": "프로페셔널 음향 시스템"
+        "text": "콘서트급 음향 시스템"
       },
       {
         "icon": "🏛",
-        "text": "도시 한복판 큰 댄스 플로어"
+        "text": "넓고 층고 높은 댄스 플로어"
       },
       {
         "icon": "🅿️",
@@ -332,9 +332,9 @@
   },
   "tickets": {
     "eyebrow": "TICKETS",
-    "title": "얼리버드 풀팩",
+    "title": "3일 패스 · 1일 패스",
     "subtitleEn": "Earlybird Full Pack",
-    "lede": "지금은 사흘 전체 프로그램을 포함한 풀팩만 예약 가능합니다.",
+    "lede": "얼리버드는 한정 수량입니다.",
     "items": [
       {
         "id": "fullpack-early",
@@ -342,11 +342,11 @@
         "nameEn": "Earlybird Full Pack",
         "price": 190000,
         "priceLabel": "₩190,000",
-        "description": "사흘 모든 프로그램 포함. 가장 합리적인 선택.",
+        "description": "3일의 모든 프로그램.",
         "includes": [
-          "오프닝 오케스트라 콘서트",
-          "여섯 번의 밀롱가 (M1–M6)",
-          "춘천 시티투어",
+          "콘서트",
+          "6 밀롱가",
+          "시티투어",
           "애프터 파티"
         ],
         "note": "한정 수량 · 입금 순 마감",
@@ -361,11 +361,12 @@
         "priceLabel": "₩240,000",
         "description": "얼리버드 마감 후 정상가.",
         "includes": [
-          "오프닝 오케스트라 콘서트",
-          "여섯 번의 밀롱가 (M1–M6)",
-          "춘천 시티투어"
+          "콘서트",
+          "6 밀롱가",
+          "시티투어",
+          "애프터 파티"
         ],
-        "note": "현장 등록 가능 (선착순)",
+        "note": "현장 등록 · 선착순",
         "featured": false,
         "cta": "예약하기"
       },
@@ -375,12 +376,12 @@
         "nameEn": "Day Pass",
         "price": 100000,
         "priceLabel": "₩100,000",
-        "description": "원하는 하루의 프로그램.",
+        "description": "선택한 하루의 모든 프로그램.",
         "includes": [
           "선택한 날의 모든 밀롱가",
-          "선택한 날의 콘서트 (10/3)"
+          "콘서트 (10/3 선택 시만)"
         ],
-        "note": "당일 입장 시 가능",
+        "note": "당일 입장 가능",
         "featured": false,
         "cta": "예약하기"
       }

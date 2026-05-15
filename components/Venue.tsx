@@ -56,13 +56,10 @@ export default function Venue() {
                 BOMNAE COMPLEX
               </p>
               <p
-                className="font-kr-serif font-black text-warm-white leading-[1.05] tracking-[-0.04em]"
-                style={{ fontSize: 'clamp(36px, 6vw, 76px)' }}
+                className="font-kr-serif font-black text-warm-white leading-[1.15] tracking-[-0.04em] whitespace-pre-line"
+                style={{ fontSize: 'clamp(28px, 4.5vw, 60px)' }}
               >
-                큰 플로어, 좋은 사운드, 꽉 찬 밤
-              </p>
-              <p className="mt-5 max-w-xl font-kr-sans text-[15px] leading-[1.75] text-warm-white/76 md:text-[17px]">
-                {t('address')} · 사흘 동안 라이브 오케스트라와 밀롱가가 한 공간에서 울립니다.
+                {t('tagline')}
               </p>
               <a
                 href="https://maps.google.com/?q=춘천봄내체육관"

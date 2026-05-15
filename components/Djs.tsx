@@ -48,14 +48,6 @@ export default function Djs() {
             sizes="(max-width: 1024px) 100vw, 1180px"
           />
           <div className="absolute inset-0 bg-gradient-to-r from-night/92 via-night/55 to-night/10" />
-          <div className="absolute bottom-0 left-0 max-w-2xl p-6 md:p-10">
-            <p className="font-en-body font-black text-[11px] tracking-[0.4em] uppercase text-gold mb-3">
-              MILONGA FLOW
-            </p>
-            <p className="font-kr-serif text-[24px] font-black leading-[1.25] text-warm-white md:text-[36px]">
-              {isKo ? '좋은 DJ는 밤의 속도를 만듭니다.' : 'A good DJ shapes the pace of the night.'}
-            </p>
-          </div>
         </div>
 
         {/* 3×2 grid (desktop) / 2×3 (mobile) */}
