@@ -1,10 +1,9 @@
 import Image from 'next/image';
-import { useTranslations, useLocale } from 'next-intl';
+import { useTranslations } from 'next-intl';
 import { ORCHESTRAS } from '@/data/festival';
 
 export default function Orchestras() {
   const t = useTranslations('orchestras');
-  const locale = useLocale();
 
   return (
     <section id="orchestras" className="bg-burgundy text-warm-white overflow-hidden">

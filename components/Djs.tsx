@@ -5,7 +5,6 @@ import { DJS } from '@/data/festival';
 export default function Djs() {
   const t = useTranslations('djs');
   const locale = useLocale();
-  const isKo = locale === 'ko';
 
   return (
     <section
