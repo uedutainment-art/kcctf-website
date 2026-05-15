@@ -1,5 +1,6 @@
 import { useLocale, useTranslations } from 'next-intl';
 import { TICKET_TIERS } from '@/data/festival';
+import RegisterButton from './RegisterButton';
 
 export default function Tickets() {
   const t = useTranslations('tickets');
@@ -88,12 +89,12 @@ export default function Tickets() {
             <p className="mb-5 font-en-body text-[12px] text-warm-white/58">
               {earlybirdItem.note}
             </p>
-            <a
+            <RegisterButton
               href={registerUrl}
               className="block rounded bg-warm-white py-4 text-center font-en-body text-[14px] font-bold uppercase tracking-[0.2em] text-burgundy shadow-[0_3px_0_rgba(253,250,245,0.4)] transition-all duration-150 hover:translate-y-[2px] hover:shadow-[0_1px_0_rgba(253,250,245,0.4)]"
             >
               {earlybirdItem.cta} →
-            </a>
+            </RegisterButton>
             <p className="mt-4 font-kr-sans text-[12px] leading-[1.6] text-warm-white/45">
               {earlybirdTier.id === 'fullpack-early'
                 ? isKo

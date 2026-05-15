@@ -7,6 +7,7 @@ import Dancers from '@/components/Dancers';
 import TheNights from '@/components/TheNights';
 import Venue from '@/components/Venue';
 import Tickets from '@/components/Tickets';
+import Accommodation from '@/components/Accommodation';
 
 export default function HomePage() {
   return (
@@ -20,6 +21,7 @@ export default function HomePage() {
       <Djs />
       <Venue />
       <Tickets />
+      <Accommodation />
     </>
   );
 }

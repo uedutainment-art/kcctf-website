@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { useTranslations, useLocale } from 'next-intl';
 import { Link, usePathname } from '@/i18n/navigation';
+import RegisterButton from './RegisterButton';
 
 type NavItem = {
   label: string;
@@ -167,12 +168,12 @@ export default function Nav() {
               >
                 {t('languageSwitch')}
               </Link>
-              <a
+              <RegisterButton
                 href={registerUrl}
                 className="bg-burgundy text-warm-white font-en-body font-bold text-[12px] tracking-[0.18em] uppercase px-6 py-3 rounded-md transition-all duration-150 shadow-[0_3px_0_#5A0E1B] hover:shadow-[0_1px_0_#5A0E1B] hover:translate-y-[2px]"
               >
                 {t('register')}
-              </a>
+              </RegisterButton>
             </div>
 
             {/* Mobile: lang toggle + hamburger */}
@@ -272,13 +273,12 @@ export default function Nav() {
 
         {/* CTA */}
         <div className="px-5 pb-10 pt-4">
-          <a
+          <RegisterButton
             href={registerUrl}
-            onClick={() => setMenuOpen(false)}
             className="block w-full bg-burgundy text-warm-white font-en-body font-bold text-[16px] tracking-[0.18em] uppercase text-center py-4 rounded-md transition-all duration-150 shadow-[0_4px_0_#5A0E1B] hover:shadow-[0_2px_0_#5A0E1B] hover:translate-y-[2px]"
           >
             {t('register')}
-          </a>
+          </RegisterButton>
         </div>
       </div>
     </>

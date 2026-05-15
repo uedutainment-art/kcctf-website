@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useTranslations } from 'next-intl';
+import RegisterButton from './RegisterButton';
 
 export default function FloatingCTA() {
   const t = useTranslations('hero');
@@ -42,12 +43,12 @@ export default function FloatingCTA() {
           </div>
 
           {/* CTA button */}
-          <a
+          <RegisterButton
             href={registerUrl}
             className="shrink-0 bg-burgundy text-warm-white font-en-body font-bold text-[13px] tracking-[0.2em] uppercase px-7 py-[11px] rounded-md shadow-[0_3px_0_#5A0E1B] hover:shadow-[0_1px_0_#5A0E1B] hover:translate-y-[2px] transition-all duration-150"
           >
             {t('cta')}
-          </a>
+          </RegisterButton>
         </div>
       </div>
     </div>

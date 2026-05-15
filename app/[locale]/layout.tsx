@@ -6,6 +6,8 @@ import { routing } from '@/i18n/routing';
 import Nav from '@/components/Nav';
 import Footer from '@/components/Footer';
 import FloatingCTA from '@/components/FloatingCTA';
+import SectionTabs from '@/components/SectionTabs';
+import RegisterModal from '@/components/RegisterModal';
 
 const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://kcctf.org';
 
@@ -50,9 +52,11 @@ export default async function LocaleLayout({
   return (
     <NextIntlClientProvider messages={messages}>
       <Nav />
+      <SectionTabs />
       <main>{children}</main>
       <Footer />
       <FloatingCTA />
+      <RegisterModal />
     </NextIntlClientProvider>
   );
 }
