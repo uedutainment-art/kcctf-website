@@ -94,14 +94,14 @@
     "venue": "찾아오는 길"
   },
   "orchestras": {
-    "eyebrow": "★ TWO LIVE ORCHESTRAS ★",
+    "eyebrow": "★ TWO LIVE ORCHESTRAS ★ · From Buenos Aires",
     "subtitleEn": "From Buenos Aires",
-    "title": "두 팀이 한 무대에 섭니다.",
-    "lede": "Tango Bardo — 부에노스 아이레스를 대표하는 정통 탱고 악단.\nMisteriosa Buenos Aires — 부에노스 아이레스의 탱고 앙상블.\n두 팀의 라이브 무대, 한국에서 처음 만납니다.",
+    "title": "부에노스 아이레스에서 온 두 오케스트라",
+    "lede": "Misteriosa Buenos Aires와 Tango Bardo가 춘천에서 라이브로 연주합니다.",
     "items": [
       {
         "id": "tango-bardo",
-        "name": "땅고 바르도",
+        "name": "Tango Bardo",
         "nameEn": "Tango Bardo",
         "role": "ORQUESTA TÍPICA · BUENOS AIRES",
         "origin": "Buenos Aires",
@@ -110,7 +110,7 @@
       },
       {
         "id": "misteriosa-buenos-aires",
-        "name": "미스테리오사 부에노스 아이레스",
+        "name": "Misteriosa Buenos Aires",
         "nameEn": "Misteriosa Buenos Aires",
         "role": "ENSEMBLE · BUENOS AIRES",
         "origin": "Buenos Aires",
@@ -182,7 +182,7 @@
         "subtitle": "Grand Milonga",
         "djId": "wangwei",
         "djName": "DJ 왕웨이",
-        "mood": "가장 화려한 밤. 사흘의 정점.",
+        "mood": "가장 화려한 밤. 전체 일정의 정점.",
         "featured": true
       },
       {
@@ -214,7 +214,7 @@
         "subtitle": "After Party & Milonga",
         "djId": "natalie",
         "djName": "DJ 나탈리",
-        "mood": "사흘을 마무리하는 마지막 한 탕다.",
+        "mood": "마지막 한 탕다로 닫는 밤.",
         "featured": true
       }
     ],

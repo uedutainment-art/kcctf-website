@@ -94,10 +94,10 @@
     "venue": "Getting Here"
   },
   "orchestras": {
-    "eyebrow": "★ TWO LIVE ORCHESTRAS ★",
+    "eyebrow": "★ TWO LIVE ORCHESTRAS ★ · From Buenos Aires",
     "subtitleEn": "From Buenos Aires",
-    "title": "Two orchestras. One stage.",
-    "lede": "Tango Bardo — a leading orquesta típica from Buenos Aires.\nMisteriosa Buenos Aires — a Buenos Aires tango ensemble.\nTwo live stages, first time in Korea.",
+    "title": "Two orchestras from Buenos Aires",
+    "lede": "Misteriosa Buenos Aires and Tango Bardo, live in Chuncheon.",
     "items": [
       {
         "id": "tango-bardo",

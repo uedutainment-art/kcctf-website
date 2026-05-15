@@ -1,16 +1,16 @@
 import { useLocale } from 'next-intl';
 
 const koItems = [
-  ['Two live orchestras', '두 라이브 오케스트라'],
-  ['Three nights', '사흘 밤'],
-  ['One big floor', '하나의 큰 플로어'],
+  ['Two Orchestras', '두 오케스트라'],
+  ['Three Nights', '3일 밤'],
+  ['One Stage', '한 무대'],
   ['Autumn in Chuncheon', '춘천의 가을'],
 ];
 
 const enItems = [
-  ['Two live orchestras', 'From Buenos Aires'],
-  ['Three nights', 'Six milongas'],
-  ['One big floor', 'Bomnae Complex'],
+  ['Two Orchestras', 'From Buenos Aires'],
+  ['Three Nights', 'Six milongas'],
+  ['One Stage', 'Bomnae Complex'],
   ['Autumn in Chuncheon', 'A lakeside city'],
 ];
 
