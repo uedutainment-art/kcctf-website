@@ -397,21 +397,21 @@
   },
   "accommodation": {
     "eyebrow": "STAY",
-    "title": "Chuncheon Bella Stay",
-    "subtitleEn": "춘천 벨라스테이",
+    "title": "The Venezia Suite",
+    "subtitleEn": "더베네치아스위트 · Chuncheon",
     "tagline": "Sleep where the festival sleeps.",
     "details": [
       {
-        "label": "Room",
-        "value": "Twin"
+        "label": "Address",
+        "value": "136 Hyoja-ro, Chuncheon"
       },
       {
-        "label": "Per night",
-        "value": "From ₩80,000"
+        "label": "Rooms",
+        "value": "Double · Twin · Ondol"
       },
       {
-        "label": "Breakfast",
-        "value": "₩11,000 per person (optional)"
+        "label": "Contact",
+        "value": "033-255-9600"
       }
     ],
     "packageNote": "Available as Full Pack + 2 nights / + 3 nights packages (prices coming soon)",
@@ -484,7 +484,7 @@
       },
       {
         "q": "How do I book accommodation?",
-        "a": "The most convenient option is the official hotel (Chuncheon Bella Stay) booked through our Full Pack + 2/3 nights packages. You may also book other accommodations independently."
+        "a": "The most convenient option is the official hotel (The Venezia Suite) booked through our Full Pack + 2/3 nights packages. You may also book other accommodations independently."
       },
       {
         "q": "Are there workshops?",

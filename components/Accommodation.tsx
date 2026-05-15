@@ -7,14 +7,26 @@ import RegisterButton from './RegisterButton';
 
 // ── EventLink API types ────────────────────────────────────────────────────────
 
+type LocaleStr = { ko: string; en: string };
+
 type RoomType = {
   id: string;
-  label: string;
-  hint: string;
-  capacity: number;
+  label: LocaleStr;
+  hint: LocaleStr;
+  capacity: { base: number; max: number };
   total: number;
   booked: number;
   available: number;
+};
+
+type Package = {
+  id: string;
+  nights: string[];
+  nightsCount: number;
+  label: LocaleStr;
+  description: LocaleStr;
+  default: boolean;
+  priceTotal: number;
 };
 
 type AvailabilityData = {
@@ -22,7 +34,7 @@ type AvailabilityData = {
   enabled: boolean;
   pricePerNightPerRoom: number;
   currency: string;
-  packages: { id: string; label: string; price: number }[];
+  packages: Package[];
   roomTypes: RoomType[];
 };
 
@@ -115,7 +127,9 @@ export default function Accommodation() {
     ? Object.fromEntries(avail.roomTypes.map((r) => [r.id, r]))
     : {};
 
-  return (
+  const pricePerNight = avail?.enabled ? avail.pricePerNightPerRoom : null;
+
+return (
     <section id="accommodation" className="bg-cream py-16">
       <div className="max-w-[1200px] mx-auto px-6 md:px-10">
 
@@ -194,12 +208,25 @@ export default function Accommodation() {
 
         {/* Room types */}
         <div className="mb-10">
-          <p className="font-en-body font-bold text-[11px] tracking-[0.3em] uppercase text-gold mb-6 text-center">
-            ROOM TYPES
-          </p>
+          <div className="flex items-baseline justify-center gap-3 mb-6">
+            <p className="font-en-body font-bold text-[11px] tracking-[0.3em] uppercase text-gold">
+              ROOM TYPES
+            </p>
+            {pricePerNight && (
+              <p className="font-kr-sans text-[12px] text-charcoal/50">
+                {isKo ? `1박 ₩${pricePerNight.toLocaleString()}` : `₩${pricePerNight.toLocaleString()} / night`}
+              </p>
+            )}
+          </div>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
             {ROOMS.map((room) => {
               const liveRoom = roomMap[room.id];
+              const displayName = liveRoom
+                ? (isKo ? liveRoom.label.ko : liveRoom.label.en)
+                : (isKo ? room.nameKo : room.nameEn);
+              const displayHint = liveRoom
+                ? (isKo ? liveRoom.hint.ko : liveRoom.hint.en)
+                : (isKo ? room.guestsKo : room.guestsEn);
               return (
                 <div key={room.id} className="bg-warm-white rounded-lg overflow-hidden border border-ink-soft/8">
                   <div className="relative">
@@ -219,10 +246,10 @@ export default function Accommodation() {
                   </div>
                   <div className="p-4">
                     <p className="font-kr-sans font-bold text-[15px] text-ink-soft mb-[2px]">
-                      {isKo ? room.nameKo : room.nameEn}
+                      {displayName}
                     </p>
                     <p className="font-en-body text-[12px] text-charcoal/55 mb-3">
-                      {room.size} · {isKo ? room.guestsKo : room.guestsEn}
+                      {room.size} · {displayHint}
                     </p>
                     <p className="font-kr-sans text-[13px] text-charcoal/70">
                       {isKo ? room.bedKo : room.bedEn}
@@ -236,26 +263,48 @@ export default function Accommodation() {
 
         {/* Packages — from API when enabled */}
         {avail?.enabled && avail.packages.length > 0 && (
-          <div className="bg-burgundy rounded-lg p-6 text-warm-white text-center">
-            <p className="font-en-body font-bold text-[11px] tracking-[0.3em] uppercase text-gold-soft mb-4">
+          <div className="mb-10">
+            <p className="font-en-body font-bold text-[11px] tracking-[0.3em] uppercase text-gold mb-6 text-center">
               PACKAGES
             </p>
-            <div className="flex flex-col sm:flex-row justify-center gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 mb-5">
               {avail.packages.map((pkg) => (
-                <div key={pkg.id} className="bg-warm-white/10 rounded px-6 py-4 flex-1 max-w-[260px] mx-auto sm:mx-0">
-                  <p className="font-kr-sans font-bold text-[14px] mb-2">{pkg.label}</p>
-                  <p className="font-en-display italic font-black text-[28px] text-gold-soft">
-                    ₩{pkg.price.toLocaleString()}
+                <div
+                  key={pkg.id}
+                  className={`relative rounded-lg p-5 flex flex-col border-2 transition-colors ${
+                    pkg.default
+                      ? 'bg-burgundy border-burgundy text-warm-white'
+                      : 'bg-warm-white border-ink-soft/10 text-ink-soft'
+                  }`}
+                >
+                  {pkg.default && (
+                    <span className="absolute -top-[11px] left-1/2 -translate-x-1/2 bg-gold text-ink font-en-body font-bold text-[9px] tracking-[0.2em] uppercase px-3 py-[3px] rounded-full whitespace-nowrap">
+                      {isKo ? '추천' : 'POPULAR'}
+                    </span>
+                  )}
+                  <p className={`font-en-body font-bold text-[10px] tracking-[0.2em] uppercase mb-1 ${pkg.default ? 'text-gold-soft' : 'text-gold'}`}>
+                    {pkg.nightsCount}{isKo ? '박' : 'N'}
+                  </p>
+                  <p className="font-kr-sans font-bold text-[14px] leading-snug mb-1">
+                    {isKo ? pkg.label.ko : pkg.label.en}
+                  </p>
+                  <p className={`font-kr-sans text-[12px] mb-4 flex-1 ${pkg.default ? 'text-warm-white/65' : 'text-charcoal/50'}`}>
+                    {isKo ? pkg.description.ko : pkg.description.en}
+                  </p>
+                  <p className={`font-en-display italic font-black text-[26px] leading-none ${pkg.default ? 'text-gold-soft' : 'text-ink-soft'}`}>
+                    ₩{pkg.priceTotal.toLocaleString()}
                   </p>
                 </div>
               ))}
             </div>
-            <RegisterButton
-              href={registerUrl}
-              className="inline-block mt-6 bg-gold text-ink font-en-body font-bold text-[13px] tracking-[0.2em] uppercase px-8 py-3 rounded-md shadow-[0_3px_0_#B8941E] hover:shadow-[0_1px_0_#B8941E] hover:translate-y-[2px] transition-all duration-150"
-            >
-              {isKo ? '패키지 예약하기 →' : 'Book Package →'}
-            </RegisterButton>
+            <div className="text-center">
+              <RegisterButton
+                href={registerUrl}
+                className="inline-block bg-burgundy text-warm-white font-en-body font-bold text-[13px] tracking-[0.2em] uppercase px-10 py-3 rounded-md shadow-[0_3px_0_#5A0E1B] hover:shadow-[0_1px_0_#5A0E1B] hover:translate-y-[2px] transition-all duration-150"
+              >
+                {isKo ? '숙박 패키지 예약하기 →' : 'Book Accommodation Package →'}
+              </RegisterButton>
+            </div>
           </div>
         )}
 

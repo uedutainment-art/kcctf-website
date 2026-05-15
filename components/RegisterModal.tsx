@@ -8,27 +8,32 @@ const EMBED_ORIGIN = 'https://kcctf-5047d.web.app';
 
 export default function RegisterModal() {
   const locale = useLocale();
+  const isKo = locale === 'ko';
   const [open, setOpen] = useState(false);
+  const [done, setDone] = useState(false);
   const [iframeH, setIframeH] = useState(680);
   const iframeRef = useRef<HTMLIFrameElement>(null);
 
-  const close = useCallback(() => setOpen(false), []);
+  const close = useCallback(() => { setOpen(false); setDone(false); }, []);
 
   // Open via custom event (fired by RegisterButton everywhere on the page)
   useEffect(() => {
-    const handler = () => setOpen(true);
+    const handler = () => { setOpen(true); setDone(false); };
     window.addEventListener('kcctf:register', handler);
     return () => window.removeEventListener('kcctf:register', handler);
   }, []);
 
-  // Auto-height via postMessage from EventLink iframe
+  // Auto-height + registration-complete via postMessage from EventLink iframe
   useEffect(() => {
     const handler = (e: MessageEvent) => {
       if (e.origin !== EMBED_ORIGIN) return;
       if (e.data?.type === 'resize' && typeof e.data.height === 'number') {
         setIframeH(Math.max(400, e.data.height));
       }
-      if (e.data?.type === 'registration-complete') close();
+      if (e.data?.type === 'registration-complete') {
+        setDone(true);
+        setTimeout(close, 3000);
+      }
     };
     window.addEventListener('message', handler);
     return () => window.removeEventListener('message', handler);
@@ -89,16 +94,36 @@ export default function RegisterModal() {
           </button>
         </div>
 
-        {/* iframe */}
-        <div className="flex-1 overflow-y-auto overscroll-contain">
-          <iframe
-            ref={iframeRef}
-            src={src}
-            title="춘천국제탱고페스티벌 2026 예약 신청"
-            allow="payment"
-            style={{ width: '100%', height: `${iframeH}px`, border: 'none', display: 'block' }}
-          />
-        </div>
+        {/* Success state */}
+        {done ? (
+          <div className="flex flex-col items-center justify-center px-8 py-16 text-center gap-4">
+            <div className="w-16 h-16 rounded-full bg-burgundy/10 flex items-center justify-center mb-2">
+              <svg width="32" height="32" viewBox="0 0 32 32" fill="none" aria-hidden>
+                <path d="M6 16L13 23L26 9" stroke="#8B1A2B" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            </div>
+            <p className="font-kr-serif font-black text-[22px] text-ink-soft leading-tight">
+              {isKo ? '신청이 완료되었습니다' : 'Registration complete'}
+            </p>
+            <p className="font-kr-sans text-[14px] text-charcoal/60 max-w-[300px] leading-relaxed">
+              {isKo
+                ? '확인 메일을 보내드렸습니다. 잠시 후 창이 닫힙니다.'
+                : 'A confirmation email has been sent. This window will close shortly.'}
+            </p>
+            <p className="font-en-display italic text-[17px] text-gold mt-2">춘천에서 만나요 ★</p>
+          </div>
+        ) : (
+          /* iframe */
+          <div className="flex-1 overflow-y-auto overscroll-contain">
+            <iframe
+              ref={iframeRef}
+              src={src}
+              title="춘천국제탱고페스티벌 2026 예약 신청"
+              allow="payment"
+              style={{ width: '100%', height: `${iframeH}px`, border: 'none', display: 'block' }}
+            />
+          </div>
+        )}
       </div>
     </div>
   );

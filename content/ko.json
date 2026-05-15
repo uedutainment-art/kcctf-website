@@ -397,21 +397,21 @@
   },
   "accommodation": {
     "eyebrow": "STAY",
-    "title": "춘천 벨라스테이",
-    "subtitleEn": "Chuncheon Bella Stay",
+    "title": "더베네치아스위트",
+    "subtitleEn": "The Venezia Suite · Chuncheon",
     "tagline": "페스티벌과 같은 호흡으로.",
     "details": [
       {
+        "label": "주소",
+        "value": "강원특별자치도 춘천시 효자로 136"
+      },
+      {
         "label": "객실",
-        "value": "트윈룸"
+        "value": "더블 · 트윈 · 온돌"
       },
       {
-        "label": "1박 가격",
-        "value": "원가 ₩80,000부터"
-      },
-      {
-        "label": "조식",
-        "value": "1인 ₩11,000 (선택)"
+        "label": "연락처",
+        "value": "033-255-9600"
       }
     ],
     "packageNote": "풀팩 + 2박 / 풀팩 + 3박 패키지로 예약 가능 (가격 곧 공개)",
