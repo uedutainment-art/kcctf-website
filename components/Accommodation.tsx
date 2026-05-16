@@ -143,10 +143,10 @@ return (
             {isKo ? '공식 지정 호텔' : 'Official Hotel'}
           </h2>
           <p className="font-en-display italic text-[20px] text-gold mb-1">
-            벨라스테이
+            더베네치아스위트
           </p>
           <p className="font-en-body text-[13px] text-charcoal/55 tracking-[0.12em] uppercase">
-            Bella Stay · Chuncheon
+            The Venezia Suite · Chuncheon
           </p>
         </div>
 
