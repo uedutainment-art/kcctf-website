@@ -65,7 +65,7 @@
       },
       "milongas": {
         "num": "6",
-        "label": "Milongas"
+        "label": "Live Milongas"
       },
       "djs": {
         "num": "6",
@@ -105,7 +105,7 @@
     "eyebrow": "★ TWO LIVE ORCHESTRAS ★ · From Buenos Aires",
     "subtitleEn": "From Buenos Aires",
     "title": "Two orchestras from Buenos Aires",
-    "lede": "Misteriosa Buenos Aires and Tango Bardo, live in Chuncheon.",
+    "lede": "Two orchestras from Buenos Aires, touring the world. Now in Chuncheon.",
     "items": [
       {
         "id": "tango-bardo",
@@ -113,7 +113,7 @@
         "nameEn": "Tango Bardo",
         "role": "ORQUESTA TÍPICA · BUENOS AIRES",
         "origin": "Buenos Aires",
-        "description": "A leading Buenos Aires tango orchestra, blending traditional roots with modern expression.",
+        "description": "A Buenos Aires quintet with tours across Asia, Europe, and Oceania. Raw, powerful — built for the dance floor.",
         "liveBadge": "LIVE"
       },
       {
@@ -122,7 +122,7 @@
         "nameEn": "Misteriosa Buenos Aires",
         "role": "ENSEMBLE · BUENOS AIRES",
         "origin": "Buenos Aires",
-        "description": "A Buenos Aires-based ensemble known for powerful, atmospheric stage performances.",
+        "description": "Founded 2008. Eight European tours. Nine musicians. The full weight of a proper Buenos Aires orchestra.",
         "liveBadge": "LIVE"
       }
     ]

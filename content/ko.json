@@ -65,7 +65,7 @@
       },
       "milongas": {
         "num": "6",
-        "label": "Milongas"
+        "label": "라이브 밀롱가"
       },
       "djs": {
         "num": "6",
@@ -105,7 +105,7 @@
     "eyebrow": "★ TWO LIVE ORCHESTRAS ★ · From Buenos Aires",
     "subtitleEn": "From Buenos Aires",
     "title": "부에노스 아이레스에서 온 두 오케스트라",
-    "lede": "Misteriosa Buenos Aires와 Tango Bardo가 춘천에서 라이브로 연주합니다.",
+    "lede": "세계를 투어하는 두 오케스트라가 춘천에 옵니다.",
     "items": [
       {
         "id": "tango-bardo",
@@ -113,7 +113,7 @@
         "nameEn": "Tango Bardo",
         "role": "ORQUESTA TÍPICA · BUENOS AIRES",
         "origin": "Buenos Aires",
-        "description": "전통의 뿌리와 현대적 표현을 잇는 부에노스 아이레스의 대표 탱고 오케스트라.",
+        "description": "부에노스아이레스에서 결성, 아시아·유럽·오세아니아를 투어한 5인 앙상블. 댄서와의 연결을 최우선으로 하는 파워풀한 사운드.",
         "liveBadge": "LIVE"
       },
       {
@@ -122,7 +122,7 @@
         "nameEn": "Misteriosa Buenos Aires",
         "role": "ENSEMBLE · BUENOS AIRES",
         "origin": "Buenos Aires",
-        "description": "강렬한 무대 존재감으로 알려진 부에노스 아이레스 기반 앙상블.",
+        "description": "2008년 부에노스아이레스 창단. 유럽 8회 투어, 9인 풀 오르케스타 티피카. 2025년 탱고 역사상 최초 트리플 앨범 발매.",
         "liveBadge": "LIVE"
       }
     ]
