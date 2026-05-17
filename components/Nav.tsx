@@ -89,23 +89,14 @@ export default function Nav() {
         <div className="max-w-[1200px] mx-auto px-6 md:px-10">
           <div className="flex h-[72px] lg:h-[72px] items-center justify-between gap-4">
 
-            {/* Logo — wordmark */}
-            <Link href="/" className="flex-shrink-0 flex items-center gap-2.5 group">
+            {/* Logo */}
+            <Link href="/" className="flex-shrink-0">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src="/images/KCCTF_logo/KCCTF.svg"
-                alt=""
-                aria-hidden
-                style={{ height: '44px', width: 'auto' }}
+                alt="춘천국제땅고페스티벌"
+                style={{ height: '58px', width: 'auto' }}
               />
-              <div className="leading-none">
-                <div className="font-en-condensed font-black text-[22px] tracking-[0.04em] uppercase text-burgundy leading-[1]">
-                  KCCTF
-                </div>
-                <div className="font-kr-sans text-[9px] tracking-[0.18em] text-ink/55 mt-[2px]">
-                  춘천국제땅고페스티벌
-                </div>
-              </div>
             </Link>
 
             {/* Desktop nav links */}
@@ -227,17 +218,9 @@ export default function Nav() {
       >
         {/* Top bar */}
         <div className="flex items-center justify-between px-5 pt-5 pb-4">
-          <Link href="/" onClick={() => setMenuOpen(false)} className="flex items-center gap-2.5">
+          <Link href="/" onClick={() => setMenuOpen(false)}>
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/images/KCCTF_logo/KCCTF.svg" alt="" aria-hidden style={{ height: '48px', width: 'auto' }} />
-            <div className="leading-none">
-              <div className="font-en-condensed font-black text-[24px] tracking-[0.04em] uppercase text-burgundy leading-[1]">
-                KCCTF
-              </div>
-              <div className="font-kr-sans text-[9px] tracking-[0.18em] text-ink/55 mt-[2px]">
-                춘천국제땅고페스티벌
-              </div>
-            </div>
+            <img src="/images/KCCTF_logo/KCCTF.svg" alt="춘천국제땅고페스티벌" style={{ height: '58px', width: 'auto' }} />
           </Link>
           <button
             onClick={() => setMenuOpen(false)}
