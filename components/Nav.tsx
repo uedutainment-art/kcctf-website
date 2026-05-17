@@ -35,7 +35,8 @@ export default function Nav() {
   }, []);
 
   useEffect(() => {
-    const sections = ['orchestras', 'schedule', 'dancers', 'djs', 'venue', 'tickets'];
+    // Order must match the actual page section order (after reorder: djs before dancers)
+    const sections = ['orchestras', 'schedule', 'djs', 'dancers', 'venue', 'tickets'];
     const sectionToHref: Record<string, string> = {
       orchestras: '#orchestras',
       schedule:   '#schedule',

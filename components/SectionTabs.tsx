@@ -7,16 +7,18 @@ const NAV_H  = 72;
 const TAB_H  = 44;
 const OFFSET = NAV_H + TAB_H + 4;
 
+// Tab order matches actual page section order (djs before dancers after reorder)
 const TABS = [
   { href: '#orchestras', sectionId: 'orchestras', key: 'orchestras' },
   { href: '#schedule',   sectionId: 'schedule',   key: 'schedule'   },
-  { href: '#dancers',    sectionId: 'dancers',     key: 'performers' },
   { href: '#djs',        sectionId: 'djs',         key: 'djs'        },
-  { href: '#tickets',    sectionId: 'tickets',     key: 'info'       },
+  { href: '#dancers',    sectionId: 'dancers',     key: 'performers' },
   { href: '#venue',      sectionId: 'venue',       key: 'venue'      },
+  { href: '#tickets',    sectionId: 'tickets',     key: 'info'       },
 ] as const;
 
-const ALL_SECTIONS = ['orchestras', 'schedule', 'dancers', 'djs', 'venue', 'tickets'];
+// Must match page section order for correct active-tab tracking on scroll
+const ALL_SECTIONS = ['orchestras', 'schedule', 'djs', 'dancers', 'venue', 'tickets'];
 const SECTION_TO_TAB: Record<string, string> = {
   orchestras: '#orchestras',
   schedule:   '#schedule',
