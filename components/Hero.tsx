@@ -35,7 +35,7 @@ export default function Hero() {
                   className="font-kr-poster text-burgundy leading-[0.86] tracking-[-0.09em] pb-2"
                   style={{ fontSize: 'clamp(70px, 6.9vw, 116px)', transform: 'scaleX(1.04)' }}
                 >
-                  <div>국제땅고</div>
+                  <div>국제탱고</div>
                   <div>페스티벌</div>
                 </div>
               </div>
@@ -96,7 +96,7 @@ export default function Hero() {
             className="font-kr-poster text-burgundy leading-[0.88] tracking-[-0.09em]"
             style={{ fontSize: 'clamp(44px, 12vw, 60px)' }}
           >
-            <div>국제땅고</div>
+            <div>국제탱고</div>
             <div>페스티벌</div>
           </div>
         </div>

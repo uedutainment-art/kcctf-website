@@ -38,7 +38,7 @@ export default function FloatingCTA() {
           {/* Left: event info */}
           <div className="hidden sm:flex items-center gap-3 min-w-0">
             <span className="font-kr-sans text-[13px] text-warm-white/50 truncate">
-              춘천국제땅고페스티벌 2026 · 10.03—10.05 · 춘천 봄내체육관
+              춘천국제탱고페스티벌 2026 · 10.03—10.05 · 춘천 봄내체육관
             </span>
           </div>
 

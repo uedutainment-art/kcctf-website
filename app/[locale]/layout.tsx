@@ -19,7 +19,7 @@ export async function generateMetadata({
   const isKo = locale === 'ko';
   return {
     title: isKo
-      ? '춘천국제땅고페스티벌 2026 — KCCTF'
+      ? '춘천국제탱고페스티벌 2026 — KCCTF'
       : 'Chuncheon International Tango Festival 2026 — KCCTF',
     description: isKo
       ? '부에노스 아이레스에서 온 두 오케스트라. Misteriosa Buenos Aires와 Tango Bardo. 2026.10.03–10.05 춘천 봄내체육관.'

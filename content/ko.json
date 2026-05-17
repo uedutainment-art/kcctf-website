@@ -1,6 +1,6 @@
 {
   "common": {
-    "festival": "춘천국제땅고페스티벌",
+    "festival": "춘천국제탱고페스티벌",
     "festivalShort": "KCCTF",
     "year": "2026",
     "dates": "2026.10.03 — 10.05",
@@ -50,7 +50,7 @@
   "hero": {
     "eyebrow": "3RD EDITION · 2026",
     "titleLine1": "춘천국제",
-    "titleLine2": "땅고페스티벌",
+    "titleLine2": "탱고페스티벌",
     "subtitleEn": "CHUNCHEON INTERNATIONAL\nTANGO FESTIVAL",
     "tagline": "두 오케스트라, 사흘 밤. 봄내체육관에서.\n아시아에서 다시 없을 라이브 탱고.",
     "uspBand": "TWO ORCHESTRAS · 6 LIVE MILONGAS",
@@ -104,8 +104,8 @@
   "orchestras": {
     "eyebrow": "★ TWO LIVE ORCHESTRAS ★ · From Buenos Aires",
     "subtitleEn": "From Buenos Aires",
-    "title": "부에노스 아이레스에서 온 두 오케스트라",
-    "lede": "세계를 투어한 두 오케스트라. 6번의 밤, 춘천에서 직접 연주합니다.",
+    "title": "부에노스 아이레스에서 온 두 팀의 오케스트라",
+    "lede": "세계를 투어한 두 오케스트라. 춘천에서 직접 연주합니다.",
     "items": [
       {
         "id": "tango-bardo",
@@ -130,7 +130,7 @@
   "theNights": {
     "eyebrow": "THE NIGHTS · 작년의 장면들",
     "title": "밤이 깊어지는 3일.",
-    "lede": "2025년 페스티벌이 보여준 것들 — 무대의 에너지, 가득 찬 플로어, 마지막 탕다까지.",
+    "lede": "2025년 페스티벌이 보여준 것들 — 무대의 에너지, 가득 찬 플로어, 마지막 딴따까지.",
     "cards": [
       { "kicker": "LIVE SOUND", "caption": "살아있는 음악" },
       { "kicker": "FULL FLOOR", "caption": "가득 찬 플로어" },
@@ -232,7 +232,7 @@
         "subtitle": "After Party & Milonga",
         "djId": "natalie",
         "djName": "DJ 나탈리",
-        "mood": "마지막 한 탕다.",
+        "mood": "마지막 한 딴따.",
         "featured": true
       }
     ],
@@ -293,7 +293,7 @@
     "eyebrow": "PERFORMERS",
     "title": "네 팀의 무대.",
     "subtitleEn": "Dance Performances",
-    "lede": "한국 땅고 대표 세 팀과 해외 초청 한 팀.",
+    "lede": "한국 탱고 대표 세 팀과 해외 초청 한 팀.",
     "items": [
       {
         "id": "london-sol",
@@ -325,7 +325,7 @@
     "eyebrow": "VENUE",
     "title": "봄내체육관",
     "subtitleEn": "Chuncheon Bomnae Complex",
-    "tagline": "압도적 규모의 댄스 플로어.\n콘서트급 음향 시스템.\n라이브를 위한 무대.",
+    "tagline": "압도적 규모의 댄스 플로어.\n콘서트급 음향 시스템.\n콘서트 무대 위의 밀롱가.",
     "address": "강원특별자치도 춘천시",
     "features": [
       {
@@ -405,13 +405,13 @@
       }
     ],
     "hotelPackageNote": "숙박 패키지(풀팩+2박, 풀팩+3박)는 곧 공개됩니다.",
-    "procedure": "① 신청 → ② 7일 내 입금 → ③ 입금 확인 → ④ QR 코드 이메일 발급",
+    "procedure": "① 신청 → ② 3일 내 입금 → ③ 입금 확인 → ④ QR 코드 이메일 발급",
     "paymentInfo": {
       "title": "입금 안내",
       "bank": "신한은행",
       "account": "100-038-582544",
       "holder": "사단법인 춘천국제탱고페스티벌",
-      "note": "예약 후 7일 이내 입금 확인 시 확정",
+      "note": "예약 후 3일 이내 입금 확인 시 확정",
       "swift": "SHBKKRSE",
       "intlNote": "해외 참가자 — 알리페이/위챗: info@kcctf.org"
     },
@@ -429,7 +429,7 @@
     "eyebrow": "ABOUT",
     "title": "춘천국제탱고페스티벌",
     "subtitleEn": "Chuncheon International Tango Festival",
-    "body": "춘천국제땅고페스티벌은 콘서트와 사회춤(밀롱가)을 결합한 사흘간의 페스티벌입니다. 부에노스 아이레스에서 직접 오는 두 오케스트라와 한국·중국·홍콩의 디제이들이 만들어 내는 밤. 세계 각지의 탱고 커뮤니티와 만나는 자리.",
+    "body": "춘천국제탱고페스티벌은 콘서트와 사회춤(밀롱가)을 결합한 사흘간의 페스티벌입니다. 부에노스 아이레스에서 직접 오는 두 오케스트라와 한국·중국·홍콩의 디제이들이 만들어 내는 밤. 세계 각지의 탱고 커뮤니티와 만나는 자리.",
     "organization": {
       "name": "사단법인 춘천국제탱고페스티벌",
       "nameEn": "Chuncheon International Tango Festival Foundation",
@@ -472,7 +472,7 @@
     "items": [
       {
         "q": "예약은 어떻게 하나요?",
-        "a": "예약하기 버튼을 누르면 별도의 신청 페이지로 안내됩니다. 신청서 작성 후 7일 이내 입금 확인 시 예약이 확정됩니다."
+        "a": "예약하기 버튼을 누르면 별도의 신청 페이지로 안내됩니다. 신청서 작성 후 3일 이내 입금 확인 시 예약이 확정됩니다."
       },
       {
         "q": "환불 규정이 어떻게 되나요?",
@@ -520,9 +520,9 @@
     "emailHarvestNotice": "본 웹사이트에 게시된 이메일 주소가 전자우편 수집 프로그램 기타 기술적 장치를 이용하여 무단으로 수집되는 것을 거부하며, 이를 위반시 정보통신망법에 의해 형사 처벌됨을 유념하시기 바랍니다."
   },
   "meta": {
-    "title": "춘천국제땅고페스티벌 2026 — KCCTF",
+    "title": "춘천국제탱고페스티벌 2026 — KCCTF",
     "description": "부에노스 아이레스에서 온 두 오케스트라. Misteriosa Buenos Aires와 Tango Bardo. 2026.10.03–10.05 춘천 봄내체육관.",
-    "ogTitle": "춘천국제땅고페스티벌 2026",
+    "ogTitle": "춘천국제탱고페스티벌 2026",
     "ogDescription": "두 오케스트라, 사흘 밤. 봄내체육관에서.",
     "keywords": "탱고, 페스티벌, 춘천, 부에노스아이레스, Tango Bardo, Misteriosa, 밀롱가, 라이브 오케스트라"
   }

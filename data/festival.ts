@@ -71,7 +71,7 @@ export const ORCHESTRAS: Orchestra[] = [
     id: 'tango-bardo',
     nameKo: '땅고 바르도',
     nameEn: 'Tango Bardo',
-    roleKo: '오르께스따 띠삐까',
+    roleKo: '오르케스타 티피카',
     roleEn: 'Orquesta Típica',
     origin: 'Buenos Aires',
     image: '/images/orq-tango-bardo.jpg',
@@ -88,12 +88,12 @@ export const ORCHESTRAS: Orchestra[] = [
 ];
 
 export const DJS: DJ[] = [
-  { id: 'hagoon',  nameKo: '하군',     nameEn: 'Hagoon',         city: '서울', cityEn: 'Seoul',     country: 'Korea',     image: '/images/DJ/6.png' },
-  { id: 'stone',   nameKo: '스톤',     nameEn: 'Stone',          city: '부산', cityEn: 'Busan',     country: 'Korea',     image: '/images/DJ/4.png' },
-  { id: 'carlos',  nameKo: '까를로스', nameEn: 'Carlos',         city: '서울', cityEn: 'Seoul',     country: 'Korea',     image: '/images/DJ/3.png' },
-  { id: 'becca',   nameKo: '베카',     nameEn: 'Becca',          city: '서울', cityEn: 'Seoul',     country: 'Korea',     image: '/images/DJ/5.png' },
-  { id: 'wangwei', nameKo: '왕웨이',   nameEn: 'Wang Wei',       city: '상해', cityEn: 'Shanghai',  country: 'China',     image: '/images/DJ/2.png' },
   { id: 'natalie', nameKo: '나탈리',   nameEn: 'Nathalie Cheng', city: '홍콩', cityEn: 'Hong Kong', country: 'Hong Kong', image: '/images/DJ/1.png' },
+  { id: 'wangwei', nameKo: '왕웨이',   nameEn: 'Wang Wei',       city: '상해', cityEn: 'Shanghai',  country: 'China',     image: '/images/DJ/2.png' },
+  { id: 'carlos',  nameKo: '까를로스', nameEn: 'Carlos',         city: '서울', cityEn: 'Seoul',     country: 'Korea',     image: '/images/DJ/3.png' },
+  { id: 'stone',   nameKo: '스톤',     nameEn: 'Stone',          city: '부산', cityEn: 'Busan',     country: 'Korea',     image: '/images/DJ/4.png' },
+  { id: 'becca',   nameKo: '베카',     nameEn: 'Becca',          city: '서울', cityEn: 'Seoul',     country: 'Korea',     image: '/images/DJ/5.png' },
+  { id: 'hagoon',  nameKo: '하군',     nameEn: 'Hagoon',         city: '서울', cityEn: 'Seoul',     country: 'Korea',     image: '/images/DJ/6.png' },
 ];
 
 export const DANCE_TEAMS: DanceTeam[] = [

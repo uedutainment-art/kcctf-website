@@ -105,7 +105,7 @@
     "eyebrow": "★ TWO LIVE ORCHESTRAS ★ · From Buenos Aires",
     "subtitleEn": "From Buenos Aires",
     "title": "Two orchestras from Buenos Aires",
-    "lede": "Two world-touring orchestras from Buenos Aires. Six live nights in Chuncheon.",
+    "lede": "Two world-touring orchestras from Buenos Aires. Playing live in Chuncheon.",
     "items": [
       {
         "id": "tango-bardo",
@@ -325,7 +325,7 @@
     "eyebrow": "VENUE",
     "title": "Bomnae Complex",
     "subtitleEn": "춘천 봄내체육관",
-    "tagline": "An overwhelming dance floor.\nConcert-grade sound system.\nA stage built for live music.",
+    "tagline": "An overwhelming dance floor.\nConcert-grade sound system.\nA milonga on the concert stage.",
     "address": "Chuncheon, Gangwon, South Korea",
     "features": [
       {
@@ -405,13 +405,13 @@
       }
     ],
     "hotelPackageNote": "Hotel packages (Full Pack + 2 nights / + 3 nights) coming soon.",
-    "procedure": "① Apply → ② Pay within 7 days → ③ Confirmation → ④ QR code sent by email",
+    "procedure": "① Apply → ② Pay within 3 days → ③ Confirmation → ④ QR code sent by email",
     "paymentInfo": {
       "title": "Payment",
       "bank": "Shinhan Bank",
       "account": "100-038-582544",
       "holder": "Chuncheon International Tango Festival Foundation",
-      "note": "Reservation confirmed upon payment within 7 days",
+      "note": "Reservation confirmed upon payment within 3 days",
       "swift": "SHBKKRSE",
       "intlNote": "Chinese participants — Alipay/WeChat: info@kcctf.org"
     },
@@ -428,7 +428,7 @@
   "about": {
     "eyebrow": "ABOUT",
     "title": "Chuncheon International Tango Festival",
-    "subtitleEn": "춘천국제땅고페스티벌",
+    "subtitleEn": "춘천국제탱고페스티벌",
     "body": "KCCTF is a three-day festival combining live orchestra concerts with social dance (milongas). Two orchestras flown directly from Buenos Aires, six DJs from Korea, China, and Hong Kong — three nights of tango together. A meeting place for the global tango community in Chuncheon's autumn.",
     "organization": {
       "name": "Chuncheon International Tango Festival Foundation",
@@ -472,7 +472,7 @@
     "items": [
       {
         "q": "How do I register?",
-        "a": "Click the Register button to be taken to the application page. Reservation is confirmed upon payment within 7 days of submission."
+        "a": "Click the Register button to be taken to the application page. Reservation is confirmed upon payment within 3 days of submission."
       },
       {
         "q": "What is the refund policy?",

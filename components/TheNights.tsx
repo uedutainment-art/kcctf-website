@@ -42,7 +42,7 @@ export default function TheNights() {
             </h2>
             <p className="mt-5 font-kr-sans text-[16px] leading-[1.75] text-warm-white/72">
               {isKo
-                ? '두 오케스트라가 연주하는 밤. 콘서트급 음향, 압도적 플로어, 새벽까지 이어지는 탕다.'
+                ? '두 오케스트라가 연주하는 밤. 콘서트급 음향, 압도적 플로어, 새벽까지 이어지는 딴따.'
                 : 'Two orchestras. Concert-grade sound. A floor you\'ve never danced on.'}
             </p>
           </div>
