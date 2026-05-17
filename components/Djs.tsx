@@ -37,18 +37,6 @@ export default function Djs() {
           </p>
         </div>
 
-        <div className="relative mb-12 min-h-[300px] overflow-hidden bg-ink ring-1 ring-gold/16">
-          <Image
-            src="/images/2025/milonga-flow.jpg"
-            alt="2025 춘천국제탱고페스티벌 밀롱가 분위기"
-            fill
-            className="object-cover"
-            style={{ objectPosition: '50% 42%' }}
-            sizes="(max-width: 1024px) 100vw, 1180px"
-          />
-          <div className="absolute inset-0 bg-gradient-to-r from-night/92 via-night/55 to-night/10" />
-        </div>
-
         {/* 3×2 grid (desktop) / 2×3 (mobile) */}
         <div className="grid grid-cols-2 gap-5 md:grid-cols-3 md:gap-6">
           {DJS.map((dj) => (

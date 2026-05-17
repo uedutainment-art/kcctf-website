@@ -53,7 +53,7 @@
     "titleLine2": "땅고페스티벌",
     "subtitleEn": "CHUNCHEON INTERNATIONAL\nTANGO FESTIVAL",
     "tagline": "두 오케스트라, 사흘 밤. 봄내체육관에서.\n아시아에서 다시 없을 라이브 탱고.",
-    "uspBand": "TWO LIVE ORCHESTRAS · THREE NIGHTS",
+    "uspBand": "TWO ORCHESTRAS · 6 LIVE MILONGAS",
     "stats": {
       "orchestras": {
         "num": "2",
@@ -105,7 +105,7 @@
     "eyebrow": "★ TWO LIVE ORCHESTRAS ★ · From Buenos Aires",
     "subtitleEn": "From Buenos Aires",
     "title": "부에노스 아이레스에서 온 두 오케스트라",
-    "lede": "세계를 투어하는 두 오케스트라가 춘천에 옵니다.",
+    "lede": "세계를 투어한 두 오케스트라. 6번의 밤, 춘천에서 직접 연주합니다.",
     "items": [
       {
         "id": "tango-bardo",
@@ -243,7 +243,7 @@
     "eyebrow": "MOOD MAKERS",
     "title": "여섯 DJ.",
     "subtitleEn": "SIX DJs",
-    "lede": "한국·중국·홍콩에서 초대했습니다.\n3일의 밀롱가를 함께합니다.",
+    "lede": "라이브 사이의 밀롱가를 채우는 6인의 DJ.\n한국·중국·홍콩에서 초대했습니다.",
     "items": [
       {
         "id": "hagoon",

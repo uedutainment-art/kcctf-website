@@ -32,18 +32,18 @@ export default function TheNights() {
         <div className="grid gap-10 lg:grid-cols-[0.68fr_1.32fr] lg:items-center">
           <div className="max-w-xl">
             <p className="font-en-body font-black text-[11px] tracking-[0.4em] uppercase text-gold mb-4">
-              {isKo ? 'THE NIGHTS · 작년의 장면들' : 'THE NIGHTS · From 2025'}
+              {isKo ? 'THE EXPERIENCE · 작년의 장면들' : 'THE EXPERIENCE · From 2025'}
             </p>
             <h2
               className="font-kr-serif font-black leading-[1.02] tracking-[-0.04em] text-warm-white"
               style={{ fontSize: 'clamp(34px, 5vw, 66px)' }}
             >
-              {isKo ? '밤이 깊어지는 3일.' : 'Three nights, going deeper.'}
+              {isKo ? '라이브가 만드는 밤.' : 'Live. Every night.'}
             </h2>
             <p className="mt-5 font-kr-sans text-[16px] leading-[1.75] text-warm-white/72">
               {isKo
-                ? '2025년 페스티벌이 보여준 것들 — 무대의 에너지, 가득 찬 플로어, 마지막 탕다까지.'
-                : 'What 2025 showed — the energy of the stage, a full floor, all the way to the last tanda.'}
+                ? '두 오케스트라가 연주하는 밤. 콘서트급 음향, 압도적 플로어, 새벽까지 이어지는 탕다.'
+                : 'Two orchestras. Concert-grade sound. A floor you\'ve never danced on.'}
             </p>
           </div>
 

@@ -15,10 +15,10 @@ export default function HomePage() {
       <Hero />
       <FeelingStrip />
       <Orchestras />
-      <Schedule />
-      <Dancers />
       <TheNights />
+      <Schedule />
       <Djs />
+      <Dancers />
       <Venue />
       <Tickets />
       <Accommodation />
