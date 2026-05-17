@@ -81,19 +81,31 @@ export default function Nav() {
       <header
         onMouseLeave={() => setOpenGroup(null)}
         className={[
-          'fixed top-0 inset-x-0 z-50 transition-all duration-300',
-          scrolled
-            ? 'bg-mustard border-b border-ink-soft/20 shadow-[0_2px_12px_rgba(26,20,16,0.06)]'
-            : 'bg-transparent border-b border-transparent',
+          'fixed top-0 inset-x-0 z-50 transition-all duration-200',
+          'bg-mustard border-b border-ink-soft/18',
+          scrolled ? 'shadow-[0_2px_14px_rgba(26,20,16,0.10)]' : '',
         ].join(' ')}
       >
         <div className="max-w-[1200px] mx-auto px-6 md:px-10">
           <div className="flex h-[72px] lg:h-[72px] items-center justify-between gap-4">
 
-            {/* Logo */}
-            <Link href="/" className="flex-shrink-0">
+            {/* Logo — wordmark */}
+            <Link href="/" className="flex-shrink-0 flex items-center gap-2.5 group">
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/images/kcctf-nav-logo.png" alt="춘천국제탱고페스티벌" style={{ height: '38px', width: 'auto' }} />
+              <img
+                src="/images/KCCTF_logo/KCCTF.svg"
+                alt=""
+                aria-hidden
+                style={{ height: '44px', width: 'auto' }}
+              />
+              <div className="leading-none">
+                <div className="font-en-condensed font-black text-[22px] tracking-[0.04em] uppercase text-burgundy leading-[1]">
+                  KCCTF
+                </div>
+                <div className="font-kr-sans text-[9px] tracking-[0.18em] text-ink/55 mt-[2px]">
+                  춘천국제땅고페스티벌
+                </div>
+              </div>
             </Link>
 
             {/* Desktop nav links */}
@@ -117,7 +129,7 @@ export default function Nav() {
                       'font-en-body font-bold text-[11px] tracking-[0.22em] uppercase transition-colors duration-200 relative px-3 py-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-burgundy/35 focus-visible:ring-offset-2 focus-visible:ring-offset-mustard',
                       isActive || isOpen
                         ? 'text-burgundy after:absolute after:bottom-[11px] after:left-3 after:right-3 after:h-[2px] after:bg-burgundy after:rounded-full'
-                        : 'text-ink-soft hover:text-burgundy',
+                        : 'text-ink hover:text-burgundy',
                     ].join(' ')}
                   >
                     {group.label}
@@ -165,7 +177,7 @@ export default function Nav() {
               <Link
                 href={pathname}
                 locale={altLocale}
-                className="font-en-body text-[11px] tracking-[0.32em] uppercase text-ink-soft/60 hover:text-ink-soft transition-colors"
+                className="font-en-body text-[11px] tracking-[0.32em] uppercase text-ink/50 hover:text-ink transition-colors"
               >
                 {t('languageSwitch')}
               </Link>
@@ -182,7 +194,7 @@ export default function Nav() {
               <Link
                 href={pathname}
                 locale={altLocale}
-                className="font-en-body text-[11px] tracking-[0.32em] uppercase text-ink-soft/60"
+                className="font-en-body text-[11px] tracking-[0.32em] uppercase text-ink/50"
               >
                 {t('languageSwitch')}
               </Link>
@@ -215,9 +227,17 @@ export default function Nav() {
       >
         {/* Top bar */}
         <div className="flex items-center justify-between px-5 pt-5 pb-4">
-          <Link href="/" onClick={() => setMenuOpen(false)}>
+          <Link href="/" onClick={() => setMenuOpen(false)} className="flex items-center gap-2.5">
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/images/kcctf-nav-logo.png" alt="춘천국제탱고페스티벌" style={{ height: '44px', width: 'auto' }} />
+            <img src="/images/KCCTF_logo/KCCTF.svg" alt="" aria-hidden style={{ height: '48px', width: 'auto' }} />
+            <div className="leading-none">
+              <div className="font-en-condensed font-black text-[24px] tracking-[0.04em] uppercase text-burgundy leading-[1]">
+                KCCTF
+              </div>
+              <div className="font-kr-sans text-[9px] tracking-[0.18em] text-ink/55 mt-[2px]">
+                춘천국제땅고페스티벌
+              </div>
+            </div>
           </Link>
           <button
             onClick={() => setMenuOpen(false)}
