@@ -14,38 +14,19 @@
     "schedule": "Program",
     "venue": "Venue",
     "tickets": "Tickets",
+    "accommodation": "Stay",
+    "faq": "FAQ",
     "register": "Register",
     "languageSwitch": "KR",
     "menuOpen": "Open menu",
     "menuClose": "Close menu",
-    "groups": {
-      "festival": {
-        "label": "Festival",
-        "items": [
-          { "label": "Orchestras", "href": "#orchestras" },
-          { "label": "Performers", "href": "#dancers" },
-          { "label": "DJs", "href": "#djs" },
-          { "label": "Program", "href": "#schedule" }
-        ]
-      },
-      "info": {
-        "label": "Info",
-        "items": [
-          { "label": "Registration", "href": "#tickets" },
-          { "label": "Prices", "href": "#tickets" },
-          { "label": "Accommodation", "href": "#tickets" },
-          { "label": "Venue", "href": "#venue" }
-        ]
-      },
-      "travel": {
-        "label": "Travel",
-        "items": [
-          { "label": "Getting Here", "href": "#venue" },
-          { "label": "Enjoy Chuncheon", "href": "#venue" },
-          { "label": "FAQ", "href": "#tickets" }
-        ]
-      }
-    }
+    "items": [
+      { "label": "Lineup", "href": "#orchestras" },
+      { "label": "Program", "href": "#schedule" },
+      { "label": "Venue", "href": "#venue" },
+      { "label": "Discover", "href": "#city-guide" },
+      { "label": "Stay", "href": "#accommodation" }
+    ]
   },
   "hero": {
     "eyebrow": "3RD EDITION · 2026",
@@ -501,8 +482,34 @@
       {
         "q": "Can I register on-site?",
         "a": "On-site registration is possible but may be limited if capacity is reached. Advance reservation is strongly recommended."
+      },
+      {
+        "q": "I want to dance more in Korea, before or after the festival.",
+        "a": "All milongas, events, and classes across Korea are listed on TangoNOW — the most comprehensive guide to the Korean tango scene."
       }
     ]
+  },
+  "cityGuide": {
+    "eyebrow": "DISCOVER CHUNCHEON",
+    "title": "Three Days Off the Floor",
+    "lede": "A short guide to the city. Recommendations coming soon.",
+    "cards": [
+      { "emoji": "🍗", "category": "EAT", "title": "Dakgalbi & Makguksu", "caption": "Chuncheon classics" },
+      { "emoji": "🚣", "category": "WALK", "title": "Lake Uiamho", "caption": "Riverside paths" },
+      { "emoji": "🌳", "category": "EXPLORE", "title": "Day Trips", "caption": "Nami Island & beyond" },
+      { "emoji": "🚄", "category": "ARRIVE", "title": "ITX from Seoul", "caption": "60 minutes" }
+    ],
+    "comingSoon": "Picks coming soon"
+  },
+  "afterKcctf": {
+    "eyebrow": "BEFORE & AFTER KCCTF",
+    "title": "More tango in Korea",
+    "lede": "Staying in Korea before or after the festival? Keep dancing in other cities.",
+    "ledeEn": "한국에 더 머무신다면, 다른 도시에서 계속 추세요.",
+    "cta": "Korea-wide tango calendar",
+    "ctaEn": "전국 탱고 일정 보기",
+    "credit": "powered by TangoNOW",
+    "url": "https://ktnow.kr"
   },
   "footer": {
     "tagline": "See you in Chuncheon",

@@ -6,8 +6,11 @@ import Djs from '@/components/Djs';
 import Dancers from '@/components/Dancers';
 import TheNights from '@/components/TheNights';
 import Venue from '@/components/Venue';
+import CityGuide from '@/components/CityGuide';
 import Tickets from '@/components/Tickets';
+import FAQ from '@/components/FAQ';
 import Accommodation from '@/components/Accommodation';
+import AfterKCCTF from '@/components/AfterKCCTF';
 
 export default function HomePage() {
   return (
@@ -20,8 +23,11 @@ export default function HomePage() {
       <Djs />
       <Dancers />
       <Venue />
+      <CityGuide />
       <Tickets />
+      <FAQ />
       <Accommodation />
+      <AfterKCCTF />
     </>
   );
 }

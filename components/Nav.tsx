@@ -11,12 +11,6 @@ type NavItem = {
   href: string;
 };
 
-type NavGroup = {
-  key: string;
-  label: string;
-  items: NavItem[];
-};
-
 export default function Nav() {
   const t = useTranslations('nav');
   const locale = useLocale();
@@ -25,7 +19,6 @@ export default function Nav() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [activeHref, setActiveHref] = useState('');
-  const [openGroup, setOpenGroup] = useState<string | null>(null);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
@@ -35,15 +28,19 @@ export default function Nav() {
   }, []);
 
   useEffect(() => {
-    // Order must match the actual page section order (after reorder: djs before dancers)
-    const sections = ['orchestras', 'schedule', 'djs', 'dancers', 'venue', 'tickets'];
+    // Order must match the actual page section order so the active indicator
+    // resolves to the last section whose top is at/above the offset.
+    const sections = ['orchestras', 'schedule', 'djs', 'dancers', 'venue', 'city-guide', 'tickets', 'faq', 'accommodation'];
     const sectionToHref: Record<string, string> = {
-      orchestras: '#orchestras',
-      schedule:   '#schedule',
-      djs:        '#djs',
-      dancers:    '#dancers',
-      venue:      '#venue',
-      tickets:    '#tickets',
+      orchestras:    '#orchestras',
+      schedule:      '#schedule',
+      djs:           '#orchestras', // 라인업 묶음
+      dancers:       '#orchestras', // 라인업 묶음
+      venue:         '#venue',
+      'city-guide':  '#city-guide',
+      tickets:       '#venue',      // tickets 안 보이면 venue 활성 유지
+      faq:           '#venue',
+      accommodation: '#accommodation',
     };
     const onScroll = () => {
       let current = '';
@@ -65,12 +62,7 @@ export default function Nav() {
     return () => { document.body.style.overflow = ''; };
   }, [menuOpen]);
 
-  const rawGroups = t.raw('groups') as Record<string, Omit<NavGroup, 'key'>>;
-  const navGroups = ['festival', 'info', 'travel'].map((key) => ({
-    key,
-    ...rawGroups[key],
-  }));
-  const activeGroup = navGroups.find((group) => group.key === openGroup) ?? null;
+  const navItems = t.raw('items') as NavItem[];
 
   const registerUrl = process.env.NEXT_PUBLIC_REGISTER_URL ?? '#tickets';
   const altLocale = locale === 'ko' ? 'en' : 'ko';
@@ -79,7 +71,6 @@ export default function Nav() {
     <>
       {/* ── Sticky header ─────────────────────────────────────────────── */}
       <header
-        onMouseLeave={() => setOpenGroup(null)}
         className={[
           'fixed top-0 inset-x-0 z-50 transition-all duration-200',
           'bg-mustard border-b border-ink-soft/18',
@@ -87,7 +78,7 @@ export default function Nav() {
         ].join(' ')}
       >
         <div className="max-w-[1200px] mx-auto px-6 md:px-10">
-          <div className="flex h-[72px] lg:h-[72px] items-center justify-between gap-4">
+          <div className="flex h-[72px] items-center justify-between gap-4">
 
             {/* Logo */}
             <Link href="/" className="flex-shrink-0">
@@ -100,68 +91,26 @@ export default function Nav() {
             </Link>
 
             {/* Desktop nav links */}
-            <nav
-              className="hidden lg:flex items-center gap-2"
-              aria-label="Main navigation"
-            >
-              {navGroups.map((group) => {
-                const isActive = group.items.some((item) => item.href === activeHref);
-                const isOpen = openGroup === group.key;
-
+            <nav className="hidden lg:flex items-center gap-1" aria-label="Main navigation">
+              {navItems.map((item) => {
+                const isActive = activeHref === item.href;
                 return (
-                  <button
-                    key={group.key}
-                    type="button"
-                    aria-expanded={isOpen}
-                    onMouseEnter={() => setOpenGroup(group.key)}
-                    onFocus={() => setOpenGroup(group.key)}
-                    onClick={() => setOpenGroup(isOpen ? null : group.key)}
+                  <a
+                    key={item.href}
+                    href={item.href}
                     className={[
-                      'font-en-body font-bold text-[11px] tracking-[0.22em] uppercase transition-colors duration-200 relative px-3 py-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-burgundy/35 focus-visible:ring-offset-2 focus-visible:ring-offset-mustard',
-                      isActive || isOpen
+                      'font-en-body font-bold text-[11px] tracking-[0.22em] uppercase transition-colors duration-200 relative px-3 py-4',
+                      'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-burgundy/35 focus-visible:ring-offset-2 focus-visible:ring-offset-mustard',
+                      isActive
                         ? 'text-burgundy after:absolute after:bottom-[11px] after:left-3 after:right-3 after:h-[2px] after:bg-burgundy after:rounded-full'
                         : 'text-ink hover:text-burgundy',
                     ].join(' ')}
                   >
-                    {group.label}
-                  </button>
+                    {item.label}
+                  </a>
                 );
               })}
             </nav>
-
-            {activeGroup && (
-              <div
-                className="hidden lg:block absolute left-1/2 top-[72px] w-[560px] -translate-x-1/2 pt-2"
-                onMouseEnter={() => setOpenGroup(activeGroup.key)}
-                onMouseLeave={() => setOpenGroup(null)}
-              >
-                <div className="border-t-4 border-burgundy bg-ink/95 px-5 py-4 shadow-[0_14px_34px_rgba(26,20,16,0.24)] backdrop-blur-sm">
-                  <p className="font-en-body font-bold text-[11px] tracking-[0.34em] uppercase text-gold mb-2">
-                    {activeGroup.label}
-                  </p>
-                  <div className="grid grid-cols-2 gap-x-6">
-                    {activeGroup.items.map((item) => (
-                      <a
-                        key={`${activeGroup.key}-${item.label}`}
-                        href={item.href}
-                        onClick={() => setOpenGroup(null)}
-                        className={[
-                          'group flex min-h-[40px] items-center justify-between border-b border-warm-white/12 font-kr-sans text-[14px] transition-colors',
-                          activeHref === item.href
-                            ? 'text-gold'
-                            : 'text-warm-white/82 hover:text-gold',
-                        ].join(' ')}
-                      >
-                        <span>{item.label}</span>
-                        <span className="font-en-body text-[13px] opacity-40 transition-transform group-hover:translate-x-1" aria-hidden>
-                          →
-                        </span>
-                      </a>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            )}
 
             {/* Desktop right: lang + CTA */}
             <div className="hidden lg:flex items-center gap-4">
@@ -246,31 +195,20 @@ export default function Nav() {
 
         {/* Menu links */}
         <nav className="flex-1 overflow-y-auto px-6 py-4" aria-label="Mobile navigation">
-          <div className="mx-auto flex max-w-sm flex-col gap-8">
-            {navGroups.map((group) => (
-              <div key={group.key}>
-                <p className="font-en-body font-bold text-[11px] tracking-[0.34em] uppercase text-gold mb-3">
-                  {group.label}
-                </p>
-                <div className="flex flex-col border-t border-ink-soft/15">
-                  {group.items.map((item) => (
-                    <a
-                      key={`${group.key}-${item.label}`}
-                      href={item.href}
-                      onClick={() => setMenuOpen(false)}
-                      className={[
-                        'flex items-center justify-between border-b border-ink-soft/15 py-4 font-kr-sans text-[18px] transition-colors',
-                        activeHref === item.href ? 'text-burgundy' : 'text-ink-soft hover:text-burgundy',
-                      ].join(' ')}
-                    >
-                      <span>{item.label}</span>
-                      <span className="font-en-body text-[14px] opacity-45" aria-hidden>
-                        →
-                      </span>
-                    </a>
-                  ))}
-                </div>
-              </div>
+          <div className="mx-auto flex max-w-sm flex-col border-t border-ink-soft/15">
+            {navItems.map((item) => (
+              <a
+                key={item.href}
+                href={item.href}
+                onClick={() => setMenuOpen(false)}
+                className={[
+                  'flex items-center justify-between border-b border-ink-soft/15 py-5 font-kr-sans text-[20px] transition-colors',
+                  activeHref === item.href ? 'text-burgundy font-bold' : 'text-ink-soft hover:text-burgundy',
+                ].join(' ')}
+              >
+                <span>{item.label}</span>
+                <span className="font-en-body text-[14px] opacity-45" aria-hidden>→</span>
+              </a>
             ))}
           </div>
         </nav>

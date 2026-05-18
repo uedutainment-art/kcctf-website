@@ -14,38 +14,19 @@
     "schedule": "일정",
     "venue": "장소",
     "tickets": "예매",
+    "accommodation": "숙소",
+    "faq": "FAQ",
     "register": "예약하기",
     "languageSwitch": "EN",
     "menuOpen": "메뉴 열기",
     "menuClose": "메뉴 닫기",
-    "groups": {
-      "festival": {
-        "label": "Festival",
-        "items": [
-          { "label": "오케스트라", "href": "#orchestras" },
-          { "label": "공연자", "href": "#dancers" },
-          { "label": "DJ", "href": "#djs" },
-          { "label": "프로그램", "href": "#schedule" }
-        ]
-      },
-      "info": {
-        "label": "Info",
-        "items": [
-          { "label": "예매", "href": "#tickets" },
-          { "label": "가격", "href": "#tickets" },
-          { "label": "숙소", "href": "#tickets" },
-          { "label": "장소", "href": "#venue" }
-        ]
-      },
-      "travel": {
-        "label": "Travel",
-        "items": [
-          { "label": "찾아오는 길", "href": "#venue" },
-          { "label": "춘천 즐기기", "href": "#venue" },
-          { "label": "FAQ", "href": "#tickets" }
-        ]
-      }
-    }
+    "items": [
+      { "label": "라인업", "href": "#orchestras" },
+      { "label": "일정", "href": "#schedule" },
+      { "label": "장소", "href": "#venue" },
+      { "label": "즐기기", "href": "#city-guide" },
+      { "label": "숙소", "href": "#accommodation" }
+    ]
   },
   "hero": {
     "eyebrow": "3RD EDITION · 2026",
@@ -501,8 +482,34 @@
       {
         "q": "현장 등록도 받나요?",
         "a": "현장 등록은 가능하지만 정원이 차면 마감될 수 있어 사전 예약을 권장드립니다."
+      },
+      {
+        "q": "페스티벌 전후에 한국에서 더 추고 싶어요.",
+        "a": "전국 밀롱가·이벤트·클래스 일정은 TangoNOW에서 확인하실 수 있습니다. 한국 탱고 신scene의 가장 종합적인 가이드입니다."
       }
     ]
+  },
+  "cityGuide": {
+    "eyebrow": "DISCOVER CHUNCHEON",
+    "title": "춘천 즐기기",
+    "lede": "춤 사이의 시간을 위한 가이드. 추천 장소는 곧 공개됩니다.",
+    "cards": [
+      { "emoji": "🍗", "category": "음식", "title": "닭갈비·막국수", "caption": "춘천 시그니처" },
+      { "emoji": "🚣", "category": "자연", "title": "호반·산책", "caption": "의암호·소양강" },
+      { "emoji": "🌳", "category": "관광", "title": "하루 코스", "caption": "남이섬·문학촌" },
+      { "emoji": "🚄", "category": "교통", "title": "ITX 청춘", "caption": "서울 60분" }
+    ],
+    "comingSoon": "추천 장소 곧 공개"
+  },
+  "afterKcctf": {
+    "eyebrow": "BEFORE & AFTER KCCTF",
+    "title": "한국에서 더 추기",
+    "lede": "춘천 전후로 한국에 머무신다면, 다른 도시에서 계속 추세요.",
+    "ledeEn": "If you're in Korea before or after the festival, keep dancing in other cities.",
+    "cta": "전국 탱고 일정 보기",
+    "ctaEn": "Korea-wide tango calendar",
+    "credit": "powered by TangoNOW",
+    "url": "https://ktnow.kr"
   },
   "footer": {
     "tagline": "춘천에서 만나요",

@@ -3,11 +3,12 @@ import { useTranslations, useLocale } from 'next-intl';
 import { Link } from '@/i18n/navigation';
 
 const NAV_LINKS = [
-  { href: '#orchestras', key: 'lineup'   },
-  { href: '#schedule',   key: 'schedule' },
-  { href: '#tickets',    key: 'tickets'  },
-  { href: '#venue',      key: 'venue'    },
-  { href: '#tickets',    key: 'register' },
+  { href: '#orchestras',    key: 'lineup'        },
+  { href: '#schedule',      key: 'schedule'      },
+  { href: '#venue',         key: 'venue'         },
+  { href: '#tickets',       key: 'tickets'       },
+  { href: '#accommodation', key: 'accommodation' },
+  { href: '#faq',           key: 'faq'           },
 ] as const;
 
 const LEGAL_LINKS = [
