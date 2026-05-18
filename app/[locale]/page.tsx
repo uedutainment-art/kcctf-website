@@ -18,15 +18,15 @@ export default function HomePage() {
       <Hero />
       <FeelingStrip />
       <Orchestras />
-      <TheNights />
-      <Schedule />
       <Djs />
       <Dancers />
+      <TheNights />
+      <Schedule />
       <Venue />
       <CityGuide />
+      <Accommodation />
       <Tickets />
       <FAQ />
-      <Accommodation />
       <AfterKCCTF />
     </>
   );

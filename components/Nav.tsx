@@ -30,17 +30,17 @@ export default function Nav() {
   useEffect(() => {
     // Order must match the actual page section order so the active indicator
     // resolves to the last section whose top is at/above the offset.
-    const sections = ['orchestras', 'schedule', 'djs', 'dancers', 'venue', 'city-guide', 'tickets', 'faq', 'accommodation'];
+    const sections = ['orchestras', 'djs', 'dancers', 'schedule', 'venue', 'city-guide', 'accommodation', 'tickets', 'faq'];
     const sectionToHref: Record<string, string> = {
-      orchestras:    '#orchestras',
-      schedule:      '#schedule',
+      orchestras:    '#orchestras', // 라인업
       djs:           '#orchestras', // 라인업 묶음
       dancers:       '#orchestras', // 라인업 묶음
+      schedule:      '#schedule',
       venue:         '#venue',
       'city-guide':  '#city-guide',
-      tickets:       '#venue',      // tickets 안 보이면 venue 활성 유지
-      faq:           '#venue',
       accommodation: '#accommodation',
+      tickets:       '#accommodation', // tickets/FAQ 영역에선 숙소 활성 유지
+      faq:           '#accommodation',
     };
     const onScroll = () => {
       let current = '';

@@ -503,12 +503,10 @@
   },
   "afterKcctf": {
     "eyebrow": "BEFORE & AFTER KCCTF",
-    "title": "More tango in Korea",
     "lede": "Staying in Korea before or after the festival? Keep dancing in other cities.",
     "ledeEn": "한국에 더 머무신다면, 다른 도시에서 계속 추세요.",
     "cta": "Korea-wide tango calendar",
     "ctaEn": "전국 탱고 일정 보기",
-    "credit": "powered by TangoNOW",
     "url": "https://ktnow.kr"
   },
   "footer": {
