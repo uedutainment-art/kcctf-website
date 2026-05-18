@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import { useTranslations } from 'next-intl';
 import { DANCE_TEAMS } from '@/data/festival';
 
@@ -33,7 +34,7 @@ export default function Dancers() {
             <div
               key={team.id}
               className={[
-                'relative rounded-lg p-6 text-center overflow-hidden transition-transform duration-200',
+                'group relative rounded-lg p-6 text-center overflow-hidden transition-transform duration-200',
                 team.isTBA
                   ? 'border-2 border-dashed border-ink-soft/25 bg-transparent'
                   : 'bg-cream shadow-[4px_4px_0_#8B1A2B] hover:-translate-y-[3px]',
@@ -52,10 +53,20 @@ export default function Dancers() {
                 />
               )}
 
-              {/* Photo placeholder / TBA */}
+              {/* Photo / placeholder / TBA */}
               {team.isTBA ? (
                 <div className="mx-auto mb-4 w-24 h-24 rounded-full border-2 border-dashed border-ink-soft/25 bg-transparent flex items-center justify-center">
                   <span className="text-2xl text-ink-soft/30" aria-hidden>?</span>
+                </div>
+              ) : team.image ? (
+                <div className="relative mx-auto mb-5 w-full aspect-square overflow-hidden bg-ink/5 ring-1 ring-ink-soft/15">
+                  <Image
+                    src={team.image}
+                    alt={team.name}
+                    fill
+                    className="object-cover object-[center_25%] grayscale-[8%] contrast-[1.04] transition-[filter,transform] duration-300 group-hover:grayscale-0 group-hover:scale-[1.03]"
+                    sizes="(max-width: 640px) 90vw, (max-width: 1024px) 44vw, 280px"
+                  />
                 </div>
               ) : (
                 <div className="relative mx-auto mb-5 flex flex-col items-center gap-2">
