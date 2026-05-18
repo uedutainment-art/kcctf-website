@@ -31,8 +31,35 @@ export async function generateMetadata({
       },
     },
     openGraph: {
+      type: 'website',
       locale: isKo ? 'ko_KR' : 'en_US',
       alternateLocale: isKo ? 'en_US' : 'ko_KR',
+      title: isKo
+        ? '춘천국제탱고페스티벌 2026 — KCCTF'
+        : 'Chuncheon International Tango Festival 2026 — KCCTF',
+      description: isKo
+        ? '땅고 바르도 · 미스테리오사 부에노스 아이레스. 2026.10.03–10.05 춘천 봄내체육관.'
+        : 'Tango Bardo · Misteriosa Buenos Aires. Oct 3–5, 2026 · Chuncheon Bomnae Complex.',
+      images: [
+        {
+          url: '/og-image.jpg',
+          width: 1200,
+          height: 630,
+          alt: isKo
+            ? '춘천국제탱고페스티벌 2026'
+            : 'Chuncheon International Tango Festival 2026',
+        },
+      ],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: isKo
+        ? '춘천국제탱고페스티벌 2026 — KCCTF'
+        : 'Chuncheon International Tango Festival 2026 — KCCTF',
+      description: isKo
+        ? '땅고 바르도 · 미스테리오사 부에노스 아이레스. 2026.10.03–10.05 춘천 봄내체육관.'
+        : 'Tango Bardo · Misteriosa Buenos Aires. Oct 3–5, 2026 · Chuncheon Bomnae Complex.',
+      images: ['/og-image.jpg'],
     },
   };
 }
