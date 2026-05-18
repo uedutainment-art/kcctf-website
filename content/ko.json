@@ -497,6 +497,27 @@
     ],
     "comingSoon": "추천 장소 곧 공개"
   },
+  "logistics": {
+    "eyebrow": "PRACTICAL · 운영 안내",
+    "title": "운영 안내",
+    "lede": "셔틀버스와 시티투어 — 자세한 정보는 행사가 가까워지면 공개됩니다.",
+    "cards": [
+      {
+        "emoji": "🚌",
+        "category": "셔틀버스",
+        "categoryEn": "SHUTTLE",
+        "title": "호텔 ↔ 봄내체육관",
+        "note": "운행 시간표 곧 공개"
+      },
+      {
+        "emoji": "🚐",
+        "category": "시티투어",
+        "categoryEn": "CITY TOUR",
+        "title": "10/5 (월) 11:00 — 14:00",
+        "note": "코스 상세 곧 공개"
+      }
+    ]
+  },
   "afterKcctf": {
     "eyebrow": "BEFORE & AFTER KCCTF",
     "lede": "춘천 전후로 한국에 머무신다면, 다른 도시에서도 탱고를 즐기실 수 있어요.",

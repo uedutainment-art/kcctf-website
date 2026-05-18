@@ -497,6 +497,27 @@
     ],
     "comingSoon": "Picks coming soon"
   },
+  "logistics": {
+    "eyebrow": "PRACTICAL · ON-SITE",
+    "title": "Practical Info",
+    "lede": "Shuttle bus and city tour details will be announced closer to the festival.",
+    "cards": [
+      {
+        "emoji": "🚌",
+        "category": "셔틀버스",
+        "categoryEn": "SHUTTLE",
+        "title": "Hotel ↔ Bomnae Complex",
+        "note": "Schedule coming soon"
+      },
+      {
+        "emoji": "🚐",
+        "category": "시티투어",
+        "categoryEn": "CITY TOUR",
+        "title": "Mon Oct 5 · 11:00–14:00",
+        "note": "Route coming soon"
+      }
+    ]
+  },
   "afterKcctf": {
     "eyebrow": "BEFORE & AFTER KCCTF",
     "lede": "Staying in Korea before or after the festival? Tango awaits in other cities, too.",

@@ -10,6 +10,7 @@ import CityGuide from '@/components/CityGuide';
 import Tickets from '@/components/Tickets';
 import FAQ from '@/components/FAQ';
 import Accommodation from '@/components/Accommodation';
+import Logistics from '@/components/Logistics';
 import AfterKCCTF from '@/components/AfterKCCTF';
 
 export default function HomePage() {
@@ -25,6 +26,7 @@ export default function HomePage() {
       <Venue />
       <CityGuide />
       <Accommodation />
+      <Logistics />
       <Tickets />
       <FAQ />
       <AfterKCCTF />
