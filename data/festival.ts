@@ -114,13 +114,13 @@ export const TICKET_TIERS: TicketTier[] = [
 // idx matches position in content/*.json schedule.items[]
 export const SCHEDULE_ITEMS: ScheduleItem[] = [
   { day: '10/3', dow: 'SAT', time: '13:00 — 14:40', type: 'concert',    idx: 0, featured: true  },
-  { day: '10/3', dow: 'SAT', time: '15:00 — 20:00', type: 'milonga',    idx: 1, djId: 'becca'   },
+  { day: '10/3', dow: 'SAT', time: '15:00 — 20:00', type: 'milonga',    idx: 1, djId: 'wangwei' },
   { day: '10/3', dow: 'SAT', time: '22:00 — 04:00', type: 'milonga',    idx: 2, djId: 'carlos'  },
-  { day: '10/4', dow: 'SUN', time: '14:00 — 19:00', type: 'milonga',    idx: 3, djId: 'hagoon'  },
-  { day: '10/4', dow: 'SUN', time: '21:00 — 03:00', type: 'milonga',    idx: 4, djId: 'wangwei', featured: true },
+  { day: '10/4', dow: 'SUN', time: '14:00 — 19:00', type: 'milonga',    idx: 3, djId: 'natalie' },
+  { day: '10/4', dow: 'SUN', time: '21:00 — 03:00', type: 'milonga',    idx: 4, djId: 'becca',   featured: true },
   { day: '10/5', dow: 'MON', time: '11:00 — 14:00', type: 'tour',       idx: 5 },
   { day: '10/5', dow: 'MON', time: '15:00 — 20:00', type: 'milonga',    idx: 6, djId: 'stone'   },
-  { day: '10/5', dow: 'MON', time: '20:00 — 24:00', type: 'afterparty', idx: 7, djId: 'natalie', featured: true },
+  { day: '10/5', dow: 'MON', time: '20:00 — 24:00', type: 'afterparty', idx: 7, djId: 'hagoon',  featured: true },
 ];
 
 export const VENUES: Venue[] = [

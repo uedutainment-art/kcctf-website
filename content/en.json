@@ -146,8 +146,8 @@
         "type": "milonga",
         "title": "M1 · Welcome Milonga",
         "subtitle": "환영 밀롱가",
-        "djId": "becca",
-        "djName": "DJ Becca",
+        "djId": "wangwei",
+        "djName": "DJ Wang Wei",
         "mood": "From sunlight to dusk — the first abrazo."
       },
       {
@@ -168,8 +168,8 @@
         "type": "milonga",
         "title": "M3 · Sunday Afternoon",
         "subtitle": "일요 오후 밀롱가",
-        "djId": "hagoon",
-        "djName": "DJ Hagoon",
+        "djId": "natalie",
+        "djName": "DJ Nathalie",
         "mood": "The hour between days."
       },
       {
@@ -179,8 +179,8 @@
         "type": "milonga",
         "title": "M4 · Grand Milonga",
         "subtitle": "그란 밀롱가",
-        "djId": "wangwei",
-        "djName": "DJ Wang Wei",
+        "djId": "becca",
+        "djName": "DJ Becca",
         "mood": "The most luminous night.",
         "featured": true
       },
@@ -211,8 +211,8 @@
         "type": "afterparty",
         "title": "M6 · After Party & Milonga",
         "subtitle": "애프터 파티 & 밀롱가",
-        "djId": "natalie",
-        "djName": "DJ Nathalie",
+        "djId": "hagoon",
+        "djName": "DJ Hagoon",
         "mood": "One last tanda.",
         "featured": true
       }

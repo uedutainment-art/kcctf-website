@@ -146,8 +146,8 @@
         "type": "milonga",
         "title": "M1 · 환영 밀롱가",
         "subtitle": "Welcome Milonga",
-        "djId": "becca",
-        "djName": "DJ 베카",
+        "djId": "wangwei",
+        "djName": "DJ 왕웨이",
         "mood": "햇빛에서 노을까지 — 첫 아브라소."
       },
       {
@@ -168,8 +168,8 @@
         "type": "milonga",
         "title": "M3 · 일요 오후 밀롱가",
         "subtitle": "Sunday Afternoon Milonga",
-        "djId": "hagoon",
-        "djName": "DJ 하군",
+        "djId": "natalie",
+        "djName": "DJ 나탈리",
         "mood": "낮의 사이에 머무는 시간."
       },
       {
@@ -179,8 +179,8 @@
         "type": "milonga",
         "title": "M4 · 그란 밀롱가",
         "subtitle": "Grand Milonga",
-        "djId": "wangwei",
-        "djName": "DJ 왕웨이",
+        "djId": "becca",
+        "djName": "DJ 베카",
         "mood": "가장 화려한 밤.",
         "featured": true
       },
@@ -211,8 +211,8 @@
         "type": "afterparty",
         "title": "M6 · 애프터 파티 & 밀롱가",
         "subtitle": "After Party & Milonga",
-        "djId": "natalie",
-        "djName": "DJ 나탈리",
+        "djId": "hagoon",
+        "djName": "DJ 하군",
         "mood": "마지막 한 딴따.",
         "featured": true
       }
