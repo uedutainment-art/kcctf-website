@@ -65,17 +65,6 @@ const ROOMS = [
     bedKo: '싱글베드 2개',
     bedEn: '2 Single Beds',
   },
-  {
-    id: 'ondol',
-    image: '/images/hotel/ondol.jpg',
-    nameKo: '온돌 객실',
-    nameEn: 'Ondol Room',
-    size: '23㎡',
-    guestsKo: '기준 3인 · 최대 4인',
-    guestsEn: 'Up to 4 guests',
-    bedKo: '개별 침구 세트',
-    bedEn: 'Floor Bedding',
-  },
 ];
 
 // ── Date helpers ───────────────────────────────────────────────────────────────
@@ -223,7 +212,7 @@ return (
               </p>
             )}
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 max-w-2xl mx-auto">
             {ROOMS.map((room) => {
               const liveRoom = roomMap[room.id];
               const displayName = liveRoom
