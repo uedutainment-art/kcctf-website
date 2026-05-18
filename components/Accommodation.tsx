@@ -78,6 +78,25 @@ const ROOMS = [
   },
 ];
 
+// ── Date helpers ───────────────────────────────────────────────────────────────
+
+const DAYS_KO = ['일', '월', '화', '수', '목', '금', '토'];
+const DAYS_EN = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+
+/** "10/2(금) 체크인 → 10/6(화) 체크아웃 · 4박" 식 문자열 생성 */
+function formatStay(nights: string[], nightsCount: number, isKo: boolean): string {
+  if (!nights || nights.length === 0) return '';
+  const checkIn = new Date(nights[0]);
+  const checkOut = new Date(nights[nights.length - 1]);
+  checkOut.setDate(checkOut.getDate() + 1);
+  const days = isKo ? DAYS_KO : DAYS_EN;
+  const fmt = (d: Date) => `${d.getMonth() + 1}/${d.getDate()}(${days[d.getDay()]})`;
+  const inLabel  = isKo ? '체크인' : 'Check-in';
+  const outLabel = isKo ? '체크아웃' : 'Check-out';
+  const nightsLabel = isKo ? `${nightsCount}박` : `${nightsCount}N`;
+  return `${fmt(checkIn)} ${inLabel} → ${fmt(checkOut)} ${outLabel} · ${nightsLabel}`;
+}
+
 // ── Availability badge ─────────────────────────────────────────────────────────
 
 function AvailBadge({ room }: { room: RoomType }) {
@@ -271,11 +290,11 @@ return (
                   <p className={`font-en-body font-bold text-[10px] tracking-[0.2em] uppercase mb-1 ${pkg.default ? 'text-gold-soft' : 'text-gold'}`}>
                     {pkg.nightsCount}{isKo ? '박' : 'N'}
                   </p>
-                  <p className="font-kr-sans font-bold text-[14px] leading-snug mb-1">
+                  <p className="font-kr-sans font-bold text-[14px] leading-snug mb-2">
                     {isKo ? pkg.label.ko : pkg.label.en}
                   </p>
-                  <p className={`font-kr-sans text-[12px] mb-4 flex-1 ${pkg.default ? 'text-warm-white/65' : 'text-charcoal/50'}`}>
-                    {isKo ? pkg.description.ko : pkg.description.en}
+                  <p className={`font-kr-sans text-[12px] leading-[1.5] mb-4 flex-1 ${pkg.default ? 'text-warm-white/72' : 'text-charcoal/65'}`}>
+                    {formatStay(pkg.nights, pkg.nightsCount, isKo)}
                   </p>
                   <p className={`font-en-display italic font-black text-[26px] leading-none ${pkg.default ? 'text-gold-soft' : 'text-ink-soft'}`}>
                     ₩{pkg.priceTotal.toLocaleString()}

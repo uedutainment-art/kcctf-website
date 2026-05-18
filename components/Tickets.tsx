@@ -32,6 +32,7 @@ export default function Tickets() {
   const procedure = t('procedure');
   const earlybirdTier = TICKET_TIERS[0];
   const earlybirdItem = items[0];
+  const onsiteItem = items.find((i) => i.id === 'fullpack-onsite');
 
   return (
     <section id="tickets" className="bg-mustard-soft py-16">
@@ -66,11 +67,19 @@ export default function Tickets() {
               {earlybirdItem.name}
             </p>
             <p
-              className="font-en-display italic font-black leading-none mb-5 text-gold-soft"
+              className="font-en-display italic font-black leading-none mb-2 text-gold-soft"
               style={{ fontSize: 'clamp(42px, 7vw, 72px)' }}
             >
               {earlybirdItem.priceLabel}
             </p>
+            {onsiteItem && (
+              <p className="mb-5 font-kr-sans text-[12px] text-warm-white/55">
+                {isKo ? '얼리버드 마감 후 정가 ' : 'After earlybird '}
+                <span className="font-bold tracking-wider text-warm-white/80">
+                  {onsiteItem.priceLabel}
+                </span>
+              </p>
+            )}
             <p className="font-kr-sans text-[15px] leading-[1.65] text-warm-white/82">
               {earlybirdItem.description}
             </p>
