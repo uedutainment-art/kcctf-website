@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import { useTranslations, useLocale } from 'next-intl';
 import { DJS } from '@/data/festival';
+import MotionReveal from './MotionReveal';
 
 export default function Djs() {
   const t = useTranslations('djs');
@@ -19,7 +20,7 @@ export default function Djs() {
       <div className="max-w-[1180px] mx-auto px-6 md:px-10">
 
         {/* Header */}
-        <div className="text-center mb-12">
+        <MotionReveal className="text-center mb-12">
           <p className="font-en-body font-bold text-[11px] tracking-[0.4em] uppercase text-gold mb-3">
             {t('eyebrow')}
           </p>
@@ -35,21 +36,22 @@ export default function Djs() {
           <p className="font-kr-sans text-[17px] text-warm-white/72 max-w-2xl mx-auto">
             {t('lede')}
           </p>
-        </div>
+        </MotionReveal>
 
         {/* 3×2 grid (desktop) / 2×3 (mobile) */}
         <div className="grid grid-cols-2 gap-5 md:grid-cols-3 md:gap-6">
-          {DJS.map((dj) => (
-            <div
+          {DJS.map((dj, index) => (
+            <MotionReveal
               key={dj.id}
               className="group text-center"
+              delay={index * 70}
             >
               <div className="relative mx-auto mb-4 aspect-[4/5] w-full max-w-[250px] overflow-hidden bg-ink ring-1 ring-gold/22 transition-transform duration-300 group-hover:-translate-y-1">
                 <Image
                   src={dj.image}
                   alt={`${dj.nameKo} (${dj.nameEn})`}
                   fill
-                  className="object-cover object-[center_20%] grayscale-[12%] contrast-[1.04] transition-[filter] duration-300 group-hover:saturate-[1.18] group-hover:grayscale-0"
+                  className="object-cover object-[center_20%] grayscale-[12%] contrast-[1.04] transition-[filter] duration-300 group-hover:saturate-[1.18] group-hover:grayscale-0 motion-slow-zoom"
                   sizes="(max-width: 640px) 44vw, (max-width: 1024px) 28vw, 250px"
                 />
                 <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-night/85 to-transparent" />
@@ -67,7 +69,7 @@ export default function Djs() {
               <p className="font-en-body text-[12px] text-warm-white/48 mt-1">
                 {locale === 'ko' ? `${dj.city} · ${dj.country}` : `${dj.cityEn} · ${dj.country}`}
               </p>
-            </div>
+            </MotionReveal>
           ))}
         </div>
 

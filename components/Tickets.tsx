@@ -1,6 +1,7 @@
 import { useLocale, useTranslations } from 'next-intl';
 import { TICKET_TIERS } from '@/data/festival';
 import RegisterButton from './RegisterButton';
+import MotionReveal from './MotionReveal';
 
 export default function Tickets() {
   const t = useTranslations('tickets');
@@ -39,7 +40,7 @@ export default function Tickets() {
       <div className="max-w-[1200px] mx-auto px-6 md:px-10">
 
         {/* Header */}
-        <div className="text-center mb-12">
+        <MotionReveal className="text-center mb-12">
           <p className="font-en-body font-bold text-[11px] tracking-[0.4em] uppercase text-burgundy mb-3">
             {t('eyebrow')}
           </p>
@@ -55,10 +56,10 @@ export default function Tickets() {
           <p className="font-kr-sans text-[15px] text-charcoal/70">
             {t('lede')}
           </p>
-        </div>
+        </MotionReveal>
 
         {/* Ticket card */}
-        <div className="mx-auto mb-10 grid max-w-[980px] grid-cols-1 overflow-hidden rounded-lg bg-burgundy text-warm-white shadow-stamp md:grid-cols-[0.95fr_1.05fr]">
+        <MotionReveal className="mx-auto mb-10 grid max-w-[980px] grid-cols-1 overflow-hidden rounded-lg bg-burgundy text-warm-white shadow-stamp md:grid-cols-[0.95fr_1.05fr]" delay={100}>
           <div className="relative p-8 md:p-10">
             <span className="mb-6 inline-flex bg-gold text-ink font-en-body font-bold text-[10px] tracking-[0.2em] uppercase px-3 py-1 rounded-full">
               EARLYBIRD
@@ -115,7 +116,7 @@ export default function Tickets() {
                 : null}
             </p>
           </div>
-        </div>
+        </MotionReveal>
 
         {/* Hotel packages — flag-gated */}
         {showHotelPackages ? null : (

@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import { useLocale } from 'next-intl';
+import MotionReveal from './MotionReveal';
 
 const nightImages = [
   {
@@ -30,7 +31,7 @@ export default function TheNights() {
     <section className="bg-night text-warm-white py-20 overflow-hidden">
       <div className="mx-auto max-w-[1320px] px-6 md:px-10">
         <div className="grid gap-10 lg:grid-cols-[0.68fr_1.32fr] lg:items-center">
-          <div className="max-w-xl">
+          <MotionReveal className="max-w-xl">
             <p className="font-en-body font-black text-[11px] tracking-[0.4em] uppercase text-gold mb-4">
               {isKo ? 'THE EXPERIENCE · 작년의 장면들' : 'THE EXPERIENCE · From 2025'}
             </p>
@@ -45,22 +46,24 @@ export default function TheNights() {
                 ? '두 오케스트라가 연주하는 밤. 콘서트급 음향, 압도적 플로어, 새벽까지 이어지는 딴따.'
                 : 'Two orchestras. Concert-grade sound. A floor you\'ve never danced on.'}
             </p>
-          </div>
+          </MotionReveal>
 
           <div className="grid grid-cols-1 gap-3 md:grid-cols-[1.05fr_1.25fr_0.95fr]">
             {nightImages.map((image, index) => (
-              <figure
+              <MotionReveal
+                as="figure"
                 key={image.src}
                 className={[
                   'group relative min-h-[300px] overflow-hidden bg-ink ring-1 ring-gold/18',
                   index === 1 ? 'md:min-h-[430px]' : 'md:min-h-[360px]',
                 ].join(' ')}
+                delay={index * 120}
               >
                 <Image
                   src={image.src}
                   alt={isKo ? image.labelKo : image.labelEn}
                   fill
-                  className="object-cover saturate-[0.95] contrast-[1.04] transition-transform duration-500 group-hover:scale-[1.04]"
+                  className="object-cover saturate-[0.95] contrast-[1.04] motion-slow-zoom"
                   style={{ objectPosition: index === 2 ? '50% 28%' : '50% 50%' }}
                   sizes="(max-width: 640px) 100vw, 28vw"
                 />
@@ -73,7 +76,7 @@ export default function TheNights() {
                     {isKo ? image.labelKo : image.labelEn}
                   </p>
                 </figcaption>
-              </figure>
+              </MotionReveal>
             ))}
           </div>
         </div>

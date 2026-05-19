@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import { useTranslations } from 'next-intl';
 import { DANCE_TEAMS } from '@/data/festival';
+import MotionReveal from './MotionReveal';
 
 export default function Dancers() {
   const t = useTranslations('dancers');
@@ -10,7 +11,7 @@ export default function Dancers() {
       <div className="max-w-[1200px] mx-auto px-6 md:px-10">
 
         {/* Header */}
-        <div className="text-center mb-12">
+        <MotionReveal className="text-center mb-12">
           <p className="font-en-body font-bold text-[11px] tracking-[0.4em] uppercase text-gold mb-3">
             {t('eyebrow')}
           </p>
@@ -26,12 +27,12 @@ export default function Dancers() {
           <p className="font-kr-sans text-[16px] text-charcoal/80 max-w-xl mx-auto">
             {t('lede')}
           </p>
-        </div>
+        </MotionReveal>
 
         {/* 4 team cards */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-          {DANCE_TEAMS.map((team) => (
-            <div
+          {DANCE_TEAMS.map((team, index) => (
+            <MotionReveal
               key={team.id}
               className={[
                 'group relative rounded-lg p-6 text-center overflow-hidden transition-transform duration-200',
@@ -39,6 +40,7 @@ export default function Dancers() {
                   ? 'border-2 border-dashed border-ink-soft/25 bg-transparent'
                   : 'bg-cream shadow-[4px_4px_0_#8B1A2B] hover:-translate-y-[3px]',
               ].join(' ')}
+              delay={index * 70}
             >
               {/* Grain overlay on non-TBA cards */}
               {!team.isTBA && (
@@ -64,7 +66,7 @@ export default function Dancers() {
                     src={team.image}
                     alt={team.name}
                     fill
-                    className="object-cover object-[center_25%] grayscale-[8%] contrast-[1.04] transition-[filter,transform] duration-300 group-hover:grayscale-0 group-hover:scale-[1.03]"
+                    className="object-cover object-[center_25%] grayscale-[8%] contrast-[1.04] transition-[filter] duration-300 group-hover:grayscale-0 motion-slow-zoom"
                     sizes="(max-width: 640px) 90vw, (max-width: 1024px) 44vw, 280px"
                   />
                 </div>
@@ -105,7 +107,7 @@ export default function Dancers() {
               >
                 {team.origin}
               </p>
-            </div>
+            </MotionReveal>
           ))}
         </div>
 
