@@ -99,7 +99,7 @@ export const DJS: DJ[] = [
 export const DANCE_TEAMS: DanceTeam[] = [
   { id: 'london-sol',   name: 'London Hong & Sol',       origin: 'Korea', image: '/images/DANCER/London Hong & Sol.jpg',       isTBA: false },
   { id: 'hyemi-wonjun', name: 'Hyemi Seo & Wonjun Seol', origin: 'Korea', image: '/images/DANCER/Hyemi Seo & Wonjun Seol.jpg', isTBA: false },
-  { id: 'team-ryu',     name: 'Team Ryu',                origin: 'Korea', image: null, isTBA: false },
+  { id: 'team-ryu',     name: 'Team Ryu',                origin: 'Korea', image: '/images/DANCER/Team Ryu.jpg', isTBA: false },
   { id: 'nadia-erik',   name: 'Nadia Aguilar y Erik Deslarmes', origin: 'International', image: '/images/DANCER/Nadia Aguilar y Erik Deslarmes.jpg', isTBA: false },
 ];
 
