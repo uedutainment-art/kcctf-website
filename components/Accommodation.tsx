@@ -46,8 +46,9 @@ const ROOMS = [
   {
     id: 'double',
     image: '/images/hotel/double.jpg',
-    nameKo: '스탠다드 더블룸',
+    nameKo: '스탠다드 더블',
     nameEn: 'Standard Double',
+    totalRooms: 80,
     size: '23㎡',
     guestsKo: '기준 2인 · 최대 2인',
     guestsEn: 'Up to 2 guests',
@@ -57,15 +58,42 @@ const ROOMS = [
   {
     id: 'twin',
     image: '/images/hotel/twin.jpg',
-    nameKo: '스탠다드 트윈룸',
+    nameKo: '스탠다드 트윈',
     nameEn: 'Standard Twin',
+    totalRooms: 55,
     size: '23㎡',
     guestsKo: '기준 2인 · 최대 2인',
     guestsEn: 'Up to 2 guests',
     bedKo: '싱글베드 2개',
     bedEn: '2 Single Beds',
   },
+  {
+    id: 'triple',
+    image: null,
+    nameKo: '스탠다드 트리플',
+    nameEn: 'Standard Triple',
+    totalRooms: 17,
+    size: '23㎡',
+    guestsKo: '기준 3인 · 최대 3인',
+    guestsEn: 'Up to 3 guests',
+    bedKo: '퀸베드 1개 + 싱글베드 1개',
+    bedEn: '1 Queen + 1 Single Bed',
+  },
+  {
+    id: 'ondol',
+    image: '/images/hotel/ondol.jpg',
+    nameKo: '온돌',
+    nameEn: 'Ondol Room',
+    totalRooms: 16,
+    size: '23㎡',
+    guestsKo: '기준 2인 · 최대 4인',
+    guestsEn: 'Up to 4 guests',
+    bedKo: '침구 2세트',
+    bedEn: '2 Bedding Sets',
+  },
 ];
+
+const TOTAL_HOTEL_ROOMS = 168;
 
 // ── Date helpers ───────────────────────────────────────────────────────────────
 
@@ -200,19 +228,25 @@ return (
 
         {/* Room types */}
         <div className="mb-10">
-          <div className="flex items-baseline justify-center gap-3 mb-6">
+          <div className="flex flex-wrap items-baseline justify-center gap-x-3 gap-y-1 mb-6">
             <p className="font-en-body font-bold text-[11px] tracking-[0.3em] uppercase text-gold">
               ROOM TYPES
             </p>
+            <p className="font-kr-sans text-[12px] text-charcoal/50">
+              {isKo
+                ? `총 ${TOTAL_HOTEL_ROOMS}객실`
+                : `${TOTAL_HOTEL_ROOMS} rooms total`}
+            </p>
             {pricePerNight && (
               <p className="font-kr-sans text-[12px] text-charcoal/50">
+                ·{' '}
                 {isKo
                   ? `1박 ₩${pricePerNight.toLocaleString()} · 숙박만`
                   : `₩${pricePerNight.toLocaleString()} / night · room only`}
               </p>
             )}
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 max-w-2xl mx-auto">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {ROOMS.map((room) => {
               const liveRoom = roomMap[room.id];
               const displayName = liveRoom
@@ -222,23 +256,37 @@ return (
                 ? (isKo ? liveRoom.hint.ko : liveRoom.hint.en)
                 : (isKo ? room.guestsKo : room.guestsEn);
               return (
-                <div key={room.id} className="bg-warm-white rounded-lg overflow-hidden border border-ink-soft/8">
+                <div key={room.id} className="bg-warm-white rounded-lg overflow-hidden border border-ink-soft/8 flex flex-col">
                   <div className="relative">
-                    <Image
-                      src={room.image}
-                      alt={room.nameKo}
-                      width={400}
-                      height={240}
-                      className="w-full object-cover"
-                      style={{ aspectRatio: '5/3' }}
-                    />
+                    {room.image ? (
+                      <Image
+                        src={room.image}
+                        alt={room.nameKo}
+                        width={400}
+                        height={240}
+                        className="w-full object-cover"
+                        style={{ aspectRatio: '5/3' }}
+                      />
+                    ) : (
+                      <div
+                        className="w-full bg-cream flex items-center justify-center"
+                        style={{ aspectRatio: '5/3' }}
+                      >
+                        <span className="font-en-body font-bold text-[10px] tracking-[0.3em] uppercase text-ink-soft/30">
+                          {isKo ? '사진 준비중' : 'Photo coming'}
+                        </span>
+                      </div>
+                    )}
+                    <span className="absolute top-3 left-3 bg-warm-white/90 text-ink-soft font-en-body font-bold text-[10px] tracking-[0.12em] uppercase px-2 py-[3px] rounded-sm">
+                      {room.totalRooms}{isKo ? '실' : ' rms'}
+                    </span>
                     {avail?.enabled && liveRoom && (
                       <div className="absolute top-3 right-3">
                         <AvailBadge room={liveRoom} />
                       </div>
                     )}
                   </div>
-                  <div className="p-4">
+                  <div className="p-4 flex-1 flex flex-col">
                     <p className="font-kr-sans font-bold text-[15px] text-ink-soft mb-[2px]">
                       {displayName}
                     </p>

@@ -17,6 +17,7 @@ export default function HomePage() {
   // 홈 티저 — 미완성 섹션은 플래그로 숨김 (정보 들어오면 .env에서 true)
   const showCityGuide = process.env.NEXT_PUBLIC_SHOW_CITY_GUIDE === 'true';
   const showLogistics = process.env.NEXT_PUBLIC_SHOW_LOGISTICS === 'true';
+  const showAccommodation = process.env.NEXT_PUBLIC_SHOW_ACCOMMODATION === 'true';
   const showTickets = process.env.NEXT_PUBLIC_SHOW_TICKETS === 'true';
   return (
     <>
@@ -29,7 +30,7 @@ export default function HomePage() {
       <Schedule />
       <Venue />
       {showCityGuide && <CityGuide />}
-      <Accommodation />
+      {showAccommodation && <Accommodation />}
       {showLogistics && <Logistics />}
       {showTickets && <Tickets />}
       <FAQ />

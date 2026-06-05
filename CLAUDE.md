@@ -29,7 +29,8 @@
 
 | 영역 | 파일 |
 |---|---|
-| 콘텐츠 (가격·일정·라인업·장소·호텔) | `_brief/운영기준.md` (특히 §3, §4, §5, §6, §7) |
+| 콘텐츠 (가격·일정·라인업·장소·호텔) — **빌드 입력** | `data/festival.ts` + `content/ko.json` · `content/en.json` |
+| 운영 원본 (참고용, 이 폴더 밖) | `../운영/운영기준.md` — 운영팀 관리 진실의 출처. 빌드 시 직접 읽지 말 것. 위 빌드 입력과 어긋나면 운영기준.md 기준으로 운영팀이 갱신 |
 | 디자인 톤 / 토큰 / 자산 | `_design/README.md` + `_design/assets/` |
 | Hero 섹션 디자인 | `_brief/new_hero_v1.html` (디자이너 V1 원안 아닌 새 시안) |
 | 한/영 카피 | `content/ko.json` + `content/en.json` (이미 작성됨) |

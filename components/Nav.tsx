@@ -63,9 +63,12 @@ export default function Nav() {
   }, [menuOpen]);
 
   const showCityGuide = process.env.NEXT_PUBLIC_SHOW_CITY_GUIDE === 'true';
-  // 춘천즐기기 숨김 시 내비에서도 #city-guide 제외
+  const showAccommodation = process.env.NEXT_PUBLIC_SHOW_ACCOMMODATION === 'true';
+  // 숨긴 섹션은 내비에서도 제외 (#city-guide, #accommodation)
   const navItems = (t.raw('items') as NavItem[]).filter(
-    (item) => showCityGuide || item.href !== '#city-guide'
+    (item) =>
+      (showCityGuide || item.href !== '#city-guide') &&
+      (showAccommodation || item.href !== '#accommodation')
   );
 
   const registerUrl = process.env.NEXT_PUBLIC_REGISTER_URL ?? '#tickets';

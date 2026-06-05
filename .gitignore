@@ -33,3 +33,8 @@ yarn-debug.log*
 # TypeScript
 *.tsbuildinfo
 next-env.d.ts
+.omc/
+ship.sh
+cleanup.sh
+.claude/settings.local.json
+.firebase/

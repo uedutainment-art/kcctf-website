@@ -24,6 +24,15 @@ export default function Footer() {
   const isKo = locale === 'ko';
   const contactEmail = process.env.NEXT_PUBLIC_CONTACT_EMAIL ?? 'info@kcctf.org';
 
+  // 숨긴 섹션은 푸터 사이트맵에서도 제외 (Nav 필터와 동일 방식)
+  const showTickets = process.env.NEXT_PUBLIC_SHOW_TICKETS === 'true';
+  const showAccommodation = process.env.NEXT_PUBLIC_SHOW_ACCOMMODATION === 'true';
+  const navLinks = NAV_LINKS.filter(
+    ({ href }) =>
+      (showTickets || href !== '#tickets') &&
+      (showAccommodation || href !== '#accommodation')
+  );
+
   return (
     <footer id="about" className="bg-night text-warm-white pt-12 pb-10">
       <div className="max-w-[1200px] mx-auto px-6 md:px-10">
@@ -55,7 +64,7 @@ export default function Footer() {
               {t('navTitle')}
             </p>
             <ul className="flex flex-col gap-3">
-              {NAV_LINKS.map(({ href, key }) => (
+              {navLinks.map(({ href, key }) => (
                 <li key={key}>
                   <a
                     href={href}
