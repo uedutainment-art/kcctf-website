@@ -3,8 +3,14 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { useLocale } from 'next-intl';
 
-const EMBED_BASE = 'https://kcctf-5047d.web.app/register/chuncheon-citf-2026';
-const EMBED_ORIGIN = 'https://kcctf-5047d.web.app';
+// 등록폼(EventLink) URL — 환경변수로 설정. EventLink를 다른 도메인으로 옮기면 env(NEXT_PUBLIC_REGISTER_URL)만 교체.
+// 값은 슬러그까지 포함한 등록폼 베이스(쿼리 없이). 모달이 ?embed=1&lang= 을 덧붙임.
+const EMBED_BASE =
+  process.env.NEXT_PUBLIC_REGISTER_URL ?? 'https://kcctf-5047d.web.app/register/chuncheon-citf-2026';
+// postMessage origin 검증용 — EMBED_BASE에서 자동 도출
+const EMBED_ORIGIN = (() => {
+  try { return new URL(EMBED_BASE).origin; } catch { return 'https://kcctf-5047d.web.app'; }
+})();
 
 export default function RegisterModal() {
   const locale = useLocale();
@@ -27,9 +33,12 @@ export default function RegisterModal() {
   useEffect(() => {
     const handler = (e: MessageEvent) => {
       if (e.origin !== EMBED_ORIGIN) return;
-      if (e.data?.type === 'resize' && typeof e.data.height === 'number') {
+      // EventLink 임베드 규약: { type: 'eventlink-resize', slug, height }
+      if (e.data?.type === 'eventlink-resize' && typeof e.data.height === 'number') {
         setIframeH(Math.max(400, e.data.height));
       }
+      // 완료는 현재 iframe 내부 결과화면으로 표시됨. 아래는 EventLink가 추후
+      // registration-complete 를 보낼 때 자동 성공화면·닫기로 동작하는 훅(미발생 시 무해).
       if (e.data?.type === 'registration-complete') {
         setDone(true);
         setTimeout(close, 3000);

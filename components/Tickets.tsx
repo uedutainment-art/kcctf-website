@@ -9,6 +9,8 @@ export default function Tickets() {
   const isKo = locale === 'ko';
   const showHotelPackages = process.env.NEXT_PUBLIC_SHOW_HOTEL_PACKAGES === 'true';
   const registerUrl = process.env.NEXT_PUBLIC_REGISTER_URL ?? '#tickets';
+  // 등록 미오픈이면 예약 버튼 대신 '등록 오픈 예정' 안내
+  const registrationOpen = process.env.NEXT_PUBLIC_REGISTRATION_OPEN === 'true';
 
   const items = t.raw('items') as {
     id: string;
@@ -102,12 +104,18 @@ export default function Tickets() {
             <p className="mb-5 font-en-body text-[12px] text-warm-white/58">
               {earlybirdItem.note}
             </p>
-            <RegisterButton
-              href={registerUrl}
-              className="block rounded bg-warm-white py-4 text-center font-en-body text-[14px] font-bold uppercase tracking-[0.2em] text-burgundy shadow-[0_3px_0_rgba(253,250,245,0.4)] transition-all duration-150 hover:translate-y-[2px] hover:shadow-[0_1px_0_rgba(253,250,245,0.4)]"
-            >
-              {earlybirdItem.cta} →
-            </RegisterButton>
+            {registrationOpen ? (
+              <RegisterButton
+                href={registerUrl}
+                className="block rounded bg-warm-white py-4 text-center font-en-body text-[14px] font-bold uppercase tracking-[0.2em] text-burgundy shadow-[0_3px_0_rgba(253,250,245,0.4)] transition-all duration-150 hover:translate-y-[2px] hover:shadow-[0_1px_0_rgba(253,250,245,0.4)]"
+              >
+                {earlybirdItem.cta} →
+              </RegisterButton>
+            ) : (
+              <div className="block rounded bg-warm-white/90 py-4 text-center font-en-body text-[14px] font-bold uppercase tracking-[0.2em] text-burgundy/70">
+                {isKo ? '등록 오픈 예정' : 'Registration opening soon'}
+              </div>
+            )}
             <p className="mt-4 font-kr-sans text-[12px] leading-[1.6] text-warm-white/45">
               {earlybirdTier.id === 'fullpack-early'
                 ? isKo

@@ -33,6 +33,8 @@ export default function SectionTabs() {
   const [visible, setVisible]     = useState(false);
   const [activeHref, setActiveHref] = useState('');
   const stripRef = useRef<HTMLDivElement>(null);
+  // 티켓 섹션이 숨겨지면 탭에서도 #tickets 제외
+  const showTickets = process.env.NEXT_PUBLIC_SHOW_TICKETS === 'true';
 
   // Show/hide when hero enters/leaves viewport
   useEffect(() => {
@@ -89,7 +91,7 @@ export default function SectionTabs() {
           ref={stripRef}
           className="flex items-center gap-[6px] overflow-x-auto scrollbar-none px-4 md:px-10 py-[6px] max-w-[1200px] mx-auto"
         >
-          {TABS.map(({ href, sectionId, key }) => {
+          {TABS.filter((tab) => showTickets || tab.href !== '#tickets').map(({ href, sectionId, key }) => {
             const active = activeHref === href;
             return (
               <a

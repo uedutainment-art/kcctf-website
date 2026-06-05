@@ -68,12 +68,14 @@ const LINKS = [
 
 export default function QuickLinks() {
   const t = useTranslations('quickLinks');
+  // 티켓 섹션이 숨겨지면 퀵링크에서도 #tickets 제외
+  const showTickets = process.env.NEXT_PUBLIC_SHOW_TICKETS === 'true';
 
   return (
     <section className="bg-burgundy py-4">
       <div className="max-w-[1200px] mx-auto px-4 md:px-10">
         <div className="grid grid-cols-3 sm:grid-cols-6 divide-x divide-warm-white/15">
-          {LINKS.map(({ key, href, icon }) => (
+          {LINKS.filter((l) => showTickets || l.href !== '#tickets').map(({ key, href, icon }) => (
             <a
               key={key}
               href={href}

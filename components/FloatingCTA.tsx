@@ -9,6 +9,8 @@ export default function FloatingCTA() {
   const [visible, setVisible] = useState(false);
 
   const registerUrl = process.env.NEXT_PUBLIC_REGISTER_URL ?? '#tickets';
+  // 등록 미오픈이면 플로팅 예약바 숨김
+  const registrationOpen = process.env.NEXT_PUBLIC_REGISTRATION_OPEN === 'true';
 
   useEffect(() => {
     const hero = document.getElementById('hero');
@@ -20,6 +22,8 @@ export default function FloatingCTA() {
     observer.observe(hero);
     return () => observer.disconnect();
   }, []);
+
+  if (!registrationOpen) return null;
 
   return (
     <div

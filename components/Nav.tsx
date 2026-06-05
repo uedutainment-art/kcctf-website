@@ -62,9 +62,15 @@ export default function Nav() {
     return () => { document.body.style.overflow = ''; };
   }, [menuOpen]);
 
-  const navItems = t.raw('items') as NavItem[];
+  const showCityGuide = process.env.NEXT_PUBLIC_SHOW_CITY_GUIDE === 'true';
+  // 춘천즐기기 숨김 시 내비에서도 #city-guide 제외
+  const navItems = (t.raw('items') as NavItem[]).filter(
+    (item) => showCityGuide || item.href !== '#city-guide'
+  );
 
   const registerUrl = process.env.NEXT_PUBLIC_REGISTER_URL ?? '#tickets';
+  // 등록 미오픈이면 예약하기 CTA 숨김
+  const registrationOpen = process.env.NEXT_PUBLIC_REGISTRATION_OPEN === 'true';
   const altLocale = locale === 'ko' ? 'en' : 'ko';
 
   return (
@@ -121,12 +127,14 @@ export default function Nav() {
               >
                 {t('languageSwitch')}
               </Link>
-              <RegisterButton
-                href={registerUrl}
-                className="bg-burgundy text-warm-white font-en-body font-bold text-[12px] tracking-[0.18em] uppercase px-6 py-3 rounded-md transition-all duration-150 shadow-[0_3px_0_#5A0E1B] hover:shadow-[0_1px_0_#5A0E1B] hover:translate-y-[2px]"
-              >
-                {t('register')}
-              </RegisterButton>
+              {registrationOpen && (
+                <RegisterButton
+                  href={registerUrl}
+                  className="bg-burgundy text-warm-white font-en-body font-bold text-[12px] tracking-[0.18em] uppercase px-6 py-3 rounded-md transition-all duration-150 shadow-[0_3px_0_#5A0E1B] hover:shadow-[0_1px_0_#5A0E1B] hover:translate-y-[2px]"
+                >
+                  {t('register')}
+                </RegisterButton>
+              )}
             </div>
 
             {/* Mobile: lang toggle + hamburger */}
@@ -215,12 +223,14 @@ export default function Nav() {
 
         {/* CTA */}
         <div className="px-5 pb-10 pt-4">
-          <RegisterButton
-            href={registerUrl}
-            className="block w-full bg-burgundy text-warm-white font-en-body font-bold text-[16px] tracking-[0.18em] uppercase text-center py-4 rounded-md transition-all duration-150 shadow-[0_4px_0_#5A0E1B] hover:shadow-[0_2px_0_#5A0E1B] hover:translate-y-[2px]"
-          >
-            {t('register')}
-          </RegisterButton>
+          {registrationOpen && (
+            <RegisterButton
+              href={registerUrl}
+              className="block w-full bg-burgundy text-warm-white font-en-body font-bold text-[16px] tracking-[0.18em] uppercase text-center py-4 rounded-md transition-all duration-150 shadow-[0_4px_0_#5A0E1B] hover:shadow-[0_2px_0_#5A0E1B] hover:translate-y-[2px]"
+            >
+              {t('register')}
+            </RegisterButton>
+          )}
         </div>
       </div>
     </>
