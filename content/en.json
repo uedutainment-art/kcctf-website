@@ -33,7 +33,7 @@
     "titleLine1": "CHUNCHEON",
     "titleLine2": "TANGO FESTIVAL",
     "subtitleEn": "INTERNATIONAL\nTANGO FESTIVAL",
-    "tagline": "Two orchestras. Three nights. One stadium.\nThe Asian tango lineup that doesn't exist anywhere else.",
+    "tagline": "Two orchestras. Three nights. One arena.\nThe Asian tango lineup that doesn't exist anywhere else.",
     "uspBand": "TWO ORCHESTRAS · 6 LIVE MILONGAS",
     "stats": {
       "orchestras": {
@@ -60,7 +60,7 @@
       "venueSecondary": "GANGWON · SOUTH KOREA"
     },
     "earlybird": {
-      "deadline": "Until May 18",
+      "deadline": "Until June 30",
       "cta": "Early Bird Registration →"
     },
     "cta": "Register →",
@@ -153,7 +153,7 @@
       {
         "day": "10/3",
         "dow": "SAT",
-        "time": "22:00 — 04:00",
+        "time": "21:00 — 04:00",
         "type": "milonga",
         "title": "M2 · First Night",
         "subtitle": "첫째 밤 밀롱가",
@@ -178,7 +178,7 @@
         "time": "21:00 — 03:00",
         "type": "milonga",
         "title": "M4 · Grand Milonga",
-        "subtitle": "그란 밀롱가",
+        "subtitle": "그랜드 밀롱가",
         "djId": "becca",
         "djName": "DJ Becca",
         "mood": "The most luminous night.",
@@ -310,19 +310,23 @@
     "address": "Chuncheon, Gangwon, South Korea",
     "features": [
       {
-        "icon": "🚄",
+        "iconKey": "transit",
+        "eyebrow": "ACCESS",
         "text": "About 60 minutes from Seoul by ITX"
       },
       {
-        "icon": "🎵",
+        "iconKey": "sound",
+        "eyebrow": "SOUND",
         "text": "Concert-grade sound system"
       },
       {
-        "icon": "🏛",
+        "iconKey": "floor",
+        "eyebrow": "SPACE",
         "text": "An overwhelming dance floor"
       },
       {
-        "icon": "🅿️",
+        "iconKey": "parking",
+        "eyebrow": "PARKING",
         "text": "Parking available"
       }
     ],
@@ -331,13 +335,13 @@
   },
   "tickets": {
     "eyebrow": "TICKETS",
-    "title": "Earlybird Full Pack",
+    "title": "Early Bird Full Pack",
     "subtitleEn": "얼리버드 풀팩",
-    "lede": "Earlybird is limited.",
+    "lede": "Early Bird is limited.",
     "items": [
       {
         "id": "fullpack-early",
-        "name": "Earlybird Full Pack",
+        "name": "Early Bird Full Pack",
         "nameEn": "얼리버드 풀팩",
         "price": 190000,
         "priceLabel": "₩190,000 (~USD 140)",
@@ -348,7 +352,7 @@
           "City Tour",
           "After Party"
         ],
-        "note": "Limited · First come first served",
+        "note": "Limited · First-come, first-served",
         "featured": true,
         "cta": "Register"
       },
@@ -358,7 +362,7 @@
         "nameEn": "현장 풀팩",
         "price": 240000,
         "priceLabel": "₩240,000 (~USD 175)",
-        "description": "Standard price after earlybird.",
+        "description": "Standard price after Early Bird.",
         "includes": [
           "Opening Concert",
           "6 Milongas",
@@ -539,13 +543,13 @@
       "refund": "Refund Policy"
     },
     "copyright": "© 2026 Chuncheon International Tango Festival Foundation. All rights reserved.",
-    "emailHarvestNotice": "Unauthorized collection of email addresses on this website using email harvesting programs or other technical means is strictly prohibited and subject to legal action under Korean Information and Communications Network Act."
+    "emailHarvestNotice": "Unauthorized collection of email addresses on this website using email harvesting programs or other technical means is strictly prohibited and subject to legal action under the Korean Information and Communications Network Act."
   },
   "meta": {
     "title": "Chuncheon International Tango Festival 2026 — KCCTF",
     "description": "Two orchestras from Buenos Aires. Misteriosa Buenos Aires and Tango Bardo, live in Chuncheon. Oct 3–5, 2026.",
     "ogTitle": "Chuncheon International Tango Festival 2026",
-    "ogDescription": "Two orchestras. Three nights. One stadium.",
+    "ogDescription": "Two orchestras. Three nights. One arena.",
     "keywords": "tango, festival, Korea, Chuncheon, Buenos Aires, Tango Bardo, Misteriosa, milonga, live orchestra"
   }
 }

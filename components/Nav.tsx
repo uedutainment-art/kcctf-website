@@ -149,6 +149,14 @@ export default function Nav() {
               >
                 {t('languageSwitch')}
               </Link>
+              {registrationOpen && (
+                <RegisterButton
+                  href={registerUrl}
+                  className="bg-burgundy text-warm-white font-en-body font-bold text-[11px] tracking-[0.08em] uppercase px-3.5 py-2 rounded-md shadow-[0_2px_0_#5A0E1B] transition-all duration-150 hover:translate-y-[1px] hover:shadow-[0_1px_0_#5A0E1B]"
+                >
+                  {t('register')}
+                </RegisterButton>
+              )}
               <button
                 onClick={() => setMenuOpen(true)}
                 aria-label={t('menuOpen')}

@@ -60,7 +60,7 @@
       "venueSecondary": "CHUNCHEON BOMNAE COMPLEX"
     },
     "earlybird": {
-      "deadline": "5월 18일까지",
+      "deadline": "6월 30일까지",
       "cta": "얼리버드 신청하기 →"
     },
     "cta": "예약하기 →",
@@ -85,7 +85,7 @@
   "orchestras": {
     "eyebrow": "★ TWO LIVE ORCHESTRAS ★ · From Buenos Aires",
     "subtitleEn": "From Buenos Aires",
-    "title": "부에노스 아이레스에서 온 두 팀의 오케스트라",
+    "title": "부에노스아이레스에서 온 두 팀의 오케스트라",
     "lede": "세계를 투어한 두 오케스트라. 춘천에서 직접 연주합니다.",
     "items": [
       {
@@ -153,7 +153,7 @@
       {
         "day": "10/3",
         "dow": "SAT",
-        "time": "22:00 — 04:00",
+        "time": "21:00 — 04:00",
         "type": "milonga",
         "title": "M2 · 첫째 밤 밀롱가",
         "subtitle": "First Night Milonga",
@@ -177,7 +177,7 @@
         "dow": "SUN",
         "time": "21:00 — 03:00",
         "type": "milonga",
-        "title": "M4 · 그란 밀롱가",
+        "title": "M4 · 그랜드 밀롱가",
         "subtitle": "Grand Milonga",
         "djId": "becca",
         "djName": "DJ 베카",
@@ -258,7 +258,7 @@
         "id": "wangwei",
         "nameKo": "왕웨이",
         "nameEn": "Wang Wei",
-        "city": "상해",
+        "city": "상하이",
         "country": "China"
       },
       {
@@ -310,19 +310,23 @@
     "address": "강원특별자치도 춘천시",
     "features": [
       {
-        "icon": "🚄",
+        "iconKey": "transit",
+        "eyebrow": "교통",
         "text": "서울에서 ITX 60분"
       },
       {
-        "icon": "🎵",
+        "iconKey": "sound",
+        "eyebrow": "음향",
         "text": "콘서트급 음향 시스템"
       },
       {
-        "icon": "🏛",
+        "iconKey": "floor",
+        "eyebrow": "규모",
         "text": "압도적 규모의 댄스 플로어"
       },
       {
-        "icon": "🅿️",
+        "iconKey": "parking",
+        "eyebrow": "주차",
         "text": "주차 가능"
       }
     ],
@@ -410,7 +414,7 @@
     "eyebrow": "ABOUT",
     "title": "춘천국제탱고페스티벌",
     "subtitleEn": "Chuncheon International Tango Festival",
-    "body": "춘천국제탱고페스티벌은 콘서트와 사회춤(밀롱가)을 결합한 사흘간의 페스티벌입니다. 부에노스 아이레스에서 직접 오는 두 오케스트라와 한국·중국·홍콩의 디제이들이 만들어 내는 밤. 세계 각지의 탱고 커뮤니티와 만나는 자리.",
+    "body": "춘천국제탱고페스티벌은 콘서트와 사회춤(밀롱가)을 결합한 사흘간의 페스티벌입니다. 부에노스아이레스에서 직접 오는 두 오케스트라와 한국·중국·홍콩의 디제이들이 만들어 내는 밤. 세계 각지의 탱고 커뮤니티와 만나는 자리.",
     "organization": {
       "name": "사단법인 춘천국제탱고페스티벌",
       "nameEn": "Chuncheon International Tango Festival Foundation",
@@ -481,7 +485,7 @@
       },
       {
         "q": "페스티벌 전후에 한국에서 더 추고 싶어요.",
-        "a": "전국 밀롱가·이벤트·클래스 일정은 TangoNOW에서 확인하실 수 있습니다. 한국 탱고 신scene의 가장 종합적인 가이드입니다."
+        "a": "전국 밀롱가·이벤트·클래스 일정은 TangoNOW에서 확인하실 수 있습니다. 한국 탱고 씬의 가장 종합적인 가이드입니다."
       }
     ]
   },
@@ -539,11 +543,11 @@
       "refund": "환불 규정"
     },
     "copyright": "© 2026 사단법인 춘천국제탱고페스티벌. All rights reserved.",
-    "emailHarvestNotice": "본 웹사이트에 게시된 이메일 주소가 전자우편 수집 프로그램 기타 기술적 장치를 이용하여 무단으로 수집되는 것을 거부하며, 이를 위반시 정보통신망법에 의해 형사 처벌됨을 유념하시기 바랍니다."
+    "emailHarvestNotice": "본 웹사이트에 게시된 이메일 주소가 전자우편 수집 프로그램 기타 기술적 장치를 이용하여 무단으로 수집되는 것을 거부하며, 이를 위반 시 정보통신망법에 의해 형사 처벌됨을 유념하시기 바랍니다."
   },
   "meta": {
     "title": "춘천국제탱고페스티벌 2026 — KCCTF",
-    "description": "부에노스 아이레스에서 온 두 오케스트라. Misteriosa Buenos Aires와 Tango Bardo. 2026.10.03–10.05 춘천 봄내체육관.",
+    "description": "부에노스아이레스에서 온 두 오케스트라. Misteriosa Buenos Aires와 Tango Bardo. 2026.10.03–10.05 춘천 봄내체육관.",
     "ogTitle": "춘천국제탱고페스티벌 2026",
     "ogDescription": "두 오케스트라, 사흘 밤. 봄내체육관에서.",
     "keywords": "탱고, 페스티벌, 춘천, 부에노스아이레스, Tango Bardo, Misteriosa, 밀롱가, 라이브 오케스트라"
