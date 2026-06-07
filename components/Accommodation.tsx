@@ -79,21 +79,10 @@ const ROOMS = [
     bedKo: '퀸베드 1개 + 싱글베드 1개',
     bedEn: '1 Queen + 1 Single Bed',
   },
-  {
-    id: 'ondol',
-    image: '/images/hotel/ondol.jpg',
-    nameKo: '온돌',
-    nameEn: 'Ondol Room',
-    totalRooms: 16,
-    size: '23㎡',
-    guestsKo: '기준 2인 · 최대 4인',
-    guestsEn: 'Up to 4 guests',
-    bedKo: '침구 2세트',
-    bedEn: '2 Bedding Sets',
-  },
 ];
 
-const TOTAL_HOTEL_ROOMS = 168;
+// 2026-06-07 온돌 제외, 예약시스템과 동일하게 3종(더블80·트윈55·트리플17)으로 정정
+const TOTAL_HOTEL_ROOMS = 152;
 
 // ── Date helpers ───────────────────────────────────────────────────────────────
 
