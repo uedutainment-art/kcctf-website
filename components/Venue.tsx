@@ -1,11 +1,81 @@
 import Image from 'next/image';
 import { useTranslations } from 'next-intl';
 
+type IconKey = 'transit' | 'sound' | 'floor' | 'parking';
+
+const SVG_BASE = {
+  xmlns: 'http://www.w3.org/2000/svg',
+  viewBox: '0 0 24 24',
+  width: 20,
+  height: 20,
+  fill: 'none' as const,
+  stroke: 'currentColor',
+  strokeWidth: '1.5',
+  strokeLinecap: 'round' as const,
+  strokeLinejoin: 'round' as const,
+  'aria-hidden': true as const,
+};
+
+function VenueIcon({ iconKey }: { iconKey: IconKey }) {
+  switch (iconKey) {
+    case 'transit':
+      return (
+        <svg {...SVG_BASE}>
+          {/* Train body */}
+          <rect x="2" y="5" width="18" height="12" rx="2" />
+          {/* Window band */}
+          <line x1="2" y1="11" x2="20" y2="11" />
+          {/* Cab windows */}
+          <rect x="5" y="7" width="4" height="3" rx="0.5" />
+          <rect x="11" y="7" width="4" height="3" rx="0.5" />
+          {/* Wheels */}
+          <circle cx="6.5" cy="19" r="1.5" />
+          <circle cx="17.5" cy="19" r="1.5" />
+          {/* Wheel struts */}
+          <line x1="6.5" y1="17" x2="6.5" y2="18" />
+          <line x1="17.5" y1="17" x2="17.5" y2="18" />
+        </svg>
+      );
+    case 'sound':
+      return (
+        <svg {...SVG_BASE}>
+          {/* Speaker cabinet */}
+          <rect x="2" y="8" width="5" height="8" rx="0.75" />
+          {/* Cone */}
+          <path d="M7 8.5 L13 4 L13 20 L7 15.5" />
+          {/* Sound arcs */}
+          <path d="M16 9 a4.5 4.5 0 0 1 0 6" />
+          <path d="M18.5 6.5 a8 8 0 0 1 0 11" />
+        </svg>
+      );
+    case 'floor':
+      return (
+        <svg {...SVG_BASE}>
+          {/* Four corner brackets — open floor/space */}
+          <path d="M3 9 L3 3 L9 3" />
+          <path d="M15 3 L21 3 L21 9" />
+          <path d="M21 15 L21 21 L15 21" />
+          <path d="M9 21 L3 21 L3 15" />
+        </svg>
+      );
+    case 'parking':
+      return (
+        <svg {...SVG_BASE}>
+          {/* Drawn P letterform — vertical stroke + bowl */}
+          <line x1="8" y1="4" x2="8" y2="20" />
+          <path d="M8 4 h5 a4.5 4.5 0 0 1 0 9 H8" />
+        </svg>
+      );
+    default:
+      return null;
+  }
+}
+
 export default function Venue() {
   const t = useTranslations('venue');
   const showConcertVenue = process.env.NEXT_PUBLIC_SHOW_CONCERT_VENUE === 'true';
 
-  const features = t.raw('features') as { icon: string; text: string }[];
+  const features = t.raw('features') as { iconKey: IconKey; eyebrow: string; text: string }[];
 
   return (
     <section
@@ -73,12 +143,26 @@ export default function Venue() {
           </div>
         </div>
 
-        {/* Feature bar */}
-        <div className="mx-auto grid max-w-[1320px] grid-cols-1 gap-px px-6 py-10 md:grid-cols-4 md:px-10">
+        {/* Feature chips */}
+        <div className="mx-auto grid max-w-[1320px] grid-cols-1 gap-3 px-6 py-10 md:grid-cols-4 md:px-10">
           {features.map((f, i) => (
-            <div key={i} className="flex min-h-[104px] items-center gap-4 bg-warm-white/[0.055] px-5 py-5 ring-1 ring-warm-white/10">
-              <span className="text-2xl" aria-hidden>{f.icon}</span>
-              <p className="font-kr-sans text-[15px] leading-[1.45] text-warm-white/82">{f.text}</p>
+            <div
+              key={i}
+              className="group flex min-h-[112px] items-center gap-4 rounded-sm border-t-2 border-gold/50 bg-gold/[0.06] px-5 py-5 ring-1 ring-gold/[0.12] transition-all duration-300 hover:-translate-y-[2px] hover:border-gold hover:bg-burgundy/[0.10] hover:ring-burgundy/[0.28]"
+            >
+              {/* Circular gold badge with stroke SVG icon */}
+              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-gold/55 text-gold transition-colors duration-300 group-hover:border-gold-soft group-hover:text-gold-soft">
+                <VenueIcon iconKey={f.iconKey} />
+              </div>
+              {/* Text stack */}
+              <div>
+                <p className="mb-[3px] font-en-body text-[9px] font-bold uppercase tracking-[0.35em] text-gold/65 transition-colors duration-300 group-hover:text-gold-soft/80">
+                  {f.eyebrow}
+                </p>
+                <p className="font-kr-sans text-[14px] leading-[1.45] text-warm-white/85 transition-colors duration-300 group-hover:text-warm-white">
+                  {f.text}
+                </p>
+              </div>
             </div>
           ))}
         </div>

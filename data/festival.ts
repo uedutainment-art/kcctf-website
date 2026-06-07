@@ -69,7 +69,7 @@ export type Venue = {
 export const ORCHESTRAS: Orchestra[] = [
   {
     id: 'tango-bardo',
-    nameKo: '땅고 바르도',
+    nameKo: '탱고 바르도',
     nameEn: 'Tango Bardo',
     roleKo: '오르케스타 티피카',
     roleEn: 'Orquesta Típica',
@@ -79,7 +79,7 @@ export const ORCHESTRAS: Orchestra[] = [
   {
     id: 'misteriosa-ba',
     nameKo: '미스테리오사 부에노스 아이레스',
-    nameEn: 'Orquesta Tipica Misteriosa Buenos Aires',
+    nameEn: 'Orquesta Típica Misteriosa Buenos Aires',
     roleKo: '탱고 앙상블',
     roleEn: 'Tango Ensemble',
     origin: 'Buenos Aires',
@@ -89,7 +89,7 @@ export const ORCHESTRAS: Orchestra[] = [
 
 export const DJS: DJ[] = [
   { id: 'natalie', nameKo: '나탈리',   nameEn: 'Nathalie Cheng', city: '홍콩', cityEn: 'Hong Kong', country: 'Hong Kong', image: '/images/DJ/1.png' },
-  { id: 'wangwei', nameKo: '왕웨이',   nameEn: 'Wang Wei',       city: '상해', cityEn: 'Shanghai',  country: 'China',     image: '/images/DJ/2.png' },
+  { id: 'wangwei', nameKo: '왕웨이',   nameEn: 'Wang Wei',       city: '상하이', cityEn: 'Shanghai',  country: 'China',     image: '/images/DJ/2.png' },
   { id: 'carlos',  nameKo: '까를로스', nameEn: 'Carlos',         city: '서울', cityEn: 'Seoul',     country: 'Korea',     image: '/images/DJ/3.png' },
   { id: 'stone',   nameKo: '스톤',     nameEn: 'Stone',          city: '부산', cityEn: 'Busan',     country: 'Korea',     image: '/images/DJ/4.png' },
   { id: 'becca',   nameKo: '베카',     nameEn: 'Becca',          city: '서울', cityEn: 'Seoul',     country: 'Korea',     image: '/images/DJ/5.png' },
@@ -112,11 +112,11 @@ export const TICKET_TIERS: TicketTier[] = [
 
 // Schedule: 운영기준.md §7 — 요일 검증: 10/3=SAT 10/4=SUN 10/5=MON
 // idx matches position in content/*.json schedule.items[]
-// 2026-06-05 DJ 배정 운영기준/staff.html 기준으로 정정: M1 베카·M3 하군·M4 왕웨이·M6 나탈리 (M2 시간 21vs22는 조앤 확정 대기)
+// 2026-06-05 DJ 배정 운영기준/staff.html 기준으로 정정: M1 베카·M3 하군·M4 왕웨이·M6 나탈리 (M2 21:00 확정, 2026-06-07)
 export const SCHEDULE_ITEMS: ScheduleItem[] = [
   { day: '10/3', dow: 'SAT', time: '13:00 — 14:40', type: 'concert',    idx: 0, featured: true  },
   { day: '10/3', dow: 'SAT', time: '15:00 — 20:00', type: 'milonga',    idx: 1, djId: 'becca'   },
-  { day: '10/3', dow: 'SAT', time: '22:00 — 04:00', type: 'milonga',    idx: 2, djId: 'carlos'  },
+  { day: '10/3', dow: 'SAT', time: '21:00 — 04:00', type: 'milonga',    idx: 2, djId: 'carlos'  },
   { day: '10/4', dow: 'SUN', time: '14:00 — 19:00', type: 'milonga',    idx: 3, djId: 'hagoon'  },
   { day: '10/4', dow: 'SUN', time: '21:00 — 03:00', type: 'milonga',    idx: 4, djId: 'wangwei', featured: true },
   { day: '10/5', dow: 'MON', time: '11:00 — 14:00', type: 'tour',       idx: 5 },

@@ -19,7 +19,7 @@ const nightImages = [
     src: '/images/2025/night-close.jpg',
     kicker: 'LATE NIGHT',
     labelKo: '깊어지는 밤',
-    labelEn: 'The night growing closer.',
+    labelEn: 'The night, growing deeper.',
   },
 ];
 
