@@ -69,7 +69,7 @@ const ROOMS = [
   },
   {
     id: 'triple',
-    image: null,
+    image: '/images/hotel/triple.jpg',
     nameKo: '스탠다드 트리플',
     nameEn: 'Standard Triple',
     totalRooms: 17,
@@ -110,23 +110,14 @@ function AvailBadge({ room }: { room: RoomType }) {
   const isEmpty = room.available === 0;
   const isLow = pct <= 0.2 && !isEmpty;
 
+  const base =
+    'inline-flex items-center gap-1 font-en-body font-bold text-[11px] tracking-[0.1em] uppercase px-2.5 py-1 rounded shadow-[0_1px_5px_rgba(26,20,16,0.25)]';
+
   if (isEmpty)
-    return (
-      <span className="inline-flex items-center gap-1 bg-ink-soft/12 text-ink-soft/50 font-en-body font-bold text-[10px] tracking-[0.12em] uppercase px-2 py-[3px] rounded-sm">
-        매진
-      </span>
-    );
+    return <span className={`${base} bg-ink-soft text-warm-white`}>매진</span>;
   if (isLow)
-    return (
-      <span className="inline-flex items-center gap-1 bg-burgundy/10 text-burgundy font-en-body font-bold text-[10px] tracking-[0.12em] uppercase px-2 py-[3px] rounded-sm">
-        잔여 {room.available}실
-      </span>
-    );
-  return (
-    <span className="inline-flex items-center gap-1 bg-gold/15 text-ink-soft font-en-body font-bold text-[10px] tracking-[0.12em] uppercase px-2 py-[3px] rounded-sm">
-      잔여 {room.available}실
-    </span>
-  );
+    return <span className={`${base} bg-burgundy text-warm-white`}>잔여 {room.available}실</span>;
+  return <span className={`${base} bg-warm-white text-burgundy`}>잔여 {room.available}실</span>;
 }
 
 // ── Main component ─────────────────────────────────────────────────────────────
@@ -221,7 +212,7 @@ return (
             <p className="font-en-body font-bold text-[11px] tracking-[0.3em] uppercase text-gold">
               ROOM TYPES
             </p>
-            <p className="font-kr-sans text-[12px] text-charcoal/50">
+            <p className="font-kr-sans font-bold text-[14px] text-ink-soft">
               {isKo
                 ? `총 ${TOTAL_HOTEL_ROOMS}객실`
                 : `${TOTAL_HOTEL_ROOMS} rooms total`}
@@ -266,7 +257,7 @@ return (
                         </span>
                       </div>
                     )}
-                    <span className="absolute top-3 left-3 bg-warm-white/90 text-ink-soft font-en-body font-bold text-[10px] tracking-[0.12em] uppercase px-2 py-[3px] rounded-sm">
+                    <span className="absolute top-3 left-3 bg-warm-white text-ink-soft font-en-body font-bold text-[11px] tracking-[0.1em] uppercase px-2.5 py-1 rounded shadow-[0_1px_5px_rgba(26,20,16,0.25)]">
                       {room.totalRooms}{isKo ? '실' : ' rms'}
                     </span>
                     {avail?.enabled && liveRoom && (
