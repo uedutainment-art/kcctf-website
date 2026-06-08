@@ -86,7 +86,7 @@
     "eyebrow": "★ TWO LIVE ORCHESTRAS ★ · From Buenos Aires",
     "subtitleEn": "From Buenos Aires",
     "title": "Two orchestras from Buenos Aires",
-    "lede": "Two world-touring orchestras from Buenos Aires. Playing live in Chuncheon.",
+    "lede": "Two world-touring orchestras from Buenos Aires.\nPlaying live in Chuncheon.",
     "items": [
       {
         "id": "tango-bardo",
@@ -461,7 +461,7 @@
       },
       {
         "q": "What is the refund policy?",
-        "a": "Please see the Refund Policy page. Partial refund available up to 30 days before the festival; refunds become difficult thereafter."
+        "a": "Full refund before the festival start date (Oct 3); no refunds from the event day onward. See the Refund Policy page for details."
       },
       {
         "q": "Where do I send payment?",
