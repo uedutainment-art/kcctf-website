@@ -34,8 +34,11 @@ export default function Tickets() {
   };
   const procedure = t('procedure');
   const earlybirdTier = TICKET_TIERS[0];
+  const onsiteTier = TICKET_TIERS.find((tier) => tier.id === 'fullpack-onsite');
   const earlybirdItem = items[0];
   const onsiteItem = items.find((i) => i.id === 'fullpack-onsite');
+  // 얼리버드 할인액 = 현장가 − 얼리버드가 (숫자 출처: TICKET_TIERS, 하드코딩 금지)
+  const earlybirdDiscount = onsiteTier ? onsiteTier.price - earlybirdTier.price : 0;
 
   return (
     <section id="tickets" className="bg-mustard-soft py-16">
@@ -78,9 +81,16 @@ export default function Tickets() {
             {onsiteItem && (
               <p className="mb-5 font-kr-sans text-[12px] text-warm-white/55">
                 {isKo ? '얼리버드 마감 후 정가 ' : 'After earlybird '}
-                <span className="font-bold tracking-wider text-warm-white/80">
+                <span className="font-bold tracking-wider text-warm-white/80 line-through decoration-warm-white/40">
                   {onsiteItem.priceLabel}
                 </span>
+                {earlybirdDiscount > 0 && (
+                  <span className="ml-2 font-bold text-gold-soft/90">
+                    {isKo
+                      ? `₩${earlybirdDiscount.toLocaleString('ko-KR')} 할인`
+                      : `save ₩${earlybirdDiscount.toLocaleString('en-US')}`}
+                  </span>
+                )}
               </p>
             )}
             <p className="font-kr-sans text-[15px] leading-[1.65] text-warm-white/82">
