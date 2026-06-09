@@ -23,7 +23,7 @@ export default function Orchestras() {
         >
           {t('title')}
         </h2>
-        <p className="font-kr-sans text-[18px] text-warm-white/85 leading-[1.6] max-w-2xl mx-auto">
+        <p className="font-kr-sans text-[18px] text-warm-white/85 leading-[1.6] max-w-2xl mx-auto whitespace-pre-line">
           {t('lede')}
         </p>
       </MotionReveal>

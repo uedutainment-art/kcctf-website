@@ -27,6 +27,8 @@ export type DanceTeam = {
   name: string;
   origin: string;
   image: string | null;
+  /** CSS object-position for the card photo (default: 'center 25%') */
+  objectPosition?: string;
   isTBA: boolean;
 };
 
@@ -97,10 +99,10 @@ export const DJS: DJ[] = [
 ];
 
 export const DANCE_TEAMS: DanceTeam[] = [
+  { id: 'nadia-erik',   name: 'Nadia Aguilar y Erik Deslarmes', origin: 'Argentina', image: '/images/DANCER/Nadia Aguilar y Erik Deslarmes.jpg', isTBA: false },
   { id: 'london-sol',   name: 'London Hong & Sol',       origin: 'Korea', image: '/images/DANCER/London Hong & Sol.jpg',       isTBA: false },
-  { id: 'hyemi-wonjun', name: 'Hyemi Seo & Wonjun Seol', origin: 'Korea', image: '/images/DANCER/Hyemi Seo & Wonjun Seol.jpg', isTBA: false },
+  { id: 'hyemi-wonjun', name: 'Xion & Hari', origin: 'Korea', image: '/images/DANCER/Xion & Hari.jpeg', objectPosition: 'center 58%', isTBA: false },
   { id: 'team-ryu',     name: 'Team Ryu',                origin: 'Korea', image: '/images/DANCER/Team Ryu.png', isTBA: false },
-  { id: 'nadia-erik',   name: 'Nadia Aguilar y Erik Deslarmes', origin: 'International', image: '/images/DANCER/Nadia Aguilar y Erik Deslarmes.jpg', isTBA: false },
 ];
 
 // Prices: 운영기준.md §4 — NEVER change without owner approval

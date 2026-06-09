@@ -66,7 +66,8 @@ export default function Dancers() {
                     src={team.image}
                     alt={team.name}
                     fill
-                    className="object-cover object-[center_25%] grayscale-[8%] contrast-[1.04] transition-[filter] duration-300 group-hover:grayscale-0 motion-slow-zoom"
+                    className="object-cover grayscale-[8%] contrast-[1.04] transition-[filter] duration-300 group-hover:grayscale-0 motion-slow-zoom"
+                    style={{ objectPosition: team.objectPosition ?? 'center 25%' }}
                     sizes="(max-width: 640px) 90vw, (max-width: 1024px) 44vw, 280px"
                   />
                 </div>
