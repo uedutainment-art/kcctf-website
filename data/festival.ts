@@ -114,16 +114,16 @@ export const TICKET_TIERS: TicketTier[] = [
 
 // Schedule: 운영기준.md §7 — 요일 검증: 10/3=SAT 10/4=SUN 10/5=MON
 // idx matches position in content/*.json schedule.items[]
-// 2026-06-05 DJ 배정 운영기준/staff.html 기준으로 정정: M1 베카·M3 하군·M4 왕웨이·M6 나탈리 (M2 21:00 확정, 2026-06-07)
+// 2026-06-11 DJ 배정 확정: M1 왕웨이·M2 까를로스·M3 나탈리·M4 베카·M5 스톤·M6 하군 (content/*.json djName과 일치, M2 21:00)
 export const SCHEDULE_ITEMS: ScheduleItem[] = [
   { day: '10/3', dow: 'SAT', time: '13:00 — 14:40', type: 'concert',    idx: 0, featured: true  },
-  { day: '10/3', dow: 'SAT', time: '15:00 — 20:00', type: 'milonga',    idx: 1, djId: 'becca'   },
+  { day: '10/3', dow: 'SAT', time: '15:00 — 20:00', type: 'milonga',    idx: 1, djId: 'wangwei' },
   { day: '10/3', dow: 'SAT', time: '21:00 — 04:00', type: 'milonga',    idx: 2, djId: 'carlos'  },
-  { day: '10/4', dow: 'SUN', time: '14:00 — 19:00', type: 'milonga',    idx: 3, djId: 'hagoon'  },
-  { day: '10/4', dow: 'SUN', time: '21:00 — 03:00', type: 'milonga',    idx: 4, djId: 'wangwei', featured: true },
+  { day: '10/4', dow: 'SUN', time: '14:00 — 19:00', type: 'milonga',    idx: 3, djId: 'natalie' },
+  { day: '10/4', dow: 'SUN', time: '21:00 — 03:00', type: 'milonga',    idx: 4, djId: 'becca',   featured: true },
   { day: '10/5', dow: 'MON', time: '11:00 — 14:00', type: 'tour',       idx: 5 },
   { day: '10/5', dow: 'MON', time: '15:00 — 20:00', type: 'milonga',    idx: 6, djId: 'stone'   },
-  { day: '10/5', dow: 'MON', time: '20:00 — 24:00', type: 'afterparty', idx: 7, djId: 'natalie', featured: true },
+  { day: '10/5', dow: 'MON', time: '20:00 — 24:00', type: 'afterparty', idx: 7, djId: 'hagoon',  featured: true },
 ];
 
 export const VENUES: Venue[] = [
