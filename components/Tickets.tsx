@@ -136,9 +136,9 @@ export default function Tickets() {
           </div>
         </MotionReveal>
 
-        {/* 춘천 시민 할인 안내 (정보성 — 가격 자동 변경 아님, 신청 시 확인 후 적용) */}
-        <div className="text-center -mt-2 mb-10">
-          <p className="font-kr-sans text-[13.5px] leading-[1.5] text-ink-soft/80 bg-cream border border-gold/25 rounded-full px-5 py-2.5 inline-block">
+        {/* 춘천 시민 할인 — 강조 배지 (정보성, 티켓 정가/로직 변경 아님) */}
+        <div className="text-center -mt-1 mb-10">
+          <p className="inline-block max-w-[580px] bg-gold text-burgundy border-2 border-burgundy rounded-xl px-6 py-3.5 shadow-[4px_4px_0_#8B1A2B] font-kr-sans font-bold text-[15px] sm:text-[16px] leading-[1.55] tracking-[0.01em]">
             {t('residentDiscount')}
           </p>
         </div>
