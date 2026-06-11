@@ -24,7 +24,7 @@ export default function RefundPage({ params: { locale } }: { params: { locale: s
     {
       heading: '환불 방법',
       paragraphs: [
-        '환불은 입금하신 계좌로 계좌이체를 통해 진행됩니다. 환불을 원하시면 contact@kcctf.org 로 신청자 성함과 함께 요청해 주세요. 확인 후 영업일 기준 3-5일 이내에 처리됩니다.',
+        '환불은 입금하신 계좌로 계좌이체를 통해 진행됩니다. 환불을 원하시면 info@kcctf.org 로 신청자 성함과 함께 요청해 주세요. 확인 후 영업일 기준 3-5일 이내에 처리됩니다.',
         '환불 과정에서 발생하는 송금 수수료 등 실비는 공제될 수 있습니다.',
       ],
     },
@@ -42,7 +42,7 @@ export default function RefundPage({ params: { locale } }: { params: { locale: s
     },
     {
       heading: '문의',
-      paragraphs: ['환불 및 신청 관련 문의: contact@kcctf.org / 사단법인 춘천국제탱고페스티벌'],
+      paragraphs: ['환불 및 신청 관련 문의: info@kcctf.org / 사단법인 춘천국제탱고페스티벌'],
     },
   ];
 
@@ -62,7 +62,7 @@ export default function RefundPage({ params: { locale } }: { params: { locale: s
     {
       heading: 'How refunds are processed',
       paragraphs: [
-        'Refunds are issued by bank transfer to the account used for payment. To request a refund, email contact@kcctf.org with the registrant’s name. Approved refunds are processed within 3–5 business days.',
+        'Refunds are issued by bank transfer to the account used for payment. To request a refund, email info@kcctf.org with the registrant’s name. Approved refunds are processed within 3–5 business days.',
         'Any remittance or transfer fees incurred during the refund may be deducted.',
       ],
     },
@@ -80,7 +80,7 @@ export default function RefundPage({ params: { locale } }: { params: { locale: s
     },
     {
       heading: 'Contact',
-      paragraphs: ['Refund and registration inquiries: contact@kcctf.org / Chuncheon International Tango Festival'],
+      paragraphs: ['Refund and registration inquiries: info@kcctf.org / Chuncheon International Tango Festival'],
     },
   ];
 
