@@ -17,8 +17,8 @@ export default function RefundPage({ params: { locale } }: { params: { locale: s
     {
       heading: '환불 기준',
       bullets: [
-        '행사 시작일인 2026년 10월 3일 전일(10월 2일)까지 취소를 요청하신 경우: 전액 환불',
-        '행사 시작일(2026년 10월 3일) 당일 및 그 이후: 환불 불가',
+        '2026년 8월 14일까지 취소: 전액 환불',
+        '2026년 8월 15일부터: 환불 불가',
       ],
     },
     {
@@ -55,8 +55,8 @@ export default function RefundPage({ params: { locale } }: { params: { locale: s
     {
       heading: 'Refund terms',
       bullets: [
-        'Cancellation requested on or before October 2, 2026 (the day before the Festival begins): full refund.',
-        'On or after the Festival start date (October 3, 2026): no refund.',
+        'On or before August 14, 2026: full refund.',
+        'From August 15, 2026: no refund.',
       ],
     },
     {

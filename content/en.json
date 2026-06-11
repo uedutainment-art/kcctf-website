@@ -390,6 +390,7 @@
       }
     ],
     "hotelPackageNote": "Hotel packages (Full Pack + 2 nights / + 3 nights) coming soon.",
+    "residentDiscount": "🏙️ Chuncheon residents — ₩70,000 off. Let us know when you register.",
     "procedure": "① Apply → ② Pay within 3 days → ③ Confirmation → ④ QR code sent by email",
     "paymentInfo": {
       "title": "Payment",
@@ -461,7 +462,7 @@
       },
       {
         "q": "What is the refund policy?",
-        "a": "Full refund before the festival start date (Oct 3); no refunds from the event day onward. See the Refund Policy page for details."
+        "a": "Full refund up to 50 days before the festival (August 14); no refund afterward. See the Refund Policy page for details."
       },
       {
         "q": "Where do I send payment?",
