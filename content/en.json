@@ -390,7 +390,14 @@
       }
     ],
     "hotelPackageNote": "Hotel packages (Full Pack + 2 nights / + 3 nights) coming soon.",
-    "residentDiscount": "🏙️ Chuncheon residents — ₩70,000 off. Let us know when you register.",
+    "residentDiscount": {
+      "title": "🏙️ Special benefit for Chuncheon residents",
+      "priceFrom": "₩240,000",
+      "priceTo": "₩170,000",
+      "priceNote": "(₩70,000 off)",
+      "body": "For active members of a Chuncheon tango club with a registered Chuncheon address; details via your club.",
+      "contact": "Contact: Inarae 010-4760-4277"
+    },
     "procedure": "① Apply → ② Pay within 3 days → ③ Confirmation → ④ QR code sent by email",
     "paymentInfo": {
       "title": "Payment",

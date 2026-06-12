@@ -136,11 +136,40 @@ export default function Tickets() {
           </div>
         </MotionReveal>
 
-        {/* 춘천 시민 할인 — 강조 배지 (정보성, 티켓 정가/로직 변경 아님) */}
-        <div className="text-center -mt-1 mb-10">
-          <p className="inline-block max-w-[580px] bg-gold text-burgundy border-2 border-burgundy rounded-xl px-6 py-3.5 shadow-[4px_4px_0_#8B1A2B] font-kr-sans font-bold text-[15px] sm:text-[16px] leading-[1.55] tracking-[0.01em]">
-            {t('residentDiscount')}
-          </p>
+        {/* 춘천시민 특별 혜택 — 강조 배너 (정보성, 티켓 정가/가격 로직 변경 아님) */}
+        <div className="-mt-1 mb-10 flex justify-center">
+          <div className="w-full max-w-[600px] overflow-hidden rounded-xl border-2 border-burgundy bg-cream text-center shadow-[5px_5px_0_#8B1A2B]">
+            {/* 헤더 바 */}
+            <div className="border-b-[3px] border-gold bg-burgundy px-5 py-3">
+              <p className="font-kr-sans text-[16px] font-bold leading-tight text-warm-white sm:text-[18px]">
+                {t('residentDiscount.title')}
+              </p>
+            </div>
+            {/* 본문 */}
+            <div className="px-5 py-5 sm:px-7">
+              {/* 가격: 정가 취소선 → 시민 특가 */}
+              <p className="mb-3 leading-tight">
+                <span className="font-kr-sans text-[15px] text-ink-soft/55 line-through decoration-burgundy/50">
+                  {t('residentDiscount.priceFrom')}
+                </span>
+                <span className="mx-2 align-middle text-burgundy/55" aria-hidden>→</span>
+                <span className="align-middle font-en-display text-[28px] font-black text-burgundy sm:text-[34px]">
+                  {t('residentDiscount.priceTo')}
+                </span>
+                <span className="ml-2 font-kr-sans text-[14px] font-bold text-burgundy">
+                  {t('residentDiscount.priceNote')}
+                </span>
+              </p>
+              {/* 안내 본문 */}
+              <p className="mx-auto max-w-[480px] font-kr-sans text-[13.5px] leading-[1.65] text-ink-soft/80">
+                {t('residentDiscount.body')}
+              </p>
+              {/* 담당 */}
+              <p className="mt-4 inline-block rounded-full bg-mustard/60 px-4 py-1.5 font-kr-sans text-[13px] font-bold text-ink-soft">
+                {t('residentDiscount.contact')}
+              </p>
+            </div>
+          </div>
         </div>
 
         {/* Hotel packages — flag-gated */}
