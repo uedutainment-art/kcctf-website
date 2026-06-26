@@ -1,4 +1,3 @@
-import Image from 'next/image';
 import { useTranslations } from 'next-intl';
 import MotionReveal from './MotionReveal';
 
@@ -24,8 +23,8 @@ export default function Hero() {
             <span>★</span>{' '}3RD EDITION · 2026{' '}<span>★</span>
           </MotionReveal>
 
-          {/* Poster-style wordmark and bandoneon */}
-          <MotionReveal className="grid grid-cols-[minmax(0,1fr)_440px] gap-12 items-end mb-8" delay={120}>
+          {/* Poster-style wordmark */}
+          <MotionReveal className="mb-8" delay={120}>
             <div className="min-w-0">
               <div className="flex items-end gap-7 mb-7">
                 <h1
@@ -48,18 +47,6 @@ export default function Hero() {
               >
                 CHUNCHEON<br />INTERNATIONAL<br />TANGO FESTIVAL
               </p>
-            </div>
-
-            <div className="flex justify-center items-end pb-5">
-              <Image
-                src="/images/illustration-bandoneon-dark-transparent.png"
-                alt="반도네온 일러스트"
-                width={400}
-                height={400}
-                className="motion-float-soft"
-                style={{ width: 'clamp(320px, 30vw, 440px)', height: 'auto', filter: 'drop-shadow(0 14px 20px rgba(74,36,24,0.18))' }}
-                priority
-              />
             </div>
           </MotionReveal>
 
@@ -105,17 +92,6 @@ export default function Hero() {
             <div>국제탱고</div>
             <div>페스티벌</div>
           </div>
-        </MotionReveal>
-
-        {/* Bandoneon — decorative */}
-        <MotionReveal className="flex justify-center my-3 opacity-90" delay={180} aria-hidden>
-          <Image
-            src="/images/illustration-bandoneon-dark-transparent.png"
-            alt=""
-            width={160}
-            height={160}
-            style={{ width: '150px', height: 'auto', filter: 'drop-shadow(0 10px 16px rgba(74,36,24,0.14))' }}
-          />
         </MotionReveal>
 
         {/* English subtitle */}

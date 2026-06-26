@@ -1,4 +1,3 @@
-import Image from 'next/image';
 import { useTranslations, useLocale } from 'next-intl';
 import { Link } from '@/i18n/navigation';
 
@@ -37,18 +36,10 @@ export default function Footer() {
     <footer id="about" className="bg-night text-warm-white pt-12 pb-10">
       <div className="max-w-[1200px] mx-auto px-6 md:px-10">
 
-        {/* Top: centred bandoneon + tagline */}
+        {/* Top: centred tagline */}
         <div className="flex flex-col items-center text-center mb-10 pb-9 border-b border-warm-white/10">
-          <Image
-            src="/images/illustration-bandoneon-dark-transparent.png"
-            alt=""
-            width={132}
-            height={92}
-            style={{ height: '104px', width: 'auto', opacity: 0.7, filter: 'drop-shadow(0 12px 18px rgba(0,0,0,0.28))' }}
-            aria-hidden
-          />
           <p
-            className="font-en-display italic font-black text-gold mt-6 leading-none"
+            className="font-en-display italic font-black text-gold leading-none"
             style={{ fontSize: 'clamp(24px, 3.2vw, 34px)' }}
           >
             {t('tagline')} · {t('taglineEn')}

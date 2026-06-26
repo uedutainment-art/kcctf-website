@@ -1,7 +1,6 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import Image from 'next/image';
 import { useTranslations, useLocale } from 'next-intl';
 import { Link, usePathname } from '@/i18n/navigation';
 import RegisterButton from './RegisterButton';
@@ -190,17 +189,6 @@ export default function Nav() {
               <path d="M2 2L18 18M18 2L2 18" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" />
             </svg>
           </button>
-        </div>
-
-        {/* Bandoneon illustration */}
-        <div className="flex justify-center pt-4 pb-2 opacity-50 pointer-events-none" aria-hidden>
-          <Image
-            src="/images/illustration-bandoneon-dark-transparent.png"
-            alt=""
-            width={140}
-            height={140}
-            style={{ width: '140px', height: 'auto', filter: 'drop-shadow(0 10px 16px rgba(74,36,24,0.14))' }}
-          />
         </div>
 
         {/* Menu links */}
