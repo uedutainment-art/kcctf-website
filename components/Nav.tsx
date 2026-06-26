@@ -89,15 +89,8 @@ export default function Nav() {
         <div className="max-w-[1200px] mx-auto px-6 md:px-10">
           <div className="flex h-[72px] items-center justify-between gap-4">
 
-            {/* Logo */}
-            <Link href="/" className="flex-shrink-0">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src="/images/KCCTF_logo/KCCTF.svg"
-                alt="춘천국제탱고페스티벌"
-                style={{ height: '58px', width: 'auto' }}
-              />
-            </Link>
+            {/* 로고 자리 — 엠블럼 제거됨, 추후 새 로고 재추가 */}
+            <div className="flex-shrink-0" aria-hidden />
 
             {/* Desktop nav links */}
             <nav className="hidden lg:flex items-center gap-1" aria-label="Main navigation">
@@ -186,10 +179,8 @@ export default function Nav() {
       >
         {/* Top bar */}
         <div className="flex items-center justify-between px-5 pt-5 pb-4">
-          <Link href="/" onClick={() => setMenuOpen(false)}>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/images/KCCTF_logo/KCCTF.svg" alt="춘천국제탱고페스티벌" style={{ height: '58px', width: 'auto' }} />
-          </Link>
+          {/* 로고 자리 — 엠블럼 제거됨, 추후 새 로고 재추가 */}
+          <div className="flex-shrink-0" aria-hidden />
           <button
             onClick={() => setMenuOpen(false)}
             aria-label={t('menuClose')}
