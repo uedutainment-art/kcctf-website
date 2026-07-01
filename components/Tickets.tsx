@@ -11,6 +11,8 @@ export default function Tickets() {
   const registerUrl = process.env.NEXT_PUBLIC_REGISTER_URL ?? '#tickets';
   // 등록 미오픈이면 예약 버튼 대신 '등록 오픈 예정' 안내
   const registrationOpen = process.env.NEXT_PUBLIC_REGISTRATION_OPEN === 'true';
+  // 2차 얼리버드 준비 중 — true면 가격 카드/입금/절차 숨기고 '2차 오픈 예정' 안내만 (시민 배너·헤더는 유지)
+  const ticketsComingSoon = process.env.NEXT_PUBLIC_TICKETS_COMING_SOON === 'true';
 
   const items = t.raw('items') as {
     id: string;
@@ -53,17 +55,35 @@ export default function Tickets() {
             className="font-kr-serif font-black text-ink-soft leading-[1.0] tracking-[-0.04em] mb-2"
             style={{ fontSize: 'clamp(28px, 4vw, 48px)' }}
           >
-            {t('title')}
+            {ticketsComingSoon ? (isKo ? '티켓' : 'Tickets') : t('title')}
           </h2>
-          <p className="font-en-display italic text-[22px] text-gold mb-4">
-            {t('subtitleEn')}
-          </p>
-          <p className="font-kr-sans text-[15px] text-charcoal/70">
-            {t('lede')}
-          </p>
+          {!ticketsComingSoon && (
+            <p className="font-en-display italic text-[22px] text-gold mb-4">
+              {t('subtitleEn')}
+            </p>
+          )}
+          {!ticketsComingSoon && (
+            <p className="font-kr-sans text-[15px] text-charcoal/70">
+              {t('lede')}
+            </p>
+          )}
         </MotionReveal>
 
+        {/* 2차 얼리버드 준비 중 — 가격 카드 대신 '오픈 예정' 안내 */}
+        {ticketsComingSoon && (
+          <MotionReveal className="mx-auto mb-10 max-w-[680px] rounded-lg border-2 border-burgundy/25 bg-cream px-8 py-14 text-center shadow-stamp" delay={100}>
+            <p className="font-en-body text-[11px] font-bold uppercase tracking-[0.32em] text-burgundy/70">Coming Soon</p>
+            <p className="mt-3 font-kr-serif text-[26px] font-black leading-tight text-ink-soft sm:text-[34px]">
+              {isKo ? '2차 얼리버드 오픈 예정' : '2nd Early Bird — Coming Soon'}
+            </p>
+            <p className="mx-auto mt-4 max-w-[460px] font-kr-sans text-[14px] leading-relaxed text-charcoal/70">
+              {isKo ? '1차 얼리버드는 마감되었습니다. 2차 오픈 일정은 곧 안내드립니다.' : 'The first Early Bird has closed. The 2nd round opening will be announced soon.'}
+            </p>
+          </MotionReveal>
+        )}
+
         {/* Ticket card */}
+        {!ticketsComingSoon && (
         <MotionReveal className="mx-auto mb-10 grid max-w-[980px] grid-cols-1 overflow-hidden rounded-lg bg-burgundy text-warm-white shadow-stamp md:grid-cols-[0.95fr_1.05fr]" delay={100}>
           <div className="relative p-8 md:p-10">
             <span className="mb-6 inline-flex items-center gap-1.5 rounded-full bg-ink/55 px-3.5 py-1 font-kr-sans text-[11px] font-bold tracking-[0.04em] text-warm-white ring-1 ring-warm-white/25">
@@ -135,6 +155,7 @@ export default function Tickets() {
             </p>
           </div>
         </MotionReveal>
+        )}
 
         {/* 춘천시민 특별 혜택 — 강조 배너 (정보성, 티켓 정가/가격 로직 변경 아님) */}
         <div className="-mt-1 mb-10 flex justify-center">
@@ -181,6 +202,8 @@ export default function Tickets() {
           </div>
         )}
 
+        {!ticketsComingSoon && (
+        <>
         {/* Procedure */}
         <p className="font-kr-sans text-[13px] text-charcoal/60 text-center mb-6">
           {procedure}
@@ -212,6 +235,8 @@ export default function Tickets() {
             </div>
           )}
         </div>
+        </>
+        )}
 
       </div>
     </section>
