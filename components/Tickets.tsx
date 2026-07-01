@@ -66,8 +66,8 @@ export default function Tickets() {
         {/* Ticket card */}
         <MotionReveal className="mx-auto mb-10 grid max-w-[980px] grid-cols-1 overflow-hidden rounded-lg bg-burgundy text-warm-white shadow-stamp md:grid-cols-[0.95fr_1.05fr]" delay={100}>
           <div className="relative p-8 md:p-10">
-            <span className="mb-6 inline-flex bg-gold text-ink font-en-body font-bold text-[10px] tracking-[0.2em] uppercase px-3 py-1 rounded-full">
-              EARLYBIRD
+            <span className="mb-6 inline-flex items-center gap-1.5 rounded-full bg-ink/55 px-3.5 py-1 font-kr-sans text-[11px] font-bold tracking-[0.04em] text-warm-white ring-1 ring-warm-white/25">
+              {isKo ? '⏰ 얼리버드 마감' : '⏰ Early Bird Closed'}
             </span>
             <p className="font-en-body font-bold text-[11px] tracking-[0.3em] uppercase mb-3 text-gold-soft">
               {earlybirdItem.name}
