@@ -1,6 +1,10 @@
 import { useTranslations } from 'next-intl';
 import MotionReveal from './MotionReveal';
 
+// 등록 플랫폼(별도 서비스) 직접 링크 — ⚠️ 비공개 초대(invite) 링크는 절대 여기에 넣지 말 것
+const REGISTER_URL = 'https://kcctf-5047d.web.app/register/chuncheon-citf-2026';
+const REGISTER_HOTEL_URL = 'https://kcctf-5047d.web.app/register/chuncheon-citf-2026?mode=hotel';
+
 export default function Hero() {
   const t = useTranslations('hero');
 
@@ -11,7 +15,7 @@ export default function Hero() {
 
       {/* ── DESKTOP (lg+) ─────────────────────────────────────────────── */}
       <div className="hidden lg:block relative z-10">
-        <div className="max-w-[1840px] mx-auto px-[clamp(32px,4vw,76px)] pt-10 pb-0">
+        <div className="max-w-[1840px] mx-auto px-[clamp(32px,4vw,76px)] pt-10 pb-10">
 
           {/* Eyebrow */}
           <MotionReveal
@@ -66,11 +70,17 @@ export default function Hero() {
               dateSecondary={t('dateBand.dateSecondary')}
             />
           </MotionReveal>
+
+          {/* 참가 신청 CTA (등록 플랫폼 직접 링크 · 새 탭) */}
+          <MotionReveal className="mt-7 flex flex-wrap items-center justify-center gap-3" delay={380}>
+            <RegisterCta href={REGISTER_URL} label={t('registerCta')} primary />
+            <RegisterCta href={REGISTER_HOTEL_URL} label={t('registerHotelCta')} />
+          </MotionReveal>
         </div>
       </div>
 
       {/* ── MOBILE (< lg) ─────────────────────────────────────────────── */}
-      <div className="lg:hidden relative z-10 px-5 pt-6 pb-0">
+      <div className="lg:hidden relative z-10 px-5 pt-6 pb-8">
 
         {/* Eyebrow */}
         <MotionReveal as="p" className="font-en-body font-black text-[10px] tracking-[0.42em] uppercase text-burgundy text-center mb-5" delay={40}>
@@ -121,6 +131,12 @@ export default function Hero() {
             mobile
           />
         </MotionReveal>
+
+        {/* 참가 신청 CTA (등록 플랫폼 직접 링크 · 새 탭) */}
+        <MotionReveal className="mt-6 mx-auto flex max-w-[320px] flex-col items-stretch gap-2.5" delay={420}>
+          <RegisterCta href={REGISTER_URL} label={t('registerCta')} primary mobile />
+          <RegisterCta href={REGISTER_HOTEL_URL} label={t('registerHotelCta')} mobile />
+        </MotionReveal>
       </div>
 
       {/* Gradient fade → Orchestras burgundy */}
@@ -159,5 +175,36 @@ function DateBand({ datePrimary, dateSecondary, mobile }: DateBandProps) {
         <p className="font-en-body font-bold text-[9px] tracking-[0.4em] uppercase text-gold-soft/85 mt-1">{dateSecondary}</p>
       </div>
     </div>
+  );
+}
+
+// 등록 플랫폼 직접 링크 버튼 (외부 서비스 → 새 탭)
+function RegisterCta({
+  href,
+  label,
+  primary,
+  mobile,
+}: {
+  href: string;
+  label: string;
+  primary?: boolean;
+  mobile?: boolean;
+}) {
+  const skin = primary
+    ? 'bg-burgundy text-warm-white shadow-[0_4px_0_#5A0E1B] hover:translate-y-[2px] hover:shadow-[0_2px_0_#5A0E1B]'
+    : 'border-2 border-burgundy/60 bg-warm-white/55 text-burgundy hover:border-burgundy hover:bg-warm-white/85';
+  return (
+    <a
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      className={[
+        'inline-flex items-center justify-center rounded-md font-kr-sans font-bold transition-all duration-150 whitespace-nowrap',
+        mobile ? 'w-full px-5 py-3.5 text-[15px]' : 'px-7 py-4 text-[15px]',
+        skin,
+      ].join(' ')}
+    >
+      {label}
+    </a>
   );
 }

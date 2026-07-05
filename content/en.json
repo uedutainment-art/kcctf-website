@@ -64,6 +64,8 @@
       "cta": "Early Bird Registration →"
     },
     "cta": "Register →",
+    "registerCta": "Register — 2nd Early Bird",
+    "registerHotelCta": "Accommodation only (no pass)",
     "scrollHint": "Scroll"
   },
   "quickLinks": {
@@ -465,7 +467,8 @@
     "items": [
       {
         "q": "How do I register?",
-        "a": "Click the Register button to be taken to the application page. Reservation is confirmed upon payment within 3 days of submission."
+        "a": "Use the 'Register' button above (or the link below) to open the application page. Your reservation is confirmed once payment is verified within 3 days of submission.",
+        "cta": { "label": "Go to registration →", "href": "https://kcctf-5047d.web.app/register/chuncheon-citf-2026" }
       },
       {
         "q": "What is the refund policy?",

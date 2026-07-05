@@ -6,6 +6,7 @@ import { useTranslations } from 'next-intl';
 type FaqItem = {
   q: string;
   a: string;
+  cta?: { label: string; href: string };
 };
 
 export default function FAQ() {
@@ -61,9 +62,19 @@ export default function FAQ() {
                     isOpen ? 'max-h-[600px]' : 'max-h-0',
                   ].join(' ')}
                 >
-                  <p className="font-kr-sans text-[15px] text-ink-soft/85 leading-[1.7] pb-5 pr-10">
+                  <p className="font-kr-sans text-[15px] text-ink-soft/85 leading-[1.7] pb-4 pr-10">
                     {item.a}
                   </p>
+                  {item.cta && (
+                    <a
+                      href={item.cta.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="mb-5 inline-flex items-center rounded-md bg-burgundy px-5 py-2.5 font-kr-sans text-[14px] font-bold text-warm-white shadow-[0_3px_0_#5A0E1B] transition-all duration-150 hover:translate-y-[1px] hover:shadow-[0_2px_0_#5A0E1B]"
+                    >
+                      {item.cta.label}
+                    </a>
+                  )}
                 </div>
               </div>
             );
