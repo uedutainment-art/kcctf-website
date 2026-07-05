@@ -3,6 +3,9 @@ import { TICKET_TIERS } from '@/data/festival';
 import RegisterButton from './RegisterButton';
 import MotionReveal from './MotionReveal';
 
+// 등록 플랫폼(별도 서비스) 직접 링크 — ⚠️ 비공개 초대(invite) 링크는 넣지 말 것
+const REGISTER_URL = 'https://kcctf-5047d.web.app/register/chuncheon-citf-2026';
+
 export default function Tickets() {
   const t = useTranslations('tickets');
   const locale = useLocale();
@@ -11,7 +14,7 @@ export default function Tickets() {
   const registerUrl = process.env.NEXT_PUBLIC_REGISTER_URL ?? '#tickets';
   // 등록 미오픈이면 예약 버튼 대신 '등록 오픈 예정' 안내
   const registrationOpen = process.env.NEXT_PUBLIC_REGISTRATION_OPEN === 'true';
-  // 2차 얼리버드 준비 중 — true면 가격 카드/입금/절차 숨기고 '2차 오픈 예정' 안내만 (시민 배너·헤더는 유지)
+  // 티켓 간단 안내 모드 — true면 전체 가격표/입금/절차 대신 '2차 얼리버드 신청 진행 중' 안내 카드만 (시민 배너 유지)
   const ticketsComingSoon = process.env.NEXT_PUBLIC_TICKETS_COMING_SOON === 'true';
 
   const items = t.raw('items') as {
@@ -69,16 +72,24 @@ export default function Tickets() {
           )}
         </MotionReveal>
 
-        {/* 2차 얼리버드 준비 중 — 가격 카드 대신 '오픈 예정' 안내 */}
+        {/* 2차 얼리버드 진행 중 — 가격 상세 대신 '신청 진행 중' 안내 + 신청 링크 */}
         {ticketsComingSoon && (
-          <MotionReveal className="mx-auto mb-10 max-w-[680px] rounded-lg border-2 border-burgundy/25 bg-cream px-8 py-14 text-center shadow-stamp" delay={100}>
-            <p className="font-en-body text-[11px] font-bold uppercase tracking-[0.32em] text-burgundy/70">Coming Soon</p>
+          <MotionReveal className="mx-auto mb-10 max-w-[680px] rounded-lg border-2 border-burgundy/25 bg-cream px-8 py-12 text-center shadow-stamp" delay={100}>
+            <p className="font-en-body text-[11px] font-bold uppercase tracking-[0.32em] text-burgundy/70">Now Open</p>
             <p className="mt-3 font-kr-serif text-[26px] font-black leading-tight text-ink-soft sm:text-[34px]">
-              {isKo ? '2차 얼리버드 오픈 예정' : '2nd Early Bird — Coming Soon'}
+              {isKo ? '2차 얼리버드 신청 진행 중' : '2nd Early Bird — Now Open'}
             </p>
-            <p className="mx-auto mt-4 max-w-[460px] font-kr-sans text-[14px] leading-relaxed text-charcoal/70">
-              {isKo ? '1차 얼리버드는 마감되었습니다. 2차 오픈 일정은 곧 안내드립니다.' : 'The first Early Bird has closed. The 2nd round opening will be announced soon.'}
+            <p className="mx-auto mt-3 max-w-[480px] font-kr-sans text-[15px] leading-relaxed text-charcoal/75">
+              {isKo ? '3일 풀패스 ₩190,000 · 7월 31일 마감' : '3-day Full Pass ₩190,000 · closes July 31'}
             </p>
+            <a
+              href={REGISTER_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-6 inline-flex items-center justify-center rounded-md bg-burgundy px-7 py-3.5 font-kr-sans text-[15px] font-bold text-warm-white shadow-[0_4px_0_#5A0E1B] transition-all duration-150 hover:translate-y-[2px] hover:shadow-[0_2px_0_#5A0E1B]"
+            >
+              {isKo ? '참가 신청하기 →' : 'Register now →'}
+            </a>
           </MotionReveal>
         )}
 
