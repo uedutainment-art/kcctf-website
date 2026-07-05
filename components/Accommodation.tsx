@@ -4,356 +4,253 @@ import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { useLocale } from 'next-intl';
 
-// ── EventLink API types ────────────────────────────────────────────────────────
+// ── EventLink 공개 API (잔여/가격) ─────────────────────────────────────────────
 
 type LocaleStr = { ko: string; en: string };
 
 type RoomType = {
   id: string;
+  hotelId?: string;
   label: LocaleStr;
-  hint: LocaleStr;
-  capacity: { base: number; max: number };
-  total: number;
-  booked: number;
-  available: number;
-};
-
-type Package = {
-  id: string;
-  nights: string[];
-  nightsCount: number;
-  label: LocaleStr;
-  description: LocaleStr;
-  default: boolean;
-  priceTotal: number;
+  hint?: LocaleStr;
+  capacity?: { base: number; max: number };
+  total?: number;
+  booked?: number;
+  available?: number;
+  pricePerNight?: number;
+  closed?: boolean;
 };
 
 type AvailabilityData = {
   ok: boolean;
   enabled: boolean;
-  pricePerNightPerRoom: number;
   currency: string;
-  packages: Package[];
   roomTypes: RoomType[];
 };
 
 const API_URL =
   'https://kcctf-5047d.web.app/api/events/chuncheon-citf-2026/accommodation/availability';
 
-// ── Static room info (from 더베네치아스위트 brochure) ──────────────────────────
+// 숙박만 예약 링크 (등록 플랫폼) — ⚠️ 비공개 초대(invite) 링크는 넣지 말 것
+const BOOK_HOTEL_URL =
+  'https://kcctf-5047d.web.app/register/chuncheon-citf-2026?mode=hotel';
 
-const ROOMS = [
+// ── 정적 메타 (사진·침대·발코니) — 플랫폼 room id 기준. 사진 없으면 placeholder ──
+
+const ROOM_META: Record<
+  string,
+  { image: string | null; bedKo: string; bedEn: string; balcony: boolean }
+> = {
+  double:         { image: '/images/hotel/double.jpg', bedKo: '퀸베드 1개',            bedEn: '1 Queen bed',            balcony: false },
+  'eston-double': { image: null,                        bedKo: '더블베드 1개',          bedEn: '1 Double bed',           balcony: true  },
+  'eston-twin':   { image: null,                        bedKo: '더블베드 1개 · 싱글베드 1개', bedEn: '1 Double + 1 Single bed', balcony: true  },
+  'eston-family': { image: null,                        bedKo: '더블베드 2개',          bedEn: '2 Double beds',          balcony: true  },
+};
+
+// ── 공식 지정 호텔 (객실은 API 기준으로 표시) ──────────────────────────────────
+
+const HOTELS: {
+  id: string;
+  nameKo: string;
+  nameEn: string;
+  taglineKo: string;
+  taglineEn: string;
+  contact?: { telHref: string; tel: string; addr: string; email: string };
+}[] = [
   {
-    id: 'double',
-    image: '/images/hotel/double.jpg',
-    nameKo: '스탠다드 더블',
-    nameEn: 'Standard Double',
-    totalRooms: 80,
-    size: '23㎡',
-    guestsKo: '기준 2인 · 최대 2인',
-    guestsEn: 'Up to 2 guests',
-    bedKo: '퀸베드 1개',
-    bedEn: '1 Queen Bed',
+    id: 'venezia',
+    nameKo: '더베네치아스위트',
+    nameEn: 'The Venezia Suite',
+    taglineKo: '페스티벌 공식 호텔 · 봄내체육관까지 셔틀 운행',
+    taglineEn: 'Official festival hotel · shuttle to Bomnae Complex',
   },
   {
-    id: 'twin',
-    image: '/images/hotel/twin.jpg',
-    nameKo: '스탠다드 트윈',
-    nameEn: 'Standard Twin',
-    totalRooms: 55,
-    size: '23㎡',
-    guestsKo: '기준 2인 · 최대 2인',
-    guestsEn: 'Up to 2 guests',
-    bedKo: '싱글베드 2개',
-    bedEn: '2 Single Beds',
-  },
-  {
-    id: 'triple',
-    image: '/images/hotel/triple.jpg',
-    nameKo: '스탠다드 트리플',
-    nameEn: 'Standard Triple',
-    totalRooms: 17,
-    size: '23㎡',
-    guestsKo: '기준 3인 · 최대 3인',
-    guestsEn: 'Up to 3 guests',
-    bedKo: '퀸베드 1개 + 싱글베드 1개',
-    bedEn: '1 Queen + 1 Single Bed',
+    id: 'eston',
+    nameKo: '에스턴호텔',
+    nameEn: 'Eston Hotel',
+    taglineKo: '춘천 중앙로 · 전 객실 발코니/테라스',
+    taglineEn: 'Chuncheon Jungang-ro · balcony/terrace in every room',
+    contact: {
+      telHref: 'tel:0332440002',
+      tel: '033) 244-0002',
+      addr: '강원특별자치도 춘천시 중앙로 193 (근화동)',
+      email: 'estonhotel_1@naver.com',
+    },
   },
 ];
 
-// 2026-06-07 온돌 제외, 예약시스템과 동일하게 3종(더블80·트윈55·트리플17)으로 정정
-const TOTAL_HOTEL_ROOMS = 152;
-
-// ── Date helpers ───────────────────────────────────────────────────────────────
-
-const DAYS_KO = ['일', '월', '화', '수', '목', '금', '토'];
-const DAYS_EN = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-
-/** "10/2(금) 체크인 → 10/6(화) 체크아웃 · 4박" 식 문자열 생성 */
-function formatStay(nights: string[], nightsCount: number, isKo: boolean): string {
-  if (!nights || nights.length === 0) return '';
-  const checkIn = new Date(nights[0]);
-  const checkOut = new Date(nights[nights.length - 1]);
-  checkOut.setDate(checkOut.getDate() + 1);
-  const days = isKo ? DAYS_KO : DAYS_EN;
-  const fmt = (d: Date) => `${d.getMonth() + 1}/${d.getDate()}(${days[d.getDay()]})`;
-  const inLabel  = isKo ? '체크인' : 'Check-in';
-  const outLabel = isKo ? '체크아웃' : 'Check-out';
-  const nightsLabel = isKo ? `${nightsCount}박` : `${nightsCount}N`;
-  return `${fmt(checkIn)} ${inLabel} → ${fmt(checkOut)} ${outLabel} · ${nightsLabel}`;
-}
-
-// ── Availability badge ─────────────────────────────────────────────────────────
+// ── 잔여 배지 ───────────────────────────────────────────────────────────────────
 
 function AvailBadge({ room }: { room: RoomType }) {
-  const pct = room.total > 0 ? room.available / room.total : 0;
-  const isEmpty = room.available === 0;
+  const total = room.total ?? 0;
+  const available = room.available ?? 0;
+  const pct = total > 0 ? available / total : 0;
+  const isEmpty = available === 0;
   const isLow = pct <= 0.2 && !isEmpty;
-
   const base =
     'inline-flex items-center gap-1 font-en-body font-bold text-[11px] tracking-[0.1em] uppercase px-2.5 py-1 rounded shadow-[0_1px_5px_rgba(26,20,16,0.25)]';
-
-  if (isEmpty)
-    return <span className={`${base} bg-ink-soft text-warm-white`}>매진</span>;
-  if (isLow)
-    return <span className={`${base} bg-burgundy text-warm-white`}>잔여 {room.available}실</span>;
-  return <span className={`${base} bg-warm-white text-burgundy`}>잔여 {room.available}실</span>;
+  if (isEmpty) return <span className={`${base} bg-ink-soft text-warm-white`}>매진</span>;
+  if (isLow) return <span className={`${base} bg-burgundy text-warm-white`}>잔여 {available}실</span>;
+  return <span className={`${base} bg-warm-white text-burgundy`}>잔여 {available}실</span>;
 }
 
-// ── Main component ─────────────────────────────────────────────────────────────
+// ── 객실 카드 ───────────────────────────────────────────────────────────────────
+
+function RoomCard({ room, isKo }: { room: RoomType; isKo: boolean }) {
+  const meta = ROOM_META[room.id];
+  const name = isKo ? room.label.ko : room.label.en;
+  const maxGuests = room.capacity?.max;
+  const bed = meta ? (isKo ? meta.bedKo : meta.bedEn) : room.hint ? (isKo ? room.hint.ko : room.hint.en) : '';
+  const balcony = meta?.balcony;
+
+  return (
+    <div className="bg-warm-white rounded-lg overflow-hidden border border-ink-soft/8 flex flex-col">
+      <div className="relative">
+        {meta?.image ? (
+          <Image
+            src={meta.image}
+            alt={name}
+            width={400}
+            height={240}
+            className="w-full object-cover"
+            style={{ aspectRatio: '5/3' }}
+          />
+        ) : (
+          <div className="w-full bg-cream flex items-center justify-center" style={{ aspectRatio: '5/3' }}>
+            <span className="font-en-body font-bold text-[10px] tracking-[0.3em] uppercase text-ink-soft/30">
+              {isKo ? '사진 준비중' : 'Photo coming'}
+            </span>
+          </div>
+        )}
+        {room.available != null && !room.closed && (
+          <div className="absolute top-3 right-3">
+            <AvailBadge room={room} />
+          </div>
+        )}
+      </div>
+      <div className="p-4 flex-1 flex flex-col">
+        <p className="font-kr-sans font-bold text-[15px] text-ink-soft mb-[2px]">{name}</p>
+        {maxGuests != null && (
+          <p className="font-en-body text-[12px] text-charcoal/55 mb-3">
+            {isKo ? `최대 ${maxGuests}인` : `Up to ${maxGuests} guests`}
+            {balcony ? (isKo ? ' · 발코니/테라스' : ' · Balcony/Terrace') : ''}
+          </p>
+        )}
+        {bed && <p className="font-kr-sans text-[13px] text-charcoal/70">{bed}</p>}
+        {room.pricePerNight != null && (
+          <p className="font-kr-sans font-bold text-[12px] text-gold mt-2">
+            {isKo ? `1박 ₩${room.pricePerNight.toLocaleString()}` : `₩${room.pricePerNight.toLocaleString()} / night`}
+          </p>
+        )}
+      </div>
+    </div>
+  );
+}
+
+// ── 메인 ────────────────────────────────────────────────────────────────────────
 
 export default function Accommodation() {
   const locale = useLocale();
   const isKo = locale === 'ko';
-  const hotelPdfUrl = process.env.NEXT_PUBLIC_HOTEL_PDF_URL ?? '';
 
   const [avail, setAvail] = useState<AvailabilityData | null>(null);
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     fetch(API_URL)
       .then((r) => r.json())
-      .then((d: AvailabilityData) => { setAvail(d); setLoading(false); })
-      .catch(() => setLoading(false));
+      .then((d: AvailabilityData) => setAvail(d))
+      .catch(() => {});
   }, []);
 
-  const roomMap = avail?.enabled
-    ? Object.fromEntries(avail.roomTypes.map((r) => [r.id, r]))
-    : {};
+  const rooms = avail?.enabled ? avail.roomTypes.filter((r) => !r.closed) : [];
+  const roomsByHotel = (hotelId: string) => rooms.filter((r) => (r.hotelId ?? 'venezia') === hotelId);
 
-  const pricePerNight = avail?.enabled ? avail.pricePerNightPerRoom : null;
-
-return (
+  return (
     <section id="accommodation" className="bg-cream py-16">
       <div className="max-w-[1200px] mx-auto px-6 md:px-10">
 
         {/* Header */}
         <div className="text-center mb-12">
           <p className="font-en-body font-bold text-[11px] tracking-[0.4em] uppercase text-gold mb-3">
-            {isKo ? 'ACCOMMODATION · 공식 호텔' : 'ACCOMMODATION · Official Hotel'}
+            {isKo ? 'ACCOMMODATION · 공식 지정 호텔' : 'ACCOMMODATION · Official Hotels'}
           </p>
           <h2
             className="font-kr-serif font-black text-ink-soft leading-[1.0] tracking-[-0.04em] mb-2"
             style={{ fontSize: 'clamp(26px, 3.5vw, 44px)' }}
           >
-            {isKo ? '공식 지정 호텔' : 'Official Hotel'}
+            {isKo ? '공식 지정 호텔' : 'Official Hotels'}
           </h2>
-          <p className="font-en-display italic text-[20px] text-gold mb-1">
-            더베네치아스위트
-          </p>
-          <p className="font-en-body text-[13px] text-charcoal/55 tracking-[0.12em] uppercase">
-            The Venezia Suite · Chuncheon
+          <p className="font-kr-sans text-[14px] text-charcoal/60">
+            {isKo ? '두 곳의 공식 호텔에서 편하게 머무세요.' : 'Stay at one of two official hotels.'}
           </p>
         </div>
 
-        {/* Hotel exterior + info */}
-        <div className="grid grid-cols-1 lg:grid-cols-[1.4fr_1fr] gap-8 mb-12 items-start">
-          {/* Photo */}
-          <div className="relative rounded-lg overflow-hidden shadow-[4px_4px_0_#8B1A2B]">
-            <Image
-              src="/images/hotel/exterior.jpg"
-              alt="더베네치아스위트 외관"
-              width={800}
-              height={500}
-              className="w-full object-cover"
-              style={{ aspectRatio: '16/9' }}
-            />
-          </div>
+        {/* Hotels */}
+        <div className="flex flex-col gap-12">
+          {HOTELS.map((hotel) => {
+            const hotelRooms = roomsByHotel(hotel.id);
+            return (
+              <div key={hotel.id} className="rounded-lg border border-ink-soft/8 bg-warm-white/40 p-6 md:p-8">
+                {/* Hotel header */}
+                <div className="mb-6 text-center">
+                  <p className="font-en-display italic text-[24px] text-gold leading-tight">{hotel.nameKo}</p>
+                  <p className="font-en-body text-[12px] text-charcoal/55 tracking-[0.12em] uppercase mt-0.5">{hotel.nameEn}</p>
+                  <p className="font-kr-sans text-[13px] text-charcoal/60 mt-2">{isKo ? hotel.taglineKo : hotel.taglineEn}</p>
+                </div>
 
-          {/* Info card */}
-          <div className="flex flex-col gap-5">
-            <div className="bg-warm-white rounded-lg p-6 border border-ink-soft/8">
-              <p className="font-en-body font-bold text-[10px] tracking-[0.3em] uppercase text-gold mb-4">
-                HOTEL INFO
-              </p>
-              <p className="font-kr-sans text-[15px] text-ink-soft leading-[1.75] whitespace-pre-line">
-                {isKo
-                  ? '페스티벌 공식 호텔.\n봄내체육관까지 셔틀버스 운행.'
-                  : 'Official festival hotel.\nShuttle bus to Bomnae Complex.'}
-              </p>
-            </div>
-
-            {hotelPdfUrl && (
-              <a
-                href={hotelPdfUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="block w-full border-2 border-ink-soft/20 text-ink-soft font-kr-sans text-[13px] text-center py-[11px] rounded-md hover:border-ink-soft/40 hover:text-ink transition-colors"
-              >
-                호텔 안내문 PDF 다운로드 ↓
-              </a>
-            )}
-          </div>
-        </div>
-
-        {/* Room types */}
-        <div className="mb-10">
-          <div className="flex flex-wrap items-baseline justify-center gap-x-3 gap-y-1 mb-6">
-            <p className="font-en-body font-bold text-[11px] tracking-[0.3em] uppercase text-gold">
-              ROOM TYPES
-            </p>
-            <p className="font-kr-sans font-bold text-[14px] text-ink-soft">
-              {isKo
-                ? `총 ${TOTAL_HOTEL_ROOMS}객실`
-                : `${TOTAL_HOTEL_ROOMS} rooms total`}
-            </p>
-            {pricePerNight && (
-              <p className="font-kr-sans text-[12px] text-charcoal/50">
-                ·{' '}
-                {isKo
-                  ? `1박 ₩${pricePerNight.toLocaleString()} · 숙박만`
-                  : `₩${pricePerNight.toLocaleString()} / night · room only`}
-              </p>
-            )}
-          </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            {ROOMS.map((room) => {
-              const liveRoom = roomMap[room.id];
-              const displayName = liveRoom
-                ? (isKo ? liveRoom.label.ko : liveRoom.label.en)
-                : (isKo ? room.nameKo : room.nameEn);
-              const displayHint = liveRoom
-                ? (isKo ? liveRoom.hint.ko : liveRoom.hint.en)
-                : (isKo ? room.guestsKo : room.guestsEn);
-              return (
-                <div key={room.id} className="bg-warm-white rounded-lg overflow-hidden border border-ink-soft/8 flex flex-col">
-                  <div className="relative">
-                    {room.image ? (
-                      <Image
-                        src={room.image}
-                        alt={room.nameKo}
-                        width={400}
-                        height={240}
-                        className="w-full object-cover"
-                        style={{ aspectRatio: '5/3' }}
-                      />
-                    ) : (
-                      <div
-                        className="w-full bg-cream flex items-center justify-center"
-                        style={{ aspectRatio: '5/3' }}
-                      >
-                        <span className="font-en-body font-bold text-[10px] tracking-[0.3em] uppercase text-ink-soft/30">
-                          {isKo ? '사진 준비중' : 'Photo coming'}
-                        </span>
-                      </div>
-                    )}
-                    <span className="absolute top-3 left-3 bg-warm-white text-ink-soft font-en-body font-bold text-[11px] tracking-[0.1em] uppercase px-2.5 py-1 rounded shadow-[0_1px_5px_rgba(26,20,16,0.25)]">
-                      {room.totalRooms}{isKo ? '실' : ' rms'}
-                    </span>
-                    {avail?.enabled && liveRoom && (
-                      <div className="absolute top-3 right-3">
-                        <AvailBadge room={liveRoom} />
-                      </div>
-                    )}
+                {/* Rooms */}
+                {hotelRooms.length > 0 ? (
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                    {hotelRooms.map((room) => (
+                      <RoomCard key={room.id} room={room} isKo={isKo} />
+                    ))}
                   </div>
-                  <div className="p-4 flex-1 flex flex-col">
-                    <p className="font-kr-sans font-bold text-[15px] text-ink-soft mb-[2px]">
-                      {displayName}
+                ) : (
+                  <p className="text-center font-kr-sans text-[13px] text-charcoal/45">
+                    {isKo ? '객실 정보를 불러오는 중입니다.' : 'Loading room information…'}
+                  </p>
+                )}
+
+                {/* 예약안내 (연락처 있는 호텔만) */}
+                {hotel.contact && (
+                  <div className="mt-6 mx-auto max-w-[560px] rounded-lg border border-ink-soft/12 bg-warm-white px-6 py-5 text-center">
+                    <p className="font-en-body font-bold text-[10px] tracking-[0.3em] uppercase text-gold mb-2">
+                      RESERVATION GUIDE · 예약안내
                     </p>
-                    <p className="font-en-body text-[12px] text-charcoal/55 mb-3">
-                      {room.size} · {displayHint}
+                    <p className="font-kr-sans font-bold text-[16px] text-ink-soft">
+                      <a href={hotel.contact.telHref} className="transition-colors hover:text-burgundy">
+                        ☎ {hotel.contact.tel}
+                      </a>
                     </p>
-                    <p className="font-kr-sans text-[13px] text-charcoal/70">
-                      {isKo ? room.bedKo : room.bedEn}
+                    <p className="font-kr-sans text-[13px] text-charcoal/65 mt-1">{hotel.contact.addr}</p>
+                    <p className="font-kr-sans text-[13px] text-charcoal/65">
+                      <a href={`mailto:${hotel.contact.email}`} className="underline decoration-ink-soft/20 transition-colors hover:text-burgundy">
+                        {hotel.contact.email}
+                      </a>
                     </p>
                   </div>
-                </div>
-              );
-            })}
-          </div>
+                )}
+              </div>
+            );
+          })}
         </div>
 
-        {/* Packages — from API when enabled */}
-        {avail?.enabled && avail.packages.length > 0 && (
-          <div className="mb-10">
-            <p className="font-en-body font-bold text-[11px] tracking-[0.3em] uppercase text-gold mb-6 text-center">
-              PACKAGES
-            </p>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 mb-5">
-              {avail.packages.map((pkg) => (
-                <div
-                  key={pkg.id}
-                  className={`relative rounded-lg p-5 flex flex-col border-2 transition-colors ${
-                    pkg.default
-                      ? 'bg-burgundy border-burgundy text-warm-white'
-                      : 'bg-warm-white border-ink-soft/10 text-ink-soft'
-                  }`}
-                >
-                  {pkg.default && (
-                    <span className="absolute -top-[11px] left-1/2 -translate-x-1/2 bg-gold text-ink font-en-body font-bold text-[9px] tracking-[0.2em] uppercase px-3 py-[3px] rounded-full whitespace-nowrap">
-                      {isKo ? '추천' : 'POPULAR'}
-                    </span>
-                  )}
-                  <p className={`font-en-body font-bold text-[10px] tracking-[0.2em] uppercase mb-1 ${pkg.default ? 'text-gold-soft' : 'text-gold'}`}>
-                    {pkg.nightsCount}{isKo ? '박' : 'N'}
-                  </p>
-                  <p className="font-kr-sans font-bold text-[14px] leading-snug mb-2">
-                    {isKo ? pkg.label.ko : pkg.label.en}
-                  </p>
-                  <p className={`font-kr-sans text-[12px] leading-[1.5] mb-4 flex-1 ${pkg.default ? 'text-warm-white/72' : 'text-charcoal/65'}`}>
-                    {formatStay(pkg.nights, pkg.nightsCount, isKo)}
-                  </p>
-                  <p className={`font-en-display italic font-black text-[26px] leading-none ${pkg.default ? 'text-gold-soft' : 'text-ink-soft'}`}>
-                    ₩{pkg.priceTotal.toLocaleString()}
-                  </p>
-                  <p className={`font-kr-sans text-[10px] mt-1 ${pkg.default ? 'text-warm-white/50' : 'text-charcoal/40'}`}>
-                    {isKo ? '숙박만 · 참가비 별도' : 'room only · pass separate'}
-                  </p>
-                </div>
-              ))}
-            </div>
-            <p className="font-kr-sans text-[12px] text-charcoal/45 text-center mt-2">
-              {isKo ? '예약은 티켓 신청 시 함께 진행됩니다.' : 'Accommodation is booked together with your festival pass.'}
-            </p>
-          </div>
-        )}
-
-        {/* Coming soon notice (when API disabled) */}
-        {!loading && !avail?.enabled && (
-          <div className="text-center border border-dashed border-ink-soft/20 rounded-lg py-5 px-4">
-            <p className="font-kr-sans text-[13px] text-charcoal/45">
-              {isKo
-                ? '숙박 패키지 가격은 곧 공개됩니다 — 예약 시작 시 알림을 받으세요'
-                : 'Accommodation packages coming soon — register now to be notified'}
-            </p>
-          </div>
-        )}
-
-        {/* Pricing note */}
-        {avail?.enabled && (
-          <p className="font-kr-sans text-[12px] text-charcoal/45 text-center mt-4 mb-2">
-            {isKo
-              ? '※ 위 숙박 금액은 객실 비용만입니다. 참가비(풀패스 ₩190,000)는 별도이며, 신청 폼에서 합산 금액이 표시됩니다.'
-              : '※ Accommodation prices are room costs only. Festival pass (₩190,000) is separate — the total is shown at checkout.'}
-          </p>
-        )}
-
-        {/* Amenities note */}
-        <p className="font-kr-sans text-[12px] text-charcoal/40 text-center mt-3">
+        {/* Note + CTA */}
+        <p className="font-kr-sans text-[12px] text-charcoal/45 text-center mt-10">
           {isKo
-            ? '전 객실 공통: 인덕션·전기포트·세탁기·냉장고(유료) · 샤워용품·드라이어·타월 제공'
-            : 'All rooms: induction cooker, kettle, washer, fridge (fee) · toiletries, hairdryer, towels'}
+            ? '※ 위 금액은 객실 비용(1박)이며 참가비(풀패스 ₩190,000)는 별도입니다. 숙박은 신청 폼에서 함께 예약됩니다.'
+            : '※ Prices are per room per night; the festival pass (₩190,000) is separate. Accommodation is booked with your pass.'}
         </p>
+        <div className="text-center mt-5">
+          <a
+            href={BOOK_HOTEL_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center justify-center rounded-md bg-burgundy px-6 py-3 font-kr-sans text-[14px] font-bold text-warm-white shadow-[0_3px_0_#5A0E1B] transition-all duration-150 hover:translate-y-[1px] hover:shadow-[0_2px_0_#5A0E1B]"
+          >
+            {isKo ? '숙박만 예약하기 →' : 'Book accommodation only →'}
+          </a>
+        </div>
 
       </div>
     </section>
