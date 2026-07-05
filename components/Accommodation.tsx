@@ -55,7 +55,6 @@ const HOTELS: {
   nameEn: string;
   taglineKo: string;
   taglineEn: string;
-  contact?: { telHref: string; tel: string; addr: string; email: string };
 }[] = [
   {
     id: 'venezia',
@@ -70,12 +69,6 @@ const HOTELS: {
     nameEn: 'Eston Hotel',
     taglineKo: '춘천 중앙로 · 전 객실 발코니/테라스',
     taglineEn: 'Chuncheon Jungang-ro · balcony/terrace in every room',
-    contact: {
-      telHref: 'tel:0332440002',
-      tel: '033) 244-0002',
-      addr: '강원특별자치도 춘천시 중앙로 193 (근화동)',
-      email: 'estonhotel_1@naver.com',
-    },
   },
 ];
 
@@ -211,25 +204,6 @@ export default function Accommodation() {
                   </p>
                 )}
 
-                {/* 예약안내 (연락처 있는 호텔만) */}
-                {hotel.contact && (
-                  <div className="mt-6 mx-auto max-w-[560px] rounded-lg border border-ink-soft/12 bg-warm-white px-6 py-5 text-center">
-                    <p className="font-en-body font-bold text-[10px] tracking-[0.3em] uppercase text-gold mb-2">
-                      RESERVATION GUIDE · 예약안내
-                    </p>
-                    <p className="font-kr-sans font-bold text-[16px] text-ink-soft">
-                      <a href={hotel.contact.telHref} className="transition-colors hover:text-burgundy">
-                        ☎ {hotel.contact.tel}
-                      </a>
-                    </p>
-                    <p className="font-kr-sans text-[13px] text-charcoal/65 mt-1">{hotel.contact.addr}</p>
-                    <p className="font-kr-sans text-[13px] text-charcoal/65">
-                      <a href={`mailto:${hotel.contact.email}`} className="underline decoration-ink-soft/20 transition-colors hover:text-burgundy">
-                        {hotel.contact.email}
-                      </a>
-                    </p>
-                  </div>
-                )}
               </div>
             );
           })}
