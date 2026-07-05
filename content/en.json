@@ -467,7 +467,7 @@
     "items": [
       {
         "q": "How do I register?",
-        "a": "Use the 'Register' button above (or the link below) to open the application page. Your reservation is confirmed once payment is verified within 3 days of submission.",
+        "a": "Fill out the form via the 'Register' button above. We'll send payment instructions by SMS and email; once payment is confirmed, your reservation is finalized and a mobile ticket QR is sent.",
         "cta": { "label": "Go to registration →", "href": "https://kcctf-5047d.web.app/register/chuncheon-citf-2026" }
       },
       {
@@ -476,7 +476,7 @@
       },
       {
         "q": "Where do I send payment?",
-        "a": "Shinhan Bank, account 100-038-582544 (holder: Chuncheon International Tango Festival Foundation)."
+        "a": "After you register, we send the bank account details by email and SMS. Please transfer within 3 days."
       },
       {
         "q": "Can I pay with a foreign credit card?",
@@ -488,11 +488,11 @@
       },
       {
         "q": "How do I book accommodation?",
-        "a": "The most convenient option is the official hotel (The Venezia Suite) booked through our Full Pack + 2/3 nights packages. You may also book other accommodations independently."
+        "a": "You can book either of the two official hotels (The Venezia Suite / Eston Hotel) together with your pass in the form. Accommodation-only booking (without a festival pass) is also available."
       },
       {
         "q": "Can I register on-site?",
-        "a": "On-site registration is possible but may be limited if capacity is reached. Advance reservation is strongly recommended."
+        "a": "Day passes are sold on-site only, on event days (no online sales). Please register for the 3-day Full Pass in advance via the form above."
       },
       {
         "q": "I want to dance more in Korea, before or after the festival.",

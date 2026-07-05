@@ -5,6 +5,7 @@ import MotionReveal from './MotionReveal';
 
 // 등록 플랫폼(별도 서비스) 직접 링크 — ⚠️ 비공개 초대(invite) 링크는 넣지 말 것
 const REGISTER_URL = 'https://kcctf-5047d.web.app/register/chuncheon-citf-2026';
+const BOOK_HOTEL_URL = 'https://kcctf-5047d.web.app/register/chuncheon-citf-2026?mode=hotel';
 
 export default function Tickets() {
   const t = useTranslations('tickets');
@@ -72,24 +73,60 @@ export default function Tickets() {
           )}
         </MotionReveal>
 
-        {/* 2차 얼리버드 진행 중 — 가격 상세 대신 '신청 진행 중' 안내 + 신청 링크 */}
+        {/* 2차 얼리버드 오픈 공지 — 티켓 + 숙박 요약 + CTA */}
         {ticketsComingSoon && (
-          <MotionReveal className="mx-auto mb-10 max-w-[680px] rounded-lg border-2 border-burgundy/25 bg-cream px-8 py-12 text-center shadow-stamp" delay={100}>
-            <p className="font-en-body text-[11px] font-bold uppercase tracking-[0.32em] text-burgundy/70">Now Open</p>
-            <p className="mt-3 font-kr-serif text-[26px] font-black leading-tight text-ink-soft sm:text-[34px]">
-              {isKo ? '2차 얼리버드 신청 진행 중' : '2nd Early Bird — Now Open'}
-            </p>
-            <p className="mx-auto mt-3 max-w-[480px] font-kr-sans text-[15px] leading-relaxed text-charcoal/75">
-              {isKo ? '3일 풀패스 ₩190,000 · 7월 31일 마감' : '3-day Full Pass ₩190,000 · closes July 31'}
-            </p>
-            <a
-              href={REGISTER_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="mt-6 inline-flex items-center justify-center rounded-md bg-burgundy px-7 py-3.5 font-kr-sans text-[15px] font-bold text-warm-white shadow-[0_4px_0_#5A0E1B] transition-all duration-150 hover:translate-y-[2px] hover:shadow-[0_2px_0_#5A0E1B]"
-            >
-              {isKo ? '참가 신청하기 →' : 'Register now →'}
-            </a>
+          <MotionReveal className="mx-auto mb-10 max-w-[760px] overflow-hidden rounded-lg border-2 border-burgundy/25 bg-cream text-center shadow-stamp" delay={100}>
+            {/* 티켓 */}
+            <div className="px-6 py-8 sm:px-10">
+              <p className="font-kr-sans text-[15px] font-bold text-burgundy">
+                {isKo ? '🎉 2차 얼리버드 오픈' : '🎉 2nd Early Bird is Open'}
+              </p>
+              <p className="mt-3 font-kr-serif text-[23px] font-black leading-tight text-ink-soft sm:text-[28px]">
+                {isKo ? '풀패스 (3일)' : 'Full Pass (3 days)'}
+              </p>
+              <p className="font-en-display text-[38px] font-black italic leading-none text-burgundy sm:text-[46px]">
+                ₩190,000
+              </p>
+              <p className="mt-2 font-kr-sans text-[14px] text-charcoal/70">
+                {isKo ? '7월 31일까지 · 조기 마감될 수 있습니다' : 'Until July 31 · may close early'}
+              </p>
+              <p className="mt-1 font-kr-sans text-[13px] text-charcoal/55">
+                {isKo ? '데이패스: 온라인 판매 없음 — 행사 당일 현장에서만' : 'Day pass: on-site only, on event days'}
+              </p>
+              <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
+                <a
+                  href={REGISTER_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center rounded-md bg-burgundy px-6 py-3.5 font-kr-sans text-[15px] font-bold text-warm-white shadow-[0_4px_0_#5A0E1B] transition-all duration-150 hover:translate-y-[2px] hover:shadow-[0_2px_0_#5A0E1B]"
+                >
+                  {isKo ? '참가 신청 — 2차 얼리버드' : 'Register — 2nd Early Bird'}
+                </a>
+                <a
+                  href={BOOK_HOTEL_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center rounded-md border-2 border-burgundy/60 bg-warm-white/60 px-6 py-3.5 font-kr-sans text-[14px] font-bold text-burgundy transition-colors hover:border-burgundy hover:bg-warm-white"
+                >
+                  {isKo ? '숙박만 예약' : 'Accommodation only'}
+                </a>
+              </div>
+            </div>
+            {/* 숙박 요약 */}
+            <div className="border-t border-ink-soft/12 bg-warm-white/50 px-6 py-6 sm:px-10">
+              <p className="font-en-body text-[10px] font-bold uppercase tracking-[0.3em] text-gold">
+                {isKo ? '공식 숙박 · 2개 호텔' : 'Official Hotels · 2'}
+              </p>
+              <p className="mt-2 font-kr-sans text-[14px] leading-relaxed text-ink-soft">
+                {isKo ? '더베네치아스위트 · 스탠다드 더블 ₩90,000/박' : 'The Venezia Suite · Standard Double ₩90,000/night'}
+              </p>
+              <p className="font-kr-sans text-[14px] leading-relaxed text-ink-soft">
+                {isKo ? '에스턴호텔 · 디럭스 더블/트윈 ₩120,000 · 패밀리 트윈 ₩170,000/박' : 'Eston Hotel · Deluxe Double/Twin ₩120,000 · Family Twin ₩170,000/night'}
+              </p>
+              <p className="mt-2 font-kr-sans text-[12px] text-charcoal/55">
+                {isKo ? '2~4박 패키지 · 신청 폼에서 객실 선택 (선착순) · 실시간 잔여는 아래 숙소 섹션' : '2–4 night packages · pick your room in the form (first-come) · live availability below'}
+              </p>
+            </div>
           </MotionReveal>
         )}
 
