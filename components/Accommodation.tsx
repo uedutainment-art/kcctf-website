@@ -42,9 +42,9 @@ const ROOM_META: Record<
   { image: string | null; bedKo: string; bedEn: string; balcony: boolean }
 > = {
   double:         { image: '/images/hotel/double.jpg', bedKo: '퀸베드 1개',            bedEn: '1 Queen bed',            balcony: false },
-  'eston-double': { image: null,                        bedKo: '더블베드 1개',          bedEn: '1 Double bed',           balcony: true  },
-  'eston-twin':   { image: null,                        bedKo: '더블베드 1개 · 싱글베드 1개', bedEn: '1 Double + 1 Single bed', balcony: true  },
-  'eston-family': { image: null,                        bedKo: '더블베드 2개',          bedEn: '2 Double beds',          balcony: true  },
+  'eston-double': { image: '/images/hotel/eston/deluxe-double.jpg', bedKo: '더블베드 1개',          bedEn: '1 Double bed',           balcony: true  },
+  'eston-twin':   { image: '/images/hotel/eston/deluxe-twin.jpg',   bedKo: '더블베드 1개 · 싱글베드 1개', bedEn: '1 Double + 1 Single bed', balcony: true  },
+  'eston-family': { image: '/images/hotel/eston/family-twin.jpg',   bedKo: '더블베드 2개',          bedEn: '2 Double beds',          balcony: true  },
 };
 
 // ── 공식 지정 호텔 (객실은 API 기준으로 표시) ──────────────────────────────────
