@@ -1,10 +1,96 @@
 import Image from 'next/image';
 import { useTranslations } from 'next-intl';
-import { DANCE_TEAMS } from '@/data/festival';
+import { DANCE_TEAMS, type DanceTeam } from '@/data/festival';
 import MotionReveal from './MotionReveal';
+
+function TeamCard({ team, index }: { team: DanceTeam; index: number }) {
+  return (
+    <MotionReveal
+      className={[
+        'group relative rounded-lg p-6 text-center overflow-hidden transition-transform duration-200',
+        team.isTBA
+          ? 'border-2 border-dashed border-ink-soft/25 bg-transparent'
+          : 'bg-cream shadow-[4px_4px_0_#8B1A2B] hover:-translate-y-[3px]',
+      ].join(' ')}
+      delay={index * 70}
+    >
+      {/* Grain overlay on non-TBA cards */}
+      {!team.isTBA && (
+        <div
+          className="absolute inset-0 opacity-[0.12] pointer-events-none"
+          style={{
+            backgroundImage: "url('/images/grain.svg')",
+            backgroundSize: '160px 160px',
+            mixBlendMode: 'multiply',
+          }}
+          aria-hidden
+        />
+      )}
+
+      {/* Photo / placeholder / TBA */}
+      {team.isTBA ? (
+        <div className="mx-auto mb-4 w-24 h-24 rounded-full border-2 border-dashed border-ink-soft/25 bg-transparent flex items-center justify-center">
+          <span className="text-2xl text-ink-soft/30" aria-hidden>?</span>
+        </div>
+      ) : team.image ? (
+        <div className="relative mx-auto mb-5 w-full aspect-square overflow-hidden bg-ink/5 ring-1 ring-ink-soft/15">
+          <Image
+            src={team.image}
+            alt={team.name}
+            fill
+            className="object-cover grayscale-[8%] contrast-[1.04] transition-[filter] duration-300 group-hover:grayscale-0 motion-slow-zoom"
+            style={{ objectPosition: team.objectPosition ?? 'center 25%' }}
+            sizes="(max-width: 640px) 90vw, (max-width: 1024px) 44vw, 400px"
+          />
+        </div>
+      ) : (
+        <div className="relative mx-auto mb-5 flex flex-col items-center gap-2">
+          {/* ornament top */}
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/images/ornament-divider.svg" alt="" aria-hidden className="opacity-25 w-20" />
+
+          {/* Big star */}
+          <span
+            className="font-en-display italic font-black text-gold-soft leading-none"
+            style={{ fontSize: '72px' }}
+            aria-hidden
+          >
+            ★
+          </span>
+
+          {/* ornament bottom */}
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/images/ornament-divider.svg" alt="" aria-hidden className="opacity-25 w-20" />
+        </div>
+      )}
+
+      <p
+        className={[
+          'font-en-body font-bold text-[15px] leading-[1.3] relative z-10',
+          team.isTBA ? 'text-ink-soft/40' : 'text-ink-soft',
+        ].join(' ')}
+      >
+        {team.name}
+      </p>
+      <p
+        className={[
+          'font-en-body text-[12px] mt-1 relative z-10',
+          team.isTBA ? 'text-charcoal/30' : 'text-charcoal/60',
+        ].join(' ')}
+      >
+        {team.origin}
+      </p>
+    </MotionReveal>
+  );
+}
 
 export default function Dancers() {
   const t = useTranslations('dancers');
+
+  // 2-1-2 배치: 상단 2팀 · 가운데 1팀(팀류) · 하단 2팀
+  const top = DANCE_TEAMS.slice(0, 2);
+  const center = DANCE_TEAMS[2];
+  const bottom = DANCE_TEAMS.slice(3, 5);
 
   return (
     <section id="dancers" className="bg-warm-white py-16">
@@ -29,87 +115,28 @@ export default function Dancers() {
           </p>
         </MotionReveal>
 
-        {/* 4 team cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-          {DANCE_TEAMS.map((team, index) => (
-            <MotionReveal
-              key={team.id}
-              className={[
-                'group relative rounded-lg p-6 text-center overflow-hidden transition-transform duration-200',
-                team.isTBA
-                  ? 'border-2 border-dashed border-ink-soft/25 bg-transparent'
-                  : 'bg-cream shadow-[4px_4px_0_#8B1A2B] hover:-translate-y-[3px]',
-              ].join(' ')}
-              delay={index * 70}
-            >
-              {/* Grain overlay on non-TBA cards */}
-              {!team.isTBA && (
-                <div
-                  className="absolute inset-0 opacity-[0.12] pointer-events-none"
-                  style={{
-                    backgroundImage: "url('/images/grain.svg')",
-                    backgroundSize: '160px 160px',
-                    mixBlendMode: 'multiply',
-                  }}
-                  aria-hidden
-                />
-              )}
-
-              {/* Photo / placeholder / TBA */}
-              {team.isTBA ? (
-                <div className="mx-auto mb-4 w-24 h-24 rounded-full border-2 border-dashed border-ink-soft/25 bg-transparent flex items-center justify-center">
-                  <span className="text-2xl text-ink-soft/30" aria-hidden>?</span>
-                </div>
-              ) : team.image ? (
-                <div className="relative mx-auto mb-5 w-full aspect-square overflow-hidden bg-ink/5 ring-1 ring-ink-soft/15">
-                  <Image
-                    src={team.image}
-                    alt={team.name}
-                    fill
-                    className="object-cover grayscale-[8%] contrast-[1.04] transition-[filter] duration-300 group-hover:grayscale-0 motion-slow-zoom"
-                    style={{ objectPosition: team.objectPosition ?? 'center 25%' }}
-                    sizes="(max-width: 640px) 90vw, (max-width: 1024px) 44vw, 280px"
-                  />
-                </div>
-              ) : (
-                <div className="relative mx-auto mb-5 flex flex-col items-center gap-2">
-                  {/* ornament top */}
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src="/images/ornament-divider.svg" alt="" aria-hidden className="opacity-25 w-20" />
-
-                  {/* Big star */}
-                  <span
-                    className="font-en-display italic font-black text-gold-soft leading-none"
-                    style={{ fontSize: '72px' }}
-                    aria-hidden
-                  >
-                    ★
-                  </span>
-
-                  {/* ornament bottom */}
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src="/images/ornament-divider.svg" alt="" aria-hidden className="opacity-25 w-20" />
-                </div>
-              )}
-
-              <p
-                className={[
-                  'font-en-body font-bold text-[15px] leading-[1.3] relative z-10',
-                  team.isTBA ? 'text-ink-soft/40' : 'text-ink-soft',
-                ].join(' ')}
-              >
-                {team.name}
-              </p>
-              <p
-                className={[
-                  'font-en-body text-[12px] mt-1 relative z-10',
-                  team.isTBA ? 'text-charcoal/30' : 'text-charcoal/60',
-                ].join(' ')}
-              >
-                {team.origin}
-              </p>
-            </MotionReveal>
-          ))}
+        {/* Dance teams — 2-1-2 */}
+        <div className="max-w-[840px] mx-auto flex flex-col gap-5">
+          {/* 상단 2팀 */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+            {top.map((team, i) => (
+              <TeamCard key={team.id} team={team} index={i} />
+            ))}
+          </div>
+          {/* 가운데 1팀 (팀류) */}
+          {center && (
+            <div className="flex justify-center">
+              <div className="w-full sm:w-[calc(50%-0.625rem)]">
+                <TeamCard team={center} index={2} />
+              </div>
+            </div>
+          )}
+          {/* 하단 2팀 */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+            {bottom.map((team, i) => (
+              <TeamCard key={team.id} team={team} index={3 + i} />
+            ))}
+          </div>
         </div>
 
       </div>
