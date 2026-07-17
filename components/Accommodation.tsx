@@ -42,6 +42,7 @@ const ROOM_META: Record<
   { image: string | null; bedKo: string; bedEn: string; balcony: boolean }
 > = {
   double:         { image: '/images/hotel/double.jpg', bedKo: '퀸베드 1개',            bedEn: '1 Queen bed',            balcony: false },
+  ondol:          { image: '/images/hotel/ondol.jpg',  bedKo: '온돌 · 바닥 이부자리',     bedEn: 'Ondol · floor bedding',  balcony: false },
   'eston-double': { image: '/images/hotel/eston/deluxe-double.jpg', bedKo: '더블베드 1개',          bedEn: '1 Double bed',           balcony: true  },
   'eston-twin':   { image: '/images/hotel/eston/deluxe-twin.jpg',   bedKo: '더블베드 1개 · 싱글베드 1개', bedEn: '1 Double + 1 Single bed', balcony: true  },
   'eston-family': { image: '/images/hotel/eston/family-twin.jpg',   bedKo: '더블베드 2개',          bedEn: '2 Double beds',          balcony: true  },
