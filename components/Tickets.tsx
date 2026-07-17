@@ -1,5 +1,5 @@
 import { useLocale, useTranslations } from 'next-intl';
-import { TICKET_TIERS } from '@/data/festival';
+import { TICKET_TIERS, DAY_PASS_BY_DAY, formatKRW } from '@/data/festival';
 import RegisterButton from './RegisterButton';
 import MotionReveal from './MotionReveal';
 
@@ -90,9 +90,28 @@ export default function Tickets() {
               <p className="mt-2 font-kr-sans text-[14px] text-charcoal/70">
                 {isKo ? '7월 31일까지 · 조기 마감될 수 있습니다' : 'Until July 31 · may close early'}
               </p>
-              <p className="mt-1 font-kr-sans text-[13px] text-charcoal/55">
-                {isKo ? '데이패스: 온라인 판매 없음 — 행사 당일 현장에서만' : 'Day pass: on-site only, on event days'}
-              </p>
+              {/* 당일권(데이패스) — 요일별 금액 · 현장만 */}
+              <div className="mx-auto mt-5 max-w-[440px] rounded-lg border border-ink-soft/12 bg-warm-white/60 px-5 py-4">
+                <p className="font-en-body text-[10px] font-bold uppercase tracking-[0.28em] text-gold">
+                  {isKo ? '당일권 · 데이패스' : 'Day Pass'}
+                </p>
+                <div className="mt-2 flex flex-wrap items-baseline justify-center gap-x-5 gap-y-1 font-kr-sans text-[15px] text-ink-soft">
+                  <span>
+                    {isKo ? '토' : 'Sat'}{' '}
+                    <b className="font-en-display text-[18px] italic text-burgundy">{formatKRW(DAY_PASS_BY_DAY['10/3'])}</b>
+                  </span>
+                  <span className="text-charcoal/25" aria-hidden>·</span>
+                  <span>
+                    {isKo ? '일·월' : 'Sun·Mon'}{' '}
+                    <b className="font-en-display text-[18px] italic text-burgundy">{formatKRW(DAY_PASS_BY_DAY['10/4'])}</b>
+                  </span>
+                </div>
+                <p className="mt-2 font-kr-sans text-[12px] leading-[1.55] text-charcoal/55">
+                  {isKo
+                    ? '토요일은 문화예술회관 오프닝 콘서트 포함 · 온라인 판매 없음, 행사 당일 현장에서만'
+                    : 'Saturday includes the arts-center opening concert · on-site only, on event days'}
+                </p>
+              </div>
               <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
                 <a
                   href={REGISTER_URL}
