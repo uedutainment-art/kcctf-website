@@ -138,6 +138,7 @@
         "title": "Opening Orchestra Concert",
         "subtitle": "오프닝 오케스트라 콘서트",
         "performer": "Tango Bardo",
+        "venue": "Chuncheon Culture & Arts Center",
         "mood": "The festival begins with a live stage.",
         "featured": true
       },
@@ -274,9 +275,9 @@
   },
   "dancers": {
     "eyebrow": "PERFORMERS",
-    "title": "Four teams on stage.",
+    "title": "Five teams on stage.",
     "subtitleEn": "댄서팀",
-    "lede": "Three teams representing Korean tango, plus one international guest team.",
+    "lede": "Teams representing Korean tango, joined by international guests.",
     "items": [
       {
         "id": "london-sol",

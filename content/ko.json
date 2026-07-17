@@ -138,6 +138,7 @@
         "title": "오프닝 오케스트라 콘서트",
         "subtitle": "Opening Orchestra Concert",
         "performer": "Tango Bardo",
+        "venue": "춘천문화예술회관",
         "mood": "사흘의 시작을 알리는 라이브 무대.",
         "featured": true
       },
@@ -274,9 +275,9 @@
   },
   "dancers": {
     "eyebrow": "PERFORMERS",
-    "title": "네 팀의 무대.",
+    "title": "다섯 팀의 무대.",
     "subtitleEn": "Dance Performances",
-    "lede": "한국 탱고 대표 세 팀과 해외 초청 한 팀.",
+    "lede": "한국 탱고를 대표하는 팀들과 해외 초청 팀이 함께합니다.",
     "items": [
       {
         "id": "london-sol",
