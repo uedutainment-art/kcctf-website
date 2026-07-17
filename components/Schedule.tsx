@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { useTranslations } from 'next-intl';
-import { SCHEDULE_ITEMS, DJS, type ScheduleDay } from '@/data/festival';
+import { SCHEDULE_ITEMS, DJS, ORCHESTRA_SHORT, type ScheduleDay } from '@/data/festival';
 
 const DAYS: { day: ScheduleDay; tabKey: string }[] = [
   { day: '10/3', tabKey: 'tabs.day1' },
@@ -74,6 +74,7 @@ export default function Schedule() {
               subtitle: string;
               mood?: string;
               djName?: string;
+              venue?: string;
             };
             const dj = item.djId ? DJS.find((d) => d.id === item.djId) : null;
 
@@ -110,6 +111,19 @@ export default function Schedule() {
                       </span>
                     )}
                   </p>
+                  {rawItem.venue && (
+                    <p className="font-kr-sans text-[12px] font-bold text-burgundy mt-1">
+                      📍 {rawItem.venue}
+                    </p>
+                  )}
+                  {item.live && item.live.length > 0 && (
+                    <p className="mt-1.5">
+                      <span className="inline-flex items-center gap-1 rounded bg-burgundy px-2 py-[3px] font-en-body font-bold text-[10px] tracking-[0.12em] uppercase text-warm-white shadow-[0_1px_4px_rgba(139,26,43,0.3)]">
+                        <span className="text-gold-soft">★</span> LIVE ·{' '}
+                        {item.live.map((o) => ORCHESTRA_SHORT[o]).join(' · ')}
+                      </span>
+                    </p>
+                  )}
                   {rawItem.mood && (
                     <p className="font-kr-sans text-[13px] text-charcoal/50 mt-1 italic">
                       {rawItem.mood}
