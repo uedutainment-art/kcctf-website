@@ -111,7 +111,7 @@ export const DJS: DJ[] = [
 export const DANCE_TEAMS: DanceTeam[] = [
   { id: 'nadia-erik',   name: 'Nadia Aguilar y Erik Deslarmes', origin: 'Argentina', image: '/images/DANCER/Nadia Aguilar y Erik Deslarmes.jpg', isTBA: false },
   { id: 'london-sol',   name: 'London Hong & Sol',       origin: 'Korea', image: '/images/DANCER/London Hong & Sol.jpg',       isTBA: false },
-  { id: 'team-ryu',     name: 'Team Ryu',                origin: 'Korea', image: '/images/DANCER/Team Ryu.png', isTBA: false },
+  { id: 'team-ryu',     name: 'Team Ryu',                origin: 'Korea', image: '/images/DANCER/Team Ryu-1.png', isTBA: false },
   { id: 'victor-rui',   name: 'Victor & Rui',            origin: 'Korea & Japan', image: '/images/DANCER/victor-rui.jpg', isTBA: false },
   { id: 'hyemi-wonjun', name: 'Xion & Hari', origin: 'Korea', image: '/images/DANCER/xion-hari.jpg', isTBA: false },
 ];
