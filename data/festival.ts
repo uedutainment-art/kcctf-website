@@ -131,6 +131,8 @@ export const DAY_PASS_BY_DAY: Record<ScheduleDay, number> = {
 };
 
 // Schedule: 운영기준.md §7 — 요일 검증: 10/3=SAT 10/4=SUN 10/5=MON
+// ⚠️ 오프닝 콘서트는 같은 공연을 문화예술회관에서 2회: 10/2(금)19:30 일반시민용(이 사이트에 절대 노출 금지),
+//    10/3(토)13:00 탱고인용(여기 표기된 것·풀패스/토 데이패스 포함). 10/2 정보를 여기에 넣지 말 것.
 // idx matches position in content/*.json schedule.items[]
 // 2026-06-11 DJ 배정 확정: M1 왕웨이·M2 까를로스·M3 나탈리·M4 베카·M5 스톤·M6 하군 (content/*.json djName과 일치, M2 21:00)
 export const SCHEDULE_ITEMS: ScheduleItem[] = [
