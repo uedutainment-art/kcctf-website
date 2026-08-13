@@ -76,6 +76,15 @@ export default function Venue() {
   const showConcertVenue = process.env.NEXT_PUBLIC_SHOW_CONCERT_VENUE === 'true';
 
   const features = t.raw('features') as { iconKey: IconKey; eyebrow: string; text: string }[];
+  const cv = t.raw('concertVenue') as {
+    name: string;
+    nameEn: string;
+    intro: string;
+    address: string;
+    concert: string;
+    tags: string[];
+    officialLink: string;
+  };
 
   return (
     <section
@@ -169,13 +178,76 @@ export default function Venue() {
 
         {/* Concert venue — flag-gated */}
         {showConcertVenue ? (
-          <div className="mx-auto mb-16 max-w-[1320px] border border-warm-white/12 bg-warm-white/[0.055] p-6">
-            <p className="font-en-body font-bold text-[11px] tracking-[0.4em] uppercase text-burgundy mb-2">
-              CONCERT VENUE
-            </p>
-            <p className="font-kr-sans text-[15px] text-warm-white/70">
-              춘천문화예술회관
-            </p>
+          <div className="mx-auto mb-16 max-w-[1320px] overflow-hidden border border-warm-white/12 md:shadow-[8px_8px_0_#8B1A2B]">
+            {/* 문화예술회관 사진 */}
+            <div className="relative">
+              <Image
+                src="/images/venue-arts-center.jpg"
+                alt="춘천문화예술회관 외관 — 황혼에 빛나는 아치와 조명"
+                width={1000}
+                height={498}
+                className="w-full object-cover"
+                style={{ maxHeight: '420px', objectPosition: 'center 42%' }}
+                sizes="(max-width: 1320px) 100vw, 1320px"
+              />
+              <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-night/60 to-transparent" />
+            </div>
+            <div className="bg-warm-white/[0.05] p-7 md:p-10">
+            <div className="grid gap-7 md:grid-cols-[1fr_auto] md:items-end">
+              {/* 소개 */}
+              <div className="max-w-[720px]">
+                <p className="font-en-body font-bold text-[11px] tracking-[0.4em] uppercase text-gold mb-3">
+                  CONCERT VENUE
+                </p>
+                <p className="font-kr-serif font-black text-warm-white text-[26px] leading-tight tracking-[-0.02em] md:text-[32px]">
+                  {cv.name}
+                </p>
+                <p className="font-en-body text-[12px] tracking-[0.12em] uppercase text-warm-white/45 mt-1">
+                  {cv.nameEn}
+                </p>
+                <p className="font-kr-sans text-[15px] leading-[1.75] text-warm-white/78 mt-5">
+                  {cv.intro}
+                </p>
+                <div className="mt-5 flex flex-wrap gap-2">
+                  {cv.tags.map((tag, i) => (
+                    <span
+                      key={i}
+                      className="rounded-full border border-gold/40 bg-gold/[0.06] px-3.5 py-1 font-kr-sans text-[12px] font-bold text-gold-soft"
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              </div>
+              {/* 맥락 · 주소 · 지도 */}
+              <div className="border-t border-warm-white/12 pt-5 md:min-w-[260px] md:border-l md:border-t-0 md:pl-8 md:pt-0 md:text-right">
+                <p className="font-kr-sans text-[14px] leading-relaxed text-warm-white/78">
+                  <span className="text-gold-soft" aria-hidden>🎼</span> {cv.concert}
+                </p>
+                <p className="mt-3 font-kr-sans text-[13px] leading-relaxed text-warm-white/50">
+                  {cv.address}
+                </p>
+                <div className="mt-4 flex flex-wrap gap-x-5 gap-y-2 md:justify-end">
+                  <a
+                    href="https://maps.google.com/?q=춘천문화예술회관"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-block border-b-2 border-gold pb-[3px] font-en-body text-[12px] font-bold uppercase tracking-[0.18em] text-gold transition-colors hover:border-warm-white hover:text-warm-white"
+                  >
+                    {t('mapLink')} ↗
+                  </a>
+                  <a
+                    href="https://www.cccf.or.kr/home/reservation/space/art_center"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-block border-b-2 border-warm-white/40 pb-[3px] font-en-body text-[12px] font-bold uppercase tracking-[0.18em] text-warm-white/70 transition-colors hover:border-warm-white hover:text-warm-white"
+                  >
+                    {cv.officialLink} ↗
+                  </a>
+                </div>
+              </div>
+            </div>
+            </div>
           </div>
         ) : (
           <div className="mx-auto mb-16 max-w-[1320px] border border-dashed border-warm-white/18 p-5 text-center">
