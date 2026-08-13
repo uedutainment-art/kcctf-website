@@ -29,13 +29,14 @@ export default function Nav() {
   useEffect(() => {
     // Order must match the actual page section order so the active indicator
     // resolves to the last section whose top is at/above the offset.
-    const sections = ['orchestras', 'djs', 'dancers', 'schedule', 'venue', 'city-guide', 'accommodation', 'tickets', 'faq'];
+    const sections = ['orchestras', 'djs', 'dancers', 'schedule', 'venue', 'travel', 'city-guide', 'accommodation', 'tickets', 'faq'];
     const sectionToHref: Record<string, string> = {
       orchestras:    '#orchestras', // 라인업
       djs:           '#orchestras', // 라인업 묶음
       dancers:       '#orchestras', // 라인업 묶음
       schedule:      '#schedule',
       venue:         '#venue',
+      travel:        '#travel',
       'city-guide':  '#city-guide',
       accommodation: '#accommodation',
       tickets:       '#accommodation', // tickets/FAQ 영역에선 숙소 활성 유지
@@ -63,9 +64,11 @@ export default function Nav() {
 
   const showCityGuide = process.env.NEXT_PUBLIC_SHOW_CITY_GUIDE === 'true';
   const showAccommodation = process.env.NEXT_PUBLIC_SHOW_ACCOMMODATION === 'true';
-  // 숨긴 섹션은 내비에서도 제외 (#city-guide, #accommodation)
+  const showTravel = process.env.NEXT_PUBLIC_SHOW_TRAVEL === 'true';
+  // 숨긴 섹션은 내비에서도 제외 (#travel, #city-guide, #accommodation)
   const navItems = (t.raw('items') as NavItem[]).filter(
     (item) =>
+      (showTravel || item.href !== '#travel') &&
       (showCityGuide || item.href !== '#city-guide') &&
       (showAccommodation || item.href !== '#accommodation')
   );

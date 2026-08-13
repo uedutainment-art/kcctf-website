@@ -5,6 +5,7 @@ const NAV_LINKS = [
   { href: '#orchestras',    key: 'lineup'        },
   { href: '#schedule',      key: 'schedule'      },
   { href: '#venue',         key: 'venue'         },
+  { href: '#travel',        key: 'travel'        },
   { href: '#tickets',       key: 'tickets'       },
   { href: '#accommodation', key: 'accommodation' },
   { href: '#faq',           key: 'faq'           },
@@ -26,10 +27,12 @@ export default function Footer() {
   // 숨긴 섹션은 푸터 사이트맵에서도 제외 (Nav 필터와 동일 방식)
   const showTickets = process.env.NEXT_PUBLIC_SHOW_TICKETS === 'true';
   const showAccommodation = process.env.NEXT_PUBLIC_SHOW_ACCOMMODATION === 'true';
+  const showTravel = process.env.NEXT_PUBLIC_SHOW_TRAVEL === 'true';
   const navLinks = NAV_LINKS.filter(
     ({ href }) =>
       (showTickets || href !== '#tickets') &&
-      (showAccommodation || href !== '#accommodation')
+      (showAccommodation || href !== '#accommodation') &&
+      (showTravel || href !== '#travel')
   );
 
   return (

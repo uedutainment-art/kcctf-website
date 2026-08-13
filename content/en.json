@@ -13,6 +13,7 @@
     "lineup": "Lineup",
     "schedule": "Program",
     "venue": "Venue",
+    "travel": "Travel",
     "tickets": "Tickets",
     "accommodation": "Stay",
     "faq": "FAQ",
@@ -24,6 +25,7 @@
       { "label": "Lineup", "href": "#orchestras" },
       { "label": "Program", "href": "#schedule" },
       { "label": "Venue", "href": "#venue" },
+      { "label": "Travel", "href": "#travel" },
       { "label": "Discover", "href": "#city-guide" },
       { "label": "Stay", "href": "#accommodation" }
     ]
@@ -34,7 +36,7 @@
     "titleLine2": "TANGO FESTIVAL",
     "subtitleEn": "INTERNATIONAL\nTANGO FESTIVAL",
     "tagline": "Two orchestras. Three nights. One arena.\nThe Asian tango lineup that doesn't exist anywhere else.",
-    "uspBand": "TWO ORCHESTRAS · 6 LIVE MILONGAS",
+    "uspBand": "TWO ORCHESTRAS · 6 MILONGAS · 3 NIGHTS",
     "stats": {
       "orchestras": {
         "num": "2",
@@ -46,7 +48,7 @@
       },
       "milongas": {
         "num": "6",
-        "label": "Live Milongas"
+        "label": "Milongas"
       },
       "djs": {
         "num": "6",
@@ -315,7 +317,7 @@
       {
         "iconKey": "transit",
         "eyebrow": "ACCESS",
-        "text": "About 60 minutes from Seoul by ITX"
+        "text": "About 65 minutes from Seoul by ITX"
       },
       {
         "iconKey": "sound",
@@ -334,7 +336,130 @@
       }
     ],
     "mapLink": "View on Google Maps",
-    "concertVenueNote": "Concert venue details coming soon."
+    "concertVenueNote": "Concert venue details coming soon.",
+    "concertVenue": {
+      "name": "춘천문화예술회관",
+      "nameEn": "Chuncheon Culture & Arts Center",
+      "intro": "Gangwon's flagship concert hall — a 940-seat proscenium theatre with an orchestra pit and acoustic shell. The festival opens here with a live orchestra concert.",
+      "address": "13 Hyojasang-gil 5beon-gil, Chuncheon, Gangwon",
+      "concert": "Sat 10/3 · Opening Orchestra Concert — Tango Bardo",
+      "tags": ["940 seats", "Orchestra pit", "Proscenium"],
+      "officialLink": "Official site"
+    }
+  },
+  "travel": {
+    "eyebrow": "TRAVEL · Getting to Chuncheon",
+    "title": "Travel",
+    "subtitleEn": "춘천 오는 길",
+    "lede": "From the airport to Chuncheon — and what to eat when you arrive. Just the essentials.",
+    "hotelsTitle": "Official Hotels",
+    "hotelsLede": "Both are official festival hotels. Book your room together with your pass in the Stay section.",
+    "hotelsCta": "Book your room in the Stay section →",
+    "hotels": [
+      {
+        "name": "The Venezia Suite",
+        "nameEn": "더베네치아스위트",
+        "address": "136 Hyoja-ro, Chuncheon, Gangwon",
+        "tel": "+82-33-255-9600",
+        "tag": "Shuttle to Bomnae Complex",
+        "mapQuery": "The Venezia Suite Chuncheon"
+      },
+      {
+        "name": "Chuncheon Eston Hotel",
+        "nameEn": "에스턴호텔",
+        "address": "193 Jungang-ro, Chuncheon, Gangwon",
+        "tel": "+82-33-244-0002",
+        "tag": "Balcony/terrace in every room",
+        "mapQuery": "Chuncheon Eston Hotel"
+      }
+    ],
+    "waysTitle": "Getting Here",
+    "waysLede": "Airport → Seoul, then Seoul → Chuncheon. Two steps — or one direct ride.",
+    "ways": [
+      {
+        "badge": "STEP 1",
+        "title": "Airport → Seoul",
+        "rows": [
+          {
+            "emoji": "🚆",
+            "text": "AREX airport railroad — Hongik Univ. approx. 53 min · Express to Seoul Station approx. 43 min"
+          },
+          {
+            "emoji": "🛬",
+            "text": "Arriving at Gimpo (GMP)? Same — hop on AREX."
+          }
+        ]
+      },
+      {
+        "badge": "STEP 2",
+        "title": "Seoul → Chuncheon",
+        "rows": [
+          {
+            "emoji": "🚄",
+            "text": "ITX-Cheongchun — Yongsan approx. 1 hr 25 min · Cheongnyangni approx. 1 hr 5 min · book on KorailTalk (English & foreign cards OK)"
+          },
+          {
+            "emoji": "🚈",
+            "text": "Gyeongchun Line — Sangbong → Chuncheon approx. 1 hr 20 min · about every 20 min on weekdays · tap in with T-money"
+          },
+          {
+            "emoji": "🚌",
+            "text": "Intercity bus — Dong Seoul Terminal → Chuncheon approx. 1 hr 10–30 min · 58 departures daily"
+          },
+          {
+            "emoji": "🚗",
+            "text": "By car — Seoul–Chuncheon Expressway approx. 1 hr · parking at Bomnae Complex"
+          }
+        ]
+      },
+      {
+        "badge": "DIRECT",
+        "title": "No transfers",
+        "rows": [
+          {
+            "emoji": "🚌",
+            "text": "Airport bus — Incheon Airport → Chuncheon Terminal, approx. 2 hr 20 min · 21 departures daily"
+          },
+          {
+            "emoji": "🚐",
+            "text": "Festival shuttle — planned from Hongdae, Seoul · schedule coming soon"
+          },
+          {
+            "emoji": "🚕",
+            "text": "Taxi — approx. 2 hr (148 km) · best shared by 2–4 people"
+          }
+        ]
+      }
+    ],
+    "arrivalNote": "On arrival — official hotels are a 5–10 min taxi ride from Namchuncheon Station or the bus terminal.",
+    "tipsTitle": "Good to Know",
+    "tipsLede": "The things international guests most often get stuck on.",
+    "tips": [
+      {
+        "emoji": "🗺️",
+        "name": "Maps apps",
+        "desc": "Google Maps navigation is limited in Korea — install Naver Map or Kakao Map before you arrive."
+      },
+      {
+        "emoji": "🛂",
+        "name": "K-ETA · Visa",
+        "desc": "Depending on your nationality you may need a K-ETA or visa. Check k-eta.go.kr before departure."
+      },
+      {
+        "emoji": "💳",
+        "name": "T-money card",
+        "desc": "One rechargeable card for AREX, subway and buses. Buy at the airport or any convenience store."
+      },
+      {
+        "emoji": "🍂",
+        "name": "October weather · Help",
+        "desc": "Warm days, chilly nights (approx. 5–18°C) — bring a jacket. Stuck? Email info@kcctf.org."
+      }
+    ],
+    "eatTitle": "Eat Out",
+    "eatLede": "Chuncheon is the home of dakgalbi and makguksu. Our favorite local spots — list coming soon.",
+    "eatComingSoon": "Restaurant list coming soon",
+    "eatNote": "We're sharing previews on our social channels — the full list will live here."
   },
   "tickets": {
     "eyebrow": "TICKETS",
@@ -476,6 +601,10 @@
         "a": "Full refund up to 50 days before the festival (August 14); no refund afterward. See the Refund Policy page for details."
       },
       {
+        "q": "Can I transfer my ticket?",
+        "a": "Individual transfers are allowed from August 15 to September 30. You must notify the organizer (info@kcctf.org) of both the transferor's and transferee's details — unreported transfers are not recognized."
+      },
+      {
         "q": "Where do I send payment?",
         "a": "After you register, we send the bank account details by email and SMS. Please transfer within 3 days."
       },
@@ -485,7 +614,7 @@
       },
       {
         "q": "How do I get to Chuncheon?",
-        "a": "About 60 minutes from Seoul by ITX-Cheongchun or KTX, or about 80 minutes by intercity bus. From Incheon Airport, around 2-3 hours via airport bus or ITX transfer."
+        "a": "About 1 hr 5 min–1 hr 25 min from Seoul by ITX-Cheongchun (Cheongnyangni/Yongsan), or about 1 hr 10–30 min by intercity bus from Dong Seoul Terminal. From Incheon Airport, the direct airport bus takes about 2 hr 20 min — see the Travel section above for details."
       },
       {
         "q": "How do I book accommodation?",

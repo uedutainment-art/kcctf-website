@@ -13,6 +13,7 @@
     "lineup": "라인업",
     "schedule": "일정",
     "venue": "장소",
+    "travel": "여행",
     "tickets": "예매",
     "accommodation": "숙소",
     "faq": "FAQ",
@@ -24,6 +25,7 @@
       { "label": "라인업", "href": "#orchestras" },
       { "label": "일정", "href": "#schedule" },
       { "label": "장소", "href": "#venue" },
+      { "label": "여행", "href": "#travel" },
       { "label": "즐기기", "href": "#city-guide" },
       { "label": "숙소", "href": "#accommodation" }
     ]
@@ -34,7 +36,7 @@
     "titleLine2": "탱고페스티벌",
     "subtitleEn": "CHUNCHEON INTERNATIONAL\nTANGO FESTIVAL",
     "tagline": "두 오케스트라, 사흘 밤. 봄내체육관에서.\n아시아에서 다시 없을 라이브 탱고.",
-    "uspBand": "TWO ORCHESTRAS · 6 LIVE MILONGAS",
+    "uspBand": "TWO ORCHESTRAS · 6 MILONGAS · 3 NIGHTS",
     "stats": {
       "orchestras": {
         "num": "2",
@@ -46,7 +48,7 @@
       },
       "milongas": {
         "num": "6",
-        "label": "라이브 밀롱가"
+        "label": "밀롱가"
       },
       "djs": {
         "num": "6",
@@ -315,7 +317,7 @@
       {
         "iconKey": "transit",
         "eyebrow": "교통",
-        "text": "서울에서 ITX 60분"
+        "text": "서울에서 ITX 약 1시간 5분"
       },
       {
         "iconKey": "sound",
@@ -334,7 +336,130 @@
       }
     ],
     "mapLink": "구글 지도에서 보기",
-    "concertVenueNote": "콘서트 장소 정보는 곧 공개됩니다."
+    "concertVenueNote": "콘서트 장소 정보는 곧 공개됩니다.",
+    "concertVenue": {
+      "name": "춘천문화예술회관",
+      "nameEn": "Chuncheon Culture & Arts Center",
+      "intro": "강원특별자치도를 대표하는 공연장. 오케스트라 피트와 음향 반사판을 갖춘 940석 프로시니엄 홀에서, 페스티벌의 문을 여는 오프닝 오케스트라 콘서트가 열립니다.",
+      "address": "강원특별자치도 춘천시 효자상길 5번길 13",
+      "concert": "10/3(토) 오프닝 오케스트라 콘서트 — Tango Bardo",
+      "tags": ["940석", "오케스트라 피트", "프로시니엄"],
+      "officialLink": "공식 안내"
+    }
+  },
+  "travel": {
+    "eyebrow": "TRAVEL · 춘천 오는 길",
+    "title": "여행 안내",
+    "subtitleEn": "Getting to Chuncheon",
+    "lede": "공항에서 춘천까지, 그리고 춘천의 맛까지 — 필요한 것만 간단히.",
+    "hotelsTitle": "공식 호텔",
+    "hotelsLede": "두 곳 모두 페스티벌 공식 호텔입니다. 예약은 참가 신청과 함께 숙소 섹션에서.",
+    "hotelsCta": "객실 예약은 숙소 섹션에서 →",
+    "hotels": [
+      {
+        "name": "더베네치아스위트",
+        "nameEn": "The Venezia Suite",
+        "address": "강원특별자치도 춘천시 효자로 136",
+        "tel": "033-255-9600",
+        "tag": "봄내체육관 셔틀 운행",
+        "mapQuery": "더베네치아스위트"
+      },
+      {
+        "name": "에스턴호텔",
+        "nameEn": "Chuncheon Eston Hotel",
+        "address": "강원특별자치도 춘천시 중앙로 193",
+        "tel": "033-244-0002",
+        "tag": "전 객실 발코니/테라스",
+        "mapQuery": "춘천 에스턴호텔"
+      }
+    ],
+    "waysTitle": "오시는 길",
+    "waysLede": "공항 → 서울, 서울 → 춘천 — 두 걸음이면 됩니다. 한 번에 오는 방법도 있어요.",
+    "ways": [
+      {
+        "badge": "STEP 1",
+        "title": "공항 → 서울",
+        "rows": [
+          {
+            "emoji": "🚆",
+            "text": "공항철도 AREX — 홍대입구역 약 53분 · 직통열차는 서울역 약 43분"
+          },
+          {
+            "emoji": "🛬",
+            "text": "김포공항(GMP) 도착도 공항철도로 동일하게 이동"
+          }
+        ]
+      },
+      {
+        "badge": "STEP 2",
+        "title": "서울 → 춘천",
+        "rows": [
+          {
+            "emoji": "🚄",
+            "text": "ITX-청춘 — 용산 약 1시간 25분 · 청량리 약 1시간 5분 · 코레일톡 예매(영어·해외카드 OK)"
+          },
+          {
+            "emoji": "🚈",
+            "text": "경춘선 전철 — 상봉 → 춘천 약 1시간 20분 · 평일 약 20분 간격 · 교통카드 탑승"
+          },
+          {
+            "emoji": "🚌",
+            "text": "시외버스 — 동서울터미널 → 춘천 약 1시간 10~30분 · 하루 58회"
+          },
+          {
+            "emoji": "🚗",
+            "text": "자가용 — 서울춘천고속도로 약 1시간 · 봄내체육관 주차 가능"
+          }
+        ]
+      },
+      {
+        "badge": "한 번에",
+        "title": "환승 없이 춘천까지",
+        "rows": [
+          {
+            "emoji": "🚌",
+            "text": "공항버스 — 인천공항 → 춘천터미널 직행 약 2시간 20분 · 하루 21회"
+          },
+          {
+            "emoji": "🚐",
+            "text": "페스티벌 셔틀 — 서울 홍대 출발 예정 · 시간표 곧 공개"
+          },
+          {
+            "emoji": "🚕",
+            "text": "택시 — 약 2시간(148km) · 2~4인 동승 추천"
+          }
+        ]
+      }
+    ],
+    "arrivalNote": "도착 후 — 남춘천역·춘천시외버스터미널에서 공식 호텔까지 택시로 약 5~10분입니다.",
+    "tipsTitle": "Good to Know",
+    "tipsLede": "해외에서 오시는 분들이 자주 막히는 것들.",
+    "tips": [
+      {
+        "emoji": "🗺️",
+        "name": "지도 앱",
+        "desc": "한국에선 Google Maps 길찾기가 제한적 — Naver Map / Kakao Map을 미리 설치하세요."
+      },
+      {
+        "emoji": "🛂",
+        "name": "K-ETA · 비자",
+        "desc": "국적에 따라 K-ETA(전자여행허가) 또는 비자가 필요합니다. 출발 전 k-eta.go.kr 확인."
+      },
+      {
+        "emoji": "💳",
+        "name": "T-money 교통카드",
+        "desc": "한 장으로 공항철도·지하철·버스 전부. 공항·편의점에서 구입."
+      },
+      {
+        "emoji": "🍂",
+        "name": "10월 날씨 · 문의",
+        "desc": "낮 따뜻, 밤 쌀쌀(약 5~18℃) — 겉옷 필수. 막히면 info@kcctf.org 로 연락 주세요."
+      }
+    ],
+    "eatTitle": "Eat Out",
+    "eatLede": "닭갈비와 막국수의 도시, 춘천. 페스티벌이 아끼는 맛집을 정리해 곧 공개합니다.",
+    "eatComingSoon": "맛집 리스트 곧 공개",
+    "eatNote": "SNS에서 먼저 소개하고 있어요 — 확정되는 대로 여기에 올립니다."
   },
   "tickets": {
     "eyebrow": "TICKETS",
@@ -476,6 +601,10 @@
         "a": "행사 50일 전(8월 14일)까지 전액 환불, 이후 환불 불가. 자세한 내용은 환불 규정 페이지를 참고해 주세요."
       },
       {
+        "q": "티켓 양도가 가능한가요?",
+        "a": "8월 15일부터 9월 30일까지 개인 간 양도가 가능합니다. 양도 시 주최측(info@kcctf.org)에 양도인·양수인 정보를 반드시 알려주세요. 고지되지 않은 양도는 인정되지 않습니다."
+      },
+      {
         "q": "입금은 어디로 하나요?",
         "a": "신청하시면 접수 이메일·문자로 입금 계좌를 안내해 드립니다. 안내받은 계좌로 3일 이내에 입금해 주세요."
       },
@@ -485,7 +614,7 @@
       },
       {
         "q": "춘천에는 어떻게 가나요?",
-        "a": "서울에서 ITX 청춘 또는 KTX로 약 60분, 시외버스로 약 80분 거리입니다. 인천공항에서는 공항버스 또는 ITX 환승으로 약 2-3시간."
+        "a": "서울에서 ITX-청춘으로 약 1시간 5분~25분(청량리·용산 기준), 동서울터미널에서 시외버스로 약 1시간 10~30분입니다. 인천공항에서는 직행 공항버스로 약 2시간 20분 — 자세한 경로는 위 '여행 안내' 섹션을 참고하세요."
       },
       {
         "q": "숙소는 어떻게 잡나요?",

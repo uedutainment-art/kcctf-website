@@ -6,6 +6,7 @@ import Djs from '@/components/Djs';
 import Dancers from '@/components/Dancers';
 import TheNights from '@/components/TheNights';
 import Venue from '@/components/Venue';
+import Travel from '@/components/Travel';
 import CityGuide from '@/components/CityGuide';
 import Tickets from '@/components/Tickets';
 import FAQ from '@/components/FAQ';
@@ -15,6 +16,7 @@ import AfterKCCTF from '@/components/AfterKCCTF';
 
 export default function HomePage() {
   // 홈 티저 — 미완성 섹션은 플래그로 숨김 (정보 들어오면 .env에서 true)
+  const showTravel = process.env.NEXT_PUBLIC_SHOW_TRAVEL === 'true';
   const showCityGuide = process.env.NEXT_PUBLIC_SHOW_CITY_GUIDE === 'true';
   const showLogistics = process.env.NEXT_PUBLIC_SHOW_LOGISTICS === 'true';
   const showAccommodation = process.env.NEXT_PUBLIC_SHOW_ACCOMMODATION === 'true';
@@ -29,6 +31,7 @@ export default function HomePage() {
       <TheNights />
       <Schedule />
       <Venue />
+      {showTravel && <Travel />}
       {showCityGuide && <CityGuide />}
       {showAccommodation && <Accommodation />}
       {showLogistics && <Logistics />}
