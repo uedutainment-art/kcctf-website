@@ -22,6 +22,13 @@ export default function RefundPage({ params: { locale } }: { params: { locale: s
       ],
     },
     {
+      heading: '티켓 양도',
+      bullets: [
+        '2026년 8월 15일부터 9월 30일까지: 개인 간 티켓 양도 가능',
+        '양도 시 주최측(info@kcctf.org)에 양도인·양수인의 정보를 반드시 고지해야 하며, 고지되지 않은 양도는 인정되지 않습니다.',
+      ],
+    },
+    {
       heading: '환불 방법',
       paragraphs: [
         '환불은 입금하신 계좌로 계좌이체를 통해 진행됩니다. 환불을 원하시면 info@kcctf.org 로 신청자 성함과 함께 요청해 주세요. 확인 후 영업일 기준 3-5일 이내에 처리됩니다.',
@@ -57,6 +64,13 @@ export default function RefundPage({ params: { locale } }: { params: { locale: s
       bullets: [
         'On or before August 14, 2026: full refund.',
         'From August 15, 2026: no refund.',
+      ],
+    },
+    {
+      heading: 'Ticket transfer',
+      bullets: [
+        'From August 15 to September 30, 2026: individual ticket transfers between persons are permitted.',
+        'To transfer, you must notify the organizer (info@kcctf.org) of both the transferor’s and transferee’s details; a transfer that is not reported is not recognized.',
       ],
     },
     {
