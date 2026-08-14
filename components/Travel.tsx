@@ -13,6 +13,8 @@ type Hotel = {
 type Way = {
   badge: string;
   title: string;
+  /** 페스티벌 자체 서비스(셔틀) — 스탬프 섀도로 강조 */
+  featured?: boolean;
   rows: { emoji: string; text: string }[];
 };
 
@@ -129,12 +131,25 @@ export default function Travel() {
         {/* ── 오시는 길 — STEP 1 · STEP 2 · 한 번에 (3카드) ────── */}
         <SubHead eyebrow="Getting Here" title={t('waysTitle')} />
         <p className="font-kr-sans text-[14px] text-charcoal/65 text-center -mt-3 mb-6">{t('waysLede')}</p>
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
           {ways.map((w) => (
-            <MotionReveal key={w.badge} className="overflow-hidden rounded-lg bg-warm-white border border-ink-soft/10 shadow-card">
+            <MotionReveal
+              key={w.badge}
+              className={[
+                'overflow-hidden rounded-lg bg-warm-white border',
+                w.featured
+                  ? 'border-burgundy/35 shadow-[4px_4px_0_#8B1A2B]'
+                  : 'border-ink-soft/10 shadow-card',
+              ].join(' ')}
+            >
               {/* 헤더 — 스케줄 데이헤더 문법 (cream + 버건디 좌측 보더) */}
               <div className="bg-cream border-l-4 border-burgundy px-5 py-3 flex items-baseline gap-3">
-                <span className="rounded bg-burgundy px-2 py-[2px] font-en-body text-[10px] font-bold tracking-[0.14em] uppercase text-warm-white">
+                <span
+                  className={[
+                    'rounded px-2 py-[2px] font-en-body text-[10px] font-bold tracking-[0.14em] uppercase',
+                    w.featured ? 'bg-gold text-ink' : 'bg-burgundy text-warm-white',
+                  ].join(' ')}
+                >
                   {w.badge}
                 </span>
                 <span className="font-kr-sans text-[15px] font-bold text-ink-soft">{w.title}</span>
