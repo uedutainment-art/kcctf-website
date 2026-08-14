@@ -90,6 +90,11 @@ export default function Tickets() {
               <p className="mt-2 font-kr-sans text-[14px] text-charcoal/70">
                 {isKo ? '8월 15일까지 · 조기 마감될 수 있습니다' : 'Until Aug 15 (KST) · may close early'}
               </p>
+              <p className="mt-1 font-kr-sans text-[13px] text-charcoal/55">
+                {isKo
+                  ? '얼리버드만 온라인 예매 — 이후에는 행사 당일 현장에서 ₩240,000'
+                  : 'Online booking for early bird only — afterwards on-site at ₩240,000 on event days'}
+              </p>
               {/* 일일권(데이패스) — 요일 구분 없음 · 얼리버드 9/1~15 온라인, 이후 현장 */}
               <div className="mx-auto mt-5 max-w-[440px] rounded-lg border border-ink-soft/12 bg-warm-white/60 px-5 py-4">
                 <p className="font-en-body text-[10px] font-bold uppercase tracking-[0.28em] text-gold">
