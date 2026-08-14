@@ -62,7 +62,7 @@
       "venueSecondary": "CHUNCHEON BOMNAE COMPLEX"
     },
     "earlybird": {
-      "deadline": "6월 30일까지",
+      "deadline": "8월 15일까지",
       "cta": "얼리버드 신청하기 →"
     },
     "cta": "예약하기 →",
@@ -491,7 +491,7 @@
           "시티투어",
           "애프터 파티"
         ],
-        "note": "⏰ 얼리버드 마감 6월 30일 · 한정 수량",
+        "note": "⏰ 얼리버드 마감 8월 15일 · 한정 수량",
         "featured": true,
         "cta": "예약하기"
       },

@@ -62,7 +62,7 @@
       "venueSecondary": "GANGWON · SOUTH KOREA"
     },
     "earlybird": {
-      "deadline": "Until June 30",
+      "deadline": "Until Aug 15 (KST)",
       "cta": "Early Bird Registration →"
     },
     "cta": "Register →",
@@ -491,7 +491,7 @@
           "City Tour",
           "After Party"
         ],
-        "note": "⏰ Early bird ends Jun 30 · limited",
+        "note": "⏰ Early bird ends Aug 15 (KST) · limited",
         "featured": true,
         "cta": "Register"
       },

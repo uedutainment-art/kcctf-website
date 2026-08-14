@@ -88,7 +88,7 @@ export default function Tickets() {
                 ₩190,000
               </p>
               <p className="mt-2 font-kr-sans text-[14px] text-charcoal/70">
-                {isKo ? '7월 31일까지 · 조기 마감될 수 있습니다' : 'Until July 31 · may close early'}
+                {isKo ? '8월 15일까지 · 조기 마감될 수 있습니다' : 'Until Aug 15 (KST) · may close early'}
               </p>
               {/* 일일권(데이패스) — 요일 구분 없음 · 얼리버드 9/1~15 온라인, 이후 현장 */}
               <div className="mx-auto mt-5 max-w-[440px] rounded-lg border border-ink-soft/12 bg-warm-white/60 px-5 py-4">
