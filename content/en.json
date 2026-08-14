@@ -421,12 +421,23 @@
             "text": "Airport bus — Incheon Airport → Chuncheon Terminal, approx. 2 hr 20 min · 21 departures daily"
           },
           {
-            "emoji": "🚐",
-            "text": "Festival shuttle — planned from Hongdae, Seoul · schedule coming soon"
-          },
-          {
             "emoji": "🚕",
             "text": "Taxi — approx. 2 hr (148 km) · best shared by 2–4 people"
+          }
+        ]
+      },
+      {
+        "badge": "SHUTTLE",
+        "title": "Festival Shuttle",
+        "featured": true,
+        "rows": [
+          {
+            "emoji": "🚐",
+            "text": "Direct ride, Hongdae (Seoul) → Chuncheon — planned"
+          },
+          {
+            "emoji": "🕐",
+            "text": "Schedule & pickup point coming soon"
           }
         ]
       }
@@ -622,7 +633,7 @@
       },
       {
         "q": "Can I register on-site?",
-        "a": "Day passes are sold on-site only, on event days (no online sales). Please register for the 3-day Full Pass in advance via the form above."
+        "a": "Day passes: early-bird online sales Sept 1–15 (KST) at ₩100,000; otherwise buy on-site on event days at ₩120,000 (same price Sat–Mon). Please register for the 3-day Full Pass in advance via the form above."
       },
       {
         "q": "I want to dance more in Korea, before or after the festival.",

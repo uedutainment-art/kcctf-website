@@ -1,5 +1,5 @@
 import { useLocale, useTranslations } from 'next-intl';
-import { TICKET_TIERS, DAY_PASS_BY_DAY, formatKRW } from '@/data/festival';
+import { TICKET_TIERS, DAY_PASS, formatKRW } from '@/data/festival';
 import RegisterButton from './RegisterButton';
 import MotionReveal from './MotionReveal';
 
@@ -90,26 +90,26 @@ export default function Tickets() {
               <p className="mt-2 font-kr-sans text-[14px] text-charcoal/70">
                 {isKo ? '7월 31일까지 · 조기 마감될 수 있습니다' : 'Until July 31 · may close early'}
               </p>
-              {/* 당일권(데이패스) — 요일별 금액 · 현장만 */}
+              {/* 일일권(데이패스) — 요일 구분 없음 · 얼리버드 9/1~15 온라인, 이후 현장 */}
               <div className="mx-auto mt-5 max-w-[440px] rounded-lg border border-ink-soft/12 bg-warm-white/60 px-5 py-4">
                 <p className="font-en-body text-[10px] font-bold uppercase tracking-[0.28em] text-gold">
-                  {isKo ? '당일권 · 데이패스' : 'Day Pass'}
+                  {isKo ? '일일권 · 데이패스 (토·일·월 동일가)' : 'Day Pass (same price Sat–Mon)'}
                 </p>
                 <div className="mt-2 flex flex-wrap items-baseline justify-center gap-x-5 gap-y-1 font-kr-sans text-[15px] text-ink-soft">
                   <span>
-                    {isKo ? '토' : 'Sat'}{' '}
-                    <b className="font-en-display text-[18px] italic text-burgundy">{formatKRW(DAY_PASS_BY_DAY['10/3'])}</b>
+                    {isKo ? '얼리버드' : 'Early bird'}{' '}
+                    <b className="font-en-display text-[18px] italic text-burgundy">{formatKRW(DAY_PASS.early)}</b>
                   </span>
                   <span className="text-charcoal/25" aria-hidden>·</span>
                   <span>
-                    {isKo ? '일·월' : 'Sun·Mon'}{' '}
-                    <b className="font-en-display text-[18px] italic text-burgundy">{formatKRW(DAY_PASS_BY_DAY['10/4'])}</b>
+                    {isKo ? '현장' : 'On-site'}{' '}
+                    <b className="font-en-display text-[18px] italic text-burgundy">{formatKRW(DAY_PASS.onsite)}</b>
                   </span>
                 </div>
                 <p className="mt-2 font-kr-sans text-[12px] leading-[1.55] text-charcoal/55">
                   {isKo
-                    ? '토요일은 문화예술회관 오프닝 콘서트 포함 · 온라인 판매 없음, 행사 당일 현장에서만'
-                    : 'Saturday includes the arts-center opening concert · on-site only, on event days'}
+                    ? '얼리버드는 9월 1일~15일에만 온라인 판매 · 이후에는 행사 당일 현장에서 · 토요일권은 문화예술회관 오프닝 콘서트 포함'
+                    : 'Early-bird online sales Sept 1–15 (KST) only · afterwards on-site on event days · the Saturday pass includes the arts-center opening concert'}
                 </p>
               </div>
               <div className="mt-6 flex flex-wrap items-center justify-center gap-3">

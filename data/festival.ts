@@ -123,12 +123,14 @@ export const TICKET_TIERS: TicketTier[] = [
   { id: 'daypass',         price: 100000, currency: 'KRW', featured: false },
 ];
 
-// 요일별 당일권(데이패스) — 토(문화예술회관 오프닝 콘서트일) ₩120,000 / 일·월 ₩100,000
-export const DAY_PASS_BY_DAY: Record<ScheduleDay, number> = {
-  '10/3': 120000,
-  '10/4': 100000,
-  '10/5': 100000,
-};
+// 일일권(데이패스) — 2026-08-14 흰곰 확정: 요일(토·일·월) 구분 없이 동일가
+//   얼리버드 ₩100,000 · 온라인 판매 9/1~9/15(KST, EventLink) / 그 외 기간은 행사 당일 현장 ₩120,000
+export const DAY_PASS = {
+  early: 100000,
+  onsite: 120000,
+  earlySalesStart: '2026-09-01', // KST
+  earlySalesEnd: '2026-09-15', // KST
+} as const;
 
 // Schedule: 운영기준.md §7 — 요일 검증: 10/3=SAT 10/4=SUN 10/5=MON
 // ⚠️ 오프닝 콘서트는 같은 공연을 문화예술회관에서 2회: 10/2(금)19:30 일반시민용(이 사이트에 절대 노출 금지),
