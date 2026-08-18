@@ -113,18 +113,24 @@ export default function Tickets() {
               ) : (
                 <>
                   <p className="font-kr-sans text-[15px] font-bold text-burgundy">
-                    {isKo ? '⏰ 온라인 신청 마감' : '⏰ Online registration closed'}
+                    {isKo ? '⏰ 얼리버드 온라인 판매 마감' : '⏰ Early bird closed'}
                   </p>
                   <p className="mt-3 font-kr-serif text-[23px] font-black leading-tight text-ink-soft sm:text-[28px]">
                     {isKo ? '풀패스 (3일)' : 'Full Pass (3 days)'}
                   </p>
+                  <p className="mt-2 font-en-body text-[11px] font-bold uppercase tracking-[0.3em] text-gold">
+                    {isKo ? '현장 등록' : 'At the door'}
+                  </p>
                   <p className="font-en-display text-[38px] font-black italic leading-none text-burgundy sm:text-[46px]">
-                    ₩240,000
+                    {onsiteTier ? formatKRW(onsiteTier.price) : '₩240,000'}
                   </p>
                   <p className="mt-2 font-kr-sans text-[14px] leading-[1.6] text-charcoal/70">
                     {isKo
-                      ? '온라인 신청은 마감되었습니다 · 행사 당일 현장에서 등록하실 수 있습니다'
-                      : 'Online registration has closed · register on-site on event days'}
+                      ? '얼리버드 온라인 신청이 마감되었습니다 · 풀패스는 행사 당일 현장에서 등록하실 수 있습니다'
+                      : 'Early-bird online registration has closed · full passes are available at the door on event days'}
+                  </p>
+                  <p className="mt-1.5 font-kr-sans text-[13px] font-bold text-ink-soft/70">
+                    {isKo ? '숙박 예약은 계속 받고 있습니다' : 'Accommodation booking is still open'}
                   </p>
                 </>
               )}
