@@ -1,5 +1,5 @@
 import { useLocale, useTranslations } from 'next-intl';
-import { TICKET_TIERS, DAY_PASS, SALE_WINDOWS, isSaleOpen, formatKRW } from '@/data/festival';
+import { TICKET_TIERS, DAY_PASS, SALE_WINDOWS, isSaleOpen, isBeforeSaleOpen, formatKRW } from '@/data/festival';
 import RegisterButton from './RegisterButton';
 import MotionReveal from './MotionReveal';
 
@@ -18,7 +18,9 @@ export default function Tickets() {
   // 티켓 간단 안내 모드 — true면 전체 가격표/입금/절차 대신 안내 카드만 (시민 배너 유지)
   const ticketsComingSoon = process.env.NEXT_PUBLIC_TICKETS_COMING_SOON === 'true';
   // 1일권·2일권 온라인 판매창 — 한국시간(KST) 기준으로 자동 개시·마감
+  // 3상태: 오픈 전(티저 '곧 예매 시작') → 판매 중 → 마감 후(현장 등록 안내)
   const dayPassOpen = isSaleOpen(SALE_WINDOWS.dayPass);
+  const beforeDayPass = isBeforeSaleOpen(SALE_WINDOWS.dayPass);
 
   const items = t.raw('items') as {
     id: string;
@@ -110,10 +112,29 @@ export default function Tickets() {
                       : `Used on Saturday it also admits you to the arts-center opening concert · on-site 1-day pass ${formatKRW(DAY_PASS.onsite)}`}
                   </p>
                 </>
+              ) : beforeDayPass ? (
+                <>
+                  <p className="font-kr-sans text-[15px] font-bold text-burgundy">
+                    {isKo ? '🎟 곧 예매 시작' : '🎟 Opening soon'}
+                  </p>
+                  <p className="mt-3 font-kr-serif text-[23px] font-black leading-tight text-ink-soft sm:text-[28px]">
+                    {isKo ? '새 티켓 예매를 준비하고 있습니다' : 'New ticket sales are on the way'}
+                  </p>
+                  <p className="mt-3 font-kr-sans text-[14px] leading-[1.6] text-charcoal/70">
+                    {isKo
+                      ? '예매가 열리면 이 페이지에서 바로 신청하실 수 있습니다'
+                      : 'When booking opens, you can register right here'}
+                  </p>
+                  <p className="mt-1.5 font-kr-sans text-[13px] font-bold text-ink-soft/70">
+                    {isKo
+                      ? '현장 등록도 가능합니다 · 숙박 예약은 계속 받고 있습니다'
+                      : 'On-site registration is also available · accommodation booking is open'}
+                  </p>
+                </>
               ) : (
                 <>
                   <p className="font-kr-sans text-[15px] font-bold text-burgundy">
-                    {isKo ? '⏰ 얼리버드 온라인 판매 마감' : '⏰ Early bird closed'}
+                    {isKo ? '⏰ 온라인 판매 종료' : '⏰ Online sales closed'}
                   </p>
                   <p className="mt-3 font-kr-serif text-[23px] font-black leading-tight text-ink-soft sm:text-[28px]">
                     {isKo ? '풀패스 (3일)' : 'Full Pass (3 days)'}
@@ -126,8 +147,8 @@ export default function Tickets() {
                   </p>
                   <p className="mt-2 font-kr-sans text-[14px] leading-[1.6] text-charcoal/70">
                     {isKo
-                      ? '얼리버드 온라인 신청이 마감되었습니다 · 풀패스는 행사 당일 현장에서 등록하실 수 있습니다'
-                      : 'Early-bird online registration has closed · full passes are available at the door on event days'}
+                      ? '온라인 판매가 종료되었습니다 · 풀패스는 행사 당일 현장에서 등록하실 수 있습니다'
+                      : 'Online sales have ended · full passes are available at the door on event days'}
                   </p>
                   <p className="mt-1.5 font-kr-sans text-[13px] font-bold text-ink-soft/70">
                     {isKo ? '숙박 예약은 계속 받고 있습니다' : 'Accommodation booking is still open'}

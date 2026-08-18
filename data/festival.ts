@@ -145,6 +145,11 @@ export function isSaleOpen(w: SaleWindow, now: number = Date.now()): boolean {
   return true;
 }
 
+/** 판매창 오픈 전(true) / 오픈 후·마감 후(false) — 티저 vs 마감 안내 분기용 */
+export function isBeforeSaleOpen(w: SaleWindow, now: number = Date.now()): boolean {
+  return now < kstMs(w.openKST);
+}
+
 /** 셔틀버스 — 확정값 입력란. fare 가 null 이면 요금 미정으로 표시하고 예약 버튼을 노출하지 않음 */
 export const SHUTTLE: { fare: number | null; seats: number | null } = {
   fare: null,   // 예: 50000
