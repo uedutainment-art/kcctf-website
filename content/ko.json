@@ -22,12 +22,30 @@
     "menuOpen": "메뉴 열기",
     "menuClose": "메뉴 닫기",
     "items": [
-      { "label": "라인업", "href": "#orchestras" },
-      { "label": "일정", "href": "#schedule" },
-      { "label": "장소", "href": "#venue" },
-      { "label": "여행", "href": "#travel" },
-      { "label": "즐기기", "href": "#city-guide" },
-      { "label": "숙소", "href": "#accommodation" }
+      {
+        "label": "라인업",
+        "href": "#orchestras"
+      },
+      {
+        "label": "일정",
+        "href": "#schedule"
+      },
+      {
+        "label": "장소",
+        "href": "#venue"
+      },
+      {
+        "label": "여행",
+        "href": "#travel"
+      },
+      {
+        "label": "즐기기",
+        "href": "#city-guide"
+      },
+      {
+        "label": "숙소",
+        "href": "#accommodation"
+      }
     ]
   },
   "hero": {
@@ -80,10 +98,22 @@
   },
   "feelingStrip": {
     "items": [
-      { "label": "TWO ORCHESTRAS", "value": "두 오케스트라" },
-      { "label": "THREE NIGHTS", "value": "3일 밤" },
-      { "label": "LIVE MILONGA", "value": "라이브 밀롱가" },
-      { "label": "AUTUMN IN CHUNCHEON", "value": "춘천의 가을" }
+      {
+        "label": "TWO ORCHESTRAS",
+        "value": "두 오케스트라"
+      },
+      {
+        "label": "THREE NIGHTS",
+        "value": "3일 밤"
+      },
+      {
+        "label": "LIVE MILONGA",
+        "value": "라이브 밀롱가"
+      },
+      {
+        "label": "AUTUMN IN CHUNCHEON",
+        "value": "춘천의 가을"
+      }
     ]
   },
   "orchestras": {
@@ -117,9 +147,18 @@
     "title": "밤이 깊어지는 3일.",
     "lede": "2025년 페스티벌이 보여준 것들 — 무대의 에너지, 가득 찬 플로어, 마지막 딴따까지.",
     "cards": [
-      { "kicker": "LIVE SOUND", "caption": "살아있는 음악" },
-      { "kicker": "FULL FLOOR", "caption": "가득 찬 플로어" },
-      { "kicker": "LATE NIGHT", "caption": "깊어지는 밤" }
+      {
+        "kicker": "LIVE SOUND",
+        "caption": "살아있는 음악"
+      },
+      {
+        "kicker": "FULL FLOOR",
+        "caption": "가득 찬 플로어"
+      },
+      {
+        "kicker": "LATE NIGHT",
+        "caption": "깊어지는 밤"
+      }
     ]
   },
   "schedule": {
@@ -343,7 +382,11 @@
       "intro": "강원특별자치도를 대표하는 공연장. 오케스트라 피트와 음향 반사판을 갖춘 940석 프로시니엄 홀에서, 페스티벌의 문을 여는 오프닝 오케스트라 콘서트가 열립니다.",
       "address": "강원특별자치도 춘천시 효자상길 5번길 13",
       "concert": "10/3(토) 오프닝 오케스트라 콘서트 — Tango Bardo",
-      "tags": ["940석", "오케스트라 피트", "프로시니엄"],
+      "tags": [
+        "940석",
+        "오케스트라 피트",
+        "프로시니엄"
+      ],
       "officialLink": "공식 안내"
     }
   },
@@ -433,11 +476,15 @@
         "rows": [
           {
             "emoji": "🚐",
-            "text": "서울 홍대 → 춘천 직행 운행 예정"
+            "text": "서울 홍대 ↔ 춘천 왕복 — 왕복권만 판매합니다"
           },
           {
-            "emoji": "🕐",
-            "text": "시간표·탑승 위치 곧 공개"
+            "emoji": "🕗",
+            "text": "가는 편: 10/3(토) 오전 8시 홍대 집합 · 도시락 제공"
+          },
+          {
+            "emoji": "🌙",
+            "text": "오는 편: 10/5(월) → 10/6(화) 넘어가는 자정, 춘천 출발"
           }
         ]
       }
@@ -470,7 +517,11 @@
     "eatTitle": "Eat Out",
     "eatLede": "닭갈비와 막국수의 도시, 춘천. 페스티벌이 아끼는 맛집을 정리해 곧 공개합니다.",
     "eatComingSoon": "맛집 리스트 곧 공개",
-    "eatNote": "SNS에서 먼저 소개하고 있어요 — 확정되는 대로 여기에 올립니다."
+    "eatNote": "SNS에서 먼저 소개하고 있어요 — 확정되는 대로 여기에 올립니다.",
+    "shuttleBeforeOpen": "8월 24일(월) 예약 시작 · 요금 곧 공개",
+    "shuttleFarePrefix": "왕복",
+    "shuttleCta": "셔틀 예약하기 →",
+    "shuttleTimeNote": "※ 시간은 변동될 수 있습니다"
   },
   "tickets": {
     "eyebrow": "TICKETS",
@@ -605,7 +656,10 @@
       {
         "q": "예약은 어떻게 하나요?",
         "a": "온라인 신청은 마감되었습니다. 행사 당일 현장에서 등록하실 수 있습니다. 숙박(호텔)은 아래 버튼으로 지금도 예약하실 수 있습니다.",
-        "cta": { "label": "숙박만 예약하기 →", "href": "https://kcctf-5047d.web.app/register/chuncheon-citf-2026?mode=hotel" }
+        "cta": {
+          "label": "숙박만 예약하기 →",
+          "href": "https://kcctf-5047d.web.app/register/chuncheon-citf-2026?mode=hotel"
+        }
       },
       {
         "q": "환불 규정이 어떻게 되나요?",
@@ -646,10 +700,30 @@
     "title": "춘천 즐기기",
     "lede": "춤 사이의 시간을 위한 가이드. 추천 장소는 곧 공개됩니다.",
     "cards": [
-      { "emoji": "🍗", "category": "음식", "title": "닭갈비·막국수", "caption": "춘천 시그니처" },
-      { "emoji": "🚣", "category": "자연", "title": "호반·산책", "caption": "의암호·소양강" },
-      { "emoji": "🌳", "category": "관광", "title": "하루 코스", "caption": "남이섬·문학촌" },
-      { "emoji": "🚄", "category": "교통", "title": "ITX 청춘", "caption": "서울 60분" }
+      {
+        "emoji": "🍗",
+        "category": "음식",
+        "title": "닭갈비·막국수",
+        "caption": "춘천 시그니처"
+      },
+      {
+        "emoji": "🚣",
+        "category": "자연",
+        "title": "호반·산책",
+        "caption": "의암호·소양강"
+      },
+      {
+        "emoji": "🌳",
+        "category": "관광",
+        "title": "하루 코스",
+        "caption": "남이섬·문학촌"
+      },
+      {
+        "emoji": "🚄",
+        "category": "교통",
+        "title": "ITX 청춘",
+        "caption": "서울 60분"
+      }
     ],
     "comingSoon": "추천 장소 곧 공개"
   },

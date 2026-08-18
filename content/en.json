@@ -22,12 +22,30 @@
     "menuOpen": "Open menu",
     "menuClose": "Close menu",
     "items": [
-      { "label": "Lineup", "href": "#orchestras" },
-      { "label": "Program", "href": "#schedule" },
-      { "label": "Venue", "href": "#venue" },
-      { "label": "Travel", "href": "#travel" },
-      { "label": "Discover", "href": "#city-guide" },
-      { "label": "Stay", "href": "#accommodation" }
+      {
+        "label": "Lineup",
+        "href": "#orchestras"
+      },
+      {
+        "label": "Program",
+        "href": "#schedule"
+      },
+      {
+        "label": "Venue",
+        "href": "#venue"
+      },
+      {
+        "label": "Travel",
+        "href": "#travel"
+      },
+      {
+        "label": "Discover",
+        "href": "#city-guide"
+      },
+      {
+        "label": "Stay",
+        "href": "#accommodation"
+      }
     ]
   },
   "hero": {
@@ -80,10 +98,22 @@
   },
   "feelingStrip": {
     "items": [
-      { "label": "TWO ORCHESTRAS", "value": "From Buenos Aires" },
-      { "label": "THREE NIGHTS", "value": "Six milongas" },
-      { "label": "LIVE MILONGA", "value": "Bomnae Complex" },
-      { "label": "AUTUMN IN CHUNCHEON", "value": "A lakeside city" }
+      {
+        "label": "TWO ORCHESTRAS",
+        "value": "From Buenos Aires"
+      },
+      {
+        "label": "THREE NIGHTS",
+        "value": "Six milongas"
+      },
+      {
+        "label": "LIVE MILONGA",
+        "value": "Bomnae Complex"
+      },
+      {
+        "label": "AUTUMN IN CHUNCHEON",
+        "value": "A lakeside city"
+      }
     ]
   },
   "orchestras": {
@@ -117,9 +147,18 @@
     "title": "Three nights, going deeper.",
     "lede": "What 2025 showed — the energy of the stage, a full floor, all the way to the last tanda.",
     "cards": [
-      { "kicker": "LIVE SOUND", "caption": "Music alive on stage." },
-      { "kicker": "FULL FLOOR", "caption": "A floor full of people." },
-      { "kicker": "LATE NIGHT", "caption": "The night growing closer." }
+      {
+        "kicker": "LIVE SOUND",
+        "caption": "Music alive on stage."
+      },
+      {
+        "kicker": "FULL FLOOR",
+        "caption": "A floor full of people."
+      },
+      {
+        "kicker": "LATE NIGHT",
+        "caption": "The night growing closer."
+      }
     ]
   },
   "schedule": {
@@ -343,7 +382,11 @@
       "intro": "Gangwon's flagship concert hall — a 940-seat proscenium theatre with an orchestra pit and acoustic shell. The festival opens here with a live orchestra concert.",
       "address": "13 Hyojasang-gil 5beon-gil, Chuncheon, Gangwon",
       "concert": "Sat 10/3 · Opening Orchestra Concert — Tango Bardo",
-      "tags": ["940 seats", "Orchestra pit", "Proscenium"],
+      "tags": [
+        "940 seats",
+        "Orchestra pit",
+        "Proscenium"
+      ],
       "officialLink": "Official site"
     }
   },
@@ -433,11 +476,15 @@
         "rows": [
           {
             "emoji": "🚐",
-            "text": "Direct ride, Hongdae (Seoul) → Chuncheon — planned"
+            "text": "Hongdae (Seoul) ↔ Chuncheon — round-trip tickets only"
           },
           {
-            "emoji": "🕐",
-            "text": "Schedule & pickup point coming soon"
+            "emoji": "🕗",
+            "text": "Outbound: Sat Oct 3, gather 8:00 AM in Hongdae · boxed lunch provided"
+          },
+          {
+            "emoji": "🌙",
+            "text": "Return: departs Chuncheon at midnight, Mon Oct 5 → Tue Oct 6"
           }
         ]
       }
@@ -470,7 +517,11 @@
     "eatTitle": "Eat Out",
     "eatLede": "Chuncheon is the home of dakgalbi and makguksu. Our favorite local spots — list coming soon.",
     "eatComingSoon": "Restaurant list coming soon",
-    "eatNote": "We're sharing previews on our social channels — the full list will live here."
+    "eatNote": "We're sharing previews on our social channels — the full list will live here.",
+    "shuttleBeforeOpen": "Booking opens Aug 24 (KST) · fare to be announced",
+    "shuttleFarePrefix": "Round trip",
+    "shuttleCta": "Book the shuttle →",
+    "shuttleTimeNote": "※ Times may change"
   },
   "tickets": {
     "eyebrow": "TICKETS",
@@ -605,7 +656,10 @@
       {
         "q": "How do I register?",
         "a": "Online registration has closed. You can register on-site on event days. Accommodation (hotel) can still be booked now using the button below.",
-        "cta": { "label": "Book accommodation →", "href": "https://kcctf-5047d.web.app/register/chuncheon-citf-2026?mode=hotel" }
+        "cta": {
+          "label": "Book accommodation →",
+          "href": "https://kcctf-5047d.web.app/register/chuncheon-citf-2026?mode=hotel"
+        }
       },
       {
         "q": "What is the refund policy?",
@@ -646,10 +700,30 @@
     "title": "Three Days Off the Floor",
     "lede": "A short guide to the city. Recommendations coming soon.",
     "cards": [
-      { "emoji": "🍗", "category": "EAT", "title": "Dakgalbi & Makguksu", "caption": "Chuncheon classics" },
-      { "emoji": "🚣", "category": "WALK", "title": "Lake Uiamho", "caption": "Riverside paths" },
-      { "emoji": "🌳", "category": "EXPLORE", "title": "Day Trips", "caption": "Nami Island & beyond" },
-      { "emoji": "🚄", "category": "ARRIVE", "title": "ITX from Seoul", "caption": "60 minutes" }
+      {
+        "emoji": "🍗",
+        "category": "EAT",
+        "title": "Dakgalbi & Makguksu",
+        "caption": "Chuncheon classics"
+      },
+      {
+        "emoji": "🚣",
+        "category": "WALK",
+        "title": "Lake Uiamho",
+        "caption": "Riverside paths"
+      },
+      {
+        "emoji": "🌳",
+        "category": "EXPLORE",
+        "title": "Day Trips",
+        "caption": "Nami Island & beyond"
+      },
+      {
+        "emoji": "🚄",
+        "category": "ARRIVE",
+        "title": "ITX from Seoul",
+        "caption": "60 minutes"
+      }
     ],
     "comingSoon": "Picks coming soon"
   },

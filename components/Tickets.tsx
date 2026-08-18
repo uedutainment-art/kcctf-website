@@ -1,9 +1,10 @@
 import { useLocale, useTranslations } from 'next-intl';
-import { TICKET_TIERS } from '@/data/festival';
+import { TICKET_TIERS, DAY_PASS, SALE_WINDOWS, isSaleOpen, formatKRW } from '@/data/festival';
 import RegisterButton from './RegisterButton';
 import MotionReveal from './MotionReveal';
 
 // 등록 플랫폼(별도 서비스) 직접 링크 — ⚠️ 비공개 초대(invite) 링크는 넣지 말 것
+const REGISTER_URL = 'https://kcctf-5047d.web.app/register/chuncheon-citf-2026';
 const BOOK_HOTEL_URL = 'https://kcctf-5047d.web.app/register/chuncheon-citf-2026?mode=hotel';
 
 export default function Tickets() {
@@ -16,6 +17,8 @@ export default function Tickets() {
   const registrationOpen = process.env.NEXT_PUBLIC_REGISTRATION_OPEN === 'true';
   // 티켓 간단 안내 모드 — true면 전체 가격표/입금/절차 대신 안내 카드만 (시민 배너 유지)
   const ticketsComingSoon = process.env.NEXT_PUBLIC_TICKETS_COMING_SOON === 'true';
+  // 1일권·2일권 온라인 판매창 — 한국시간(KST) 기준으로 자동 개시·마감
+  const dayPassOpen = isSaleOpen(SALE_WINDOWS.dayPass);
 
   const items = t.raw('items') as {
     id: string;
@@ -77,26 +80,74 @@ export default function Tickets() {
           <MotionReveal className="mx-auto mb-10 max-w-[760px] overflow-hidden rounded-lg border-2 border-burgundy/25 bg-cream text-center shadow-stamp" delay={100}>
             {/* 티켓 */}
             <div className="px-6 py-8 sm:px-10">
-              <p className="font-kr-sans text-[15px] font-bold text-burgundy">
-                {isKo ? '⏰ 온라인 신청 마감' : '⏰ Online registration closed'}
-              </p>
-              <p className="mt-3 font-kr-serif text-[23px] font-black leading-tight text-ink-soft sm:text-[28px]">
-                {isKo ? '풀패스 (3일)' : 'Full Pass (3 days)'}
-              </p>
-              <p className="font-en-display text-[38px] font-black italic leading-none text-burgundy sm:text-[46px]">
-                ₩240,000
-              </p>
-              <p className="mt-2 font-kr-sans text-[14px] leading-[1.6] text-charcoal/70">
-                {isKo
-                  ? '온라인 신청은 마감되었습니다 · 행사 당일 현장에서 등록하실 수 있습니다'
-                  : 'Online registration has closed · register on-site on event days'}
-              </p>
+              {dayPassOpen ? (
+                <>
+                  <p className="font-kr-sans text-[15px] font-bold text-burgundy">
+                    {isKo ? '🎟 1일권 · 2일권 판매 중' : '🎟 Day passes on sale'}
+                  </p>
+                  <div className="mt-4 flex flex-wrap items-baseline justify-center gap-x-8 gap-y-2">
+                    <span>
+                      <span className="font-kr-serif text-[17px] font-black text-ink-soft">{isKo ? '1일권' : '1-Day'}</span>{' '}
+                      <span className="font-en-display text-[34px] font-black italic leading-none text-burgundy sm:text-[40px]">
+                        {formatKRW(DAY_PASS.oneDay)}
+                      </span>
+                    </span>
+                    <span>
+                      <span className="font-kr-serif text-[17px] font-black text-ink-soft">{isKo ? '2일권' : '2-Day'}</span>{' '}
+                      <span className="font-en-display text-[34px] font-black italic leading-none text-burgundy sm:text-[40px]">
+                        {formatKRW(DAY_PASS.twoDay)}
+                      </span>
+                    </span>
+                  </div>
+                  <p className="mt-4 font-kr-sans text-[14px] leading-[1.6] text-charcoal/75">
+                    {isKo
+                      ? '날짜를 고르지 않아도 됩니다 — 축제 기간 중 아무 날 오셔서 입장하세요.'
+                      : 'No date to choose — come on any day of the festival.'}
+                  </p>
+                  <p className="mt-1 font-kr-sans text-[13px] leading-[1.6] text-charcoal/55">
+                    {isKo
+                      ? `토요일에 사용하시면 문화예술회관 오프닝 콘서트도 함께 · 현장 구매는 1일권 ${formatKRW(DAY_PASS.onsite)}`
+                      : `Used on Saturday it also admits you to the arts-center opening concert · on-site 1-day pass ${formatKRW(DAY_PASS.onsite)}`}
+                  </p>
+                </>
+              ) : (
+                <>
+                  <p className="font-kr-sans text-[15px] font-bold text-burgundy">
+                    {isKo ? '⏰ 온라인 신청 마감' : '⏰ Online registration closed'}
+                  </p>
+                  <p className="mt-3 font-kr-serif text-[23px] font-black leading-tight text-ink-soft sm:text-[28px]">
+                    {isKo ? '풀패스 (3일)' : 'Full Pass (3 days)'}
+                  </p>
+                  <p className="font-en-display text-[38px] font-black italic leading-none text-burgundy sm:text-[46px]">
+                    ₩240,000
+                  </p>
+                  <p className="mt-2 font-kr-sans text-[14px] leading-[1.6] text-charcoal/70">
+                    {isKo
+                      ? '온라인 신청은 마감되었습니다 · 행사 당일 현장에서 등록하실 수 있습니다'
+                      : 'Online registration has closed · register on-site on event days'}
+                  </p>
+                </>
+              )}
               <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
+                {dayPassOpen && (
+                  <a
+                    href={REGISTER_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center justify-center rounded-md bg-burgundy px-6 py-3.5 font-kr-sans text-[15px] font-bold text-warm-white shadow-[0_4px_0_#5A0E1B] transition-all duration-150 hover:translate-y-[2px] hover:shadow-[0_2px_0_#5A0E1B]"
+                  >
+                    {isKo ? '참가 신청 — 1일권 · 2일권' : 'Register — Day passes'}
+                  </a>
+                )}
                 <a
                   href={BOOK_HOTEL_URL}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center rounded-md bg-burgundy px-6 py-3.5 font-kr-sans text-[15px] font-bold text-warm-white shadow-[0_4px_0_#5A0E1B] transition-all duration-150 hover:translate-y-[2px] hover:shadow-[0_2px_0_#5A0E1B]"
+                  className={
+                    dayPassOpen
+                      ? 'inline-flex items-center justify-center rounded-md border-2 border-burgundy/60 bg-warm-white/60 px-6 py-3.5 font-kr-sans text-[14px] font-bold text-burgundy transition-colors hover:border-burgundy hover:bg-warm-white'
+                      : 'inline-flex items-center justify-center rounded-md bg-burgundy px-6 py-3.5 font-kr-sans text-[15px] font-bold text-warm-white shadow-[0_4px_0_#5A0E1B] transition-all duration-150 hover:translate-y-[2px] hover:shadow-[0_2px_0_#5A0E1B]'
+                  }
                 >
                   {isKo ? '숙박만 예약' : 'Accommodation only'}
                 </a>

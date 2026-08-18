@@ -1,5 +1,9 @@
 import { useTranslations } from 'next-intl';
+import { SALE_WINDOWS, SHUTTLE, isSaleOpen, formatKRW } from '@/data/festival';
 import MotionReveal from './MotionReveal';
+
+// 셔틀 전용 접수 창구 (숙박 ?mode=hotel 과 같은 패턴)
+const BOOK_SHUTTLE_URL = 'https://kcctf-5047d.web.app/register/chuncheon-citf-2026?mode=shuttle';
 
 type Hotel = {
   name: string;
@@ -47,6 +51,9 @@ export default function Travel() {
   const hotels = t.raw('hotels') as Hotel[];
   const ways = t.raw('ways') as Way[];
   const tips = t.raw('tips') as Tip[];
+  // 셔틀 예약 개시 — 한국시간(KST) 8/24 00:00부터. 요금이 확정돼야 예약 버튼 노출
+  const shuttleOpen = isSaleOpen(SALE_WINDOWS.shuttle);
+  const shuttleBookable = shuttleOpen && SHUTTLE.fare != null;
 
   return (
     <section id="travel" className="bg-warm-white py-16">
@@ -162,6 +169,33 @@ export default function Travel() {
                   </li>
                 ))}
               </ul>
+              {w.featured && (
+                <div className="border-t border-ink-soft/10 px-5 py-4">
+                  {shuttleBookable ? (
+                    <>
+                      <p className="font-kr-sans text-[14px] text-ink-soft">
+                        {t('shuttleFarePrefix')}{' '}
+                        <b className="font-en-display text-[20px] italic text-burgundy">
+                          {formatKRW(SHUTTLE.fare as number)}
+                        </b>
+                      </p>
+                      <a
+                        href={BOOK_SHUTTLE_URL}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="mt-3 inline-flex w-full items-center justify-center rounded-md bg-burgundy px-5 py-3 font-kr-sans text-[14px] font-bold text-warm-white shadow-[0_3px_0_#5A0E1B] transition-all duration-150 hover:translate-y-[1px] hover:shadow-[0_2px_0_#5A0E1B]"
+                      >
+                        {t('shuttleCta')}
+                      </a>
+                    </>
+                  ) : (
+                    <p className="font-kr-sans text-[13px] font-bold text-burgundy">
+                      🎫 {t('shuttleBeforeOpen')}
+                    </p>
+                  )}
+                  <p className="mt-2 font-kr-sans text-[11.5px] text-charcoal/50">{t('shuttleTimeNote')}</p>
+                </div>
+              )}
             </MotionReveal>
           ))}
         </div>

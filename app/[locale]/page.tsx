@@ -14,6 +14,9 @@ import Accommodation from '@/components/Accommodation';
 import Logistics from '@/components/Logistics';
 import AfterKCCTF from '@/components/AfterKCCTF';
 
+// 판매창(1·2일권 9/1, 셔틀 8/24)이 한국시간 기준으로 자동 전환되도록 5분마다 재생성
+export const revalidate = 300;
+
 export default function HomePage() {
   // 홈 티저 — 미완성 섹션은 플래그로 숨김 (정보 들어오면 .env에서 true)
   const showTravel = process.env.NEXT_PUBLIC_SHOW_TRAVEL === 'true';

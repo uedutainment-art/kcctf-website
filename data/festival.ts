@@ -123,13 +123,39 @@ export const TICKET_TIERS: TicketTier[] = [
   { id: 'daypass',         price: 100000, currency: 'KRW', featured: false },
 ];
 
-// 일일권(데이패스) — 2026-08-14 흰곰 확정: 요일(토·일·월) 구분 없이 동일가
-//   얼리버드 ₩100,000 · 온라인 판매 9/1~9/15(KST, EventLink) / 그 외 기간은 행사 당일 현장 ₩120,000
+// ── 판매창 (한국시간 KST 고정) ───────────────────────────────────────────────
+// 뷰어 시간대와 무관하게 KST 기준으로 판정. 해외 접속자도 동일하게 열리고 닫힘.
+export type SaleWindow = { openKST: string; closeKST: string | null };
+
+/** 'YYYY-MM-DDTHH:mm' 을 KST(+09:00)로 해석해 epoch(ms) 반환 */
+function kstMs(iso: string): number {
+  return new Date(`${iso}:00+09:00`).getTime();
+}
+
+export const SALE_WINDOWS: Record<'shuttle' | 'dayPass', SaleWindow> = {
+  /** 셔틀 왕복권 — 8/24 예약 시작 (마감은 좌석 소진 시 = 플랫폼에서 처리) */
+  shuttle: { openKST: '2026-08-24T00:00', closeKST: null },
+  /** 1일권·2일권 — 9/1 00:00 ~ 10/2 23:59 온라인 */
+  dayPass: { openKST: '2026-09-01T00:00', closeKST: '2026-10-02T23:59' },
+};
+
+export function isSaleOpen(w: SaleWindow, now: number = Date.now()): boolean {
+  if (now < kstMs(w.openKST)) return false;
+  if (w.closeKST && now > kstMs(w.closeKST)) return false;
+  return true;
+}
+
+/** 셔틀버스 — 확정값 입력란. fare 가 null 이면 요금 미정으로 표시하고 예약 버튼을 노출하지 않음 */
+export const SHUTTLE: { fare: number | null; seats: number | null } = {
+  fare: null,   // 예: 50000
+  seats: null,  // 예: 45
+};
+
+// 1일권·2일권 — 요일 구분 없는 자유이용권(축제 기간 중 아무 날). 판매 기간은 SALE_WINDOWS.dayPass 참조
 export const DAY_PASS = {
-  early: 100000,
-  onsite: 120000,
-  earlySalesStart: '2026-09-01', // KST
-  earlySalesEnd: '2026-09-15', // KST
+  oneDay: 100000,  // 온라인
+  twoDay: 200000,  // 온라인
+  onsite: 120000,  // 1일권 현장
 } as const;
 
 // Schedule: 운영기준.md §7 — 요일 검증: 10/3=SAT 10/4=SUN 10/5=MON
