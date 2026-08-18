@@ -11,7 +11,7 @@ export default function RefundPage({ params: { locale } }: { params: { locale: s
   const sectionsKo: LegalSection[] = [
     {
       paragraphs: [
-        '본 환불 규정은 춘천국제탱고페스티벌 2026(이하 페스티벌) 참가 신청(참가권 및 숙박 패키지)에 적용됩니다.',
+        '본 환불 규정은 춘천국제탱고페스티벌 2026(이하 페스티벌) 참가 신청(참가권·숙박 패키지·셔틀버스 왕복권)에 적용됩니다.',
       ],
     },
     {
@@ -42,6 +42,14 @@ export default function RefundPage({ params: { locale } }: { params: { locale: s
       ],
     },
     {
+      heading: '셔틀버스 왕복권',
+      bullets: [
+        '셔틀버스 왕복권은 좌석 선점 상품으로, 구매 후 환불이 불가합니다.',
+        '양도는 2026년 9월 30일까지 가능하며, 티켓 양도와 동일하게 주최측(info@kcctf.org)에 양도인·양수인 정보를 고지해야 합니다.',
+        '신청 후 3일 이내에 입금이 확인되지 않으면 좌석은 자동 해제되며, 남은 좌석이 있는 경우 다시 신청할 수 있습니다.',
+      ],
+    },
+    {
       heading: '행사 취소·변경 시',
       paragraphs: [
         '천재지변, 감염병, 그 밖의 불가항력 또는 주최측의 부득이한 사정으로 페스티벌이 취소되거나 중대하게 변경되는 경우, 별도의 환불·보상 기준을 공지해 드립니다.',
@@ -56,7 +64,7 @@ export default function RefundPage({ params: { locale } }: { params: { locale: s
   const sectionsEn: LegalSection[] = [
     {
       paragraphs: [
-        'This Refund Policy applies to all registrations for the Chuncheon International Tango Festival 2026 (the “Festival”), including passes and accommodation packages.',
+        'This Refund Policy applies to all registrations for the Chuncheon International Tango Festival 2026 (the “Festival”), including passes, accommodation packages, and shuttle bus round-trip tickets.',
       ],
     },
     {
@@ -84,6 +92,14 @@ export default function RefundPage({ params: { locale } }: { params: { locale: s
       heading: 'Accommodation packages',
       paragraphs: [
         'The same terms apply to accommodation packages. Additional conditions may apply depending on the official hotel (The Venezia Suite).',
+      ],
+    },
+    {
+      heading: 'Shuttle bus round-trip tickets',
+      bullets: [
+        'Shuttle tickets reserve a seat and are non-refundable once purchased.',
+        'Transfers are permitted until September 30, 2026, under the same conditions as ticket transfers: notify the organizer (info@kcctf.org) of both the transferor’s and transferee’s details.',
+        'If payment is not confirmed within 3 days of booking, the seat is automatically released; you may book again while seats remain.',
       ],
     },
     {
