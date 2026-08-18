@@ -66,7 +66,7 @@
       "cta": "Early Bird Registration →"
     },
     "cta": "Register →",
-    "registerCta": "Register — 2nd Early Bird",
+    "registerCta": "Register",
     "registerHotelCta": "Accommodation only (no pass)",
     "scrollHint": "Scroll"
   },
@@ -604,8 +604,8 @@
     "items": [
       {
         "q": "How do I register?",
-        "a": "Fill out the form via the 'Register' button above. We'll send payment instructions by SMS and email; once payment is confirmed, your reservation is finalized and a mobile ticket QR is sent.",
-        "cta": { "label": "Go to registration →", "href": "https://kcctf-5047d.web.app/register/chuncheon-citf-2026" }
+        "a": "Online registration has closed. You can register on-site on event days. Accommodation (hotel) can still be booked now using the button below.",
+        "cta": { "label": "Book accommodation →", "href": "https://kcctf-5047d.web.app/register/chuncheon-citf-2026?mode=hotel" }
       },
       {
         "q": "What is the refund policy?",
@@ -633,7 +633,7 @@
       },
       {
         "q": "Can I register on-site?",
-        "a": "Day passes: early-bird online sales Sept 1–15 (KST) at ₩100,000; otherwise buy on-site on event days at ₩120,000 (same price Sat–Mon). Please register for the 3-day Full Pass in advance via the form above."
+        "a": "Yes. Online registration has closed, and you can register on-site on event days. The on-site price for the 3-day Full Pass is ₩240,000."
       },
       {
         "q": "I want to dance more in Korea, before or after the festival.",

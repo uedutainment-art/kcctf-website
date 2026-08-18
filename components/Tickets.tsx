@@ -1,10 +1,9 @@
 import { useLocale, useTranslations } from 'next-intl';
-import { TICKET_TIERS, DAY_PASS, formatKRW } from '@/data/festival';
+import { TICKET_TIERS } from '@/data/festival';
 import RegisterButton from './RegisterButton';
 import MotionReveal from './MotionReveal';
 
 // 등록 플랫폼(별도 서비스) 직접 링크 — ⚠️ 비공개 초대(invite) 링크는 넣지 말 것
-const REGISTER_URL = 'https://kcctf-5047d.web.app/register/chuncheon-citf-2026';
 const BOOK_HOTEL_URL = 'https://kcctf-5047d.web.app/register/chuncheon-citf-2026?mode=hotel';
 
 export default function Tickets() {
@@ -15,7 +14,7 @@ export default function Tickets() {
   const registerUrl = process.env.NEXT_PUBLIC_REGISTER_URL ?? '#tickets';
   // 등록 미오픈이면 예약 버튼 대신 '등록 오픈 예정' 안내
   const registrationOpen = process.env.NEXT_PUBLIC_REGISTRATION_OPEN === 'true';
-  // 티켓 간단 안내 모드 — true면 전체 가격표/입금/절차 대신 '2차 얼리버드 신청 진행 중' 안내 카드만 (시민 배너 유지)
+  // 티켓 간단 안내 모드 — true면 전체 가격표/입금/절차 대신 안내 카드만 (시민 배너 유지)
   const ticketsComingSoon = process.env.NEXT_PUBLIC_TICKETS_COMING_SOON === 'true';
 
   const items = t.raw('items') as {
@@ -73,64 +72,31 @@ export default function Tickets() {
           )}
         </MotionReveal>
 
-        {/* 2차 얼리버드 오픈 공지 — 티켓 + 숙박 요약 + CTA */}
+        {/* 티켓 안내 카드 — 온라인 마감 안내 + 숙박 요약 + 숙박 CTA */}
         {ticketsComingSoon && (
           <MotionReveal className="mx-auto mb-10 max-w-[760px] overflow-hidden rounded-lg border-2 border-burgundy/25 bg-cream text-center shadow-stamp" delay={100}>
             {/* 티켓 */}
             <div className="px-6 py-8 sm:px-10">
               <p className="font-kr-sans text-[15px] font-bold text-burgundy">
-                {isKo ? '🎉 2차 얼리버드 오픈' : '🎉 2nd Early Bird is Open'}
+                {isKo ? '⏰ 온라인 신청 마감' : '⏰ Online registration closed'}
               </p>
               <p className="mt-3 font-kr-serif text-[23px] font-black leading-tight text-ink-soft sm:text-[28px]">
                 {isKo ? '풀패스 (3일)' : 'Full Pass (3 days)'}
               </p>
               <p className="font-en-display text-[38px] font-black italic leading-none text-burgundy sm:text-[46px]">
-                ₩190,000
+                ₩240,000
               </p>
-              <p className="mt-2 font-kr-sans text-[14px] text-charcoal/70">
-                {isKo ? '8월 15일까지 · 조기 마감될 수 있습니다' : 'Until Aug 15 (KST) · may close early'}
-              </p>
-              <p className="mt-1 font-kr-sans text-[13px] text-charcoal/55">
+              <p className="mt-2 font-kr-sans text-[14px] leading-[1.6] text-charcoal/70">
                 {isKo
-                  ? '얼리버드만 온라인 예매 — 이후에는 행사 당일 현장에서 ₩240,000'
-                  : 'Online booking for early bird only — afterwards on-site at ₩240,000 on event days'}
+                  ? '온라인 신청은 마감되었습니다 · 행사 당일 현장에서 등록하실 수 있습니다'
+                  : 'Online registration has closed · register on-site on event days'}
               </p>
-              {/* 일일권(데이패스) — 요일 구분 없음 · 얼리버드 9/1~15 온라인, 이후 현장 */}
-              <div className="mx-auto mt-5 max-w-[440px] rounded-lg border border-ink-soft/12 bg-warm-white/60 px-5 py-4">
-                <p className="font-en-body text-[10px] font-bold uppercase tracking-[0.28em] text-gold">
-                  {isKo ? '일일권 · 데이패스 (토·일·월 동일가)' : 'Day Pass (same price Sat–Mon)'}
-                </p>
-                <div className="mt-2 flex flex-wrap items-baseline justify-center gap-x-5 gap-y-1 font-kr-sans text-[15px] text-ink-soft">
-                  <span>
-                    {isKo ? '얼리버드' : 'Early bird'}{' '}
-                    <b className="font-en-display text-[18px] italic text-burgundy">{formatKRW(DAY_PASS.early)}</b>
-                  </span>
-                  <span className="text-charcoal/25" aria-hidden>·</span>
-                  <span>
-                    {isKo ? '현장' : 'On-site'}{' '}
-                    <b className="font-en-display text-[18px] italic text-burgundy">{formatKRW(DAY_PASS.onsite)}</b>
-                  </span>
-                </div>
-                <p className="mt-2 font-kr-sans text-[12px] leading-[1.55] text-charcoal/55">
-                  {isKo
-                    ? '얼리버드는 9월 1일~15일에만 온라인 판매 · 이후에는 행사 당일 현장에서 · 토요일권은 문화예술회관 오프닝 콘서트 포함'
-                    : 'Early-bird online sales Sept 1–15 (KST) only · afterwards on-site on event days · the Saturday pass includes the arts-center opening concert'}
-                </p>
-              </div>
               <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
-                <a
-                  href={REGISTER_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center rounded-md bg-burgundy px-6 py-3.5 font-kr-sans text-[15px] font-bold text-warm-white shadow-[0_4px_0_#5A0E1B] transition-all duration-150 hover:translate-y-[2px] hover:shadow-[0_2px_0_#5A0E1B]"
-                >
-                  {isKo ? '참가 신청 — 2차 얼리버드' : 'Register — 2nd Early Bird'}
-                </a>
                 <a
                   href={BOOK_HOTEL_URL}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center rounded-md border-2 border-burgundy/60 bg-warm-white/60 px-6 py-3.5 font-kr-sans text-[14px] font-bold text-burgundy transition-colors hover:border-burgundy hover:bg-warm-white"
+                  className="inline-flex items-center justify-center rounded-md bg-burgundy px-6 py-3.5 font-kr-sans text-[15px] font-bold text-warm-white shadow-[0_4px_0_#5A0E1B] transition-all duration-150 hover:translate-y-[2px] hover:shadow-[0_2px_0_#5A0E1B]"
                 >
                   {isKo ? '숙박만 예약' : 'Accommodation only'}
                 </a>

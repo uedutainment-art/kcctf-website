@@ -213,8 +213,8 @@ export default function Accommodation() {
         {/* Note + CTA */}
         <p className="font-kr-sans text-[12px] text-charcoal/45 text-center mt-10">
           {isKo
-            ? '※ 위 금액은 객실 비용(1박)이며 참가비(풀패스 ₩190,000)는 별도입니다. 숙박은 신청 폼에서 함께 예약됩니다.'
-            : '※ Prices are per room per night; the festival pass (₩190,000) is separate. Accommodation is booked with your pass.'}
+            ? '※ 위 금액은 객실 비용(1박)이며 참가비는 별도입니다. 숙박은 신청 폼에서 예약됩니다.'
+            : '※ Prices are per room per night; the festival pass is separate. Accommodation is booked via the registration form.'}
         </p>
         <div className="text-center mt-5">
           <a

@@ -2,7 +2,6 @@ import { useTranslations } from 'next-intl';
 import MotionReveal from './MotionReveal';
 
 // 등록 플랫폼(별도 서비스) 직접 링크 — ⚠️ 비공개 초대(invite) 링크는 절대 여기에 넣지 말 것
-const REGISTER_URL = 'https://kcctf-5047d.web.app/register/chuncheon-citf-2026';
 const REGISTER_HOTEL_URL = 'https://kcctf-5047d.web.app/register/chuncheon-citf-2026?mode=hotel';
 
 export default function Hero() {
@@ -73,7 +72,6 @@ export default function Hero() {
 
           {/* 참가 신청 CTA (등록 플랫폼 직접 링크 · 새 탭) */}
           <MotionReveal className="mt-7 flex flex-wrap items-center justify-center gap-3" delay={380}>
-            <RegisterCta href={REGISTER_URL} label={t('registerCta')} primary />
             <RegisterCta href={REGISTER_HOTEL_URL} label={t('registerHotelCta')} />
           </MotionReveal>
         </div>
@@ -134,7 +132,6 @@ export default function Hero() {
 
         {/* 참가 신청 CTA (등록 플랫폼 직접 링크 · 새 탭) */}
         <MotionReveal className="mt-6 mx-auto flex max-w-[320px] flex-col items-stretch gap-2.5" delay={420}>
-          <RegisterCta href={REGISTER_URL} label={t('registerCta')} primary mobile />
           <RegisterCta href={REGISTER_HOTEL_URL} label={t('registerHotelCta')} mobile />
         </MotionReveal>
       </div>
