@@ -518,10 +518,59 @@
     "eatLede": "Chuncheon is the home of dakgalbi and makguksu. Our favorite local spots — list coming soon.",
     "eatComingSoon": "Restaurant list coming soon",
     "eatNote": "We're sharing previews on our social channels — the full list will live here.",
-    "shuttleBeforeOpen": "Booking opens Aug 24 (KST) · fare to be announced",
+    "shuttleBeforeOpen": "Booking opens Aug 24 (KST)",
     "shuttleFarePrefix": "Round trip",
     "shuttleCta": "Book the shuttle →",
-    "shuttleTimeNote": "※ Times may change"
+    "shuttleTimeNote": "※ Times may change",
+    "shuttlePending": "Booking opens shortly",
+    "shuttleFareNote": "per person · meals included",
+    "loop": {
+      "eyebrow": "In Chuncheon",
+      "title": "Getting Around — Free Loop Shuttle",
+      "lede": "One bus loops between Bomnae Complex and the two official hotels. No booking needed — 25 seats, first come first served.",
+      "route": [
+        "Bomnae Complex",
+        "Eston Hotel",
+        "The Venezia Suite"
+      ],
+      "routeNote": "Bomnae → Eston +10 min → The Venezia +20 min · same in reverse · 60-minute loop",
+      "facts": [
+        {
+          "emoji": "🆓",
+          "text": "Free · no booking · 25 seats, first come first served"
+        },
+        {
+          "emoji": "⏱",
+          "text": "Never departs before the listed time · every 30 minutes late at night"
+        },
+        {
+          "emoji": "🎻",
+          "text": "Sat Oct 3: after the concert, shuttles take everyone from the Arts Center to Bomnae Complex"
+        }
+      ],
+      "dirToHotels": "Venue → Hotels",
+      "dirToVenue": "Hotels → Venue",
+      "colsToHotels": [
+        "Dep. Bomnae",
+        "Eston",
+        "Arr. Venezia"
+      ],
+      "colsToVenue": [
+        "Dep. Venezia",
+        "Eston",
+        "Arr. Bomnae"
+      ],
+      "summaryCols": [
+        "Day",
+        "Venue → Hotels",
+        "Hotels → Venue"
+      ],
+      "first": "First",
+      "last": "Last",
+      "fullTimetable": "Full timetable by stop",
+      "pdf": "Download timetable (PDF)",
+      "footnote": "Traffic may add a few minutes · check the stop and direction before boarding"
+    }
   },
   "tickets": {
     "eyebrow": "TICKETS",
@@ -604,7 +653,7 @@
     "eyebrow": "ACCOMMODATION · Official Hotel",
     "title": "The Venezia Suite",
     "subtitleEn": "더베네치아스위트 · Chuncheon",
-    "tagline": "Official festival hotel.\nShuttle bus to Bomnae Complex.",
+    "tagline": "Official festival hotel.\nFree loop shuttle to Bomnae Complex (until the last late-night run).",
     "packageNote": "Full Pack + 2 nights / Full Pack + 3 nights (price coming soon)",
     "moreOptionsLink": "See other lodging options"
   },

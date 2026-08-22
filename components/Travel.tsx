@@ -1,5 +1,9 @@
-import { useTranslations } from 'next-intl';
-import { SALE_WINDOWS, SHUTTLE, isSaleOpen, formatKRW } from '@/data/festival';
+import { Fragment } from 'react';
+import { useLocale, useTranslations } from 'next-intl';
+import {
+  SALE_WINDOWS, SHUTTLE, LOOP_SHUTTLE, SCHEDULE_ITEMS,
+  isSaleOpen, isShuttleBookable, addMinutes, formatKRW, type ScheduleDay,
+} from '@/data/festival';
 import MotionReveal from './MotionReveal';
 
 // 셔틀 전용 접수 창구 (숙박 ?mode=hotel 과 같은 패턴)
@@ -28,6 +32,68 @@ type Tip = {
   desc: string;
 };
 
+type LoopCopy = {
+  eyebrow: string;
+  title: string;
+  lede: string;
+  route: string[];
+  routeNote: string;
+  facts: { emoji: string; text: string }[];
+  dirToHotels: string;
+  dirToVenue: string;
+  colsToHotels: string[];
+  colsToVenue: string[];
+  summaryCols: string[];
+  first: string;
+  last: string;
+  fullTimetable: string;
+  pdf: string;
+  footnote: string;
+};
+
+const LOOP_PDF = '/docs/kcctf-2026-shuttle-timetable.pdf';
+const LOOP_DAYS: ScheduleDay[] = ['10/3', '10/4', '10/5'];
+
+/** 정류장 3곳 시각 행 (출발 + 10분 + 20분) */
+function stopTimes(dep: string): string[] {
+  return LOOP_SHUTTLE.offsets.map((o) => addMinutes(dep, o));
+}
+
+/** 한 방향 전체 시간표 — 막차 행은 회색 + '막차' 라벨 */
+function LoopTable({ title, cols, deps, lastLabel }: { title: string; cols: string[]; deps: string[]; lastLabel: string }) {
+  return (
+    <div className="min-w-0">
+      <p className="mb-2 font-kr-sans text-[13px] font-bold text-burgundy">{title}</p>
+      <div className="overflow-x-auto">
+        <table className="w-full border-collapse font-en-body text-[13px] tabular-nums">
+          <thead>
+            <tr className="border-b border-ink-soft/20">
+              {cols.map((c) => (
+                <th key={c} className="py-1.5 text-center font-kr-sans text-[11px] font-bold text-charcoal/55">{c}</th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {deps.map((dep, i) => {
+              const isLast = i === deps.length - 1;
+              return (
+                <tr key={dep} className={['border-b border-ink-soft/8', isLast ? 'text-charcoal/50' : 'text-ink-soft'].join(' ')}>
+                  {stopTimes(dep).map((t, j) => (
+                    <td key={j} className="py-1.5 text-center">
+                      {t}
+                      {isLast && j === 0 && <span className="ml-1 font-kr-sans text-[10px]">{lastLabel}</span>}
+                    </td>
+                  ))}
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
+}
+
 /** 하우스 스타일 소제목 — 골드 eyebrow + 세리프 타이틀 */
 function SubHead({ eyebrow, title }: { eyebrow: string; title: string }) {
   return (
@@ -47,13 +113,22 @@ function SubHead({ eyebrow, title }: { eyebrow: string; title: string }) {
 
 export default function Travel() {
   const t = useTranslations('travel');
+  const locale = useLocale();
+  const isKo = locale === 'ko';
 
   const hotels = t.raw('hotels') as Hotel[];
   const ways = t.raw('ways') as Way[];
   const tips = t.raw('tips') as Tip[];
-  // 셔틀 예약 개시 — 한국시간(KST) 8/24 00:00부터. 요금이 확정돼야 예약 버튼 노출
+  const loop = t.raw('loop') as LoopCopy;
+  // 서울 셔틀 예약 — 한국시간(KST) 8/24 00:00부터. 요금+좌석 수가 확정돼야 예약 버튼 노출 (플랫폼 fail-closed와 동일 조건)
   const shuttleOpen = isSaleOpen(SALE_WINDOWS.shuttle);
-  const shuttleBookable = shuttleOpen && SHUTTLE.fare != null;
+  const shuttleBookable = isShuttleBookable();
+  const dayLabel = (d: ScheduleDay) => {
+    const dow = SCHEDULE_ITEMS.find((s) => s.day === d)?.dow ?? '';
+    const dowKo = { SAT: '토', SUN: '일', MON: '월' }[dow as 'SAT' | 'SUN' | 'MON'] ?? '';
+    const dowEn = { SAT: 'Sat', SUN: 'Sun', MON: 'Mon' }[dow as 'SAT' | 'SUN' | 'MON'] ?? '';
+    return isKo ? `${d}(${dowKo})` : `${dowEn} Oct ${d.split('/')[1]}`;
+  };
 
   return (
     <section id="travel" className="bg-warm-white py-16">
@@ -171,26 +246,29 @@ export default function Travel() {
               </ul>
               {w.featured && (
                 <div className="border-t border-ink-soft/10 px-5 py-4">
+                  {SHUTTLE.fare != null && (
+                    <p className="font-kr-sans text-[14px] text-ink-soft">
+                      {t('shuttleFarePrefix')}{' '}
+                      <b className="font-en-display text-[20px] italic text-burgundy">
+                        {formatKRW(SHUTTLE.fare)}
+                      </b>
+                      {SHUTTLE.mealIncluded && (
+                        <span className="ml-2 font-kr-sans text-[12px] text-charcoal/60">{t('shuttleFareNote')}</span>
+                      )}
+                    </p>
+                  )}
                   {shuttleBookable ? (
-                    <>
-                      <p className="font-kr-sans text-[14px] text-ink-soft">
-                        {t('shuttleFarePrefix')}{' '}
-                        <b className="font-en-display text-[20px] italic text-burgundy">
-                          {formatKRW(SHUTTLE.fare as number)}
-                        </b>
-                      </p>
-                      <a
-                        href={BOOK_SHUTTLE_URL}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="mt-3 inline-flex w-full items-center justify-center rounded-md bg-burgundy px-5 py-3 font-kr-sans text-[14px] font-bold text-warm-white shadow-[0_3px_0_#5A0E1B] transition-all duration-150 hover:translate-y-[1px] hover:shadow-[0_2px_0_#5A0E1B]"
-                      >
-                        {t('shuttleCta')}
-                      </a>
-                    </>
+                    <a
+                      href={BOOK_SHUTTLE_URL}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="mt-3 inline-flex w-full items-center justify-center rounded-md bg-burgundy px-5 py-3 font-kr-sans text-[14px] font-bold text-warm-white shadow-[0_3px_0_#5A0E1B] transition-all duration-150 hover:translate-y-[1px] hover:shadow-[0_2px_0_#5A0E1B]"
+                    >
+                      {t('shuttleCta')}
+                    </a>
                   ) : (
-                    <p className="font-kr-sans text-[13px] font-bold text-burgundy">
-                      🎫 {t('shuttleBeforeOpen')}
+                    <p className="mt-2 font-kr-sans text-[13px] font-bold text-burgundy">
+                      🎫 {shuttleOpen ? t('shuttlePending') : t('shuttleBeforeOpen')}
                     </p>
                   )}
                   <p className="mt-2 font-kr-sans text-[11.5px] text-charcoal/50">{t('shuttleTimeNote')}</p>
@@ -202,6 +280,96 @@ export default function Travel() {
         <p className="mt-5 mx-auto max-w-[720px] rounded-lg bg-mustard/25 border border-gold/30 px-5 py-3.5 text-center font-kr-sans text-[13px] leading-relaxed text-ink-soft">
           {t('arrivalNote')}
         </p>
+
+        {/* ── In Chuncheon — 무료 순환 셔틀 (봄내 ↔ 에스턴 ↔ 베네치아) ───── */}
+        <SubHead eyebrow={loop.eyebrow} title={loop.title} />
+        <p className="font-kr-sans text-[14px] text-charcoal/65 text-center -mt-3 mb-6 max-w-xl mx-auto">{loop.lede}</p>
+        <MotionReveal className="overflow-hidden rounded-lg border border-burgundy/35 bg-warm-white shadow-[4px_4px_0_#8B1A2B]">
+          {/* 노선 */}
+          <div className="bg-cream border-l-4 border-burgundy px-5 py-4">
+            <div className="flex flex-wrap items-center justify-center gap-2">
+              {loop.route.map((stop, i) => (
+                <Fragment key={stop}>
+                  {i > 0 && <span className="font-en-body text-[14px] text-gold" aria-hidden>⟷</span>}
+                  <span className="rounded border border-gold/60 bg-warm-white px-3 py-1.5 font-kr-sans text-[13px] font-bold text-ink-soft">
+                    {stop}
+                  </span>
+                </Fragment>
+              ))}
+            </div>
+            <p className="mt-2.5 text-center font-kr-sans text-[12px] text-charcoal/60">{loop.routeNote}</p>
+          </div>
+          {/* 핵심 안내 */}
+          <ul className="px-5 py-4 space-y-3">
+            {loop.facts.map((f, i) => (
+              <li key={i} className="flex gap-3">
+                <span className="text-[20px] leading-[1.3] shrink-0" aria-hidden>{f.emoji}</span>
+                <span className="font-kr-sans text-[13px] leading-[1.6] text-charcoal/85">{f.text}</span>
+              </li>
+            ))}
+          </ul>
+          {/* 날짜별 첫차·막차 요약 */}
+          <div className="border-t border-ink-soft/10 px-5 py-4 overflow-x-auto">
+            <table className="w-full border-collapse font-en-body text-[13px] tabular-nums">
+              <thead>
+                <tr className="border-b border-ink-soft/20">
+                  {loop.summaryCols.map((c) => (
+                    <th key={c} className="py-1.5 text-left font-kr-sans text-[11px] font-bold text-charcoal/55 first:pl-0">{c}</th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {LOOP_DAYS.map((d) => {
+                  const th = LOOP_SHUTTLE.toHotels[d];
+                  const tv = LOOP_SHUTTLE.toVenue[d];
+                  return (
+                    <tr key={d} className="border-b border-ink-soft/8">
+                      <td className="py-2 font-kr-sans text-[13px] font-bold text-ink-soft">{dayLabel(d)}</td>
+                      <td className="py-2 text-ink-soft">
+                        {th[0]} – <b className="text-burgundy">{th[th.length - 1]}</b>
+                        <span className="ml-1 font-kr-sans text-[10.5px] text-charcoal/50">{loop.last}</span>
+                      </td>
+                      <td className="py-2 text-ink-soft">
+                        {tv[0]} – <b className="text-burgundy">{tv[tv.length - 1]}</b>
+                        <span className="ml-1 font-kr-sans text-[10.5px] text-charcoal/50">{loop.last}</span>
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
+          {/* 정류장별 전체 시간표 (접힘) */}
+          <details className="border-t border-ink-soft/10 group">
+            <summary className="cursor-pointer list-none px-5 py-3.5 font-kr-sans text-[13px] font-bold text-burgundy hover:bg-cream/60">
+              <span className="mr-1.5 inline-block transition-transform group-open:rotate-90" aria-hidden>▸</span>
+              {loop.fullTimetable}
+            </summary>
+            <div className="space-y-7 px-5 pb-6 pt-2">
+              {LOOP_DAYS.map((d) => (
+                <div key={d}>
+                  <p className="mb-3 font-kr-serif text-[16px] font-black text-ink-soft">{dayLabel(d)}</p>
+                  <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
+                    <LoopTable title={loop.dirToHotels} cols={loop.colsToHotels} deps={LOOP_SHUTTLE.toHotels[d]} lastLabel={loop.last} />
+                    <LoopTable title={loop.dirToVenue} cols={loop.colsToVenue} deps={LOOP_SHUTTLE.toVenue[d]} lastLabel={loop.last} />
+                  </div>
+                </div>
+              ))}
+            </div>
+          </details>
+          {/* PDF + 주의 */}
+          <div className="flex flex-wrap items-center justify-between gap-3 border-t border-ink-soft/10 bg-cream/50 px-5 py-3.5">
+            <p className="font-kr-sans text-[11.5px] text-charcoal/55">{loop.footnote}</p>
+            <a
+              href={LOOP_PDF}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="border-b-2 border-burgundy/50 pb-[1px] font-en-body text-[11px] font-bold uppercase tracking-[0.16em] text-burgundy transition-colors hover:border-burgundy"
+            >
+              {loop.pdf} ↗
+            </a>
+          </div>
+        </MotionReveal>
 
         {/* ── Good to Know — 해외 참가자 팁 (4) ─────────────────── */}
         <SubHead eyebrow="For International Guests" title={t('tipsTitle')} />

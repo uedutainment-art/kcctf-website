@@ -150,11 +150,45 @@ export function isBeforeSaleOpen(w: SaleWindow, now: number = Date.now()): boole
   return now < kstMs(w.openKST);
 }
 
-/** 셔틀버스 — 확정값 입력란. fare 가 null 이면 요금 미정으로 표시하고 예약 버튼을 노출하지 않음 */
-export const SHUTTLE: { fare: number | null; seats: number | null } = {
-  fare: null,   // 예: 50000
-  seats: null,  // 예: 45
+/** 서울 홍대↔춘천 셔틀 왕복권 — 확정값 입력란.
+ *  fare·seats 가 둘 다 있어야 예약 버튼 노출 (플랫폼도 요금·좌석 0이면 판매 불가 → 한쪽만 열리는 일 방지) */
+export const SHUTTLE: { fare: number | null; seats: number | null; mealIncluded: boolean } = {
+  fare: 60000,        // 1인 왕복, 도시락 포함 (2026-08-19 대표 확정)
+  seats: null,        // 총 좌석 = 대당 정원 × 3대 — 버스 업체 확인 후 입력 (예: 135)
+  mealIncluded: true,
 };
+
+/** 예약 버튼 노출 조건: 판매창 열림 + 요금 + 좌석 수 확정 */
+export function isShuttleBookable(now: number = Date.now()): boolean {
+  return isSaleOpen(SALE_WINDOWS.shuttle, now) && SHUTTLE.fare != null && SHUTTLE.seats != null;
+}
+
+// ── 춘천 시내 무료 순환 셔틀 (25인승 1대 · 한 바퀴 60분 · 예약 없음) ──────────
+// 출처: 운영/셔틀버스_정류장별_시간표_2026-08-19.pdf (대표 제작). 봄내 → 에스턴 +10분 → 베네치아 +20분, 반대 방향 동일.
+// 막차 = 각 배열의 마지막 항목. 시각은 출발 정류장 기준(행사장→호텔은 봄내 출발, 호텔→행사장은 베네치아 출발).
+export const LOOP_SHUTTLE = {
+  capacity: 25,
+  loopMinutes: 60,
+  /** 출발지 → 중간(에스턴) → 종점 소요(분) */
+  offsets: [0, 10, 20] as const,
+  toHotels: {
+    '10/3': ['14:00','15:00','16:00','17:00','18:00','19:00','20:00','21:00','22:00','23:00','00:00','01:00','02:00','02:30','03:00','03:30','04:00','04:30'],
+    '10/4': ['13:00','14:00','15:00','16:00','17:00','18:00','19:00','20:00','21:00','22:00','23:00','00:00','01:00','01:30','02:00','02:30','03:00','03:30'],
+    '10/5': ['14:00','15:00','16:00','17:00','18:00','19:00','20:00','21:00','22:00','22:30','23:00','23:30','00:00','00:30'],
+  } as Record<ScheduleDay, string[]>,
+  toVenue: {
+    '10/3': ['13:30','14:30','15:30','16:30','17:30','18:30','19:30','20:30','21:30','22:30','23:30','00:30','01:30'],
+    '10/4': ['12:30','13:30','14:30','15:30','16:30','17:30','18:30','19:30','20:30','21:30','22:30','23:30','00:30'],
+    '10/5': ['13:30','14:30','15:30','16:30','17:30','18:30','19:30','20:30','21:30'],
+  } as Record<ScheduleDay, string[]>,
+};
+
+/** 'HH:mm' + 분 → 'HH:mm' (자정 넘김 처리) */
+export function addMinutes(hhmm: string, min: number): string {
+  const [h, m] = hhmm.split(':').map(Number);
+  const t = (h * 60 + m + min) % (24 * 60);
+  return `${String(Math.floor(t / 60)).padStart(2, '0')}:${String(t % 60).padStart(2, '0')}`;
+}
 
 // 1일권·2일권 — 요일 구분 없는 자유이용권(축제 기간 중 아무 날). 판매 기간은 SALE_WINDOWS.dayPass 참조
 export const DAY_PASS = {
