@@ -151,16 +151,25 @@ export function isBeforeSaleOpen(w: SaleWindow, now: number = Date.now()): boole
 }
 
 /** 서울 홍대↔춘천 셔틀 왕복권 — 확정값 입력란.
- *  fare·seats 가 둘 다 있어야 예약 버튼 노출 (플랫폼도 요금·좌석 0이면 판매 불가 → 한쪽만 열리는 일 방지) */
-export const SHUTTLE: { fare: number | null; seats: number | null; mealIncluded: boolean } = {
+ *  fare·seats 가 둘 다 있고 bookingLive 가 true 여야 예약 버튼 노출
+ *  (플랫폼도 요금·좌석 0이면 판매 불가 → 한쪽만 열리는 일 방지) */
+export const SHUTTLE: { fare: number | null; seats: number | null; mealIncluded: boolean; bookingLive: boolean } = {
   fare: 60000,        // 1인 왕복, 도시락 포함 (2026-08-19 대표 확정)
-  seats: null,        // 총 좌석 = 대당 정원 × 3대 — 버스 업체 확인 후 입력 (예: 135)
+  seats: 80,          // 40명 × 2대 (2026-08-19 대표 확정). 3대째는 예비 — 매진 시 120으로 올림
   mealIncluded: true,
+  /** ⚠️ 플랫폼 ?mode=shuttle 창구가 실제 배포된 것을 확인한 뒤 true 로.
+   *  false 인 동안은 8/24가 지나도 버튼을 숨김 — 미배포 상태에서 일반 신청 폼으로 보내는 사고 방지 */
+  bookingLive: false,
 };
 
-/** 예약 버튼 노출 조건: 판매창 열림 + 요금 + 좌석 수 확정 */
+/** 예약 버튼 노출 조건: 판매창 열림(KST 8/24) + 요금 + 좌석 수 + 플랫폼 창구 배포 확인 */
 export function isShuttleBookable(now: number = Date.now()): boolean {
-  return isSaleOpen(SALE_WINDOWS.shuttle, now) && SHUTTLE.fare != null && SHUTTLE.seats != null;
+  return (
+    isSaleOpen(SALE_WINDOWS.shuttle, now) &&
+    SHUTTLE.fare != null &&
+    SHUTTLE.seats != null &&
+    SHUTTLE.bookingLive
+  );
 }
 
 // ── 춘천 시내 무료 순환 셔틀 (25인승 1대 · 한 바퀴 60분 · 예약 없음) ──────────
