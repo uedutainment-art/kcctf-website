@@ -1,4 +1,3 @@
-import { Fragment } from 'react';
 import { useLocale, useTranslations } from 'next-intl';
 import { Link } from '@/i18n/navigation';
 import { SALE_WINDOWS, SHUTTLE, LOOP_SHUTTLE, isSaleOpen, isShuttleBookable, formatKRW } from '@/data/festival';
