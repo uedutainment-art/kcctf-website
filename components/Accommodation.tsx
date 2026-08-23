@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { isHotelOpen } from '@/data/festival';
 import Image from 'next/image';
 import { useLocale } from 'next-intl';
 
@@ -217,14 +218,20 @@ export default function Accommodation() {
             : '※ Prices are per room per night; the festival pass is separate. Accommodation is booked via the registration form.'}
         </p>
         <div className="text-center mt-5">
-          <a
-            href={BOOK_HOTEL_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center justify-center rounded-md bg-burgundy px-6 py-3 font-kr-sans text-[14px] font-bold text-warm-white shadow-[0_3px_0_#5A0E1B] transition-all duration-150 hover:translate-y-[1px] hover:shadow-[0_2px_0_#5A0E1B]"
-          >
-            {isKo ? '숙박만 예약하기 →' : 'Book accommodation only →'}
-          </a>
+          {isHotelOpen() ? (
+            <a
+              href={BOOK_HOTEL_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center justify-center rounded-md bg-burgundy px-6 py-3 font-kr-sans text-[14px] font-bold text-warm-white shadow-[0_3px_0_#5A0E1B] transition-all duration-150 hover:translate-y-[1px] hover:shadow-[0_2px_0_#5A0E1B]"
+            >
+              {isKo ? '숙박만 예약하기 · 8/24까지 →' : 'Book accommodation only · until Aug 24 →'}
+            </a>
+          ) : (
+            <p className="inline-block rounded-md border-2 border-dashed border-ink-soft/25 px-5 py-3 font-kr-sans text-[13.5px] font-bold text-ink-soft/70">
+              {isKo ? '숙박 신청은 8월 24일(월)로 마감되었습니다 · 문의 info@kcctf.org' : 'Accommodation booking closed on Aug 24 (Mon) · inquiries: info@kcctf.org'}
+            </p>
+          )}
         </div>
 
       </div>

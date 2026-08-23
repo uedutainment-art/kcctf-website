@@ -2,6 +2,14 @@
 
 import { useState } from 'react';
 import { useTranslations } from 'next-intl';
+import { isOnlineRegistrationOpen, isHotelOpen } from '@/data/festival';
+
+/** FAQ 버튼 노출 조건 — 숙박 링크는 8/24까지, 참가 신청 링크는 플랫폼 재개 확인 후 */
+function ctaVisible(href: string): boolean {
+  if (href.includes('mode=hotel')) return isHotelOpen();
+  if (href.includes('kcctf-5047d.web.app/register')) return isOnlineRegistrationOpen();
+  return true;
+}
 
 type FaqItem = {
   q: string;
@@ -65,7 +73,7 @@ export default function FAQ() {
                   <p className="font-kr-sans text-[15px] text-ink-soft/85 leading-[1.7] pb-4 pr-10">
                     {item.a}
                   </p>
-                  {item.cta && (
+                  {item.cta && ctaVisible(item.cta.href) && (
                     <a
                       href={item.cta.href}
                       target="_blank"

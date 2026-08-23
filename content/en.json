@@ -704,10 +704,10 @@
     "items": [
       {
         "q": "How do I register?",
-        "a": "Online registration has closed. You can register on-site on event days. Accommodation (hotel) can still be booked now using the button below.",
+        "a": "Use the [Register] button in the Tickets section above. The Full Pass is ₩190,000 (early bird) until Aug 31 (Mon) and ₩240,000 from Sept 1; online registration stays open until Oct 2 (Fri). We confirm your place once payment is received.",
         "cta": {
-          "label": "Book accommodation →",
-          "href": "https://kcctf-5047d.web.app/register/chuncheon-citf-2026?mode=hotel"
+          "label": "Register →",
+          "href": "https://kcctf-5047d.web.app/register/chuncheon-citf-2026"
         }
       },
       {
@@ -732,11 +732,11 @@
       },
       {
         "q": "How do I book accommodation?",
-        "a": "You can book either of the two official hotels (The Venezia Suite / Eston Hotel) together with your pass in the form. Accommodation-only booking (without a festival pass) is also available."
+        "a": "Bookings for the two official hotels (The Venezia Suite / Eston Hotel) are accepted until Aug 24 (Mon). For accommodation questions after that, email info@kcctf.org."
       },
       {
         "q": "Can I register on-site?",
-        "a": "Yes. Online registration has closed, and you can register on-site on event days. The on-site price for the 3-day Full Pass is ₩240,000."
+        "a": "Yes. Online registration runs until Oct 2 (Fri); after that you can register at the door on event days. On-site prices: Full Pass (3 days) ₩240,000 · 1-Day ₩120,000."
       },
       {
         "q": "I want to dance more in Korea, before or after the festival.",

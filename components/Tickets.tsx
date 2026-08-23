@@ -1,5 +1,5 @@
 import { useLocale, useTranslations } from 'next-intl';
-import { TICKET_TIERS, DAY_PASS, SALE_WINDOWS, isSaleOpen, isBeforeSaleOpen, formatKRW } from '@/data/festival';
+import { TICKET_TIERS, DAY_PASS, TICKET_SALES, ticketPhase, isOnlineRegistrationOpen, isHotelOpen, formatKRW } from '@/data/festival';
 import RegisterButton from './RegisterButton';
 import MotionReveal from './MotionReveal';
 
@@ -17,10 +17,12 @@ export default function Tickets() {
   const registrationOpen = process.env.NEXT_PUBLIC_REGISTRATION_OPEN === 'true';
   // 티켓 간단 안내 모드 — true면 전체 가격표/입금/절차 대신 안내 카드만 (시민 배너 유지)
   const ticketsComingSoon = process.env.NEXT_PUBLIC_TICKETS_COMING_SOON === 'true';
-  // 1일권·2일권 온라인 판매창 — 한국시간(KST) 기준으로 자동 개시·마감
-  // 3상태: 오픈 전(티저 '곧 예매 시작') → 판매 중 → 마감 후(현장 등록 안내)
-  const dayPassOpen = isSaleOpen(SALE_WINDOWS.dayPass);
-  const beforeDayPass = isBeforeSaleOpen(SALE_WINDOWS.dayPass);
+  // 온라인 판매 단계 — 한국시간(KST) 기준 자동 전환: 얼리버드(~8/31) → 9/1 정가+일일권 얼리버드(~9/15) → 9/16 정가 → 10/3 마감
+  const phase = ticketPhase();
+  const onlinePhase = phase !== 'pre' && phase !== 'closed';
+  const ticketsLive = TICKET_SALES.live;           // 플랫폼 재개 확인 후 true → 신청 버튼 노출
+  const onlineOpen = isOnlineRegistrationOpen();   // onlinePhase && ticketsLive
+  const hotelOpen = isHotelOpen();                 // 숙박 접수 8/24 23:59 KST 까지
 
   const items = t.raw('items') as {
     id: string;
@@ -77,42 +79,67 @@ export default function Tickets() {
           )}
         </MotionReveal>
 
-        {/* 티켓 안내 카드 — 온라인 마감 안내 + 숙박 요약 + 숙박 CTA */}
+        {/* 티켓 안내 카드 — 판매 단계(KST)별 자동 전환 + 숙박 접수(8/24까지) */}
         {ticketsComingSoon && (
           <MotionReveal className="mx-auto mb-10 max-w-[760px] overflow-hidden rounded-lg border-2 border-burgundy/25 bg-cream text-center shadow-stamp" delay={100}>
-            {/* 티켓 */}
             <div className="px-6 py-8 sm:px-10">
-              {dayPassOpen ? (
+              {phase === 'earlyBird2' && (
                 <>
                   <p className="font-kr-sans text-[15px] font-bold text-burgundy">
-                    {isKo ? '🎟 1일권 · 2일권 판매 중' : '🎟 Day passes on sale'}
+                    {isKo ? '⏰ 얼리버드 연장 — 8월 31일(월)까지' : '⏰ Early bird extended — until Aug 31 (Mon)'}
                   </p>
-                  <div className="mt-4 flex flex-wrap items-baseline justify-center gap-x-8 gap-y-2">
-                    <span>
-                      <span className="font-kr-serif text-[17px] font-black text-ink-soft">{isKo ? '1일권' : '1-Day'}</span>{' '}
-                      <span className="font-en-display text-[34px] font-black italic leading-none text-burgundy sm:text-[40px]">
-                        {formatKRW(DAY_PASS.oneDay)}
-                      </span>
+                  <p className="mt-3 font-kr-serif text-[23px] font-black leading-tight text-ink-soft sm:text-[28px]">
+                    {isKo ? '풀패스 (3일)' : 'Full Pass (3 days)'}
+                  </p>
+                  <p className="mt-1 flex flex-wrap items-baseline justify-center gap-x-3">
+                    <span className="font-en-display text-[38px] font-black italic leading-none text-burgundy sm:text-[46px]">
+                      {formatKRW(earlybirdTier.price)}
                     </span>
-                    <span>
-                      <span className="font-kr-serif text-[17px] font-black text-ink-soft">{isKo ? '2일권' : '2-Day'}</span>{' '}
-                      <span className="font-en-display text-[34px] font-black italic leading-none text-burgundy sm:text-[40px]">
-                        {formatKRW(DAY_PASS.twoDay)}
+                    {onsiteTier && (
+                      <span className="font-kr-sans text-[14px] text-charcoal/50">
+                        <span className="line-through decoration-burgundy/40">{formatKRW(onsiteTier.price)}</span>
+                        {earlybirdDiscount > 0 && (
+                          <span className="ml-1.5 font-bold text-burgundy">
+                            {isKo ? `₩${earlybirdDiscount.toLocaleString('ko-KR')} 할인` : `save ₩${earlybirdDiscount.toLocaleString('en-US')}`}
+                          </span>
+                        )}
                       </span>
-                    </span>
+                    )}
+                  </p>
+                  <p className="mt-3 font-kr-sans text-[14px] leading-[1.6] text-charcoal/70">
+                    {isKo
+                      ? '8월 31일(월) 23:59까지 온라인 얼리버드 · 9월 1일부터 ₩240,000'
+                      : 'Early-bird price online until Aug 31, 23:59 KST · ₩240,000 from Sept 1'}
+                  </p>
+                </>
+              )}
+              {(phase === 'regularEarlyDay' || phase === 'regular') && (
+                <>
+                  <p className="font-kr-sans text-[15px] font-bold text-burgundy">
+                    {isKo ? '🎟 온라인 신청 중 — 10월 2일(금)까지' : '🎟 Online registration open — until Oct 2 (Fri)'}
+                  </p>
+                  <div className="mt-4 flex flex-wrap items-baseline justify-center gap-x-8 gap-y-3">
+                    <PriceChip label={isKo ? '풀패스 (3일)' : 'Full Pass'} price={onsiteTier ? onsiteTier.price : 240000} />
+                    <PriceChip label={isKo ? '1일권' : '1-Day'} price={phase === 'regularEarlyDay' ? DAY_PASS.oneDayEarly : DAY_PASS.oneDay} />
+                    {phase === 'regularEarlyDay' && <PriceChip label={isKo ? '2일권' : '2-Day'} price={DAY_PASS.twoDayEarly} />}
                   </div>
                   <p className="mt-4 font-kr-sans text-[14px] leading-[1.6] text-charcoal/75">
                     {isKo
-                      ? '날짜를 고르지 않아도 됩니다 — 축제 기간 중 아무 날 오셔서 입장하세요.'
-                      : 'No date to choose — come on any day of the festival.'}
+                      ? '1일권·2일권은 날짜를 고르지 않아도 됩니다 — 축제 기간 중 아무 날 오셔서 입장하세요.'
+                      : 'Day passes need no date — come on any day of the festival.'}
                   </p>
                   <p className="mt-1 font-kr-sans text-[13px] leading-[1.6] text-charcoal/55">
-                    {isKo
-                      ? `토요일에 사용하시면 문화예술회관 오프닝 콘서트도 함께 · 현장 구매는 1일권 ${formatKRW(DAY_PASS.onsite)}`
-                      : `Used on Saturday it also admits you to the arts-center opening concert · on-site 1-day pass ${formatKRW(DAY_PASS.onsite)}`}
+                    {phase === 'regularEarlyDay'
+                      ? (isKo
+                          ? `일일권 얼리버드는 9월 15일(화)까지 · 이후 1일권 ${formatKRW(DAY_PASS.oneDay)} · 토요일에 사용하시면 오프닝 콘서트도 함께`
+                          : `Day-pass early bird until Sept 15 (Tue) · then 1-Day ${formatKRW(DAY_PASS.oneDay)} · used on Saturday it also admits you to the opening concert`)
+                      : (isKo
+                          ? `토요일에 사용하시면 문화예술회관 오프닝 콘서트도 함께 · 현장 구매는 1일권 ${formatKRW(DAY_PASS.onsite)}`
+                          : `Used on Saturday it also admits you to the arts-center opening concert · on-site 1-day pass ${formatKRW(DAY_PASS.onsite)}`)}
                   </p>
                 </>
-              ) : beforeDayPass ? (
+              )}
+              {phase === 'pre' && (
                 <>
                   <p className="font-kr-sans text-[15px] font-bold text-burgundy">
                     {isKo ? '🎟 곧 예매 시작' : '🎟 Opening soon'}
@@ -120,80 +147,88 @@ export default function Tickets() {
                   <p className="mt-3 font-kr-serif text-[23px] font-black leading-tight text-ink-soft sm:text-[28px]">
                     {isKo ? '새 티켓 예매를 준비하고 있습니다' : 'New ticket sales are on the way'}
                   </p>
-                  <p className="mt-3 font-kr-sans text-[14px] leading-[1.6] text-charcoal/70">
-                    {isKo
-                      ? '예매가 열리면 이 페이지에서 바로 신청하실 수 있습니다'
-                      : 'When booking opens, you can register right here'}
-                  </p>
-                  <p className="mt-1.5 font-kr-sans text-[13px] font-bold text-ink-soft/70">
-                    {isKo
-                      ? '현장 등록도 가능합니다 · 숙박 예약은 계속 받고 있습니다'
-                      : 'On-site registration is also available · accommodation booking is open'}
-                  </p>
                 </>
-              ) : (
+              )}
+              {phase === 'closed' && (
                 <>
                   <p className="font-kr-sans text-[15px] font-bold text-burgundy">
                     {isKo ? '⏰ 온라인 판매 종료' : '⏰ Online sales closed'}
                   </p>
-                  <p className="mt-3 font-kr-serif text-[23px] font-black leading-tight text-ink-soft sm:text-[28px]">
-                    {isKo ? '풀패스 (3일)' : 'Full Pass (3 days)'}
-                  </p>
-                  <p className="mt-2 font-en-body text-[11px] font-bold uppercase tracking-[0.3em] text-gold">
-                    {isKo ? '현장 등록' : 'At the door'}
-                  </p>
-                  <p className="font-en-display text-[38px] font-black italic leading-none text-burgundy sm:text-[46px]">
-                    {onsiteTier ? formatKRW(onsiteTier.price) : '₩240,000'}
-                  </p>
-                  <p className="mt-2 font-kr-sans text-[14px] leading-[1.6] text-charcoal/70">
+                  <div className="mt-4 flex flex-wrap items-baseline justify-center gap-x-8 gap-y-3">
+                    <PriceChip label={isKo ? '풀패스 (3일) · 현장' : 'Full Pass · at the door'} price={onsiteTier ? onsiteTier.price : 240000} />
+                    <PriceChip label={isKo ? '1일권 · 현장' : '1-Day · at the door'} price={DAY_PASS.onsite} />
+                  </div>
+                  <p className="mt-3 font-kr-sans text-[14px] leading-[1.6] text-charcoal/70">
                     {isKo
-                      ? '온라인 판매가 종료되었습니다 · 풀패스는 행사 당일 현장에서 등록하실 수 있습니다'
-                      : 'Online sales have ended · full passes are available at the door on event days'}
-                  </p>
-                  <p className="mt-1.5 font-kr-sans text-[13px] font-bold text-ink-soft/70">
-                    {isKo ? '숙박 예약은 계속 받고 있습니다' : 'Accommodation booking is still open'}
+                      ? '온라인 판매가 종료되었습니다 · 행사 당일 현장에서 등록하실 수 있습니다'
+                      : 'Online sales have ended · register at the door on event days'}
                   </p>
                 </>
               )}
+
+              {/* CTA — 참가 신청(플랫폼 재개 확인 후) · 숙박만 예약(8/24까지) */}
               <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
-                {dayPassOpen && (
+                {onlinePhase && (
+                  ticketsLive ? (
+                    <a
+                      href={REGISTER_URL}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center justify-center rounded-md bg-burgundy px-6 py-3.5 font-kr-sans text-[15px] font-bold text-warm-white shadow-[0_4px_0_#5A0E1B] transition-all duration-150 hover:translate-y-[2px] hover:shadow-[0_2px_0_#5A0E1B]"
+                    >
+                      {isKo ? '참가 신청' : 'Register'}
+                    </a>
+                  ) : (
+                    <span className="inline-flex items-center justify-center rounded-md border-2 border-dashed border-burgundy/40 px-6 py-3 font-kr-sans text-[14px] font-bold text-burgundy/80">
+                      {isKo ? '🎫 신청 접수 준비 중 — 곧 열립니다' : '🎫 Registration opening shortly'}
+                    </span>
+                  )
+                )}
+                {hotelOpen && (
                   <a
-                    href={REGISTER_URL}
+                    href={BOOK_HOTEL_URL}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center justify-center rounded-md bg-burgundy px-6 py-3.5 font-kr-sans text-[15px] font-bold text-warm-white shadow-[0_4px_0_#5A0E1B] transition-all duration-150 hover:translate-y-[2px] hover:shadow-[0_2px_0_#5A0E1B]"
+                    className={
+                      onlineOpen
+                        ? 'inline-flex items-center justify-center rounded-md border-2 border-burgundy/60 bg-warm-white/60 px-6 py-3.5 font-kr-sans text-[14px] font-bold text-burgundy transition-colors hover:border-burgundy hover:bg-warm-white'
+                        : 'inline-flex items-center justify-center rounded-md bg-burgundy px-6 py-3.5 font-kr-sans text-[15px] font-bold text-warm-white shadow-[0_4px_0_#5A0E1B] transition-all duration-150 hover:translate-y-[2px] hover:shadow-[0_2px_0_#5A0E1B]'
+                    }
                   >
-                    {isKo ? '참가 신청 — 1일권 · 2일권' : 'Register — Day passes'}
+                    {isKo ? '숙박만 예약 · 8/24까지' : 'Accommodation only · until Aug 24'}
                   </a>
                 )}
-                <a
-                  href={BOOK_HOTEL_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={
-                    dayPassOpen
-                      ? 'inline-flex items-center justify-center rounded-md border-2 border-burgundy/60 bg-warm-white/60 px-6 py-3.5 font-kr-sans text-[14px] font-bold text-burgundy transition-colors hover:border-burgundy hover:bg-warm-white'
-                      : 'inline-flex items-center justify-center rounded-md bg-burgundy px-6 py-3.5 font-kr-sans text-[15px] font-bold text-warm-white shadow-[0_4px_0_#5A0E1B] transition-all duration-150 hover:translate-y-[2px] hover:shadow-[0_2px_0_#5A0E1B]'
-                  }
-                >
-                  {isKo ? '숙박만 예약' : 'Accommodation only'}
-                </a>
               </div>
             </div>
-            {/* 숙박 요약 */}
+            {/* 숙박 요약 / 마감 안내 */}
             <div className="border-t border-ink-soft/12 bg-warm-white/50 px-6 py-6 sm:px-10">
-              <p className="font-en-body text-[10px] font-bold uppercase tracking-[0.3em] text-gold">
-                {isKo ? '공식 숙박 · 2개 호텔' : 'Official Hotels · 2'}
-              </p>
-              <p className="mt-2 font-kr-sans text-[14px] leading-relaxed text-ink-soft">
-                {isKo ? '더베네치아스위트 · 스탠다드 더블 ₩90,000/박' : 'The Venezia Suite · Standard Double ₩90,000/night'}
-              </p>
-              <p className="font-kr-sans text-[14px] leading-relaxed text-ink-soft">
-                {isKo ? '에스턴호텔 · 디럭스 더블/트윈 ₩120,000 · 패밀리 트윈 ₩170,000/박' : 'Eston Hotel · Deluxe Double/Twin ₩120,000 · Family Twin ₩170,000/night'}
-              </p>
-              <p className="mt-2 font-kr-sans text-[12px] text-charcoal/55">
-                {isKo ? '2~4박 패키지 · 신청 폼에서 객실 선택 (선착순) · 실시간 잔여는 아래 숙소 섹션' : '2–4 night packages · pick your room in the form (first-come) · live availability below'}
-              </p>
+              {hotelOpen ? (
+                <>
+                  <p className="font-en-body text-[10px] font-bold uppercase tracking-[0.3em] text-gold">
+                    {isKo ? '공식 숙박 · 2개 호텔 · 8월 24일(월)까지 접수' : 'Official Hotels · 2 · booking until Aug 24 (Mon)'}
+                  </p>
+                  <p className="mt-2 font-kr-sans text-[14px] leading-relaxed text-ink-soft">
+                    {isKo ? '더베네치아스위트 · 스탠다드 더블 ₩90,000/박' : 'The Venezia Suite · Standard Double ₩90,000/night'}
+                  </p>
+                  <p className="font-kr-sans text-[14px] leading-relaxed text-ink-soft">
+                    {isKo ? '에스턴호텔 · 디럭스 더블/트윈 ₩120,000 · 패밀리 트윈 ₩170,000/박' : 'Eston Hotel · Deluxe Double/Twin ₩120,000 · Family Twin ₩170,000/night'}
+                  </p>
+                  <p className="mt-2 font-kr-sans text-[12px] text-charcoal/55">
+                    {isKo ? '2~4박 패키지 · 신청 폼에서 객실 선택 (선착순) · 실시간 잔여는 아래 숙소 섹션' : '2–4 night packages · pick your room in the form (first-come) · live availability below'}
+                  </p>
+                </>
+              ) : (
+                <>
+                  <p className="font-en-body text-[10px] font-bold uppercase tracking-[0.3em] text-gold">
+                    {isKo ? '공식 숙박' : 'Official Hotels'}
+                  </p>
+                  <p className="mt-2 font-kr-sans text-[14px] leading-relaxed text-ink-soft">
+                    {isKo
+                      ? '공식 호텔 숙박 신청은 8월 24일(월)로 마감되었습니다 · 문의 info@kcctf.org'
+                      : 'Official-hotel booking closed on Aug 24 (Mon) · inquiries: info@kcctf.org'}
+                  </p>
+                </>
+              )}
             </div>
           </MotionReveal>
         )}
@@ -356,5 +391,17 @@ export default function Tickets() {
 
       </div>
     </section>
+  );
+}
+
+/** 가격 칩 — 라벨(세리프) + 금액(디스플레이 이탤릭) */
+function PriceChip({ label, price }: { label: string; price: number }) {
+  return (
+    <span>
+      <span className="font-kr-serif text-[17px] font-black text-ink-soft">{label}</span>{' '}
+      <span className="font-en-display text-[34px] font-black italic leading-none text-burgundy sm:text-[40px]">
+        {formatKRW(price)}
+      </span>
+    </span>
   );
 }
