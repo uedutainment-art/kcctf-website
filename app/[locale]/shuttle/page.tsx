@@ -55,14 +55,14 @@ export default function ShutttlePage({ params: { locale } }: { params: { locale:
       ];
   const notes = isKo
     ? [
-        '왕복권만 판매합니다 (편도 없음) · 예약 시 귀가편 ①/② 중 하나를 선택합니다 · 귀가편별 40석 선착순',
+        '왕복권만 판매합니다 (편도 없음) · 예약 시 귀가편 ①/② 중 하나를 선택합니다 · 귀가편별 30석 선착순 · 1건당 최대 4명(본인 포함)',
         '출발 시 샌드위치, 도착 후 점심 도시락을 무료로 드립니다 — 도시락은 예약 시 일반 / 샐러드 중 선택',
         '문화예술회관과 봄내체육관 바로 인근에는 식당이 거의 없습니다 — 점심은 도시락으로 준비해 드립니다',
         '환불 불가 · 양도는 9월 30일까지(양도인·양수인을 info@kcctf.org 에 고지) · 신청 후 3일 내 미입금 시 좌석 자동 해제',
         '모든 시각은 한국시간(KST)이며 교통 상황에 따라 변동될 수 있습니다. 확정 시 개별 안내드립니다.',
       ]
     : [
-        'Round trip only · choose Return ① or ② when booking · 40 seats per return, first come first served',
+        'Round trip only · choose Return ① or ② when booking · 30 seats per return, first come first served · up to 4 people per booking',
         'A sandwich at departure and a lunch box on arrival are complimentary — choose regular or salad when booking',
         'There are almost no restaurants right next to the Arts Center or Bomnae Complex — lunch is covered by the lunch box',
         'Non-refundable · transfers until Sept 30 (notify info@kcctf.org of both parties) · seats are released if unpaid 3 days after booking',

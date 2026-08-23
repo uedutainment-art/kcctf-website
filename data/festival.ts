@@ -200,7 +200,7 @@ export function isBeforeSaleOpen(w: SaleWindow, now: number = nowMs()): boolean 
  *  (플랫폼도 요금·좌석 0이면 판매 불가 → 한쪽만 열리는 일 방지) */
 export const SHUTTLE: { fare: number | null; seats: number | null; mealIncluded: boolean; bookingLive: boolean } = {
   fare: 60000,        // 1인 왕복, 도시락 포함 (2026-08-19 대표 확정)
-  seats: 80,          // 귀가편별 40석 × 2 (2026-08-23 대표 확정). 한쪽 30석 초과 시 그쪽 +1대(40)
+  seats: 60,          // 공개 판매 귀가편별 30석 × 2 (2026-08-23 대표 확정). 버스 정원 45 중 15석은 플랫폼 held(예비). 1건 최대 4명
   mealIncluded: true,
   /** ⚠️ 플랫폼 ?mode=shuttle 창구가 실제 배포된 것을 확인한 뒤 true 로.
    *  false 인 동안은 8/24가 지나도 버튼을 숨김 — 미배포 상태에서 일반 신청 폼으로 보내는 사고 방지 */
