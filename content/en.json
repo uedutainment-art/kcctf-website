@@ -476,15 +476,15 @@
         "rows": [
           {
             "emoji": "🚐",
-            "text": "Hongdae (Seoul) ↔ Chuncheon — round-trip tickets only"
+            "text": "Hongdae (Seoul) ↔ Chuncheon — round trip only · choose your return when booking (40 seats each, first come)"
           },
           {
             "emoji": "🕗",
-            "text": "Outbound: Sat Oct 3, gather 8:00 AM in Hongdae · sandwich at departure, lunch box on arrival"
+            "text": "Outbound: Sat Oct 3, 08:00 at Hongik Univ. Stn Exit 2 (near Ocho) → Arts Center (lunch box · concert) → Bomnae Complex → Eston → The Venezia"
           },
           {
             "emoji": "🌙",
-            "text": "Return (choose one of two): ① midnight Mon Oct 5 ② Tue Oct 6 morning — select when booking"
+            "text": "Return ①: Mon Oct 5, 00:30 after the last event, Bomnae → both hotels → Seoul Stn → Hongdae · ②: Tue Oct 6, 11:00 from the hotels → Seoul Stn → Hongdae"
           }
         ]
       }
@@ -518,10 +518,10 @@
     "eatLede": "Chuncheon is the home of dakgalbi and makguksu. Our favorite local spots — list coming soon.",
     "eatComingSoon": "Restaurant list coming soon",
     "eatNote": "We're sharing previews on our social channels — the full list will live here.",
-    "shuttleBeforeOpen": "Booking opens Aug 24 (KST)",
+    "shuttleBeforeOpen": "Booking opens Aug 24 (Mon) 09:00 KST",
     "shuttleFarePrefix": "Round trip",
     "shuttleCta": "Book the shuttle →",
-    "shuttleTimeNote": "※ Times may change",
+    "shuttleTimeNote": "※ All times KST · changes will be notified individually",
     "shuttlePending": "Booking opens shortly",
     "shuttleFareNote": "per person · meals included",
     "loop": {
@@ -568,9 +568,9 @@
       "first": "First",
       "last": "Last",
       "fullTimetable": "Full timetable by stop",
-      "pdf": "Download timetable (PDF)",
       "footnote": "Traffic may add a few minutes · check the stop and direction before boarding"
-    }
+    },
+    "shuttleDetailLink": "Full shuttle schedule"
   },
   "tickets": {
     "eyebrow": "TICKETS",
@@ -704,7 +704,7 @@
     "items": [
       {
         "q": "How do I register?",
-        "a": "Use the [Register] button in the Tickets section above. The Full Pass is ₩190,000 (early bird) until Aug 31 (Mon) and ₩240,000 from Sept 1; online registration stays open until Oct 2 (Fri). We confirm your place once payment is received.",
+        "a": "Use the [Register] button in the Tickets section above. Full Pass: ₩190,000 early bird until Aug 31 (Mon) 23:59 KST, then ₩240,000 from Sept 1; 1-Day ₩100,000 · 2-Day ₩200,000. Online registration stays open until Oct 2 (Fri) 23:59 KST. We confirm your place once payment is received.",
         "cta": {
           "label": "Register →",
           "href": "https://kcctf-5047d.web.app/register/chuncheon-citf-2026"
@@ -732,7 +732,7 @@
       },
       {
         "q": "How do I book accommodation?",
-        "a": "Bookings for the two official hotels (The Venezia Suite / Eston Hotel) are accepted until Aug 24 (Mon). For accommodation questions after that, email info@kcctf.org."
+        "a": "Bookings for the two official hotels (The Venezia Suite / Eston Hotel) are accepted until Aug 24 (Mon) 23:59 KST. For accommodation questions after that, email info@kcctf.org."
       },
       {
         "q": "Can I register on-site?",

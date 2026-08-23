@@ -86,7 +86,7 @@ export default function Tickets() {
               {phase === 'earlyBird2' && (
                 <>
                   <p className="font-kr-sans text-[15px] font-bold text-burgundy">
-                    {isKo ? '⏰ 얼리버드 연장 — 8월 31일(월)까지' : '⏰ Early bird extended — until Aug 31 (Mon)'}
+                    {isKo ? '⏰ 얼리버드 연장 — 8월 31일(월) 23:59까지 (한국시간)' : '⏰ Early bird extended — until Aug 31 (Mon) 23:59 KST'}
                   </p>
                   <p className="mt-3 font-kr-serif text-[23px] font-black leading-tight text-ink-soft sm:text-[28px]">
                     {isKo ? '풀패스 (3일)' : 'Full Pass (3 days)'}
@@ -108,20 +108,20 @@ export default function Tickets() {
                   </p>
                   <p className="mt-3 font-kr-sans text-[14px] leading-[1.6] text-charcoal/70">
                     {isKo
-                      ? '8월 31일(월) 23:59까지 온라인 얼리버드 · 9월 1일부터 ₩240,000'
-                      : 'Early-bird price online until Aug 31, 23:59 KST · ₩240,000 from Sept 1'}
+                      ? '8월 31일(월) 23:59까지 온라인 얼리버드 · 9월 1일(화)부터 풀패스 ₩240,000 · 1일권 ₩100,000 · 2일권 ₩200,000'
+                      : 'Early-bird price online until Aug 31, 23:59 KST · from Sept 1: Full Pass ₩240,000 · 1-Day ₩100,000 · 2-Day ₩200,000'}
                   </p>
                 </>
               )}
-              {(phase === 'regularEarlyDay' || phase === 'regular') && (
+              {phase === 'regular' && (
                 <>
                   <p className="font-kr-sans text-[15px] font-bold text-burgundy">
-                    {isKo ? '🎟 온라인 신청 중 — 10월 2일(금)까지' : '🎟 Online registration open — until Oct 2 (Fri)'}
+                    {isKo ? '🎟 온라인 신청 중 — 10월 2일(금) 23:59까지 (한국시간)' : '🎟 Online registration open — until Oct 2 (Fri) 23:59 KST'}
                   </p>
                   <div className="mt-4 flex flex-wrap items-baseline justify-center gap-x-8 gap-y-3">
                     <PriceChip label={isKo ? '풀패스 (3일)' : 'Full Pass'} price={onsiteTier ? onsiteTier.price : 240000} />
-                    <PriceChip label={isKo ? '1일권' : '1-Day'} price={phase === 'regularEarlyDay' ? DAY_PASS.oneDayEarly : DAY_PASS.oneDay} />
-                    {phase === 'regularEarlyDay' && <PriceChip label={isKo ? '2일권' : '2-Day'} price={DAY_PASS.twoDayEarly} />}
+                    <PriceChip label={isKo ? '1일권' : '1-Day'} price={DAY_PASS.oneDay} />
+                    <PriceChip label={isKo ? '2일권' : '2-Day'} price={DAY_PASS.twoDay} />
                   </div>
                   <p className="mt-4 font-kr-sans text-[14px] leading-[1.6] text-charcoal/75">
                     {isKo
@@ -129,13 +129,9 @@ export default function Tickets() {
                       : 'Day passes need no date — come on any day of the festival.'}
                   </p>
                   <p className="mt-1 font-kr-sans text-[13px] leading-[1.6] text-charcoal/55">
-                    {phase === 'regularEarlyDay'
-                      ? (isKo
-                          ? `일일권 얼리버드는 9월 15일(화)까지 · 이후 1일권 ${formatKRW(DAY_PASS.oneDay)} · 토요일에 사용하시면 오프닝 콘서트도 함께`
-                          : `Day-pass early bird until Sept 15 (Tue) · then 1-Day ${formatKRW(DAY_PASS.oneDay)} · used on Saturday it also admits you to the opening concert`)
-                      : (isKo
-                          ? `토요일에 사용하시면 문화예술회관 오프닝 콘서트도 함께 · 현장 구매는 1일권 ${formatKRW(DAY_PASS.onsite)}`
-                          : `Used on Saturday it also admits you to the arts-center opening concert · on-site 1-day pass ${formatKRW(DAY_PASS.onsite)}`)}
+                    {isKo
+                      ? `토요일에 사용하시면 문화예술회관 오프닝 콘서트도 함께 · 현장 구매는 1일권 ${formatKRW(DAY_PASS.onsite)} · 풀패스 ${onsiteTier ? formatKRW(onsiteTier.price) : '₩240,000'}`
+                      : `Used on Saturday it also admits you to the arts-center opening concert · at the door: 1-Day ${formatKRW(DAY_PASS.onsite)} · Full Pass ${onsiteTier ? formatKRW(onsiteTier.price) : '₩240,000'}`}
                   </p>
                 </>
               )}
@@ -195,7 +191,7 @@ export default function Tickets() {
                         : 'inline-flex items-center justify-center rounded-md bg-burgundy px-6 py-3.5 font-kr-sans text-[15px] font-bold text-warm-white shadow-[0_4px_0_#5A0E1B] transition-all duration-150 hover:translate-y-[2px] hover:shadow-[0_2px_0_#5A0E1B]'
                     }
                   >
-                    {isKo ? '숙박만 예약 · 8/24까지' : 'Accommodation only · until Aug 24'}
+                    {isKo ? '숙박만 예약 · 8/24(월) 23:59까지' : 'Accommodation only · until Aug 24, 23:59 KST'}
                   </a>
                 )}
               </div>
@@ -205,7 +201,7 @@ export default function Tickets() {
               {hotelOpen ? (
                 <>
                   <p className="font-en-body text-[10px] font-bold uppercase tracking-[0.3em] text-gold">
-                    {isKo ? '공식 숙박 · 2개 호텔 · 8월 24일(월)까지 접수' : 'Official Hotels · 2 · booking until Aug 24 (Mon)'}
+                    {isKo ? '공식 숙박 · 2개 호텔 · 8월 24일(월) 23:59까지 접수 (한국시간)' : 'Official Hotels · 2 · booking until Aug 24 (Mon) 23:59 KST'}
                   </p>
                   <p className="mt-2 font-kr-sans text-[14px] leading-relaxed text-ink-soft">
                     {isKo ? '더베네치아스위트 · 스탠다드 더블 ₩90,000/박' : 'The Venezia Suite · Standard Double ₩90,000/night'}

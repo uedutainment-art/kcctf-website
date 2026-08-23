@@ -1,10 +1,9 @@
 import { Fragment } from 'react';
 import { useLocale, useTranslations } from 'next-intl';
-import {
-  SALE_WINDOWS, SHUTTLE, LOOP_SHUTTLE, SCHEDULE_ITEMS,
-  isSaleOpen, isShuttleBookable, addMinutes, formatKRW, type ScheduleDay,
-} from '@/data/festival';
+import { Link } from '@/i18n/navigation';
+import { SALE_WINDOWS, SHUTTLE, LOOP_SHUTTLE, isSaleOpen, isShuttleBookable, formatKRW } from '@/data/festival';
 import MotionReveal from './MotionReveal';
+import { LOOP_DAYS, dayLabel } from './LoopTimetable';
 
 // 셔틀 전용 접수 창구 (숙박 ?mode=hotel 과 같은 패턴)
 const BOOK_SHUTTLE_URL = 'https://kcctf-5047d.web.app/register/chuncheon-citf-2026?mode=shuttle';
@@ -51,49 +50,6 @@ type LoopCopy = {
   footnote: string;
 };
 
-const LOOP_PDF = '/docs/kcctf-2026-shuttle-timetable.pdf';
-const LOOP_DAYS: ScheduleDay[] = ['10/3', '10/4', '10/5'];
-
-/** 정류장 3곳 시각 행 (출발 + 10분 + 20분) */
-function stopTimes(dep: string): string[] {
-  return LOOP_SHUTTLE.offsets.map((o) => addMinutes(dep, o));
-}
-
-/** 한 방향 전체 시간표 — 막차 행은 회색 + '막차' 라벨 */
-function LoopTable({ title, cols, deps, lastLabel }: { title: string; cols: string[]; deps: string[]; lastLabel: string }) {
-  return (
-    <div className="min-w-0">
-      <p className="mb-2 font-kr-sans text-[13px] font-bold text-burgundy">{title}</p>
-      <div className="overflow-x-auto">
-        <table className="w-full border-collapse font-en-body text-[13px] tabular-nums">
-          <thead>
-            <tr className="border-b border-ink-soft/20">
-              {cols.map((c) => (
-                <th key={c} className="py-1.5 text-center font-kr-sans text-[11px] font-bold text-charcoal/55">{c}</th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {deps.map((dep, i) => {
-              const isLast = i === deps.length - 1;
-              return (
-                <tr key={dep} className={['border-b border-ink-soft/8', isLast ? 'text-charcoal/50' : 'text-ink-soft'].join(' ')}>
-                  {stopTimes(dep).map((t, j) => (
-                    <td key={j} className="py-1.5 text-center">
-                      {t}
-                      {isLast && j === 0 && <span className="ml-1 font-kr-sans text-[10px]">{lastLabel}</span>}
-                    </td>
-                  ))}
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
-      </div>
-    </div>
-  );
-}
-
 /** 하우스 스타일 소제목 — 골드 eyebrow + 세리프 타이틀 */
 function SubHead({ eyebrow, title }: { eyebrow: string; title: string }) {
   return (
@@ -123,12 +79,7 @@ export default function Travel() {
   // 서울 셔틀 예약 — 한국시간(KST) 8/24 00:00부터. 요금+좌석 수가 확정돼야 예약 버튼 노출 (플랫폼 fail-closed와 동일 조건)
   const shuttleOpen = isSaleOpen(SALE_WINDOWS.shuttle);
   const shuttleBookable = isShuttleBookable();
-  const dayLabel = (d: ScheduleDay) => {
-    const dow = SCHEDULE_ITEMS.find((s) => s.day === d)?.dow ?? '';
-    const dowKo = { SAT: '토', SUN: '일', MON: '월' }[dow as 'SAT' | 'SUN' | 'MON'] ?? '';
-    const dowEn = { SAT: 'Sat', SUN: 'Sun', MON: 'Mon' }[dow as 'SAT' | 'SUN' | 'MON'] ?? '';
-    return isKo ? `${d}(${dowKo})` : `${dowEn} Oct ${d.split('/')[1]}`;
-  };
+  const day = (d: (typeof LOOP_DAYS)[number]) => dayLabel(d, isKo);
 
   return (
     <section id="travel" className="bg-warm-white py-16">
@@ -272,6 +223,12 @@ export default function Travel() {
                     </p>
                   )}
                   <p className="mt-2 font-kr-sans text-[11.5px] text-charcoal/50">{t('shuttleTimeNote')}</p>
+                  <Link
+                    href="/shuttle"
+                    className="mt-2 inline-block border-b-2 border-burgundy/50 pb-[1px] font-en-body text-[11px] font-bold uppercase tracking-[0.16em] text-burgundy transition-colors hover:border-burgundy"
+                  >
+                    {t('shuttleDetailLink')} →
+                  </Link>
                 </div>
               )}
             </MotionReveal>
@@ -324,7 +281,7 @@ export default function Travel() {
                   const tv = LOOP_SHUTTLE.toVenue[d];
                   return (
                     <tr key={d} className="border-b border-ink-soft/8">
-                      <td className="py-2 font-kr-sans text-[13px] font-bold text-ink-soft">{dayLabel(d)}</td>
+                      <td className="py-2 font-kr-sans text-[13px] font-bold text-ink-soft">{day(d)}</td>
                       <td className="py-2 text-ink-soft">
                         {th[0]} – <b className="text-burgundy">{th[th.length - 1]}</b>
                         <span className="ml-1 font-kr-sans text-[10.5px] text-charcoal/50">{loop.last}</span>
@@ -339,35 +296,15 @@ export default function Travel() {
               </tbody>
             </table>
           </div>
-          {/* 정류장별 전체 시간표 (접힘) */}
-          <details className="border-t border-ink-soft/10 group">
-            <summary className="cursor-pointer list-none px-5 py-3.5 font-kr-sans text-[13px] font-bold text-burgundy hover:bg-cream/60">
-              <span className="mr-1.5 inline-block transition-transform group-open:rotate-90" aria-hidden>▸</span>
-              {loop.fullTimetable}
-            </summary>
-            <div className="space-y-7 px-5 pb-6 pt-2">
-              {LOOP_DAYS.map((d) => (
-                <div key={d}>
-                  <p className="mb-3 font-kr-serif text-[16px] font-black text-ink-soft">{dayLabel(d)}</p>
-                  <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
-                    <LoopTable title={loop.dirToHotels} cols={loop.colsToHotels} deps={LOOP_SHUTTLE.toHotels[d]} lastLabel={loop.last} />
-                    <LoopTable title={loop.dirToVenue} cols={loop.colsToVenue} deps={LOOP_SHUTTLE.toVenue[d]} lastLabel={loop.last} />
-                  </div>
-                </div>
-              ))}
-            </div>
-          </details>
-          {/* PDF + 주의 */}
+          {/* 전체 시간표는 /shuttle 페이지 */}
           <div className="flex flex-wrap items-center justify-between gap-3 border-t border-ink-soft/10 bg-cream/50 px-5 py-3.5">
             <p className="font-kr-sans text-[11.5px] text-charcoal/55">{loop.footnote}</p>
-            <a
-              href={LOOP_PDF}
-              target="_blank"
-              rel="noopener noreferrer"
+            <Link
+              href="/shuttle"
               className="border-b-2 border-burgundy/50 pb-[1px] font-en-body text-[11px] font-bold uppercase tracking-[0.16em] text-burgundy transition-colors hover:border-burgundy"
             >
-              {loop.pdf} ↗
-            </a>
+              {loop.fullTimetable} →
+            </Link>
           </div>
         </MotionReveal>
 

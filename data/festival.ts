@@ -134,29 +134,26 @@ function kstMs(iso: string): number {
 
 // 2026-08-23 흰곰 확정 가격 체계 (운영/지시문_EventLink_얼리버드재개_호텔마감_2026-08-23.md)
 //   ~8/31  풀패스 얼리버드 ₩190,000 (재개)      · 숙박 접수는 8/24 23:59 까지
-//   9/1~   풀패스 ₩240,000 온라인 계속          · 9/1~9/15 1일권 ₩100,000 · 2일권 ₩200,000 (얼리버드)
-//   9/16~  1일권 ₩120,000 (2일권 비노출)        · 10/2 23:59 온라인 종료 → 현장 등록만
-export const SALE_WINDOWS: Record<'shuttle' | 'dayPass' | 'earlyBird2' | 'dayPassEarly' | 'fullPassOnline' | 'hotel', SaleWindow> = {
-  /** 셔틀 왕복권 — 8/24 예약 시작 (마감은 좌석 소진 시 = 플랫폼에서 처리) */
-  shuttle: { openKST: '2026-08-24T00:00', closeKST: null },
+//   9/1~10/2  풀패스 ₩240,000 · 1일권 ₩100,000 · 2일권 ₩200,000 온라인 (대표 8/18 원결정 — 온라인 1일권은 전날까지 10만원)
+//   10/3~  온라인 종료 → 현장 풀패스 ₩240,000 · 1일권 ₩120,000
+export const SALE_WINDOWS: Record<'shuttle' | 'dayPass' | 'earlyBird2' | 'fullPassOnline' | 'hotel', SaleWindow> = {
+  /** 셔틀 왕복권 — 8/24(월) 09:00 KST 예약 시작 (마감은 좌석 소진 시 = 플랫폼에서 처리) */
+  shuttle: { openKST: '2026-08-24T09:00', closeKST: null },
   /** 풀패스 얼리버드 재개 ₩190,000 — 8/23 ~ 8/31 23:59 */
   earlyBird2: { openKST: '2026-08-23T00:00', closeKST: '2026-08-31T23:59' },
   /** 풀패스 정가 ₩240,000 온라인 — 9/1 ~ 10/2 23:59 */
   fullPassOnline: { openKST: '2026-09-01T00:00', closeKST: '2026-10-02T23:59' },
-  /** 1·2일권 얼리버드 — 9/1 ~ 9/15 23:59 */
-  dayPassEarly: { openKST: '2026-09-01T00:00', closeKST: '2026-09-15T23:59' },
-  /** 1일권 온라인 전체 기간 — 9/1 ~ 10/2 23:59 (9/16부터 ₩120,000) */
+  /** 1일권·2일권 온라인 — 9/1 ~ 10/2 23:59 (가격 변동 없음) */
   dayPass: { openKST: '2026-09-01T00:00', closeKST: '2026-10-02T23:59' },
   /** 숙박(공식 호텔) 접수 — 8/24 23:59 까지 (8/25 00:00 마감) */
   hotel: { openKST: '2026-01-01T00:00', closeKST: '2026-08-24T23:59' },
 };
 
 /** 온라인 참가 신청 단계 — 경계에 빈틈이 없도록 '시작 시각' 순서로만 판정 */
-export type TicketPhase = 'pre' | 'earlyBird2' | 'regularEarlyDay' | 'regular' | 'closed';
+export type TicketPhase = 'pre' | 'earlyBird2' | 'regular' | 'closed';
 export function ticketPhase(now: number = Date.now()): TicketPhase {
   if (now > kstMs(SALE_WINDOWS.fullPassOnline.closeKST as string)) return 'closed';
-  if (now > kstMs(SALE_WINDOWS.dayPassEarly.closeKST as string)) return 'regular';
-  if (now >= kstMs(SALE_WINDOWS.fullPassOnline.openKST)) return 'regularEarlyDay';
+  if (now >= kstMs(SALE_WINDOWS.fullPassOnline.openKST)) return 'regular';
   if (now >= kstMs(SALE_WINDOWS.earlyBird2.openKST)) return 'earlyBird2';
   return 'pre';
 }
@@ -190,7 +187,7 @@ export function isBeforeSaleOpen(w: SaleWindow, now: number = Date.now()): boole
  *  (플랫폼도 요금·좌석 0이면 판매 불가 → 한쪽만 열리는 일 방지) */
 export const SHUTTLE: { fare: number | null; seats: number | null; mealIncluded: boolean; bookingLive: boolean } = {
   fare: 60000,        // 1인 왕복, 도시락 포함 (2026-08-19 대표 확정)
-  seats: 80,          // 40명 × 2대 (2026-08-19 대표 확정). 3대째는 예비 — 매진 시 120으로 올림
+  seats: 80,          // 귀가편별 40석 × 2 (2026-08-23 대표 확정). 한쪽 30석 초과 시 그쪽 +1대(40)
   mealIncluded: true,
   /** ⚠️ 플랫폼 ?mode=shuttle 창구가 실제 배포된 것을 확인한 뒤 true 로.
    *  false 인 동안은 8/24가 지나도 버튼을 숨김 — 미배포 상태에서 일반 신청 폼으로 보내는 사고 방지 */
@@ -236,10 +233,9 @@ export function addMinutes(hhmm: string, min: number): string {
 
 // 1일권·2일권 — 요일 구분 없는 자유이용권(축제 기간 중 아무 날). 판매 기간은 SALE_WINDOWS 참조
 export const DAY_PASS = {
-  oneDayEarly: 100000,  // 1일권 얼리버드 (9/1~9/15 온라인)
-  twoDayEarly: 200000,  // 2일권 얼리버드 (9/1~9/15 온라인) — 9/16부터 비노출(풀패스와 동일가)
-  oneDay: 120000,       // 1일권 정가 (9/16~10/2 온라인)
-  onsite: 120000,       // 1일권 현장
+  oneDay: 100000,  // 1일권 온라인 (9/1~10/2)
+  twoDay: 200000,  // 2일권 온라인 (9/1~10/2)
+  onsite: 120000,  // 1일권 현장
 } as const;
 
 // Schedule: 운영기준.md §7 — 요일 검증: 10/3=SAT 10/4=SUN 10/5=MON
