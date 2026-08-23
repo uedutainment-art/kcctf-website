@@ -160,7 +160,7 @@ export function ticketPhase(now: number = Date.now()): TicketPhase {
 
 /** ⚠️ 온라인 신청 버튼 스위치 — 플랫폼이 얼리버드 재개를 실제 배포한 것을 확인한 뒤 true.
  *  false 인 동안은 가격·기간만 안내하고 버튼 대신 "접수 준비 중" 표시 (마감된 폼으로 보내는 사고 방지) */
-export const TICKET_SALES = { live: false };
+export const TICKET_SALES = { live: true };  // 2026-08-23 19:40 KST 플랫폼 얼리버드 재개 배포(3fd87b0) 확인 후 ON
 
 export function isOnlineRegistrationOpen(now: number = Date.now()): boolean {
   const p = ticketPhase(now);
