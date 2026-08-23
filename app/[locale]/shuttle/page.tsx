@@ -32,9 +32,9 @@ export default function ShutttlePage({ params: { locale } }: { params: { locale:
       ];
   const returns: { label: string; steps: Step[] }[] = isKo
     ? [
-        { label: '귀가편 ① — 10/5(월) 밤', steps: [
-          { time: '24:00', text: '행사 종료 (애프터파티)' },
-          { time: '00:30', text: '봄내체육관 출발 → 에스턴호텔 → 더베네치아스위트' },
+        { label: '귀가편 ① — 10/6(화) 00:30 · 월요일 밤 행사 후', steps: [
+          { time: '24:00', text: '10/5(월) 행사 종료 (애프터파티)' },
+          { time: '00:30', text: '10/6(화) 새벽 — 봄내체육관 출발 → 에스턴호텔 → 더베네치아스위트' },
           { time: '→', text: '서울역 경유 → 홍대입구 도착' },
         ] },
         { label: '귀가편 ② — 10/6(화) 오전', steps: [
@@ -43,9 +43,9 @@ export default function ShutttlePage({ params: { locale } }: { params: { locale:
         ] },
       ]
     : [
-        { label: 'Return ① — Mon Oct 5, night', steps: [
-          { time: '24:00', text: 'Last event ends (after-party)' },
-          { time: '00:30', text: 'Depart Bomnae Complex → Eston Hotel → The Venezia Suite' },
+        { label: 'Return ① — Tue Oct 6, 00:30 · after Monday night', steps: [
+          { time: '24:00', text: 'Mon Oct 5 — last event ends (after-party)' },
+          { time: '00:30', text: 'Tue Oct 6, early hours — depart Bomnae Complex → Eston Hotel → The Venezia Suite' },
           { time: '→', text: 'via Seoul Station → arrive Hongdae' },
         ] },
         { label: 'Return ② — Tue Oct 6, morning', steps: [
