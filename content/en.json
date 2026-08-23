@@ -468,25 +468,6 @@
             "text": "Taxi — approx. 2 hr (148 km) · best shared by 2–4 people"
           }
         ]
-      },
-      {
-        "badge": "SHUTTLE",
-        "title": "Festival Shuttle",
-        "featured": true,
-        "rows": [
-          {
-            "emoji": "🚐",
-            "text": "Hongdae (Seoul) ↔ Chuncheon — round trip only · choose your return when booking (40 seats each, first come)"
-          },
-          {
-            "emoji": "🕗",
-            "text": "Outbound: Sat Oct 3, 08:00 at Hongik Univ. Stn Exit 2 (near Ocho) → Arts Center (lunch box · concert) → Bomnae Complex → Eston → The Venezia"
-          },
-          {
-            "emoji": "🌙",
-            "text": "Return ①: Mon Oct 5, 00:30 after the last event, Bomnae → both hotels → Seoul Stn → Hongdae · ②: Tue Oct 6, 11:00 from the hotels → Seoul Stn → Hongdae"
-          }
-        ]
       }
     ],
     "arrivalNote": "On arrival — official hotels are a 5–10 min taxi ride from Namchuncheon Station or the bus terminal.",
@@ -518,59 +499,53 @@
     "eatLede": "Chuncheon is the home of dakgalbi and makguksu. Our favorite local spots — list coming soon.",
     "eatComingSoon": "Restaurant list coming soon",
     "eatNote": "We're sharing previews on our social channels — the full list will live here.",
-    "shuttleBeforeOpen": "Booking opens Aug 24 (Mon) 09:00 KST",
-    "shuttleFarePrefix": "Round trip",
-    "shuttleCta": "Book the shuttle →",
-    "shuttleTimeNote": "※ All times KST · changes will be notified individually",
-    "shuttlePending": "Booking opens shortly",
-    "shuttleFareNote": "per person · meals included",
-    "loop": {
-      "eyebrow": "In Chuncheon",
-      "title": "Getting Around — Free Loop Shuttle",
-      "lede": "One bus loops between Bomnae Complex and the two official hotels. No booking needed — 25 seats, first come first served.",
-      "route": [
-        "Bomnae Complex",
-        "Eston Hotel",
-        "The Venezia Suite"
-      ],
-      "routeNote": "Bomnae → Eston +10 min → The Venezia +20 min · same in reverse · 60-minute loop",
-      "facts": [
-        {
-          "emoji": "🆓",
-          "text": "Free · no booking · 25 seats, first come first served"
-        },
-        {
-          "emoji": "⏱",
-          "text": "Never departs before the listed time · every 30 minutes late at night"
-        },
-        {
-          "emoji": "🎻",
-          "text": "Sat Oct 3: after the concert, shuttles take everyone from the Arts Center to Bomnae Complex"
-        }
-      ],
-      "dirToHotels": "Venue → Hotels",
-      "dirToVenue": "Hotels → Venue",
-      "colsToHotels": [
-        "Dep. Bomnae",
-        "Eston",
-        "Arr. Venezia"
-      ],
-      "colsToVenue": [
-        "Dep. Venezia",
-        "Eston",
-        "Arr. Bomnae"
-      ],
-      "summaryCols": [
-        "Day",
-        "Hotels → Venue",
-        "Venue → Hotels"
-      ],
-      "first": "First",
-      "last": "Last",
-      "fullTimetable": "Full timetable by stop",
-      "footnote": "Traffic may add a few minutes · check the stop and direction before boarding"
-    },
-    "shuttleDetailLink": "Full shuttle schedule"
+    "shuttles": {
+      "eyebrow": "Shuttle Buses",
+      "title": "Shuttle Buses",
+      "lede": "The Seoul round-trip shuttle is booked in advance; the loop shuttle inside Chuncheon is free.",
+      "seoul": {
+        "badge": "Seoul ↔ Chuncheon",
+        "title": "Seoul Shuttle Round Trip",
+        "statusOpen": "Booking open",
+        "statusBefore": "Booking opens Aug 24 (Mon) 09:00 KST",
+        "statusPending": "Booking opening shortly",
+        "fareNote": "per person round trip · meals included",
+        "rows": [
+          {
+            "k": "Out",
+            "v": "Sat Oct 3, 08:00 — meet at Hongik Univ. Stn Exit 2 → Chuncheon"
+          },
+          {
+            "k": "Return",
+            "v": "① Mon Oct 5, 00:30 from Bomnae · ② Tue Oct 6, 11:00 from the hotels — choose when booking"
+          },
+          {
+            "k": "Seats",
+            "v": "40 per return · first come first served"
+          }
+        ],
+        "cta": "Book",
+        "detail": "Full schedule"
+      },
+      "loop": {
+        "badge": "In Chuncheon",
+        "free": "Free",
+        "title": "Loop Shuttle",
+        "route": "Bomnae Complex ↔ Eston Hotel ↔ The Venezia Suite",
+        "rows": [
+          {
+            "k": "Use",
+            "v": "No booking · 25 seats, first come first served · 60-min loop"
+          }
+        ],
+        "lastLabel": "last",
+        "cta": "Timetable",
+        "toVenueLabel": "Hotels→Venue",
+        "toHotelsLabel": "Venue→Hotels",
+        "firstLabel": "first"
+      },
+      "timeNote": "All times KST · changes will be notified individually"
+    }
   },
   "tickets": {
     "eyebrow": "TICKETS",

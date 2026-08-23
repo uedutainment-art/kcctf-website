@@ -20,8 +20,6 @@ type Hotel = {
 type Way = {
   badge: string;
   title: string;
-  /** 페스티벌 자체 서비스(셔틀) — 스탬프 섀도로 강조 */
-  featured?: boolean;
   rows: { emoji: string; text: string }[];
 };
 
@@ -31,23 +29,19 @@ type Tip = {
   desc: string;
 };
 
-type LoopCopy = {
+type ShuttleCopy = {
   eyebrow: string;
   title: string;
   lede: string;
-  route: string[];
-  routeNote: string;
-  facts: { emoji: string; text: string }[];
-  dirToHotels: string;
-  dirToVenue: string;
-  colsToHotels: string[];
-  colsToVenue: string[];
-  summaryCols: string[];
-  first: string;
-  last: string;
-  fullTimetable: string;
-  pdf: string;
-  footnote: string;
+  seoul: {
+    badge: string; title: string; statusOpen: string; statusBefore: string; statusPending: string;
+    fareNote: string; rows: { k: string; v: string }[]; cta: string; detail: string;
+  };
+  loop: {
+    badge: string; free: string; title: string; route: string;
+    rows: { k: string; v: string }[]; toVenueLabel: string; toHotelsLabel: string; firstLabel: string; lastLabel: string; cta: string;
+  };
+  timeNote: string;
 };
 
 /** 하우스 스타일 소제목 — 골드 eyebrow + 세리프 타이틀 */
@@ -75,7 +69,7 @@ export default function Travel() {
   const hotels = t.raw('hotels') as Hotel[];
   const ways = t.raw('ways') as Way[];
   const tips = t.raw('tips') as Tip[];
-  const loop = t.raw('loop') as LoopCopy;
+  const sh = t.raw('shuttles') as ShuttleCopy;
   // 서울 셔틀 예약 — 한국시간(KST) 8/24 00:00부터. 요금+좌석 수가 확정돼야 예약 버튼 노출 (플랫폼 fail-closed와 동일 조건)
   const shuttleOpen = isSaleOpen(SALE_WINDOWS.shuttle);
   const shuttleBookable = isShuttleBookable();
@@ -164,25 +158,12 @@ export default function Travel() {
         {/* ── 오시는 길 — STEP 1 · STEP 2 · 한 번에 (3카드) ────── */}
         <SubHead eyebrow="Getting Here" title={t('waysTitle')} />
         <p className="font-kr-sans text-[14px] text-charcoal/65 text-center -mt-3 mb-6">{t('waysLede')}</p>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+        <div className="grid grid-cols-1 gap-5 md:grid-cols-3">
           {ways.map((w) => (
-            <MotionReveal
-              key={w.badge}
-              className={[
-                'overflow-hidden rounded-lg bg-warm-white border',
-                w.featured
-                  ? 'border-burgundy/35 shadow-[4px_4px_0_#8B1A2B]'
-                  : 'border-ink-soft/10 shadow-card',
-              ].join(' ')}
-            >
+            <MotionReveal key={w.badge} className="overflow-hidden rounded-lg border border-ink-soft/10 bg-warm-white shadow-card">
               {/* 헤더 — 스케줄 데이헤더 문법 (cream + 버건디 좌측 보더) */}
               <div className="bg-cream border-l-4 border-burgundy px-5 py-3 flex items-baseline gap-3">
-                <span
-                  className={[
-                    'rounded px-2 py-[2px] font-en-body text-[10px] font-bold tracking-[0.14em] uppercase',
-                    w.featured ? 'bg-gold text-ink' : 'bg-burgundy text-warm-white',
-                  ].join(' ')}
-                >
+                <span className="rounded bg-burgundy px-2 py-[2px] font-en-body text-[10px] font-bold tracking-[0.14em] uppercase text-warm-white">
                   {w.badge}
                 </span>
                 <span className="font-kr-sans text-[15px] font-bold text-ink-soft">{w.title}</span>
@@ -195,42 +176,6 @@ export default function Travel() {
                   </li>
                 ))}
               </ul>
-              {w.featured && (
-                <div className="border-t border-ink-soft/10 px-5 py-4">
-                  {SHUTTLE.fare != null && (
-                    <p className="font-kr-sans text-[14px] text-ink-soft">
-                      {t('shuttleFarePrefix')}{' '}
-                      <b className="font-en-display text-[20px] italic text-burgundy">
-                        {formatKRW(SHUTTLE.fare)}
-                      </b>
-                      {SHUTTLE.mealIncluded && (
-                        <span className="ml-2 font-kr-sans text-[12px] text-charcoal/60">{t('shuttleFareNote')}</span>
-                      )}
-                    </p>
-                  )}
-                  {shuttleBookable ? (
-                    <a
-                      href={BOOK_SHUTTLE_URL}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="mt-3 inline-flex w-full items-center justify-center rounded-md bg-burgundy px-5 py-3 font-kr-sans text-[14px] font-bold text-warm-white shadow-[0_3px_0_#5A0E1B] transition-all duration-150 hover:translate-y-[1px] hover:shadow-[0_2px_0_#5A0E1B]"
-                    >
-                      {t('shuttleCta')}
-                    </a>
-                  ) : (
-                    <p className="mt-2 font-kr-sans text-[13px] font-bold text-burgundy">
-                      🎫 {shuttleOpen ? t('shuttlePending') : t('shuttleBeforeOpen')}
-                    </p>
-                  )}
-                  <p className="mt-2 font-kr-sans text-[11.5px] text-charcoal/50">{t('shuttleTimeNote')}</p>
-                  <Link
-                    href="/shuttle"
-                    className="mt-2 inline-block border-b-2 border-burgundy/50 pb-[1px] font-en-body text-[11px] font-bold uppercase tracking-[0.16em] text-burgundy transition-colors hover:border-burgundy"
-                  >
-                    {t('shuttleDetailLink')} →
-                  </Link>
-                </div>
-              )}
             </MotionReveal>
           ))}
         </div>
@@ -238,75 +183,118 @@ export default function Travel() {
           {t('arrivalNote')}
         </p>
 
-        {/* ── In Chuncheon — 무료 순환 셔틀 (봄내 ↔ 에스턴 ↔ 베네치아) ───── */}
-        <SubHead eyebrow={loop.eyebrow} title={loop.title} />
-        <p className="font-kr-sans text-[14px] text-charcoal/65 text-center -mt-3 mb-6 max-w-xl mx-auto">{loop.lede}</p>
-        <MotionReveal className="overflow-hidden rounded-lg border border-burgundy/35 bg-warm-white shadow-[4px_4px_0_#8B1A2B]">
-          {/* 노선 */}
-          <div className="bg-cream border-l-4 border-burgundy px-5 py-4">
-            <div className="flex flex-wrap items-center justify-center gap-2">
-              {loop.route.map((stop, i) => (
-                <Fragment key={stop}>
-                  {i > 0 && <span className="font-en-body text-[14px] text-gold" aria-hidden>⟷</span>}
-                  <span className="rounded border border-gold/60 bg-warm-white px-3 py-1.5 font-kr-sans text-[13px] font-bold text-ink-soft">
-                    {stop}
-                  </span>
-                </Fragment>
-              ))}
+        {/* ── Shuttle Buses — 서울 셔틀(예약) · 춘천 순환(무료) 나란히 ───── */}
+        <SubHead eyebrow={sh.eyebrow} title={sh.title} />
+        <p className="font-kr-sans text-[14px] text-charcoal/65 text-center -mt-3 mb-6">{sh.lede}</p>
+        <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
+
+          {/* 서울 셔틀 — 예약제 (스탬프 섀도) */}
+          <MotionReveal className="flex flex-col overflow-hidden rounded-lg border border-burgundy/35 bg-warm-white shadow-[4px_4px_0_#8B1A2B]">
+            <div className="flex items-center justify-between gap-3 border-l-4 border-burgundy bg-cream px-5 py-3">
+              <span className="rounded bg-burgundy px-2 py-[2px] font-en-body text-[10px] font-bold tracking-[0.14em] uppercase text-warm-white">
+                {sh.seoul.badge}
+              </span>
+              {shuttleBookable ? (
+                <span className="inline-flex items-center gap-1.5 rounded-full bg-burgundy px-3 py-1 font-kr-sans text-[12px] font-bold text-warm-white">
+                  <span className="h-2 w-2 rounded-full bg-gold-soft" aria-hidden />
+                  {sh.seoul.statusOpen}
+                </span>
+              ) : (
+                <span className="rounded-full border border-burgundy/40 bg-warm-white px-3 py-1 font-kr-sans text-[12px] font-bold text-burgundy">
+                  {shuttleOpen ? sh.seoul.statusPending : sh.seoul.statusBefore}
+                </span>
+              )}
             </div>
-            <p className="mt-2.5 text-center font-kr-sans text-[12px] text-charcoal/60">{loop.routeNote}</p>
-          </div>
-          {/* 핵심 안내 */}
-          <ul className="px-5 py-4 space-y-3">
-            {loop.facts.map((f, i) => (
-              <li key={i} className="flex gap-3">
-                <span className="text-[20px] leading-[1.3] shrink-0" aria-hidden>{f.emoji}</span>
-                <span className="font-kr-sans text-[13px] leading-[1.6] text-charcoal/85">{f.text}</span>
-              </li>
-            ))}
-          </ul>
-          {/* 날짜별 첫차·막차 요약 */}
-          <div className="border-t border-ink-soft/10 px-5 py-4 overflow-x-auto">
-            <table className="w-full border-collapse font-en-body text-[13px] tabular-nums">
-              <thead>
-                <tr className="border-b border-ink-soft/20">
-                  {loop.summaryCols.map((c) => (
-                    <th key={c} className="py-1.5 text-left font-kr-sans text-[11px] font-bold text-charcoal/55 first:pl-0">{c}</th>
-                  ))}
-                </tr>
-              </thead>
-              <tbody>
-                {LOOP_DAYS.map((d) => {
-                  const th = LOOP_SHUTTLE.toHotels[d];
-                  const tv = LOOP_SHUTTLE.toVenue[d];
-                  return (
-                    <tr key={d} className="border-b border-ink-soft/8">
-                      <td className="py-2 font-kr-sans text-[13px] font-bold text-ink-soft">{day(d)}</td>
-                      <td className="py-2 text-ink-soft">
-                        {tv[0]} – <b className="text-burgundy">{tv[tv.length - 1]}</b>
-                        <span className="ml-1 font-kr-sans text-[10.5px] text-charcoal/50">{loop.last}</span>
-                      </td>
-                      <td className="py-2 text-ink-soft">
-                        {th[0]} – <b className="text-burgundy">{th[th.length - 1]}</b>
-                        <span className="ml-1 font-kr-sans text-[10.5px] text-charcoal/50">{loop.last}</span>
-                      </td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
-          </div>
-          {/* 전체 시간표는 /shuttle 페이지 */}
-          <div className="flex flex-wrap items-center justify-between gap-3 border-t border-ink-soft/10 bg-cream/50 px-5 py-3.5">
-            <p className="font-kr-sans text-[11.5px] text-charcoal/55">{loop.footnote}</p>
-            <Link
-              href="/shuttle/chuncheon"
-              className="border-b-2 border-burgundy/50 pb-[1px] font-en-body text-[11px] font-bold uppercase tracking-[0.16em] text-burgundy transition-colors hover:border-burgundy"
-            >
-              {loop.fullTimetable} →
-            </Link>
-          </div>
-        </MotionReveal>
+            <div className="flex-1 px-5 pt-4">
+              <h4 className="font-kr-serif text-[19px] font-black text-ink-soft">{sh.seoul.title}</h4>
+              {SHUTTLE.fare != null && (
+                <p className="mt-1 flex flex-wrap items-baseline gap-x-2">
+                  <span className="font-en-display text-[30px] font-black italic leading-none text-burgundy">{formatKRW(SHUTTLE.fare)}</span>
+                  <span className="font-kr-sans text-[12px] text-charcoal/60">{sh.seoul.fareNote}</span>
+                </p>
+              )}
+              <dl className="mt-4 space-y-2">
+                {sh.seoul.rows.map((r) => (
+                  <div key={r.k} className="flex gap-3">
+                    <dt className="w-[76px] shrink-0 font-kr-sans text-[12px] font-bold text-gold">{r.k}</dt>
+                    <dd className="font-kr-sans text-[13px] leading-[1.55] text-charcoal/85">{r.v}</dd>
+                  </div>
+                ))}
+              </dl>
+            </div>
+            <div className="mt-4 flex flex-wrap items-center gap-2 border-t border-ink-soft/10 px-5 py-4">
+              {shuttleBookable && (
+                <a
+                  href={BOOK_SHUTTLE_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex flex-1 items-center justify-center rounded-md bg-burgundy px-5 py-3 font-kr-sans text-[14px] font-bold text-warm-white shadow-[0_3px_0_#5A0E1B] transition-all duration-150 hover:translate-y-[1px] hover:shadow-[0_2px_0_#5A0E1B]"
+                >
+                  {sh.seoul.cta} →
+                </a>
+              )}
+              <Link
+                href="/shuttle"
+                className={[
+                  'inline-flex items-center justify-center rounded-md border-2 px-5 py-3 font-kr-sans text-[13px] font-bold transition-colors',
+                  shuttleBookable
+                    ? 'border-burgundy/40 text-burgundy hover:border-burgundy'
+                    : 'flex-1 border-burgundy/60 bg-warm-white text-burgundy hover:border-burgundy hover:bg-cream',
+                ].join(' ')}
+              >
+                {sh.seoul.detail} →
+              </Link>
+            </div>
+          </MotionReveal>
+
+          {/* 춘천 순환 셔틀 — 무료 */}
+          <MotionReveal className="flex flex-col overflow-hidden rounded-lg border border-gold/50 bg-cream shadow-card">
+            <div className="flex items-center justify-between gap-3 border-l-4 border-gold bg-warm-white px-5 py-3">
+              <span className="rounded bg-gold px-2 py-[2px] font-en-body text-[10px] font-bold tracking-[0.14em] uppercase text-ink">
+                {sh.loop.badge}
+              </span>
+              <span className="rounded-full bg-gold px-3.5 py-1 font-en-display text-[15px] font-black italic leading-none text-ink">
+                FREE · {sh.loop.free}
+              </span>
+            </div>
+            <div className="flex-1 px-5 pt-4">
+              <h4 className="font-kr-serif text-[19px] font-black text-ink-soft">{sh.loop.title}</h4>
+              <p className="mt-1 font-kr-sans text-[13px] font-bold text-ink-soft/80">{sh.loop.route}</p>
+              <dl className="mt-4 space-y-2">
+                {sh.loop.rows.map((r) => (
+                  <div key={r.k} className="flex gap-3">
+                    <dt className="w-[76px] shrink-0 font-kr-sans text-[12px] font-bold text-gold">{r.k}</dt>
+                    <dd className="font-kr-sans text-[13px] leading-[1.55] text-charcoal/85">{r.v}</dd>
+                  </div>
+                ))}
+                {/* 방향별 첫차·막차 — 호텔→행사장(오후 첫차) 먼저, 행사장→호텔(새벽 막차) 다음 */}
+                <div className="flex gap-3">
+                  <dt className="w-[76px] shrink-0 font-kr-sans text-[12px] font-bold text-gold">{sh.loop.toVenueLabel}</dt>
+                  <dd className="font-kr-sans text-[13px] leading-[1.55] text-charcoal/85">
+                    <span className="text-charcoal/55">{sh.loop.firstLabel}</span>{' '}
+                    {LOOP_DAYS.map((d) => `${day(d)} ${LOOP_SHUTTLE.toVenue[d][0]}`).join(' · ')}
+                  </dd>
+                </div>
+                <div className="flex gap-3">
+                  <dt className="w-[76px] shrink-0 font-kr-sans text-[12px] font-bold text-gold">{sh.loop.toHotelsLabel}</dt>
+                  <dd className="font-kr-sans text-[13px] leading-[1.55] text-charcoal/85">
+                    <span className="text-charcoal/55">{sh.loop.lastLabel}</span>{' '}
+                    {LOOP_DAYS.map((d) => `${day(d)} ${LOOP_SHUTTLE.toHotels[d][LOOP_SHUTTLE.toHotels[d].length - 1]}`).join(' · ')}
+                  </dd>
+                </div>
+              </dl>
+            </div>
+            <div className="mt-4 border-t border-ink-soft/10 px-5 py-4">
+              <Link
+                href="/shuttle/chuncheon"
+                className="inline-flex w-full items-center justify-center rounded-md border-2 border-gold/70 bg-warm-white px-5 py-3 font-kr-sans text-[13px] font-bold text-ink-soft transition-colors hover:border-gold hover:bg-mustard/30"
+              >
+                {sh.loop.cta} →
+              </Link>
+            </div>
+          </MotionReveal>
+        </div>
+        <p className="mt-3 text-center font-kr-sans text-[11.5px] text-charcoal/50">{sh.timeNote}</p>
 
         {/* ── Good to Know — 해외 참가자 팁 (4) ─────────────────── */}
         <SubHead eyebrow="For International Guests" title={t('tipsTitle')} />
