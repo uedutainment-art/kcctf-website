@@ -13,8 +13,8 @@ export function generateMetadata({ params: { locale } }: { params: { locale: str
 export default function ChuncheonShuttlePage({ params: { locale } }: { params: { locale: string } }) {
   const isKo = locale === 'ko';
   const legend = isKo
-    ? ['한 줄 = 한 시간대 · 왼쪽 호텔 → 행사장, 오른쪽 행사장 → 호텔 (출발 · 에스턴 · 도착 순)', '🟨 머스터드 칸 = 심야 30분 간격(한 시간대에 두 편)', '🌙 구분선 = 자정을 넘긴 새벽 · 셔틀은 표기된 시각보다 먼저 출발하지 않습니다']
-    : ['One row = one hour · left Hotels → Venue, right Venue → Hotels (departure · Eston · arrival)', '🟨 Mustard cell = late-night 30-minute interval (two runs in one hour)', '🌙 Divider = after midnight · the shuttle never departs before the listed time'];
+    ? ['한 줄 = 한 시간대 · 왼쪽 호텔 → 행사장, 오른쪽 행사장 → 호텔 (출발 · 에스턴 · 도착 순 · 좁은 화면에선 출발 → 도착만, 에스턴은 +10분)', '🟨 머스터드 칸 = 심야 30분 간격(한 시간대에 두 편)', '🌙 구분선 = 자정을 넘긴 새벽 · 셔틀은 표기된 시각보다 먼저 출발하지 않습니다']
+    : ['One row = one hour · left Hotels → Venue, right Venue → Hotels (departure · Eston · arrival; on narrow screens only departure → arrival, Eston is +10 min)', '🟨 Mustard cell = late-night 30-minute interval (two runs in one hour)', '🌙 Divider = after midnight · the shuttle never departs before the listed time'];
 
   return (
     <div className="bg-cream px-5 pt-[104px] md:pt-[128px] pb-24">
@@ -63,6 +63,8 @@ export default function ChuncheonShuttlePage({ params: { locale } }: { params: {
               toHotels: isKo ? '행사장 → 호텔' : 'Venue → Hotels',
               toVenueStops: isKo ? '더베네치아 출발 · 에스턴 · 봄내 도착' : 'dep. Venezia · Eston · arr. Bomnae',
               toHotelsStops: isKo ? '봄내 출발 · 에스턴 · 더베네치아 도착' : 'dep. Bomnae · Eston · arr. Venezia',
+              toVenueShort: isKo ? '더베네치아 → 봄내' : 'Venezia → Bomnae',
+              toHotelsShort: isKo ? '봄내 → 더베네치아' : 'Bomnae → Venezia',
               first: isKo ? '첫차' : 'first',
               last: isKo ? '막차' : 'last',
               afterMidnight: isKo ? `${nextDayLabel(d, isKo)} 새벽` : `${nextDayLabel(d, isKo)} early hours`,

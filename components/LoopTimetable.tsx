@@ -123,6 +123,8 @@ export type LoopDayLabels = {
   toHotels: string;     // 행사장 → 호텔
   toVenueStops: string; // 더베네치아 · 에스턴 · 봄내
   toHotelsStops: string;// 봄내 · 에스턴 · 더베네치아
+  toVenueShort: string; // 모바일: 더베네치아 → 봄내
+  toHotelsShort: string;// 모바일: 봄내 → 더베네치아
   first: string; last: string; afterMidnight: string; late: string;
   hourSuffix: string;   // 시 / :00
 };
@@ -153,14 +155,15 @@ export function LoopDayTable({
           const st = stopTimes(dep);
           const isFirst = dep === first, isLast = dep === last;
           return (
-            <div key={dep} className={['flex items-center justify-center gap-2 py-0.5', isLast ? 'text-charcoal/55' : ''].join(' ')}>
+            <div key={dep} className={['flex items-center justify-center gap-1 sm:gap-2 py-0.5 whitespace-nowrap', isLast ? 'text-charcoal/55' : ''].join(' ')}>
               <span>{st[0]}</span>
-              <span className="text-charcoal/35">·</span>
-              <span className="text-charcoal/70">{st[1]}</span>
-              <span className="text-charcoal/35">·</span>
+              <span className="text-charcoal/35 sm:hidden">→</span>
+              <span className="hidden text-charcoal/35 sm:inline">·</span>
+              <span className="hidden text-charcoal/70 sm:inline">{st[1]}</span>
+              <span className="hidden text-charcoal/35 sm:inline">·</span>
               <span>{st[2]}</span>
-              {isFirst && <span className="font-kr-sans text-[10px] font-normal text-charcoal/50">{labels.first}</span>}
-              {isLast && <span className="font-kr-sans text-[10px] font-normal text-charcoal/50">{labels.last}</span>}
+              {isFirst && <span className="font-kr-sans text-[9px] font-normal text-charcoal/50 sm:text-[10px]">{labels.first}</span>}
+              {isLast && <span className="font-kr-sans text-[9px] font-normal text-charcoal/50 sm:text-[10px]">{labels.last}</span>}
             </div>
           );
         })}
@@ -172,17 +175,19 @@ export function LoopDayTable({
   let lateBadgeShown = false;
   return (
     <div className="overflow-x-auto">
-      <table className="w-full border-collapse font-en-body text-[13px] tabular-nums">
+      <table className="w-full border-collapse font-en-body text-[12px] tabular-nums sm:text-[13px]">
         <thead>
           <tr className="border-b border-ink-soft/20">
-            <th className="w-[56px] py-1.5 text-left font-kr-sans text-[11px] font-bold text-charcoal/55">{labels.hourCol}</th>
+            <th className="w-[44px] py-1.5 text-left font-kr-sans text-[11px] font-bold text-charcoal/55 sm:w-[56px]">{labels.hourCol}</th>
             <th className="py-1.5 text-center">
               <span className="block font-kr-sans text-[12px] font-bold text-burgundy">{labels.toVenue}</span>
-              <span className="block font-kr-sans text-[10.5px] font-normal text-charcoal/50">{labels.toVenueStops}</span>
+              <span className="block font-kr-sans text-[10.5px] font-normal text-charcoal/50 sm:hidden">{labels.toVenueShort}</span>
+              <span className="hidden font-kr-sans text-[10.5px] font-normal text-charcoal/50 sm:block">{labels.toVenueStops}</span>
             </th>
             <th className="py-1.5 text-center">
               <span className="block font-kr-sans text-[12px] font-bold text-burgundy">{labels.toHotels}</span>
-              <span className="block font-kr-sans text-[10.5px] font-normal text-charcoal/50">{labels.toHotelsStops}</span>
+              <span className="block font-kr-sans text-[10.5px] font-normal text-charcoal/50 sm:hidden">{labels.toHotelsShort}</span>
+              <span className="hidden font-kr-sans text-[10.5px] font-normal text-charcoal/50 sm:block">{labels.toHotelsStops}</span>
             </th>
           </tr>
         </thead>
@@ -210,10 +215,10 @@ export function LoopDayTable({
             if (showBadge) lateBadgeShown = true;
             rows.push(
               <tr key={k} className="border-b border-ink-soft/10 text-ink-soft">
-                <td className="py-2 whitespace-nowrap font-kr-sans text-[12px] font-bold text-charcoal/70">
+                <td className="py-2 pr-1 font-kr-sans text-[11.5px] font-bold text-charcoal/70 sm:whitespace-nowrap sm:text-[12px]">
                   {String(hour).padStart(2, '0')}{labels.hourSuffix}
                   {showBadge && (
-                    <span className="ml-1.5 rounded-full bg-burgundy px-1.5 py-[1px] font-kr-sans text-[9px] font-bold text-warm-white">{labels.late}</span>
+                    <span className="mt-0.5 block w-fit whitespace-nowrap rounded-full bg-burgundy px-1.5 py-[1px] font-kr-sans text-[9px] font-bold text-warm-white sm:ml-1.5 sm:mt-0 sm:inline">{labels.late}</span>
                   )}
                 </td>
                 <Cell deps={v} first={firstV} last={lastV} late={isLateRow} />
