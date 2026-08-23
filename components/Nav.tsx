@@ -77,6 +77,9 @@ export default function Nav() {
   // 등록 미오픈이면 예약하기 CTA 숨김
   const registrationOpen = process.env.NEXT_PUBLIC_REGISTRATION_OPEN === 'true';
   const altLocale = locale === 'ko' ? 'en' : 'ko';
+  // 서브페이지(/shuttle 등)에서는 섹션 앵커가 같은 페이지에 없으므로 홈(/ko#section)으로 보냄
+  const onHome = pathname === '/';
+  const sectionHref = (hash: string) => (onHome ? hash : `/${locale}${hash}`);
 
   return (
     <>
@@ -91,8 +94,19 @@ export default function Nav() {
         <div className="max-w-[1200px] mx-auto px-6 md:px-10">
           <div className="flex h-[72px] items-center justify-between gap-4">
 
-            {/* 로고 자리 — 엠블럼 제거됨, 추후 새 로고 재추가 */}
-            <div className="flex-shrink-0" aria-hidden />
+            {/* 왼쪽 상단 워드마크 — 항상 홈으로 (엠블럼 로고는 추후 교체) */}
+            <Link
+              href="/"
+              aria-label={locale === 'ko' ? '홈으로' : 'Home'}
+              className="group flex flex-shrink-0 items-baseline gap-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-burgundy/35 focus-visible:ring-offset-2 focus-visible:ring-offset-mustard rounded-sm"
+            >
+              <span className="font-en-display text-[22px] font-black italic leading-none text-ink-soft transition-colors group-hover:text-burgundy">
+                KCCTF
+              </span>
+              <span className="hidden sm:inline font-en-body text-[10px] font-bold tracking-[0.3em] uppercase text-ink/55">
+                2026
+              </span>
+            </Link>
 
             {/* Desktop nav links */}
             <nav className="hidden lg:flex items-center gap-1" aria-label="Main navigation">
@@ -101,7 +115,7 @@ export default function Nav() {
                 return (
                   <a
                     key={item.href}
-                    href={item.href}
+                    href={sectionHref(item.href)}
                     className={[
                       'font-en-body font-bold text-[11px] tracking-[0.22em] uppercase transition-colors duration-200 relative px-3 py-4',
                       'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-burgundy/35 focus-visible:ring-offset-2 focus-visible:ring-offset-mustard',
@@ -200,7 +214,7 @@ export default function Nav() {
             {navItems.map((item) => (
               <a
                 key={item.href}
-                href={item.href}
+                href={sectionHref(item.href)}
                 onClick={() => setMenuOpen(false)}
                 className={[
                   'flex items-center justify-between border-b border-ink-soft/15 py-5 font-kr-sans text-[20px] transition-colors',

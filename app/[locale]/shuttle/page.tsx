@@ -1,5 +1,4 @@
 import type { Metadata } from 'next';
-import { Link } from '@/i18n/navigation';
 import { SHUTTLE, SALE_WINDOWS, isSaleOpen, isShuttleBookable, formatKRW } from '@/data/festival';
 
 // 서울 셔틀 안내 페이지 — 서울 셔틀 내용 + 신청 버튼만 (춘천 순환 시간표는 /shuttle/chuncheon, Travel 섹션에서 별도 링크)
@@ -73,9 +72,9 @@ export default function ShutttlePage({ params: { locale } }: { params: { locale:
   return (
     <div className="bg-cream px-5 pt-[104px] md:pt-[128px] pb-24">
       <div className="mx-auto max-w-3xl">
-        <Link href="/#travel" className="inline-block font-en-body text-[11px] uppercase tracking-[0.22em] text-burgundy hover:underline">
-          ← {isKo ? '홈으로' : 'Home'}
-        </Link>
+        <a href={`/${locale}#travel`} className="inline-block font-en-body text-[11px] uppercase tracking-[0.22em] text-burgundy hover:underline">
+          ← {isKo ? '홈으로 (여행 안내)' : 'Home (Travel)'}
+        </a>
         <p className="mt-5 font-en-body font-bold text-[11px] tracking-[0.4em] uppercase text-burgundy">Seoul ↔ Chuncheon Shuttle</p>
         <h1 className="mt-2 font-kr-serif font-black text-ink-soft leading-[1.05] tracking-[-0.03em]" style={{ fontSize: 'clamp(28px, 4vw, 44px)' }}>
           {isKo ? '서울 셔틀 안내' : 'Seoul Shuttle'}
