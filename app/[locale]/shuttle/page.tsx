@@ -20,14 +20,14 @@ export default function ShutttlePage({ params: { locale } }: { params: { locale:
 
   const outbound: Step[] = isKo
     ? [
-        { time: '08:00', text: '홍대입구역 2번 출구(오초 인근) 집합 · 출발 — 샌드위치 제공' },
-        { time: '도착', text: '춘천문화예술회관 — 점심 도시락' },
+        { time: '08:00', text: '홍대입구역 2번 출구(오초 인근) 집합 · 출발 — 샌드위치 무료 제공' },
+        { time: '도착', text: '춘천문화예술회관 — 점심 도시락 무료 제공 (인근 식당 거의 없음)' },
         { time: '13:00', text: '오프닝 콘서트 (문화예술회관)' },
         { time: '콘서트 후', text: '봄내체육관 → 에스턴호텔 → 더베네치아스위트' },
       ]
     : [
-        { time: '08:00', text: 'Meet & depart — Hongik Univ. Station Exit 2 (near Ocho) · sandwich provided' },
-        { time: 'Arrival', text: 'Chuncheon Culture & Arts Center — lunch box' },
+        { time: '08:00', text: 'Meet & depart — Hongik Univ. Station Exit 2 (near Ocho) · complimentary sandwich' },
+        { time: 'Arrival', text: 'Chuncheon Culture & Arts Center — complimentary lunch box (few restaurants nearby)' },
         { time: '13:00', text: 'Opening concert (Arts Center)' },
         { time: 'After', text: 'Bomnae Complex → Eston Hotel → The Venezia Suite' },
       ];
@@ -57,13 +57,15 @@ export default function ShutttlePage({ params: { locale } }: { params: { locale:
   const notes = isKo
     ? [
         '왕복권만 판매합니다 (편도 없음) · 예약 시 귀가편 ①/② 중 하나를 선택합니다 · 귀가편별 40석 선착순',
-        '요금은 1인 왕복 ₩60,000 — 샌드위치·점심 도시락 포함 · 도시락은 예약 시 일반 / 샐러드 중 선택',
+        '출발 시 샌드위치, 도착 후 점심 도시락을 무료로 드립니다 — 도시락은 예약 시 일반 / 샐러드 중 선택',
+        '문화예술회관과 봄내체육관 바로 인근에는 식당이 거의 없습니다 — 점심은 도시락으로 준비해 드립니다',
         '환불 불가 · 양도는 9월 30일까지(양도인·양수인을 info@kcctf.org 에 고지) · 신청 후 3일 내 미입금 시 좌석 자동 해제',
         '모든 시각은 한국시간(KST)이며 교통 상황에 따라 변동될 수 있습니다. 확정 시 개별 안내드립니다.',
       ]
     : [
         'Round trip only · choose Return ① or ② when booking · 40 seats per return, first come first served',
-        'Fare ₩60,000 per person round trip — sandwich and lunch box included · choose a regular or salad lunch box when booking',
+        'A sandwich at departure and a lunch box on arrival are complimentary — choose regular or salad when booking',
+        'There are almost no restaurants right next to the Arts Center or Bomnae Complex — lunch is covered by the lunch box',
         'Non-refundable · transfers until Sept 30 (notify info@kcctf.org of both parties) · seats are released if unpaid 3 days after booking',
         'All times are Korea Standard Time (KST) and may shift with traffic; we will notify you individually once confirmed.',
       ];
@@ -92,7 +94,7 @@ export default function ShutttlePage({ params: { locale } }: { params: { locale:
             <p className="mt-1 font-kr-sans text-[14px] text-ink-soft">
               {isKo ? '왕복' : 'Round trip'}{' '}
               <b className="font-en-display text-[22px] italic text-burgundy">{SHUTTLE.fare != null ? formatKRW(SHUTTLE.fare) : '—'}</b>
-              <span className="ml-2 text-[12px] text-charcoal/60">{isKo ? '1인 · 도시락 포함' : 'per person · meals included'}</span>
+              <span className="ml-2 text-[12px] text-charcoal/60">{isKo ? '1인 · 샌드위치·도시락 무료 제공' : 'per person · sandwich & lunch box complimentary'}</span>
             </p>
           </div>
 

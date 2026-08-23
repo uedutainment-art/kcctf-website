@@ -145,9 +145,8 @@ export function LoopDayTable({
   const firstV = toVenue[0], lastV = toVenue[toVenue.length - 1];
   const firstH = toHotels[0], lastH = toHotels[toHotels.length - 1];
 
-  const Cell = ({ deps, first, last }: { deps: string[]; first: string; last: string }) => {
+  const Cell = ({ deps, first, last, late = false }: { deps: string[]; first: string; last: string; late?: boolean }) => {
     if (deps.length === 0) return <td className="py-2 text-center text-charcoal/25">—</td>;
-    const late = deps.length > 1; // 같은 시간대에 두 편 = 30분 간격
     return (
       <td className={['py-1.5 text-center', late ? 'bg-mustard/30 font-bold text-burgundy' : ''].join(' ')}>
         {deps.map((dep) => {
@@ -171,6 +170,17 @@ export function LoopDayTable({
 
   let dividerShown = false;
   let lateBadgeShown = false;
+  // 같은 시간대 안에서도 실제 출발 시각 순(:00 → :30)으로 줄을 나눔 — 00:00(행사장→호텔)이 00:30(호텔→행사장)보다 위에 오도록
+  const subSlots = (v: string[], h: string[]) => {
+    const m = new Map<number, { v: string[]; h: string[] }>();
+    const add = (dir: 'v' | 'h', dep: string) => {
+      const k = mins(dep) % 60 < 30 ? 0 : 30;
+      const cur = m.get(k) ?? { v: [], h: [] };
+      cur[dir].push(dep); m.set(k, cur);
+    };
+    v.forEach((d) => add('v', d)); h.forEach((d) => add('h', d));
+    return Array.from(m.entries()).sort((x, y) => x[0] - y[0]).map(([, val]) => val);
+  };
   return (
     <div className="overflow-x-auto">
       <table className="w-full border-collapse font-en-body text-[13px] tabular-nums">
@@ -209,18 +219,23 @@ export function LoopDayTable({
             const isLateRow = h.length > 1 || v.length > 1;
             const showBadge = isLateRow && !lateBadgeShown;
             if (showBadge) lateBadgeShown = true;
-            rows.push(
-              <tr key={k} className="border-b border-ink-soft/8 text-ink-soft">
-                <td className="py-2 whitespace-nowrap font-kr-sans text-[12px] font-bold text-charcoal/70">
-                  {String(hour).padStart(2, '0')}{labels.hourSuffix}
-                  {showBadge && (
-                    <span className="ml-1.5 rounded-full bg-burgundy px-1.5 py-[1px] font-kr-sans text-[9px] font-bold text-warm-white">{labels.late}</span>
+            const subs = subSlots(v, h);
+            subs.forEach((sub, si) => {
+              rows.push(
+                <tr key={`${k}-${si}`} className={['text-ink-soft', si === subs.length - 1 ? 'border-b border-ink-soft/15' : 'border-b border-ink-soft/5'].join(' ')}>
+                  {si === 0 && (
+                    <td rowSpan={subs.length} className="py-2 align-top whitespace-nowrap font-kr-sans text-[12px] font-bold text-charcoal/70">
+                      {String(hour).padStart(2, '0')}{labels.hourSuffix}
+                      {showBadge && (
+                        <span className="ml-1.5 rounded-full bg-burgundy px-1.5 py-[1px] font-kr-sans text-[9px] font-bold text-warm-white">{labels.late}</span>
+                      )}
+                    </td>
                   )}
-                </td>
-                <Cell deps={v} first={firstV} last={lastV} />
-                <Cell deps={h} first={firstH} last={lastH} />
-              </tr>,
-            );
+                  <Cell deps={sub.v} first={firstV} last={lastV} late={isLateRow} />
+                  <Cell deps={sub.h} first={firstH} last={lastH} late={isLateRow} />
+                </tr>,
+              );
+            });
             return rows;
           })}
         </tbody>
