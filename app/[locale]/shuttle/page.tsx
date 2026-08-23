@@ -57,13 +57,13 @@ export default function ShutttlePage({ params: { locale } }: { params: { locale:
   const notes = isKo
     ? [
         '왕복권만 판매합니다 (편도 없음) · 예약 시 귀가편 ①/② 중 하나를 선택합니다 · 귀가편별 40석 선착순',
-        '요금은 1인 왕복 ₩60,000 — 샌드위치·점심 도시락 포함',
+        '요금은 1인 왕복 ₩60,000 — 샌드위치·점심 도시락 포함 · 도시락은 예약 시 일반 / 샐러드 중 선택',
         '환불 불가 · 양도는 9월 30일까지(양도인·양수인을 info@kcctf.org 에 고지) · 신청 후 3일 내 미입금 시 좌석 자동 해제',
         '모든 시각은 한국시간(KST)이며 교통 상황에 따라 변동될 수 있습니다. 확정 시 개별 안내드립니다.',
       ]
     : [
         'Round trip only · choose Return ① or ② when booking · 40 seats per return, first come first served',
-        'Fare ₩60,000 per person round trip — sandwich and lunch box included',
+        'Fare ₩60,000 per person round trip — sandwich and lunch box included · choose a regular or salad lunch box when booking',
         'Non-refundable · transfers until Sept 30 (notify info@kcctf.org of both parties) · seats are released if unpaid 3 days after booking',
         'All times are Korea Standard Time (KST) and may shift with traffic; we will notify you individually once confirmed.',
       ];

@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { Link } from '@/i18n/navigation';
 import { LOOP_SHUTTLE } from '@/data/festival';
-import { LOOP_DAYS, LoopTable, dayLabel, nextDayLabel } from '@/components/LoopTimetable';
+import { LOOP_DAYS, LoopDayTable, dayLabel, nextDayLabel } from '@/components/LoopTimetable';
 
 // 춘천 무료 순환 셔틀 — 정류장별 전체 시간표 (모든 시각 한국시간). 데이터: festival.ts LOOP_SHUTTLE
 // 왼쪽 = 호텔 → 행사장 (오후에 먼저 타는 방향), 오른쪽 = 행사장 → 호텔 (밤·새벽)
@@ -12,12 +12,9 @@ export function generateMetadata({ params: { locale } }: { params: { locale: str
 
 export default function ChuncheonShuttlePage({ params: { locale } }: { params: { locale: string } }) {
   const isKo = locale === 'ko';
-  const cols = isKo
-    ? { toVenue: ['더베네치아 출발', '에스턴', '봄내 도착'], toHotels: ['봄내 출발', '에스턴', '더베네치아 도착'] }
-    : { toVenue: ['Dep. Venezia', 'Eston', 'Arr. Bomnae'], toHotels: ['Dep. Bomnae', 'Eston', 'Arr. Venezia'] };
   const legend = isKo
-    ? ['🟨 머스터드 행 = 심야 30분 간격 구간', '🌙 구분선 = 자정을 넘긴 새벽 시각', '첫차·막차 표시 · 셔틀은 표기된 시각보다 먼저 출발하지 않습니다']
-    : ['🟨 Mustard rows = late-night 30-minute interval', '🌙 Divider = times after midnight (next day)', 'First/last runs marked · the shuttle never departs before the listed time'];
+    ? ['한 줄 = 한 시간대 · 왼쪽 호텔 → 행사장, 오른쪽 행사장 → 호텔 (출발 · 에스턴 · 도착 순)', '🟨 머스터드 칸 = 심야 30분 간격(한 시간대에 두 편)', '🌙 구분선 = 자정을 넘긴 새벽 · 셔틀은 표기된 시각보다 먼저 출발하지 않습니다']
+    : ['One row = one hour · left Hotels → Venue, right Venue → Hotels (departure · Eston · arrival)', '🟨 Mustard cell = late-night 30-minute interval (two runs in one hour)', '🌙 Divider = after midnight · the shuttle never departs before the listed time'];
 
   return (
     <div className="bg-cream px-5 pt-[104px] md:pt-[128px] pb-24">
@@ -56,10 +53,16 @@ export default function ChuncheonShuttlePage({ params: { locale } }: { params: {
         <div className="mt-8 space-y-8">
           {LOOP_DAYS.map((d) => {
             const labels = {
+              hourCol: isKo ? '시각' : 'Hour',
+              toVenue: isKo ? '호텔 → 행사장' : 'Hotels → Venue',
+              toHotels: isKo ? '행사장 → 호텔' : 'Venue → Hotels',
+              toVenueStops: isKo ? '더베네치아 출발 · 에스턴 · 봄내 도착' : 'dep. Venezia · Eston · arr. Bomnae',
+              toHotelsStops: isKo ? '봄내 출발 · 에스턴 · 더베네치아 도착' : 'dep. Bomnae · Eston · arr. Venezia',
               first: isKo ? '첫차' : 'first',
               last: isKo ? '막차' : 'last',
               afterMidnight: isKo ? `${nextDayLabel(d, isKo)} 새벽` : `${nextDayLabel(d, isKo)} early hours`,
               late: isKo ? '30분 간격' : 'every 30 min',
+              hourSuffix: isKo ? '시' : ':00',
             };
             return (
               <section key={d} className="overflow-hidden rounded-lg border border-ink-soft/15 bg-warm-white shadow-card">
@@ -69,9 +72,8 @@ export default function ChuncheonShuttlePage({ params: { locale } }: { params: {
                     {isKo ? `막차 ${LOOP_SHUTTLE.toHotels[d].slice(-1)[0]} 봄내 출발` : `last run ${LOOP_SHUTTLE.toHotels[d].slice(-1)[0]} from Bomnae`}
                   </span>
                 </div>
-                <div className="grid grid-cols-1 gap-6 px-5 py-5 sm:grid-cols-2">
-                  <LoopTable title={isKo ? '호텔 → 행사장' : 'Hotels → Venue'} cols={cols.toVenue} deps={LOOP_SHUTTLE.toVenue[d]} labels={labels} />
-                  <LoopTable title={isKo ? '행사장 → 호텔' : 'Venue → Hotels'} cols={cols.toHotels} deps={LOOP_SHUTTLE.toHotels[d]} labels={labels} />
+                <div className="px-5 py-4">
+                  <LoopDayTable toVenue={LOOP_SHUTTLE.toVenue[d]} toHotels={LOOP_SHUTTLE.toHotels[d]} labels={labels} />
                 </div>
               </section>
             );
