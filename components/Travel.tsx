@@ -283,11 +283,11 @@ export default function Travel() {
                     <tr key={d} className="border-b border-ink-soft/8">
                       <td className="py-2 font-kr-sans text-[13px] font-bold text-ink-soft">{day(d)}</td>
                       <td className="py-2 text-ink-soft">
-                        {th[0]} – <b className="text-burgundy">{th[th.length - 1]}</b>
+                        {tv[0]} – <b className="text-burgundy">{tv[tv.length - 1]}</b>
                         <span className="ml-1 font-kr-sans text-[10.5px] text-charcoal/50">{loop.last}</span>
                       </td>
                       <td className="py-2 text-ink-soft">
-                        {tv[0]} – <b className="text-burgundy">{tv[tv.length - 1]}</b>
+                        {th[0]} – <b className="text-burgundy">{th[th.length - 1]}</b>
                         <span className="ml-1 font-kr-sans text-[10.5px] text-charcoal/50">{loop.last}</span>
                       </td>
                     </tr>
@@ -300,7 +300,7 @@ export default function Travel() {
           <div className="flex flex-wrap items-center justify-between gap-3 border-t border-ink-soft/10 bg-cream/50 px-5 py-3.5">
             <p className="font-kr-sans text-[11.5px] text-charcoal/55">{loop.footnote}</p>
             <Link
-              href="/shuttle"
+              href="/shuttle/chuncheon"
               className="border-b-2 border-burgundy/50 pb-[1px] font-en-body text-[11px] font-bold uppercase tracking-[0.16em] text-burgundy transition-colors hover:border-burgundy"
             >
               {loop.fullTimetable} →

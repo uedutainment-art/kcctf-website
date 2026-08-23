@@ -132,6 +132,19 @@ function kstMs(iso: string): number {
   return new Date(`${iso}:00+09:00`).getTime();
 }
 
+// ── 로컬 미리보기 전용 (next dev 에서만) ────────────────────────────────────
+// .env.local 에 NEXT_PUBLIC_PREVIEW_KST=2026-08-24T09:30 처럼 적으면 그 시각(KST)의 화면을 보여줌.
+// NEXT_PUBLIC_PREVIEW_SHUTTLE_LIVE=true / NEXT_PUBLIC_PREVIEW_TICKETS_LIVE=true 는 스위치 강제 ON.
+// production 빌드(Firebase 배포)에서는 NODE_ENV 가드로 전부 무시됨 → 라이브엔 영향 없음.
+const IS_PREVIEW = process.env.NODE_ENV !== 'production';
+function nowMs(): number {
+  const p = process.env.NEXT_PUBLIC_PREVIEW_KST;
+  return IS_PREVIEW && p ? kstMs(p) : Date.now();
+}
+function previewFlag(name: 'NEXT_PUBLIC_PREVIEW_SHUTTLE_LIVE' | 'NEXT_PUBLIC_PREVIEW_TICKETS_LIVE'): boolean {
+  return IS_PREVIEW && process.env[name] === 'true';
+}
+
 // 2026-08-23 흰곰 확정 가격 체계 (운영/지시문_EventLink_얼리버드재개_호텔마감_2026-08-23.md)
 //   ~8/31  풀패스 얼리버드 ₩190,000 (재개)      · 숙박 접수는 8/24 23:59 까지
 //   9/1~10/2  풀패스 ₩240,000 · 1일권 ₩100,000 · 2일권 ₩200,000 온라인 (대표 8/18 원결정 — 온라인 1일권은 전날까지 10만원)
@@ -151,7 +164,7 @@ export const SALE_WINDOWS: Record<'shuttle' | 'dayPass' | 'earlyBird2' | 'fullPa
 
 /** 온라인 참가 신청 단계 — 경계에 빈틈이 없도록 '시작 시각' 순서로만 판정 */
 export type TicketPhase = 'pre' | 'earlyBird2' | 'regular' | 'closed';
-export function ticketPhase(now: number = Date.now()): TicketPhase {
+export function ticketPhase(now: number = nowMs()): TicketPhase {
   if (now > kstMs(SALE_WINDOWS.fullPassOnline.closeKST as string)) return 'closed';
   if (now >= kstMs(SALE_WINDOWS.fullPassOnline.openKST)) return 'regular';
   if (now >= kstMs(SALE_WINDOWS.earlyBird2.openKST)) return 'earlyBird2';
@@ -162,23 +175,23 @@ export function ticketPhase(now: number = Date.now()): TicketPhase {
  *  false 인 동안은 가격·기간만 안내하고 버튼 대신 "접수 준비 중" 표시 (마감된 폼으로 보내는 사고 방지) */
 export const TICKET_SALES = { live: true };  // 2026-08-23 19:40 KST 플랫폼 얼리버드 재개 배포(3fd87b0) 확인 후 ON
 
-export function isOnlineRegistrationOpen(now: number = Date.now()): boolean {
+export function isOnlineRegistrationOpen(now: number = nowMs()): boolean {
   const p = ticketPhase(now);
-  return p !== 'pre' && p !== 'closed' && TICKET_SALES.live;
+  return p !== 'pre' && p !== 'closed' && (TICKET_SALES.live || previewFlag('NEXT_PUBLIC_PREVIEW_TICKETS_LIVE'));
 }
 
-export function isHotelOpen(now: number = Date.now()): boolean {
+export function isHotelOpen(now: number = nowMs()): boolean {
   return isSaleOpen(SALE_WINDOWS.hotel, now);
 }
 
-export function isSaleOpen(w: SaleWindow, now: number = Date.now()): boolean {
+export function isSaleOpen(w: SaleWindow, now: number = nowMs()): boolean {
   if (now < kstMs(w.openKST)) return false;
   if (w.closeKST && now > kstMs(w.closeKST)) return false;
   return true;
 }
 
 /** 판매창 오픈 전(true) / 오픈 후·마감 후(false) — 티저 vs 마감 안내 분기용 */
-export function isBeforeSaleOpen(w: SaleWindow, now: number = Date.now()): boolean {
+export function isBeforeSaleOpen(w: SaleWindow, now: number = nowMs()): boolean {
   return now < kstMs(w.openKST);
 }
 
@@ -195,12 +208,12 @@ export const SHUTTLE: { fare: number | null; seats: number | null; mealIncluded:
 };
 
 /** 예약 버튼 노출 조건: 판매창 열림(KST 8/24) + 요금 + 좌석 수 + 플랫폼 창구 배포 확인 */
-export function isShuttleBookable(now: number = Date.now()): boolean {
+export function isShuttleBookable(now: number = nowMs()): boolean {
   return (
     isSaleOpen(SALE_WINDOWS.shuttle, now) &&
     SHUTTLE.fare != null &&
     SHUTTLE.seats != null &&
-    SHUTTLE.bookingLive
+    (SHUTTLE.bookingLive || previewFlag('NEXT_PUBLIC_PREVIEW_SHUTTLE_LIVE'))
   );
 }
 

@@ -562,8 +562,8 @@
       ],
       "summaryCols": [
         "Day",
-        "Venue → Hotels",
-        "Hotels → Venue"
+        "Hotels → Venue",
+        "Venue → Hotels"
       ],
       "first": "First",
       "last": "Last",

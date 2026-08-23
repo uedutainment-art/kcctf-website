@@ -1,15 +1,14 @@
 import type { Metadata } from 'next';
 import { Link } from '@/i18n/navigation';
-import { SHUTTLE, LOOP_SHUTTLE, SALE_WINDOWS, isSaleOpen, isShuttleBookable, formatKRW } from '@/data/festival';
-import { LOOP_DAYS, LoopTable, dayLabel } from '@/components/LoopTimetable';
+import { SHUTTLE, SALE_WINDOWS, isSaleOpen, isShuttleBookable, formatKRW } from '@/data/festival';
 
-// 셔틀 안내 전용 페이지 — 서울 셔틀 일정 + 춘천 무료 순환 시간표 (모든 시각 한국시간)
+// 서울 셔틀 안내 페이지 (모든 시각 한국시간) — 춘천 순환 시간표는 /shuttle/chuncheon
 // 출처: 운영/스탭공지_정리_2026-08-23.md · 순환 시간표 = festival.ts LOOP_SHUTTLE
 
 const BOOK_SHUTTLE_URL = 'https://kcctf-5047d.web.app/register/chuncheon-citf-2026?mode=shuttle';
 
 export function generateMetadata({ params: { locale } }: { params: { locale: string } }): Metadata {
-  return { title: locale === 'ko' ? '셔틀버스 안내 — KCCTF' : 'Shuttle Buses — KCCTF' };
+  return { title: locale === 'ko' ? '서울 셔틀 안내 — KCCTF' : 'Seoul Shuttle — KCCTF' };
 }
 
 type Step = { time: string; text: string };
@@ -69,19 +68,15 @@ export default function ShutttlePage({ params: { locale } }: { params: { locale:
         'All times are Korea Standard Time (KST) and may shift with traffic; we will notify you individually once confirmed.',
       ];
 
-  const loopCols = isKo
-    ? { toHotels: ['봄내 출발', '에스턴', '더베네치아 도착'], toVenue: ['더베네치아 출발', '에스턴', '봄내 도착'] }
-    : { toHotels: ['Dep. Bomnae', 'Eston', 'Arr. Venezia'], toVenue: ['Dep. Venezia', 'Eston', 'Arr. Bomnae'] };
-
   return (
-    <div className="px-5 pt-[104px] md:pt-[128px] pb-24">
+    <div className="bg-cream px-5 pt-[104px] md:pt-[128px] pb-24">
       <div className="mx-auto max-w-3xl">
         <Link href="/#travel" className="inline-block font-en-body text-[11px] uppercase tracking-[0.22em] text-burgundy hover:underline">
           ← {isKo ? '홈으로' : 'Home'}
         </Link>
-        <p className="mt-5 font-en-body font-bold text-[11px] tracking-[0.4em] uppercase text-burgundy">Shuttle Buses</p>
+        <p className="mt-5 font-en-body font-bold text-[11px] tracking-[0.4em] uppercase text-burgundy">Seoul ↔ Chuncheon Shuttle</p>
         <h1 className="mt-2 font-kr-serif font-black text-ink-soft leading-[1.05] tracking-[-0.03em]" style={{ fontSize: 'clamp(28px, 4vw, 44px)' }}>
-          {isKo ? '셔틀버스 안내' : 'Shuttle Buses'}
+          {isKo ? '서울 셔틀 안내' : 'Seoul Shuttle'}
         </h1>
         <p className="mt-2 font-kr-sans text-[14px] text-charcoal/70">
           {isKo ? '모든 시각은 한국시간(KST) 기준입니다.' : 'All times are Korea Standard Time (KST).'}
@@ -156,36 +151,22 @@ export default function ShutttlePage({ params: { locale } }: { params: { locale:
           </div>
         </section>
 
-        {/* ── B. 춘천 순환 셔틀 시간표 ──────────────────────────── */}
-        <section className="mt-10 overflow-hidden rounded-lg border border-ink-soft/15 bg-warm-white shadow-card">
-          <div className="bg-cream border-l-4 border-burgundy px-5 py-4">
-            <p className="font-en-body text-[10px] font-bold uppercase tracking-[0.3em] text-gold">In Chuncheon · Free</p>
-            <h2 className="mt-1 font-kr-serif text-[22px] font-black text-ink-soft">
+        {/* ── 춘천 순환 셔틀은 별도 페이지 ───────────────────────── */}
+        <Link
+          href="/shuttle/chuncheon"
+          className="mt-8 flex items-center justify-between gap-4 rounded-lg border border-ink-soft/15 bg-warm-white px-5 py-4 shadow-card transition-transform hover:-translate-y-[2px]"
+        >
+          <span>
+            <span className="block font-en-body text-[10px] font-bold uppercase tracking-[0.3em] text-gold">In Chuncheon · Free</span>
+            <span className="mt-1 block font-kr-serif text-[18px] font-black text-ink-soft">
               {isKo ? '춘천 순환 셔틀 시간표' : 'Chuncheon Loop Shuttle Timetable'}
-            </h2>
-            <p className="mt-1 font-kr-sans text-[13px] text-charcoal/70">
-              {isKo
-                ? `봄내체육관 → 에스턴호텔 +10분 → 더베네치아스위트 +20분 · 반대 방향 동일 · ${LOOP_SHUTTLE.capacity}인승 1대 · 무료 · 예약 없이 선착순 · 표기 시각보다 먼저 출발하지 않습니다`
-                : `Bomnae → Eston +10 min → The Venezia +20 min · same in reverse · one ${LOOP_SHUTTLE.capacity}-seat bus · free · no booking · never departs before the listed time`}
-            </p>
-          </div>
-          <div className="space-y-8 px-5 py-6">
-            {LOOP_DAYS.map((d) => (
-              <div key={d}>
-                <p className="mb-3 font-kr-serif text-[17px] font-black text-ink-soft">{dayLabel(d, isKo)}</p>
-                <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
-                  <LoopTable title={isKo ? '행사장 → 호텔' : 'Venue → Hotels'} cols={loopCols.toHotels} deps={LOOP_SHUTTLE.toHotels[d]} lastLabel={isKo ? '막차' : 'Last'} />
-                  <LoopTable title={isKo ? '호텔 → 행사장' : 'Hotels → Venue'} cols={loopCols.toVenue} deps={LOOP_SHUTTLE.toVenue[d]} lastLabel={isKo ? '막차' : 'Last'} />
-                </div>
-              </div>
-            ))}
-            <p className="border-t border-ink-soft/10 pt-4 font-kr-sans text-[12px] text-charcoal/55">
-              {isKo
-                ? '길이 막히면 몇 분 늦을 수 있습니다 · 탑승 전 정류장과 방향을 확인해 주세요 · 10/3(토) 콘서트 후 문화예술회관 → 봄내체육관 이동은 서울 셔틀로 함께 합니다'
-                : 'Traffic may add a few minutes · check the stop and direction before boarding · on Sat Oct 3 the Seoul shuttles carry everyone from the Arts Center to Bomnae Complex after the concert'}
-            </p>
-          </div>
-        </section>
+            </span>
+            <span className="mt-0.5 block font-kr-sans text-[12.5px] text-charcoal/65">
+              {isKo ? '봄내체육관 ↔ 에스턴 ↔ 더베네치아 · 무료 · 예약 없이 선착순' : 'Bomnae ↔ Eston ↔ The Venezia · free · no booking'}
+            </span>
+          </span>
+          <span className="shrink-0 font-en-body text-[11px] font-bold uppercase tracking-[0.16em] text-burgundy">{isKo ? '시간표' : 'Timetable'} →</span>
+        </Link>
       </div>
     </div>
   );
