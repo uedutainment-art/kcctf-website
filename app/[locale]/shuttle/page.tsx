@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import { Link } from '@/i18n/navigation';
 import { SHUTTLE, SALE_WINDOWS, isSaleOpen, isShuttleBookable, formatKRW } from '@/data/festival';
 
-// 서울 셔틀 안내 페이지 (모든 시각 한국시간) — 춘천 순환 시간표는 /shuttle/chuncheon
+// 서울 셔틀 안내 페이지 — 서울 셔틀 내용 + 신청 버튼만 (춘천 순환 시간표는 /shuttle/chuncheon, Travel 섹션에서 별도 링크)
 // 출처: 운영/스탭공지_정리_2026-08-23.md · 순환 시간표 = festival.ts LOOP_SHUTTLE
 
 const BOOK_SHUTTLE_URL = 'https://kcctf-5047d.web.app/register/chuncheon-citf-2026?mode=shuttle';
@@ -151,22 +151,6 @@ export default function ShutttlePage({ params: { locale } }: { params: { locale:
           </div>
         </section>
 
-        {/* ── 춘천 순환 셔틀은 별도 페이지 ───────────────────────── */}
-        <Link
-          href="/shuttle/chuncheon"
-          className="mt-8 flex items-center justify-between gap-4 rounded-lg border border-ink-soft/15 bg-warm-white px-5 py-4 shadow-card transition-transform hover:-translate-y-[2px]"
-        >
-          <span>
-            <span className="block font-en-body text-[10px] font-bold uppercase tracking-[0.3em] text-gold">In Chuncheon · Free</span>
-            <span className="mt-1 block font-kr-serif text-[18px] font-black text-ink-soft">
-              {isKo ? '춘천 순환 셔틀 시간표' : 'Chuncheon Loop Shuttle Timetable'}
-            </span>
-            <span className="mt-0.5 block font-kr-sans text-[12.5px] text-charcoal/65">
-              {isKo ? '봄내체육관 ↔ 에스턴 ↔ 더베네치아 · 무료 · 예약 없이 선착순' : 'Bomnae ↔ Eston ↔ The Venezia · free · no booking'}
-            </span>
-          </span>
-          <span className="shrink-0 font-en-body text-[11px] font-bold uppercase tracking-[0.16em] text-burgundy">{isKo ? '시간표' : 'Timetable'} →</span>
-        </Link>
       </div>
     </div>
   );
