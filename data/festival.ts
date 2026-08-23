@@ -204,7 +204,7 @@ export const SHUTTLE: { fare: number | null; seats: number | null; mealIncluded:
   mealIncluded: true,
   /** ⚠️ 플랫폼 ?mode=shuttle 창구가 실제 배포된 것을 확인한 뒤 true 로.
    *  false 인 동안은 8/24가 지나도 버튼을 숨김 — 미배포 상태에서 일반 신청 폼으로 보내는 사고 방지 */
-  bookingLive: false,
+  bookingLive: true,   // 2026-08-23 23:05 KST 플랫폼 ?mode=shuttle 프로덕션 배포(리비전 00895) 확인 후 ON
 };
 
 /** 예약 버튼 노출 조건: 판매창 열림(KST 8/24) + 요금 + 좌석 수 + 플랫폼 창구 배포 확인 */
