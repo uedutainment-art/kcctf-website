@@ -13,8 +13,12 @@ const HOTELS: {
   addressEn: string;
   tel: string;
   mapQuery: string;
-  /** 전경 사진 — 없으면 텍스트 카드 */
-  image: string | null;
+  /** 전경 사진 — 원본 비율 그대로 표시(왜곡·크롭 없음) */
+  image: string;
+  /** 원본 가로/세로 (CSS aspect-ratio) */
+  aspect: string;
+  /** sm 이상에서 사진 패널 폭 — 가로 사진은 넓게, 세로 사진은 좁게 */
+  panelClass: string;
   noteKo: string;
   noteEn: string;
 }[] = [
@@ -27,6 +31,8 @@ const HOTELS: {
     tel: '033-255-9600',
     mapQuery: '더베네치아스위트',
     image: '/images/hotel/exterior.jpg',
+    aspect: '1685 / 881',
+    panelClass: 'sm:w-[58%]',
     noteKo: '무료 순환 셔틀 정차 · 봄내체육관까지 20분',
     noteEn: 'Free loop shuttle stop · 20 min to Bomnae Complex',
   },
@@ -38,7 +44,9 @@ const HOTELS: {
     addressEn: '193 Jungang-ro, Chuncheon',
     tel: '033-244-0002',
     mapQuery: '춘천 에스턴호텔',
-    image: null,
+    image: '/images/hotel/eston/exterior.jpg',
+    aspect: '933 / 1400',
+    panelClass: 'sm:w-[34%]',
     noteKo: '무료 순환 셔틀 정차 · 봄내체육관까지 10분',
     noteEn: 'Free loop shuttle stop · 10 min to Bomnae Complex',
   },
@@ -70,26 +78,20 @@ export default function Accommodation() {
           </p>
         </div>
 
-        {/* 호텔 안내 카드 2장 — 전경 · 주소 · 전화 · 길안내 */}
-        <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+        {/* 호텔 안내 카드 2장 — 사진은 원본 비율 그대로(왜곡·크롭 없음), sm 이상 가로형 배치 */}
+        <div className="flex flex-col gap-6">
           {HOTELS.map((h) => (
-            <div key={h.id} className="overflow-hidden rounded-lg border border-ink-soft/12 bg-warm-white shadow-card">
-              {h.image ? (
-                <div className="relative aspect-[16/9]">
-                  <Image
-                    src={h.image}
-                    alt={isKo ? `${h.nameKo} 전경` : `${h.nameEn} exterior`}
-                    fill
-                    sizes="(max-width: 768px) 100vw, 50vw"
-                    className="object-cover"
-                  />
-                </div>
-              ) : (
-                <div className="flex aspect-[16/9] items-center justify-center bg-cream">
-                  <span className="font-en-display text-[44px] font-black italic text-gold-soft" aria-hidden>★</span>
-                </div>
-              )}
-              <div className="p-6">
+            <div key={h.id} className="overflow-hidden rounded-lg border border-ink-soft/12 bg-warm-white shadow-card sm:flex sm:items-stretch">
+              <div className={['relative shrink-0 bg-night/90', h.panelClass].join(' ')} style={{ aspectRatio: h.aspect }}>
+                <Image
+                  src={h.image}
+                  alt={isKo ? `${h.nameKo} 전경` : `${h.nameEn} exterior`}
+                  fill
+                  sizes="(max-width: 640px) 100vw, 60vw"
+                  className="object-cover"
+                />
+              </div>
+              <div className="flex-1 self-center p-6 sm:p-7">
                 <p className="font-en-display italic text-[24px] leading-tight text-gold">{h.nameKo}</p>
                 <p className="mt-0.5 font-en-body text-[11px] uppercase tracking-[0.14em] text-charcoal/50">{h.nameEn}</p>
                 <p className="mt-4 font-kr-sans text-[13.5px] text-ink-soft">📍 {isKo ? h.addressKo : h.addressEn}</p>
