@@ -1,7 +1,8 @@
 'use client';
 
 import { useState } from 'react';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
+import { Link } from '@/i18n/navigation';
 import { SCHEDULE_ITEMS, DJS, ORCHESTRA_SHORT, type ScheduleDay } from '@/data/festival';
 
 const DAYS: { day: ScheduleDay; tabKey: string }[] = [
@@ -19,6 +20,7 @@ const TYPE_ICON: Record<string, string> = {
 
 export default function Schedule() {
   const t = useTranslations('schedule');
+  const isKo = useLocale() === 'ko';
   const [activeDay, setActiveDay] = useState<ScheduleDay>('10/3');
 
   const dayItems = SCHEDULE_ITEMS.filter((item) => item.day === activeDay);
@@ -127,6 +129,16 @@ export default function Schedule() {
                   {rawItem.mood && (
                     <p className="font-kr-sans text-[13px] text-charcoal/50 mt-1 italic">
                       {rawItem.mood}
+                    </p>
+                  )}
+                  {item.type === 'concert' && (
+                    <p className="mt-2">
+                      <Link
+                        href="/program-note"
+                        className="border-b-2 border-burgundy/50 pb-[1px] font-en-body text-[11px] font-bold uppercase tracking-[0.16em] text-burgundy transition-colors hover:border-burgundy"
+                      >
+                        {isKo ? '공연 프로그램 노트' : 'Program Note'} →
+                      </Link>
                     </p>
                   )}
                 </div>
