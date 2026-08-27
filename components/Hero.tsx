@@ -1,16 +1,18 @@
 import { useTranslations } from 'next-intl';
-import { isOnlineRegistrationOpen, isHotelOpen } from '@/data/festival';
+import { isOnlineRegistrationOpen, isHotelOpen, isShuttleBookable } from '@/data/festival';
 import MotionReveal from './MotionReveal';
 
 // 등록 플랫폼(별도 서비스) 직접 링크 — ⚠️ 비공개 초대(invite) 링크는 절대 여기에 넣지 말 것
 const REGISTER_URL = 'https://kcctf-5047d.web.app/register/chuncheon-citf-2026';
 const REGISTER_HOTEL_URL = 'https://kcctf-5047d.web.app/register/chuncheon-citf-2026?mode=hotel';
+const BOOK_SHUTTLE_URL = 'https://kcctf-5047d.web.app/register/chuncheon-citf-2026?mode=shuttle';
 
 export default function Hero() {
   const t = useTranslations('hero');
   // CTA — 참가 신청(온라인 판매 단계 + 플랫폼 재개 확인) · 숙박만 예약(8/24 23:59 KST까지)
   const onlineOpen = isOnlineRegistrationOpen();
   const hotelOpen = isHotelOpen();
+  const shuttleOpen = isShuttleBookable();  // 8/24 09:00 KST ~ 매진·마감 시 플랫폼과 함께 자동 숨김
 
   return (
     <section id="hero" className="diamond-bg relative pt-[72px] pb-0 overflow-hidden">
@@ -78,6 +80,7 @@ export default function Hero() {
           {/* 참가 신청 CTA (등록 플랫폼 직접 링크 · 새 탭) */}
           <MotionReveal className="mt-7 flex flex-wrap items-center justify-center gap-3" delay={380}>
             {onlineOpen && <RegisterCta href={REGISTER_URL} label={t('registerCta')} primary />}
+            {shuttleOpen && <RegisterCta href={BOOK_SHUTTLE_URL} label={t('shuttleCta')} />}
             {hotelOpen && <RegisterCta href={REGISTER_HOTEL_URL} label={t('registerHotelCta')} primary={!onlineOpen} />}
           </MotionReveal>
         </div>
@@ -139,6 +142,7 @@ export default function Hero() {
         {/* 참가 신청 CTA (등록 플랫폼 직접 링크 · 새 탭) */}
         <MotionReveal className="mt-6 mx-auto flex max-w-[320px] flex-col items-stretch gap-2.5" delay={420}>
           {onlineOpen && <RegisterCta href={REGISTER_URL} label={t('registerCta')} primary mobile />}
+          {shuttleOpen && <RegisterCta href={BOOK_SHUTTLE_URL} label={t('shuttleCta')} mobile />}
           {hotelOpen && <RegisterCta href={REGISTER_HOTEL_URL} label={t('registerHotelCta')} primary={!onlineOpen} mobile />}
         </MotionReveal>
       </div>

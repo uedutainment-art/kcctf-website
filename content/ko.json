@@ -86,7 +86,8 @@
     "cta": "예약하기 →",
     "registerCta": "참가 신청",
     "registerHotelCta": "숙박만 예약 · 8/24까지",
-    "scrollHint": "아래로"
+    "scrollHint": "아래로",
+    "shuttleCta": "🚌 셔틀버스 예약"
   },
   "quickLinks": {
     "orchestras": "오케스트라 소개",

@@ -86,7 +86,8 @@
     "cta": "Register →",
     "registerCta": "Register",
     "registerHotelCta": "Accommodation only · until Aug 24",
-    "scrollHint": "Scroll"
+    "scrollHint": "Scroll",
+    "shuttleCta": "🚌 Shuttle Bus"
   },
   "quickLinks": {
     "orchestras": "Orchestras",
