@@ -152,22 +152,22 @@ function previewFlag(name: 'NEXT_PUBLIC_PREVIEW_SHUTTLE_LIVE' | 'NEXT_PUBLIC_PRE
 export const SALE_WINDOWS: Record<'shuttle' | 'dayPass' | 'earlyBird2' | 'fullPassOnline' | 'hotel', SaleWindow> = {
   /** 셔틀 왕복권 — 8/24(월) 09:00 KST 예약 시작 (마감은 좌석 소진 시 = 플랫폼에서 처리) */
   shuttle: { openKST: '2026-08-24T09:00', closeKST: null },
-  /** 풀패스 얼리버드 재개 ₩190,000 — 8/23 ~ 8/31 23:59 */
-  earlyBird2: { openKST: '2026-08-23T00:00', closeKST: '2026-08-31T23:59' },
-  /** 풀패스 정가 ₩240,000 온라인 — 9/1 ~ 10/2 23:59 */
-  fullPassOnline: { openKST: '2026-09-01T00:00', closeKST: '2026-10-02T23:59' },
-  /** 1일권·2일권 온라인 — 9/1 ~ 10/2 23:59 (가격 변동 없음) */
-  dayPass: { openKST: '2026-09-01T00:00', closeKST: '2026-10-02T23:59' },
+  /** 풀패스 얼리버드 재개 ₩190,000 — 8/23 ~ 9/1 08:00 (8/31 밤 대표 연장, 플랫폼과 동기화) */
+  earlyBird2: { openKST: '2026-08-23T00:00', closeKST: '2026-09-01T08:00' },
+  /** 풀패스 정가 ₩240,000 온라인 — 9/1 09:00 ~ 10/2 23:59 (08~09시는 전환 대기) */
+  fullPassOnline: { openKST: '2026-09-01T09:00', closeKST: '2026-10-02T23:59' },
+  /** 1일권·2일권 온라인 — 9/1 09:00 ~ 10/2 23:59 (가격 변동 없음) */
+  dayPass: { openKST: '2026-09-01T09:00', closeKST: '2026-10-02T23:59' },
   /** 숙박(공식 호텔) 접수 — 8/24 23:59 까지 (8/25 00:00 마감) */
   hotel: { openKST: '2026-01-01T00:00', closeKST: '2026-08-24T23:59' },
 };
 
-/** 온라인 참가 신청 단계 — 경계에 빈틈이 없도록 '시작 시각' 순서로만 판정 */
+/** 온라인 참가 신청 단계. 얼리버드 종료(9/1 08:00)~정가 오픈(09:00) 사이 1시간은 'pre'(준비 중 티저)로 표시 */
 export type TicketPhase = 'pre' | 'earlyBird2' | 'regular' | 'closed';
 export function ticketPhase(now: number = nowMs()): TicketPhase {
   if (now > kstMs(SALE_WINDOWS.fullPassOnline.closeKST as string)) return 'closed';
   if (now >= kstMs(SALE_WINDOWS.fullPassOnline.openKST)) return 'regular';
-  if (now >= kstMs(SALE_WINDOWS.earlyBird2.openKST)) return 'earlyBird2';
+  if (now >= kstMs(SALE_WINDOWS.earlyBird2.openKST) && now <= kstMs(SALE_WINDOWS.earlyBird2.closeKST as string)) return 'earlyBird2';
   return 'pre';
 }
 

@@ -86,7 +86,7 @@ export default function Tickets() {
               {phase === 'earlyBird2' && (
                 <>
                   <p className="font-kr-sans text-[15px] font-bold text-burgundy">
-                    {isKo ? '⏰ 얼리버드 연장 — 8월 31일(월) 23:59까지 (한국시간)' : '⏰ Early bird extended — until Aug 31 (Mon) 23:59 KST'}
+                    {isKo ? '⏰ 얼리버드 진행 중' : '⏰ Early bird — on now'}
                   </p>
                   <p className="mt-3 font-kr-serif text-[23px] font-black leading-tight text-ink-soft sm:text-[28px]">
                     {isKo ? '풀패스 (3일)' : 'Full Pass (3 days)'}
@@ -108,8 +108,8 @@ export default function Tickets() {
                   </p>
                   <p className="mt-3 font-kr-sans text-[14px] leading-[1.6] text-charcoal/70">
                     {isKo
-                      ? '8월 31일(월) 23:59까지 온라인 얼리버드 · 9월 1일(화)부터 풀패스 ₩240,000 · 1일권 ₩100,000 · 2일권 ₩200,000'
-                      : 'Early-bird price online until Aug 31, 23:59 KST · from Sept 1: Full Pass ₩240,000 · 1-Day ₩100,000 · 2-Day ₩200,000'}
+                      ? '온라인 얼리버드 진행 중 · 종료 후에는 풀패스 ₩240,000 · 1일권 ₩100,000 · 2일권 ₩200,000'
+                      : 'Early-bird price online now · afterwards: Full Pass ₩240,000 · 1-Day ₩100,000 · 2-Day ₩200,000'}
                   </p>
                 </>
               )}
