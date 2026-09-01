@@ -680,7 +680,7 @@
     "items": [
       {
         "q": "How do I register?",
-        "a": "Use the [Register] button in the Tickets section above. During the early-bird period the Full Pass is ₩190,000; afterwards Full Pass ₩240,000 · 1-Day ₩100,000 · 2-Day ₩200,000. Online registration stays open until Oct 2 (Fri) 23:59 KST. We confirm your place once payment is received.",
+        "a": "Use the [Register] button in the Tickets section above. The Full Pass is ₩240,000; day passes are early-bird priced until Sept 15 (Tue) midnight KST — 1-Day ₩100,000 · 2-Day ₩200,000 (regular ₩120,000 · ₩240,000), then at regular price. Online registration stays open until Oct 2 (Fri) 23:59 KST. We confirm your place once payment is received.",
         "cta": {
           "label": "Register →",
           "href": "https://kcctf-5047d.web.app/register/chuncheon-citf-2026"

@@ -149,15 +149,17 @@ function previewFlag(name: 'NEXT_PUBLIC_PREVIEW_SHUTTLE_LIVE' | 'NEXT_PUBLIC_PRE
 //   ~8/31  풀패스 얼리버드 ₩190,000 (재개)      · 숙박 접수는 8/24 23:59 까지
 //   9/1~10/2  풀패스 ₩240,000 · 1일권 ₩100,000 · 2일권 ₩200,000 온라인 (대표 8/18 원결정 — 온라인 1일권은 전날까지 10만원)
 //   10/3~  온라인 종료 → 현장 풀패스 ₩240,000 · 1일권 ₩120,000
-export const SALE_WINDOWS: Record<'shuttle' | 'dayPass' | 'earlyBird2' | 'fullPassOnline' | 'hotel', SaleWindow> = {
+export const SALE_WINDOWS: Record<'shuttle' | 'dayPass' | 'dayPassEarly' | 'earlyBird2' | 'fullPassOnline' | 'hotel', SaleWindow> = {
   /** 셔틀 왕복권 — 8/24(월) 09:00 KST 예약 시작 (마감은 좌석 소진 시 = 플랫폼에서 처리) */
   shuttle: { openKST: '2026-08-24T09:00', closeKST: null },
   /** 풀패스 얼리버드 재개 ₩190,000 — 8/23 ~ 9/1 08:00 (8/31 밤 대표 연장, 플랫폼과 동기화) */
   earlyBird2: { openKST: '2026-08-23T00:00', closeKST: '2026-09-01T08:00' },
   /** 풀패스 정가 ₩240,000 온라인 — 9/1 09:00 ~ 10/2 23:59 (08~09시는 전환 대기) */
   fullPassOnline: { openKST: '2026-09-01T09:00', closeKST: '2026-10-02T23:59' },
-  /** 1일권·2일권 온라인 — 9/1 09:00 ~ 10/2 23:59 (가격 변동 없음) */
+  /** 1일권·2일권 온라인 — 9/1 09:00 ~ 10/2 23:59 */
   dayPass: { openKST: '2026-09-01T09:00', closeKST: '2026-10-02T23:59' },
+  /** 일일권 얼리버드(1일권 10만·2일권 20만) — 9/15 자정까지 (대표 확정 9/1). 이후 정가 12만/24만 온라인 계속 */
+  dayPassEarly: { openKST: '2026-09-01T09:00', closeKST: '2026-09-15T23:59' },
   /** 숙박(공식 호텔) 접수 — 8/24 23:59 까지 (8/25 00:00 마감) */
   hotel: { openKST: '2026-01-01T00:00', closeKST: '2026-08-24T23:59' },
 };
@@ -246,10 +248,17 @@ export function addMinutes(hhmm: string, min: number): string {
 
 // 1일권·2일권 — 요일 구분 없는 자유이용권(축제 기간 중 아무 날). 판매 기간은 SALE_WINDOWS 참조
 export const DAY_PASS = {
-  oneDay: 100000,  // 1일권 온라인 (9/1~10/2)
-  twoDay: 200000,  // 2일권 온라인 (9/1~10/2)
-  onsite: 120000,  // 1일권 현장
+  oneDayEarly: 100000,  // 1일권 얼리버드 (9/1~9/15 자정)
+  oneDay: 120000,       // 1일권 정가 (9/16~10/2 온라인 · 현장 동일)
+  twoDayEarly: 200000,  // 2일권 얼리버드 (9/1~9/15 자정)
+  twoDay: 240000,       // 2일권 정가 (9/16~10/2 온라인)
+  onsite: 120000,       // 1일권 현장
 } as const;
+
+/** 일일권 얼리버드(10만/20만) 기간인지 — 원가 취소선 표기용 */
+export function isDayPassEarly(now: number = nowMs()): boolean {
+  return isSaleOpen(SALE_WINDOWS.dayPassEarly, now);
+}
 
 // Schedule: 운영기준.md §7 — 요일 검증: 10/3=SAT 10/4=SUN 10/5=MON
 // ⚠️ 오프닝 콘서트는 같은 공연을 문화예술회관에서 2회: 10/2(금)19:30 일반시민용(이 사이트에 절대 노출 금지),

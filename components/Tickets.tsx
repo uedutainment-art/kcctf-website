@@ -1,5 +1,5 @@
 import { useLocale, useTranslations } from 'next-intl';
-import { TICKET_TIERS, DAY_PASS, TICKET_SALES, ticketPhase, isOnlineRegistrationOpen, isHotelOpen, formatKRW } from '@/data/festival';
+import { TICKET_TIERS, DAY_PASS, TICKET_SALES, ticketPhase, isOnlineRegistrationOpen, isHotelOpen, isDayPassEarly, formatKRW } from '@/data/festival';
 import RegisterButton from './RegisterButton';
 import MotionReveal from './MotionReveal';
 
@@ -23,6 +23,7 @@ export default function Tickets() {
   const ticketsLive = TICKET_SALES.live;           // 플랫폼 재개 확인 후 true → 신청 버튼 노출
   const onlineOpen = isOnlineRegistrationOpen();   // onlinePhase && ticketsLive
   const hotelOpen = isHotelOpen();                 // 숙박 접수 8/24 23:59 KST 까지
+  const dayEarly = isDayPassEarly();               // 일일권 얼리버드 9/15 자정까지 — 원가 취소선 표기
 
   const items = t.raw('items') as {
     id: string;
@@ -120,8 +121,8 @@ export default function Tickets() {
                   </p>
                   <div className="mt-4 flex flex-wrap items-baseline justify-center gap-x-8 gap-y-3">
                     <PriceChip label={isKo ? '풀패스 (3일)' : 'Full Pass'} price={onsiteTier ? onsiteTier.price : 240000} />
-                    <PriceChip label={isKo ? '1일권' : '1-Day'} price={DAY_PASS.oneDay} />
-                    <PriceChip label={isKo ? '2일권' : '2-Day'} price={DAY_PASS.twoDay} />
+                    <PriceChip label={isKo ? '1일권' : '1-Day'} price={dayEarly ? DAY_PASS.oneDayEarly : DAY_PASS.oneDay} original={DAY_PASS.oneDay} />
+                    <PriceChip label={isKo ? '2일권' : '2-Day'} price={dayEarly ? DAY_PASS.twoDayEarly : DAY_PASS.twoDay} original={DAY_PASS.twoDay} />
                   </div>
                   <p className="mt-4 font-kr-sans text-[14px] leading-[1.6] text-charcoal/75">
                     {isKo
@@ -129,9 +130,13 @@ export default function Tickets() {
                       : 'Day passes need no date — come on any day of the festival.'}
                   </p>
                   <p className="mt-1 font-kr-sans text-[13px] leading-[1.6] text-charcoal/55">
-                    {isKo
-                      ? `토요일에 사용하시면 문화예술회관 오프닝 콘서트도 함께 · 현장 구매는 1일권 ${formatKRW(DAY_PASS.onsite)} · 풀패스 ${onsiteTier ? formatKRW(onsiteTier.price) : '₩240,000'}`
-                      : `Used on Saturday it also admits you to the arts-center opening concert · at the door: 1-Day ${formatKRW(DAY_PASS.onsite)} · Full Pass ${onsiteTier ? formatKRW(onsiteTier.price) : '₩240,000'}`}
+                    {dayEarly
+                      ? (isKo
+                          ? '일일권 얼리버드는 9월 15일(화) 자정까지 · 토요일에 사용하시면 문화예술회관 오프닝 콘서트도 함께'
+                          : 'Day-pass early bird until Sept 15 (Tue) midnight KST · used on Saturday it also admits you to the arts-center opening concert')
+                      : (isKo
+                          ? `토요일에 사용하시면 문화예술회관 오프닝 콘서트도 함께 · 현장 구매는 1일권 ${formatKRW(DAY_PASS.onsite)}`
+                          : `Used on Saturday it also admits you to the arts-center opening concert · on-site 1-day pass ${formatKRW(DAY_PASS.onsite)}`)}
                   </p>
                 </>
               )}
@@ -390,11 +395,16 @@ export default function Tickets() {
   );
 }
 
-/** 가격 칩 — 라벨(세리프) + 금액(디스플레이 이탤릭) */
-function PriceChip({ label, price }: { label: string; price: number }) {
+/** 가격 칩 — 라벨(세리프) + 금액(디스플레이 이탤릭). original 이 현재가와 다르면 원가 취소선 표기 */
+function PriceChip({ label, price, original }: { label: string; price: number; original?: number }) {
   return (
     <span>
       <span className="font-kr-serif text-[17px] font-black text-ink-soft">{label}</span>{' '}
+      {original != null && original !== price && (
+        <span className="mr-1 font-kr-sans text-[15px] text-charcoal/45 line-through decoration-burgundy/40">
+          {formatKRW(original)}
+        </span>
+      )}
       <span className="font-en-display text-[34px] font-black italic leading-none text-burgundy sm:text-[40px]">
         {formatKRW(price)}
       </span>
