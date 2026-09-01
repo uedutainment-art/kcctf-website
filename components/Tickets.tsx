@@ -124,6 +124,13 @@ export default function Tickets() {
                     <PriceChip label={isKo ? '1일권' : '1-Day'} price={dayEarly ? DAY_PASS.oneDayEarly : DAY_PASS.oneDay} original={DAY_PASS.oneDay} />
                     <PriceChip label={isKo ? '2일권' : '2-Day'} price={dayEarly ? DAY_PASS.twoDayEarly : DAY_PASS.twoDay} original={DAY_PASS.twoDay} />
                   </div>
+                  {dayEarly && (
+                    <p className="mt-4">
+                      <span className="inline-block rounded-md bg-burgundy px-4 py-2 font-kr-sans text-[15px] font-bold text-warm-white">
+                        {isKo ? '⏰ 1일권·2일권 얼리버드 — 9월 15일(화) 자정까지' : '⏰ Day-pass early bird — until Sept 15 (Tue), midnight KST'}
+                      </span>
+                    </p>
+                  )}
                   <p className="mt-4 font-kr-sans text-[14px] leading-[1.6] text-charcoal/75">
                     {isKo
                       ? '1일권·2일권은 날짜를 고르지 않아도 됩니다 — 축제 기간 중 아무 날 오셔서 입장하세요.'
@@ -132,8 +139,8 @@ export default function Tickets() {
                   <p className="mt-1 font-kr-sans text-[13px] leading-[1.6] text-charcoal/55">
                     {dayEarly
                       ? (isKo
-                          ? '일일권 얼리버드는 9월 15일(화) 자정까지 · 토요일에 사용하시면 문화예술회관 오프닝 콘서트도 함께'
-                          : 'Day-pass early bird until Sept 15 (Tue) midnight KST · used on Saturday it also admits you to the arts-center opening concert')
+                          ? '토요일에 사용하시면 문화예술회관 오프닝 콘서트도 함께'
+                          : 'Used on Saturday it also admits you to the arts-center opening concert')
                       : (isKo
                           ? `토요일에 사용하시면 문화예술회관 오프닝 콘서트도 함께 · 현장 구매는 1일권 ${formatKRW(DAY_PASS.onsite)}`
                           : `Used on Saturday it also admits you to the arts-center opening concert · on-site 1-day pass ${formatKRW(DAY_PASS.onsite)}`)}
