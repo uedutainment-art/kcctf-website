@@ -119,17 +119,40 @@ export default function Tickets() {
                   <p className="font-kr-sans text-[15px] font-bold text-burgundy">
                     {isKo ? '🎟 온라인 신청 중 — 10월 2일(금) 23:59까지 (한국시간)' : '🎟 Online registration open — until Oct 2 (Fri) 23:59 KST'}
                   </p>
-                  <div className="mt-4 flex flex-wrap items-baseline justify-center gap-x-8 gap-y-3">
-                    <PriceChip label={isKo ? '풀패스 (3일)' : 'Full Pass'} price={onsiteTier ? onsiteTier.price : 240000} />
-                    <PriceChip label={isKo ? '1일권' : '1-Day'} price={dayEarly ? DAY_PASS.oneDayEarly : DAY_PASS.oneDay} original={DAY_PASS.oneDay} />
-                    <PriceChip label={isKo ? '2일권' : '2-Day'} price={dayEarly ? DAY_PASS.twoDayEarly : DAY_PASS.twoDay} original={DAY_PASS.twoDay} />
-                  </div>
-                  {dayEarly && (
-                    <p className="mt-4">
-                      <span className="inline-block rounded-md bg-burgundy px-4 py-2 font-kr-sans text-[15px] font-bold text-warm-white">
-                        {isKo ? '⏰ 1일권·2일권 얼리버드 — 9월 15일(화) 자정까지' : '⏰ Day-pass early bird — until Sept 15 (Tue), midnight KST'}
-                      </span>
-                    </p>
+                  {dayEarly ? (
+                    <div className="mt-5 grid gap-4 sm:grid-cols-2">
+                      {/* 풀패스 — 정가 */}
+                      <div className="flex flex-col items-center justify-center rounded-lg border border-ink/10 bg-warm-white/70 px-5 py-6">
+                        <p className="font-kr-sans text-[12px] font-bold tracking-[0.12em] text-charcoal/55">
+                          {isKo ? '정가 판매' : 'REGULAR PRICE'}
+                        </p>
+                        <p className="mt-2 font-kr-serif text-[19px] font-black text-ink-soft">
+                          {isKo ? '풀패스 (3일)' : 'Full Pass (3 days)'}
+                        </p>
+                        <p className="mt-1.5 font-en-display text-[34px] font-black italic leading-none text-burgundy">
+                          {formatKRW(onsiteTier ? onsiteTier.price : 240000)}
+                        </p>
+                      </div>
+                      {/* 일일권 — 얼리버드 */}
+                      <div className="rounded-lg border-2 border-burgundy bg-warm-white px-5 py-6">
+                        <p className="mx-auto w-fit rounded bg-burgundy px-3 py-1 font-kr-sans text-[12.5px] font-bold text-warm-white">
+                          {isKo ? '⏰ 얼리버드 — 9월 15일(화) 자정까지' : '⏰ EARLY BIRD — till Sept 15 (Tue) midnight'}
+                        </p>
+                        <div className="mt-3.5 space-y-2.5">
+                          <EarlyRow label={isKo ? '1일권' : '1-Day'} original={DAY_PASS.oneDay} price={DAY_PASS.oneDayEarly} />
+                          <EarlyRow label={isKo ? '2일권' : '2-Day'} original={DAY_PASS.twoDay} price={DAY_PASS.twoDayEarly} />
+                        </div>
+                        <p className="mt-3 font-kr-sans text-[12px] text-charcoal/55">
+                          {isKo ? '9월 16일부터 정가 ₩120,000 · ₩240,000' : 'From Sept 16: ₩120,000 · ₩240,000'}
+                        </p>
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="mt-4 flex flex-wrap items-baseline justify-center gap-x-8 gap-y-3">
+                      <PriceChip label={isKo ? '풀패스 (3일)' : 'Full Pass'} price={onsiteTier ? onsiteTier.price : 240000} />
+                      <PriceChip label={isKo ? '1일권' : '1-Day'} price={DAY_PASS.oneDay} />
+                      <PriceChip label={isKo ? '2일권' : '2-Day'} price={DAY_PASS.twoDay} />
+                    </div>
                   )}
                   <p className="mt-4 font-kr-sans text-[14px] leading-[1.6] text-charcoal/75">
                     {isKo
@@ -402,19 +425,29 @@ export default function Tickets() {
   );
 }
 
-/** 가격 칩 — 라벨(세리프) + 금액(디스플레이 이탤릭). original 이 현재가와 다르면 원가 취소선 표기 */
-function PriceChip({ label, price, original }: { label: string; price: number; original?: number }) {
+/** 가격 칩 — 라벨(세리프) + 금액(디스플레이 이탤릭) */
+function PriceChip({ label, price }: { label: string; price: number }) {
   return (
     <span>
       <span className="font-kr-serif text-[17px] font-black text-ink-soft">{label}</span>{' '}
-      {original != null && original !== price && (
-        <span className="mr-1 font-kr-sans text-[15px] text-charcoal/45 line-through decoration-burgundy/40">
-          {formatKRW(original)}
-        </span>
-      )}
       <span className="font-en-display text-[34px] font-black italic leading-none text-burgundy sm:text-[40px]">
         {formatKRW(price)}
       </span>
     </span>
+  );
+}
+
+/** 얼리버드 패널 행 — 라벨 + 원가 취소선 + 얼리버드가 */
+function EarlyRow({ label, original, price }: { label: string; original: number; price: number }) {
+  return (
+    <p className="flex items-baseline justify-center gap-x-2 whitespace-nowrap">
+      <span className="font-kr-serif text-[16px] font-black text-ink-soft">{label}</span>
+      <span className="font-kr-sans text-[13px] text-charcoal/45 line-through decoration-burgundy/40">
+        {formatKRW(original)}
+      </span>
+      <span className="font-en-display text-[26px] font-black italic leading-none text-burgundy">
+        {formatKRW(price)}
+      </span>
+    </p>
   );
 }
