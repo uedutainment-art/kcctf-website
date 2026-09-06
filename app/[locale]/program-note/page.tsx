@@ -5,7 +5,7 @@ import { PROGRAM_KO, PROGRAM_EN } from '@/data/program-note';
 // Program Note — 팜플릿 QR(kcctf.org/program-note)로 들어오는 공연 프로그램 페이지.
 // ⚠️ 회차·날짜·장소·티켓 정보 표기 금지 (두 회차 관객이 같은 QR을 씀 — 대표 확정 2026-08-26)
 
-export const metadata: Metadata = { title: 'Program Note — KCCTF' };
+export const metadata: Metadata = { title: 'Program Note — KCTF' };
 
 export default function ProgramNotePage({ params: { locale } }: { params: { locale: string } }) {
   const isKo = locale === 'ko';

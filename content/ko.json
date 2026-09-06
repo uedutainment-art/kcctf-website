@@ -1,7 +1,7 @@
 {
   "common": {
     "festival": "춘천국제탱고페스티벌",
-    "festivalShort": "KCCTF",
+    "festivalShort": "KCTF",
     "year": "2026",
     "dates": "2026.10.03 — 10.05",
     "datesLong": "2026년 10월 3일 토요일 — 10월 5일 월요일",
@@ -774,7 +774,7 @@
     ]
   },
   "afterKcctf": {
-    "eyebrow": "BEFORE & AFTER KCCTF",
+    "eyebrow": "BEFORE & AFTER KCTF",
     "lede": "춘천 전후로 한국에 머무신다면, 다른 도시에서도 탱고를 즐기실 수 있어요.",
     "ledeEn": "If you're in Korea before or after the festival, tango awaits in other cities too.",
     "cta": "전국 탱고 일정 보기",
@@ -797,7 +797,7 @@
     "emailHarvestNotice": "본 웹사이트에 게시된 이메일 주소가 전자우편 수집 프로그램 기타 기술적 장치를 이용하여 무단으로 수집되는 것을 거부하며, 이를 위반 시 정보통신망법에 의해 형사 처벌됨을 유념하시기 바랍니다."
   },
   "meta": {
-    "title": "춘천국제탱고페스티벌 2026 — KCCTF",
+    "title": "춘천국제탱고페스티벌 2026 — KCTF",
     "description": "부에노스아이레스에서 온 두 오케스트라. Misteriosa Buenos Aires와 Tango Bardo. 2026.10.03–10.05 춘천 봄내체육관.",
     "ogTitle": "춘천국제탱고페스티벌 2026",
     "ogDescription": "두 오케스트라, 사흘 밤. 봄내체육관에서.",

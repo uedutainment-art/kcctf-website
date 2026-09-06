@@ -9,13 +9,13 @@ const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://kcctf.org';
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
-  title: '춘천국제탱고페스티벌 2026 — KCCTF',
+  title: '춘천국제탱고페스티벌 2026 — KCTF',
   description: '부에노스 아이레스에서 온 두 오케스트라. Misteriosa Buenos Aires와 Tango Bardo. 2026.10.03–10.05 춘천 봄내체육관.',
   openGraph: {
     type: 'website',
     locale: 'ko_KR',
     alternateLocale: 'en_US',
-    siteName: 'KCCTF',
+    siteName: 'KCTF',
     images: [
       {
         url: '/og-image.jpg',

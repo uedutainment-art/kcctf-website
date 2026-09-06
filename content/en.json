@@ -1,7 +1,7 @@
 {
   "common": {
     "festival": "Chuncheon International Tango Festival",
-    "festivalShort": "KCCTF",
+    "festivalShort": "KCTF",
     "year": "2026",
     "dates": "Oct 3–5, 2026",
     "datesLong": "Saturday, October 3 — Monday, October 5, 2026",
@@ -637,7 +637,7 @@
     "eyebrow": "ABOUT",
     "title": "Chuncheon International Tango Festival",
     "subtitleEn": "춘천국제탱고페스티벌",
-    "body": "KCCTF is a three-day festival combining live orchestra concerts with social dance (milongas). Two orchestras flown directly from Buenos Aires, six DJs from Korea, China, and Hong Kong — three nights of tango together. A meeting place for the global tango community in Chuncheon's autumn.",
+    "body": "KCTF is a three-day festival combining live orchestra concerts with social dance (milongas). Two orchestras flown directly from Buenos Aires, six DJs from Korea, China, and Hong Kong — three nights of tango together. A meeting place for the global tango community in Chuncheon's autumn.",
     "organization": {
       "name": "Chuncheon International Tango Festival Foundation",
       "nameEn": "사단법인 춘천국제탱고페스티벌",
@@ -774,7 +774,7 @@
     ]
   },
   "afterKcctf": {
-    "eyebrow": "BEFORE & AFTER KCCTF",
+    "eyebrow": "BEFORE & AFTER KCTF",
     "lede": "Staying in Korea before or after the festival? Tango awaits in other cities, too.",
     "ledeEn": "한국에 더 머무신다면, 다른 도시에서도 탱고를 즐기실 수 있어요.",
     "cta": "Korea-wide tango calendar",
@@ -797,7 +797,7 @@
     "emailHarvestNotice": "Unauthorized collection of email addresses on this website using email harvesting programs or other technical means is strictly prohibited and subject to legal action under the Korean Information and Communications Network Act."
   },
   "meta": {
-    "title": "Chuncheon International Tango Festival 2026 — KCCTF",
+    "title": "Chuncheon International Tango Festival 2026 — KCTF",
     "description": "Two orchestras from Buenos Aires. Misteriosa Buenos Aires and Tango Bardo, live in Chuncheon. Oct 3–5, 2026.",
     "ogTitle": "Chuncheon International Tango Festival 2026",
     "ogDescription": "Two orchestras. Three nights. One arena.",

@@ -7,7 +7,7 @@ import { LOOP_DAYS, LoopDayTable, dayLabel, nextDayLabel } from '@/components/Lo
 // 왼쪽 = 호텔 → 행사장 (오후에 먼저 타는 방향), 오른쪽 = 행사장 → 호텔 (밤·새벽)
 
 export function generateMetadata({ params: { locale } }: { params: { locale: string } }): Metadata {
-  return { title: locale === 'ko' ? '춘천 순환 셔틀 시간표 — KCCTF' : 'Chuncheon Loop Shuttle Timetable — KCCTF' };
+  return { title: locale === 'ko' ? '춘천 순환 셔틀 시간표 — KCTF' : 'Chuncheon Loop Shuttle Timetable — KCTF' };
 }
 
 export default function ChuncheonShuttlePage({ params: { locale } }: { params: { locale: string } }) {

@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import LegalPage, { type LegalSection } from '@/components/LegalPage';
 
 export function generateMetadata({ params: { locale } }: { params: { locale: string } }): Metadata {
-  return { title: locale === 'ko' ? '개인정보처리방침 — KCCTF' : 'Privacy Policy — KCCTF' };
+  return { title: locale === 'ko' ? '개인정보처리방침 — KCTF' : 'Privacy Policy — KCTF' };
 }
 
 export default function PrivacyPage({ params: { locale } }: { params: { locale: string } }) {

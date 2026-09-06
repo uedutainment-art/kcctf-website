@@ -7,7 +7,7 @@ import { SHUTTLE, SALE_WINDOWS, isSaleOpen, isShuttleBookable, formatKRW } from 
 const BOOK_SHUTTLE_URL = 'https://kcctf-5047d.web.app/register/chuncheon-citf-2026?mode=shuttle';
 
 export function generateMetadata({ params: { locale } }: { params: { locale: string } }): Metadata {
-  return { title: locale === 'ko' ? '서울 셔틀 안내 — KCCTF' : 'Seoul Shuttle — KCCTF' };
+  return { title: locale === 'ko' ? '서울 셔틀 안내 — KCTF' : 'Seoul Shuttle — KCTF' };
 }
 
 type Step = { time: string; text: string };

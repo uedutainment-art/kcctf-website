@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import LegalPage, { type LegalSection } from '@/components/LegalPage';
 
 export function generateMetadata({ params: { locale } }: { params: { locale: string } }): Metadata {
-  return { title: locale === 'ko' ? '환불 규정 — KCCTF' : 'Refund Policy — KCCTF' };
+  return { title: locale === 'ko' ? '환불 규정 — KCTF' : 'Refund Policy — KCTF' };
 }
 
 export default function RefundPage({ params: { locale } }: { params: { locale: string } }) {

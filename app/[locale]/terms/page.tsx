@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import LegalPage, { type LegalSection } from '@/components/LegalPage';
 
 export function generateMetadata({ params: { locale } }: { params: { locale: string } }): Metadata {
-  return { title: locale === 'ko' ? '이용약관 — KCCTF' : 'Terms of Service — KCCTF' };
+  return { title: locale === 'ko' ? '이용약관 — KCTF' : 'Terms of Service — KCTF' };
 }
 
 export default function TermsPage({ params: { locale } }: { params: { locale: string } }) {

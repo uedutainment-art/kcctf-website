@@ -101,7 +101,7 @@ export default function Nav() {
               className="group flex flex-shrink-0 items-baseline gap-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-burgundy/35 focus-visible:ring-offset-2 focus-visible:ring-offset-mustard rounded-sm"
             >
               <span className="font-en-display text-[22px] font-black italic leading-none text-ink-soft transition-colors group-hover:text-burgundy">
-                KCCTF
+                KCTF
               </span>
               <span className="hidden sm:inline font-en-body text-[10px] font-bold tracking-[0.3em] uppercase text-ink/55">
                 2026

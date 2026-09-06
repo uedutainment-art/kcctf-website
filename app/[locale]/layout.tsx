@@ -17,8 +17,8 @@ export async function generateMetadata({
   const isKo = locale === 'ko';
   return {
     title: isKo
-      ? '춘천국제탱고페스티벌 2026 — KCCTF'
-      : 'Chuncheon International Tango Festival 2026 — KCCTF',
+      ? '춘천국제탱고페스티벌 2026 — KCTF'
+      : 'Chuncheon International Tango Festival 2026 — KCTF',
     description: isKo
       ? '부에노스아이레스에서 온 두 오케스트라. Misteriosa Buenos Aires와 Tango Bardo. 2026.10.03–10.05 춘천 봄내체육관.'
       : 'Two orchestras from Buenos Aires. Misteriosa Buenos Aires and Tango Bardo, live in Chuncheon. Oct 3–5, 2026.',
@@ -34,8 +34,8 @@ export async function generateMetadata({
       locale: isKo ? 'ko_KR' : 'en_US',
       alternateLocale: isKo ? 'en_US' : 'ko_KR',
       title: isKo
-        ? '춘천국제탱고페스티벌 2026 — KCCTF'
-        : 'Chuncheon International Tango Festival 2026 — KCCTF',
+        ? '춘천국제탱고페스티벌 2026 — KCTF'
+        : 'Chuncheon International Tango Festival 2026 — KCTF',
       description: isKo
         ? '탱고 바르도 · 미스테리오사 부에노스아이레스. 2026.10.03–10.05 춘천 봄내체육관.'
         : 'Tango Bardo · Misteriosa Buenos Aires. Oct 3–5, 2026 · Chuncheon Bomnae Complex.',
@@ -53,8 +53,8 @@ export async function generateMetadata({
     twitter: {
       card: 'summary_large_image',
       title: isKo
-        ? '춘천국제탱고페스티벌 2026 — KCCTF'
-        : 'Chuncheon International Tango Festival 2026 — KCCTF',
+        ? '춘천국제탱고페스티벌 2026 — KCTF'
+        : 'Chuncheon International Tango Festival 2026 — KCTF',
       description: isKo
         ? '탱고 바르도 · 미스테리오사 부에노스아이레스. 2026.10.03–10.05 춘천 봄내체육관.'
         : 'Tango Bardo · Misteriosa Buenos Aires. Oct 3–5, 2026 · Chuncheon Bomnae Complex.',
