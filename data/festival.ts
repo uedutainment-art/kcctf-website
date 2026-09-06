@@ -281,20 +281,20 @@ export const SCHEDULE_ITEMS: ScheduleItem[] = [
   { day: '10/3', dow: 'SAT', time: '21:00 — 04:00', type: 'milonga',    idx: 2, djId: 'carlos',
     liveSets: [
       { orch: 'tango-bardo', time: '23:00' },
-      { orch: 'misteriosa',  time: '24:30', dancers: ['Sion', 'Victor'] },
+      { orch: 'misteriosa',  time: '24:30', dancers: ['Xion & Hari', 'Victor & Rui'] },
     ] },
   { day: '10/4', dow: 'SUN', time: '14:00 — 19:00', type: 'milonga',    idx: 3, djId: 'natalie',
     liveSets: [{ orch: 'misteriosa', time: '16:30', dancers: ['Ryuga'] }] },
   { day: '10/4', dow: 'SUN', time: '21:00 — 03:00', type: 'milonga',    idx: 4, djId: 'becca', featured: true,
     liveSets: [
-      { orch: 'tango-bardo', time: '23:00', dancers: ['London', 'Team Ryu'] },
-      { orch: 'misteriosa',  time: '24:30', dancers: ['Eric'] },
+      { orch: 'tango-bardo', time: '23:00', dancers: ['London Hong & Sol', 'Team Ryu'] },
+      { orch: 'misteriosa',  time: '24:30', dancers: ['Nadia & Erik'] },
     ] },
   { day: '10/5', dow: 'MON', time: '11:00 — 14:00', type: 'tour',       idx: 5 },
   { day: '10/5', dow: 'MON', time: '15:00 — 20:00', type: 'milonga',    idx: 6, djId: 'stone',
-    liveSets: [{ orch: 'misteriosa', time: '17:30', dancers: ['London'] }] },
+    liveSets: [{ orch: 'misteriosa', time: '17:30', dancers: ['London Hong & Sol'] }] },
   { day: '10/5', dow: 'MON', time: '20:00 — 24:00', type: 'afterparty', idx: 7, djId: 'hagoon', featured: true,
-    liveSets: [{ orch: 'tango-bardo', time: '21:00', dancers: ['Victor', 'Sion', 'Eric'] }] },
+    liveSets: [{ orch: 'tango-bardo', time: '21:00', dancers: ['Victor & Rui', 'Xion & Hari', 'Nadia & Erik'] }] },
 ];
 
 export const VENUES: Venue[] = [
