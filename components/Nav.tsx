@@ -98,10 +98,12 @@ export default function Nav() {
             <Link
               href="/"
               aria-label={locale === 'ko' ? '홈으로' : 'Home'}
-              className="group flex flex-shrink-0 items-baseline gap-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-burgundy/35 focus-visible:ring-offset-2 focus-visible:ring-offset-mustard rounded-sm"
+              className="group flex flex-shrink-0 items-center gap-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-burgundy/35 focus-visible:ring-offset-2 focus-visible:ring-offset-mustard rounded-sm"
             >
-              <span className="font-en-display text-[22px] font-black italic leading-none text-ink-soft transition-colors group-hover:text-burgundy">
-                KCTF
+              {/* 네온 로고는 다크 배경에서만 사니까, 로고 크기만 한 다크 칩을 깔아줌 (스탬프 느낌) */}
+              <span className="inline-flex items-center rounded-md bg-night px-2.5 py-[7px] shadow-[2px_2px_0_rgba(90,14,27,0.4)] transition-transform duration-150 group-hover:translate-y-[1px] group-hover:shadow-[1px_1px_0_rgba(90,14,27,0.4)]">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src="/images/kctf-logo-nav.png" alt="KCTF" className="h-[22px] w-auto" />
               </span>
               <span className="hidden sm:inline font-en-body text-[10px] font-bold tracking-[0.3em] uppercase text-ink/55">
                 2026
