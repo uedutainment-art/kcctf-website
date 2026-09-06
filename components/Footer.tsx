@@ -41,12 +41,23 @@ export default function Footer() {
 
         {/* Top: centred tagline */}
         <div className="flex flex-col items-center text-center mb-10 pb-9 border-b border-warm-white/10">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src="/images/kctf-lockup.png"
-            alt="KCTF — Chuncheon International Tango Festival 2026"
-            className="mb-6 h-[140px] w-auto sm:h-[160px]"
-          />
+          {/* 공식 로고는 포스터 원본의 다크 네이비·오로라 배경 안에서만 제 색이 살아서, 포스터 카드로 프레이밍 */}
+          <div
+            className="mb-7 rounded-xl border border-white/[0.06] px-12 py-9 sm:px-16 sm:py-10"
+            style={{
+              background:
+                'radial-gradient(ellipse 90% 70% at 50% 20%, #251345 0%, #150c2b 45%, #0b0618 100%)',
+              boxShadow:
+                '0 0 50px rgba(110,60,220,0.18), inset 0 0 70px rgba(90,50,190,0.10)',
+            }}
+          >
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/images/kctf-lockup.png"
+              alt="KCTF — Chuncheon International Tango Festival 2026"
+              className="h-[140px] w-auto sm:h-[160px]"
+            />
+          </div>
           <p
             className="font-en-display italic font-black text-gold leading-none"
             style={{ fontSize: 'clamp(24px, 3.2vw, 34px)' }}

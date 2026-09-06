@@ -98,14 +98,11 @@ export default function Nav() {
             <Link
               href="/"
               aria-label={locale === 'ko' ? '홈으로' : 'Home'}
-              className="group flex flex-shrink-0 items-center gap-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-burgundy/35 focus-visible:ring-offset-2 focus-visible:ring-offset-mustard rounded-sm"
+              className="group flex flex-shrink-0 items-baseline gap-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-burgundy/35 focus-visible:ring-offset-2 focus-visible:ring-offset-mustard rounded-sm"
             >
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src="/images/kctf-logo-nav.png"
-                alt="KCTF"
-                className="h-[26px] w-auto transition-opacity group-hover:opacity-75"
-              />
+              <span className="font-en-display text-[22px] font-black italic leading-none text-ink-soft transition-colors group-hover:text-burgundy">
+                KCTF
+              </span>
               <span className="hidden sm:inline font-en-body text-[10px] font-bold tracking-[0.3em] uppercase text-ink/55">
                 2026
               </span>
