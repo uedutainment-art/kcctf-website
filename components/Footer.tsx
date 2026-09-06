@@ -41,6 +41,12 @@ export default function Footer() {
 
         {/* Top: centred tagline */}
         <div className="flex flex-col items-center text-center mb-10 pb-9 border-b border-warm-white/10">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/images/kctf-lockup.png"
+            alt="KCTF — Chuncheon International Tango Festival 2026"
+            className="mb-6 h-[140px] w-auto sm:h-[160px]"
+          />
           <p
             className="font-en-display italic font-black text-gold leading-none"
             style={{ fontSize: 'clamp(24px, 3.2vw, 34px)' }}
