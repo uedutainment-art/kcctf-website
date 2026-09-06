@@ -294,7 +294,7 @@ export const SCHEDULE_ITEMS: ScheduleItem[] = [
   { day: '10/5', dow: 'MON', time: '15:00 — 20:00', type: 'milonga',    idx: 6, djId: 'stone',
     liveSets: [{ orch: 'misteriosa', time: '17:30', dancers: ['London'] }] },
   { day: '10/5', dow: 'MON', time: '20:00 — 24:00', type: 'afterparty', idx: 7, djId: 'hagoon', featured: true,
-    liveSets: [{ orch: 'tango-bardo', time: '20:30', dancers: ['Victor', 'Sion', 'Eric'] }] },
+    liveSets: [{ orch: 'tango-bardo', time: '21:00', dancers: ['Victor', 'Sion', 'Eric'] }] },
 ];
 
 export const VENUES: Venue[] = [
