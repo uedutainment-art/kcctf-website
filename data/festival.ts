@@ -43,6 +43,14 @@ export const ORCHESTRA_SHORT: Record<OrchestraLive, string> = {
   'tango-bardo': 'Tango Bardo',
 };
 
+/** 라이브 무대 1회 — 시작 시각·공연 댄서 (2026-09-06 최종 밀롱가 시간표 기준, 표기 그대로) */
+export type LiveSet = {
+  orch: OrchestraLive;
+  /** 시작 시각 — 심야는 24시 표기 (예: '24:30' = 익일 00:30) */
+  time: string;
+  dancers?: string[];
+};
+
 export type ScheduleItem = {
   day: ScheduleDay;
   dow: ScheduleDow;
@@ -51,8 +59,8 @@ export type ScheduleItem = {
   /** Index into content/*.json schedule.items[] for title/subtitle/mood */
   idx: number;
   djId?: string;
-  /** 이 세션에 라이브로 연주하는 오케스트라 */
-  live?: OrchestraLive[];
+  /** 이 세션의 라이브 무대들 (시간순) — 배지·상세 표기 모두 여기서 파생 */
+  liveSets?: LiveSet[];
   featured?: boolean;
 };
 
@@ -265,15 +273,28 @@ export function isDayPassEarly(now: number = nowMs()): boolean {
 //    10/3(토)13:00 탱고인용(여기 표기된 것·풀패스/토 데이패스 포함). 10/2 정보를 여기에 넣지 말 것.
 // idx matches position in content/*.json schedule.items[]
 // 2026-06-11 DJ 배정 확정: M1 왕웨이·M2 까를로스·M3 나탈리·M4 베카·M5 스톤·M6 하군 (content/*.json djName과 일치, M2 21:00)
+// 라이브 시각·댄서·M6 단독 무대: 2026-09-06 대표 확정 최종 밀롱가 시간표 기준 (댄서명은 시간표 표기 그대로)
 export const SCHEDULE_ITEMS: ScheduleItem[] = [
-  { day: '10/3', dow: 'SAT', time: '13:00 — 14:40', type: 'concert',    idx: 0, live: ['tango-bardo'],               featured: true  },
+  { day: '10/3', dow: 'SAT', time: '13:00 — 14:40', type: 'concert',    idx: 0, featured: true,
+    liveSets: [{ orch: 'tango-bardo', time: '13:00' }] },
   { day: '10/3', dow: 'SAT', time: '15:00 — 20:00', type: 'milonga',    idx: 1, djId: 'wangwei' },
-  { day: '10/3', dow: 'SAT', time: '21:00 — 04:00', type: 'milonga',    idx: 2, djId: 'carlos',  live: ['misteriosa', 'tango-bardo'] },
-  { day: '10/4', dow: 'SUN', time: '14:00 — 19:00', type: 'milonga',    idx: 3, djId: 'natalie', live: ['misteriosa'] },
-  { day: '10/4', dow: 'SUN', time: '21:00 — 03:00', type: 'milonga',    idx: 4, djId: 'becca',   live: ['misteriosa', 'tango-bardo'], featured: true },
+  { day: '10/3', dow: 'SAT', time: '21:00 — 04:00', type: 'milonga',    idx: 2, djId: 'carlos',
+    liveSets: [
+      { orch: 'tango-bardo', time: '23:00' },
+      { orch: 'misteriosa',  time: '24:30', dancers: ['Sion', 'Victor'] },
+    ] },
+  { day: '10/4', dow: 'SUN', time: '14:00 — 19:00', type: 'milonga',    idx: 3, djId: 'natalie',
+    liveSets: [{ orch: 'misteriosa', time: '16:30', dancers: ['Ryuga'] }] },
+  { day: '10/4', dow: 'SUN', time: '21:00 — 03:00', type: 'milonga',    idx: 4, djId: 'becca', featured: true,
+    liveSets: [
+      { orch: 'tango-bardo', time: '23:00', dancers: ['London', 'Team Ryu'] },
+      { orch: 'misteriosa',  time: '24:30', dancers: ['Eric'] },
+    ] },
   { day: '10/5', dow: 'MON', time: '11:00 — 14:00', type: 'tour',       idx: 5 },
-  { day: '10/5', dow: 'MON', time: '15:00 — 20:00', type: 'milonga',    idx: 6, djId: 'stone',   live: ['misteriosa'] },
-  { day: '10/5', dow: 'MON', time: '20:00 — 24:00', type: 'afterparty', idx: 7, djId: 'hagoon',  live: ['misteriosa', 'tango-bardo'], featured: true },
+  { day: '10/5', dow: 'MON', time: '15:00 — 20:00', type: 'milonga',    idx: 6, djId: 'stone',
+    liveSets: [{ orch: 'misteriosa', time: '17:30', dancers: ['London'] }] },
+  { day: '10/5', dow: 'MON', time: '20:00 — 24:00', type: 'afterparty', idx: 7, djId: 'hagoon', featured: true,
+    liveSets: [{ orch: 'tango-bardo', time: '20:30', dancers: ['Victor', 'Sion', 'Eric'] }] },
 ];
 
 export const VENUES: Venue[] = [

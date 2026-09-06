@@ -118,13 +118,28 @@ export default function Schedule() {
                       📍 {rawItem.venue}
                     </p>
                   )}
-                  {item.live && item.live.length > 0 && (
+                  {item.liveSets && item.liveSets.length > 0 && (
                     <p className="mt-1.5">
                       <span className="inline-flex items-center gap-1 rounded bg-burgundy px-2 py-[3px] font-en-body font-bold text-[10px] tracking-[0.12em] uppercase text-warm-white shadow-[0_1px_4px_rgba(139,26,43,0.3)]">
                         <span className="text-gold-soft">★</span> LIVE ·{' '}
-                        {item.live.map((o) => ORCHESTRA_SHORT[o]).join(' · ')}
+                        {item.liveSets.map((s) => ORCHESTRA_SHORT[s.orch]).join(' · ')}
                       </span>
                     </p>
+                  )}
+                  {item.liveSets && item.type !== 'concert' && (
+                    <div className="mt-1">
+                      {item.liveSets.map((set) => (
+                        <p key={set.orch} className="font-en-body text-[12px] text-ink-soft/85 leading-[1.7]">
+                          <span className="font-bold text-gold">{set.time}</span>
+                          {' '}{ORCHESTRA_SHORT[set.orch]}
+                          {set.dancers && (
+                            <span className="text-charcoal/60">
+                              {' '}· 💃 {set.dancers.join(' · ')}
+                            </span>
+                          )}
+                        </p>
+                      ))}
+                    </div>
                   )}
                   {rawItem.mood && (
                     <p className="font-kr-sans text-[13px] text-charcoal/50 mt-1 italic">
