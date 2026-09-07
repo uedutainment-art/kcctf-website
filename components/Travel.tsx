@@ -1,6 +1,6 @@
 import { useLocale, useTranslations } from 'next-intl';
 import { Link } from '@/i18n/navigation';
-import { SALE_WINDOWS, SHUTTLE, LOOP_SHUTTLE, isSaleOpen, isShuttleBookable, formatKRW } from '@/data/festival';
+import { SALE_WINDOWS, SHUTTLE, LOOP_SHUTTLE, isSaleOpen, isShuttleBookable, isOneWayOpen, formatKRW } from '@/data/festival';
 import MotionReveal from './MotionReveal';
 import { LOOP_DAYS, dayLabel } from './LoopTimetable';
 
@@ -34,7 +34,8 @@ type ShuttleCopy = {
   lede: string;
   seoul: {
     badge: string; title: string; statusOpen: string; statusBefore: string; statusPending: string;
-    fareNote: string; rows: { k: string; v: string }[]; cta: string; detail: string;
+    fareNote: string; fareNoteOneWay: string; oneWayLabel: string;
+    rows: { k: string; v: string }[]; cta: string; detail: string;
   };
   loop: {
     badge: string; free: string; title: string; route: string;
@@ -72,6 +73,7 @@ export default function Travel() {
   // 서울 셔틀 예약 — 한국시간(KST) 8/24 00:00부터. 요금+좌석 수가 확정돼야 예약 버튼 노출 (플랫폼 fail-closed와 동일 조건)
   const shuttleOpen = isSaleOpen(SALE_WINDOWS.shuttle);
   const shuttleBookable = isShuttleBookable();
+  const oneWay = isOneWayOpen();
   const day = (d: (typeof LOOP_DAYS)[number]) => dayLabel(d, isKo);
 
   return (
@@ -207,10 +209,20 @@ export default function Travel() {
             <div className="flex-1 px-5 pt-4">
               <h4 className="font-kr-serif text-[19px] font-black text-ink-soft">{sh.seoul.title}</h4>
               {SHUTTLE.fare != null && (
-                <p className="mt-1 flex flex-wrap items-baseline gap-x-2">
-                  <span className="font-en-display text-[30px] font-black italic leading-none text-burgundy">{formatKRW(SHUTTLE.fare)}</span>
-                  <span className="font-kr-sans text-[12px] text-charcoal/60">{sh.seoul.fareNote}</span>
-                </p>
+                <>
+                  <p className="mt-1 flex flex-wrap items-baseline gap-x-3 gap-y-1">
+                    <span className="font-en-display text-[30px] font-black italic leading-none text-burgundy">{formatKRW(SHUTTLE.fare)}</span>
+                    {oneWay && SHUTTLE.fareOneWay != null && (
+                      <span className="font-kr-sans text-[12.5px] text-charcoal/70">
+                        {sh.seoul.oneWayLabel}{' '}
+                        <b className="font-en-display text-[19px] italic text-burgundy">{formatKRW(SHUTTLE.fareOneWay)}</b>
+                      </span>
+                    )}
+                  </p>
+                  <p className="mt-0.5 font-kr-sans text-[12px] text-charcoal/60">
+                    {oneWay ? sh.seoul.fareNoteOneWay : sh.seoul.fareNote}
+                  </p>
+                </>
               )}
               <dl className="mt-4 space-y-2">
                 {sh.seoul.rows.map((r) => (

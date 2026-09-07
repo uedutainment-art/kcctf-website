@@ -503,10 +503,10 @@
     "shuttles": {
       "eyebrow": "Shuttle Buses",
       "title": "셔틀버스",
-      "lede": "서울에서 오는 왕복 셔틀은 예약제, 춘천 안을 도는 순환 셔틀은 무료입니다.",
+      "lede": "서울에서 오는 셔틀은 예약제, 춘천 안을 도는 순환 셔틀은 무료입니다.",
       "seoul": {
         "badge": "서울 ↔ 춘천",
-        "title": "서울 셔틀 왕복권",
+        "title": "서울 셔틀",
         "statusOpen": "예약 중",
         "statusBefore": "8/24(월) 오전 9시 예약 시작",
         "statusPending": "예약 준비 중",
@@ -526,7 +526,9 @@
           }
         ],
         "cta": "예약하기",
-        "detail": "상세 일정"
+        "detail": "상세 일정",
+        "oneWayLabel": "편도",
+        "fareNoteOneWay": "왕복 1인 · 편도는 가는 편/오는 편 각각 · 도시락은 가는 편 제공"
       },
       "loop": {
         "badge": "춘천 안에서",

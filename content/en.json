@@ -503,10 +503,10 @@
     "shuttles": {
       "eyebrow": "Shuttle Buses",
       "title": "Shuttle Buses",
-      "lede": "The Seoul round-trip shuttle is booked in advance; the loop shuttle inside Chuncheon is free.",
+      "lede": "The Seoul shuttle is booked in advance; the loop shuttle inside Chuncheon is free.",
       "seoul": {
         "badge": "Seoul ↔ Chuncheon",
-        "title": "Seoul Shuttle Round Trip",
+        "title": "Seoul Shuttle",
         "statusOpen": "Booking open",
         "statusBefore": "Booking opens Aug 24 (Mon) 09:00 KST",
         "statusPending": "Booking opening shortly",
@@ -526,7 +526,9 @@
           }
         ],
         "cta": "Book",
-        "detail": "Full schedule"
+        "detail": "Full schedule",
+        "oneWayLabel": "One way",
+        "fareNoteOneWay": "Round trip per person · one way available each direction · lunch box on the outbound leg"
       },
       "loop": {
         "badge": "In Chuncheon",

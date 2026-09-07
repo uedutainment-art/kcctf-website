@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { SHUTTLE, SALE_WINDOWS, isSaleOpen, isShuttleBookable, formatKRW } from '@/data/festival';
+import { SHUTTLE, SALE_WINDOWS, isSaleOpen, isShuttleBookable, isOneWayOpen, formatKRW } from '@/data/festival';
 
 // 서울 셔틀 안내 페이지 — 서울 셔틀 내용 + 신청 버튼만 (춘천 순환 시간표는 /shuttle/chuncheon, Travel 섹션에서 별도 링크)
 // 출처: 운영/스탭공지_정리_2026-08-23.md · 순환 시간표 = festival.ts LOOP_SHUTTLE
@@ -16,6 +16,7 @@ export default function ShutttlePage({ params: { locale } }: { params: { locale:
   const isKo = locale === 'ko';
   const shuttleOpen = isSaleOpen(SALE_WINDOWS.shuttle);
   const bookable = isShuttleBookable();
+  const oneWay = isOneWayOpen();   // 편도 판매 표기 — 플랫폼 편도 창구 확인 후 ON
 
   const outbound: Step[] = isKo
     ? [
@@ -55,15 +56,23 @@ export default function ShutttlePage({ params: { locale } }: { params: { locale:
       ];
   const notes = isKo
     ? [
-        '왕복권만 판매합니다 (편도 없음) · 예약 시 귀가편 ①/② 중 하나를 선택합니다 · 선착순(좌석 한정) · 1건당 최대 4명(본인 포함)',
-        '도착 후 점심 도시락을 무료로 드립니다 — 예약 시 일반 / 샐러드 중 선택',
+        oneWay
+          ? '왕복과 편도(가는 편 · 오는 편) 모두 예약할 수 있습니다 · 왕복과 오는 편 편도는 귀가편 ①/② 중 하나를 선택합니다 · 선착순(좌석 한정) · 1건당 최대 4명(본인 포함)'
+          : '왕복권만 판매합니다 (편도 없음) · 예약 시 귀가편 ①/② 중 하나를 선택합니다 · 선착순(좌석 한정) · 1건당 최대 4명(본인 포함)',
+        oneWay
+          ? '가는 편 탑승자는 도착 후 점심 도시락을 무료로 드립니다 — 예약 시 일반 / 샐러드 중 선택 (오는 편 편도는 도시락이 제공되지 않습니다)'
+          : '도착 후 점심 도시락을 무료로 드립니다 — 예약 시 일반 / 샐러드 중 선택',
         '문화예술회관과 봄내체육관 바로 인근에는 식당이 거의 없습니다 — 점심은 도시락으로 준비해 드립니다',
         '환불 불가 · 양도는 9월 30일까지(양도인·양수인을 info@kcctf.org 에 고지) · 신청 후 3일 내 미입금 시 좌석 자동 해제',
         '모든 시각은 한국시간(KST)이며 교통 상황에 따라 변동될 수 있습니다. 확정 시 개별 안내드립니다.',
       ]
     : [
-        'Round trip only · choose Return ① or ② when booking · first come first served (limited seats) · up to 4 people per booking',
-        'A complimentary lunch box is provided on arrival — choose regular or salad when booking',
+        oneWay
+          ? 'Round trip and one way (outbound · return) are both available · round trip and return-only bookings choose Return ① or ② · first come first served (limited seats) · up to 4 people per booking'
+          : 'Round trip only · choose Return ① or ② when booking · first come first served (limited seats) · up to 4 people per booking',
+        oneWay
+          ? 'Outbound passengers receive a complimentary lunch box on arrival — choose regular or salad when booking (no lunch box with return-only tickets)'
+          : 'A complimentary lunch box is provided on arrival — choose regular or salad when booking',
         'There are almost no restaurants right next to the Arts Center or Bomnae Complex — lunch is covered by the lunch box',
         'Non-refundable · transfers until Sept 30 (notify info@kcctf.org of both parties) · seats are released if unpaid 3 days after booking',
         'All times are Korea Standard Time (KST) and may shift with traffic; we will notify you individually once confirmed.',
@@ -88,12 +97,26 @@ export default function ShutttlePage({ params: { locale } }: { params: { locale:
           <div className="bg-cream border-l-4 border-burgundy px-5 py-4">
             <p className="font-en-body text-[10px] font-bold uppercase tracking-[0.3em] text-gold">Seoul ↔ Chuncheon</p>
             <h2 className="mt-1 font-kr-serif text-[22px] font-black text-ink-soft">
-              {isKo ? '서울 셔틀 — 홍대 ↔ 춘천 왕복' : 'Seoul Shuttle — Hongdae ↔ Chuncheon round trip'}
+              {oneWay
+                ? (isKo ? '서울 셔틀 — 홍대 ↔ 춘천' : 'Seoul Shuttle — Hongdae ↔ Chuncheon')
+                : (isKo ? '서울 셔틀 — 홍대 ↔ 춘천 왕복' : 'Seoul Shuttle — Hongdae ↔ Chuncheon round trip')}
             </h2>
-            <p className="mt-1 font-kr-sans text-[14px] text-ink-soft">
-              {isKo ? '왕복' : 'Round trip'}{' '}
-              <b className="font-en-display text-[22px] italic text-burgundy">{SHUTTLE.fare != null ? formatKRW(SHUTTLE.fare) : '—'}</b>
-              <span className="ml-2 text-[12px] text-charcoal/60">{isKo ? '1인 · 점심 도시락 무료 제공' : 'per person · lunch box complimentary'}</span>
+            <p className="mt-1 flex flex-wrap items-baseline gap-x-4 gap-y-1 font-kr-sans text-[14px] text-ink-soft">
+              <span>
+                {isKo ? '왕복' : 'Round trip'}{' '}
+                <b className="font-en-display text-[22px] italic text-burgundy">{SHUTTLE.fare != null ? formatKRW(SHUTTLE.fare) : '—'}</b>
+              </span>
+              {oneWay && SHUTTLE.fareOneWay != null && (
+                <span>
+                  {isKo ? '편도' : 'One way'}{' '}
+                  <b className="font-en-display text-[22px] italic text-burgundy">{formatKRW(SHUTTLE.fareOneWay)}</b>
+                </span>
+              )}
+            </p>
+            <p className="mt-1 font-kr-sans text-[12px] text-charcoal/60">
+              {oneWay
+                ? (isKo ? '1인 기준 · 가는 편 탑승자에게 점심 도시락 무료 제공' : 'Per person · lunch box complimentary for outbound passengers')
+                : (isKo ? '1인 · 점심 도시락 무료 제공' : 'per person · lunch box complimentary')}
             </p>
           </div>
 

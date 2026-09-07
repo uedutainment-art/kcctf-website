@@ -208,13 +208,24 @@ export function isBeforeSaleOpen(w: SaleWindow, now: number = nowMs()): boolean 
 /** 서울 홍대↔춘천 셔틀 왕복권 — 확정값 입력란.
  *  fare·seats 가 둘 다 있고 bookingLive 가 true 여야 예약 버튼 노출
  *  (플랫폼도 요금·좌석 0이면 판매 불가 → 한쪽만 열리는 일 방지) */
-export const SHUTTLE: { fare: number | null; seats: number | null; mealIncluded: boolean; bookingLive: boolean } = {
-  fare: 60000,        // 1인 왕복, 도시락 포함 (2026-08-19 대표 확정)
-  seats: 60,          // 공개 판매 귀가편별 30석 × 2 (2026-08-23 대표 확정). 버스 정원 45 중 15석은 플랫폼 held(예비). 1건 최대 4명
+export const SHUTTLE: {
+  fare: number | null; fareOneWay: number | null;
+  seats: number | null; mealIncluded: boolean;
+  bookingLive: boolean; oneWayLive: boolean;
+} = {
+  fare: 60000,        // 왕복 1인, 도시락 포함 (2026-08-19 대표 확정)
+  fareOneWay: 35000,  // 편도 1인 — 가는 편·오는 편 동일가 (2026-09-08 대표 확정). 도시락은 가는 편에만 포함
+  // 공개 판매 좌석(구간별 합계): 가는 편 80 + 귀가① 40 + 귀가② 40. 45인승 2대 운영,
+  // 예비(held)는 가는 편 10 · 귀가편 각 5 (2026-09-08 대표 확정). 1건 최대 4명. 잔여 수는 비노출.
+  seats: 160,
   mealIncluded: true,
   /** ⚠️ 플랫폼 ?mode=shuttle 창구가 실제 배포된 것을 확인한 뒤 true 로.
    *  false 인 동안은 8/24가 지나도 버튼을 숨김 — 미배포 상태에서 일반 신청 폼으로 보내는 사고 방지 */
   bookingLive: true,   // 2026-08-23 23:05 KST 플랫폼 ?mode=shuttle 프로덕션 배포(리비전 00895) 확인 후 ON
+  /** ⚠️ 편도 판매 표기 스위치 — 플랫폼이 편도 3종(왕복/가는 편/오는 편)을 실제로 받는 것을
+   *  확인한 뒤에만 true. false 인 동안 화면은 기존 '왕복만 판매' 상태로 유지된다.
+   *  홈페이지가 먼저 편도를 광고하고 폼에는 편도가 없는 사고를 막기 위한 fail-closed 스위치. */
+  oneWayLive: false,
 };
 
 /** 예약 버튼 노출 조건: 판매창 열림(KST 8/24) + 요금 + 좌석 수 + 플랫폼 창구 배포 확인 */
@@ -225,6 +236,11 @@ export function isShuttleBookable(now: number = nowMs()): boolean {
     SHUTTLE.seats != null &&
     (SHUTTLE.bookingLive || previewFlag('NEXT_PUBLIC_PREVIEW_SHUTTLE_LIVE'))
   );
+}
+
+/** 편도(가는 편·오는 편) 판매 표기 조건 — 예약 자체가 열려 있고 + 편도 요금이 있고 + 플랫폼 편도 창구 확인됨 */
+export function isOneWayOpen(now: number = nowMs()): boolean {
+  return isShuttleBookable(now) && SHUTTLE.fareOneWay != null && SHUTTLE.oneWayLive;
 }
 
 // ── 춘천 시내 무료 순환 셔틀 (25인승 1대 · 한 바퀴 60분 · 예약 없음) ──────────

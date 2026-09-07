@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import LegalPage, { type LegalSection } from '@/components/LegalPage';
+import { isOneWayOpen } from '@/data/festival';
 
 export function generateMetadata({ params: { locale } }: { params: { locale: string } }): Metadata {
   return { title: locale === 'ko' ? '환불 규정 — KCTF' : 'Refund Policy — KCTF' };
@@ -7,11 +8,14 @@ export function generateMetadata({ params: { locale } }: { params: { locale: str
 
 export default function RefundPage({ params: { locale } }: { params: { locale: string } }) {
   const isKo = locale === 'ko';
+  // 편도 판매가 열리면 환불·양도 조항이 편도에도 동일 적용된다는 점을 규정에 명시
+  const shuttleKo = isOneWayOpen() ? '셔틀버스 승차권(왕복·편도)' : '셔틀버스 왕복권';
+  const shuttleEn = isOneWayOpen() ? 'shuttle bus tickets (round trip and one way)' : 'shuttle bus round-trip tickets';
 
   const sectionsKo: LegalSection[] = [
     {
       paragraphs: [
-        '본 환불 규정은 춘천국제탱고페스티벌 2026(이하 페스티벌) 참가 신청(참가권·숙박 패키지·셔틀버스 왕복권)에 적용됩니다.',
+        `본 환불 규정은 춘천국제탱고페스티벌 2026(이하 페스티벌) 참가 신청(참가권·숙박 패키지·${shuttleKo})에 적용됩니다.`,
       ],
     },
     {
@@ -42,9 +46,9 @@ export default function RefundPage({ params: { locale } }: { params: { locale: s
       ],
     },
     {
-      heading: '셔틀버스 왕복권',
+      heading: shuttleKo,
       bullets: [
-        '셔틀버스 왕복권은 좌석 선점 상품으로, 구매 후 환불이 불가합니다.',
+        `${shuttleKo}은 좌석 선점 상품으로, 구매 후 환불이 불가합니다.`,
         '양도는 2026년 9월 30일까지 가능하며, 티켓 양도와 동일하게 주최측(info@kcctf.org)에 양도인·양수인 정보를 고지해야 합니다.',
         '신청 후 3일 이내에 입금이 확인되지 않으면 좌석은 자동 해제되며, 남은 좌석이 있는 경우 다시 신청할 수 있습니다.',
       ],
@@ -64,7 +68,7 @@ export default function RefundPage({ params: { locale } }: { params: { locale: s
   const sectionsEn: LegalSection[] = [
     {
       paragraphs: [
-        'This Refund Policy applies to all registrations for the Chuncheon International Tango Festival 2026 (the “Festival”), including passes, accommodation packages, and shuttle bus round-trip tickets.',
+        `This Refund Policy applies to all registrations for the Chuncheon International Tango Festival 2026 (the “Festival”), including passes, accommodation packages, and ${shuttleEn}.`,
       ],
     },
     {
@@ -95,7 +99,7 @@ export default function RefundPage({ params: { locale } }: { params: { locale: s
       ],
     },
     {
-      heading: 'Shuttle bus round-trip tickets',
+      heading: isOneWayOpen() ? 'Shuttle bus tickets (round trip · one way)' : 'Shuttle bus round-trip tickets',
       bullets: [
         'Shuttle tickets reserve a seat and are non-refundable once purchased.',
         'Transfers are permitted until September 30, 2026, under the same conditions as ticket transfers: notify the organizer (info@kcctf.org) of both the transferor’s and transferee’s details.',
