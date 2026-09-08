@@ -35,13 +35,15 @@ echo "▶ 4/4  배포 후 헬스체크 (SSR 콜드스타트 감안 최대 90초 
 ok=0
 for i in $(seq 1 9); do
   sleep 10
-  ko=$(curl -s -o /dev/null -w "%{http_code}" "https://kcctf.org/ko?hc=$(date +%s)")
-  en=$(curl -s -o /dev/null -w "%{http_code}" "https://kcctf.org/en?hc=$(date +%s)")
-  echo "  시도 $i: /ko=$ko /en=$en"
+  ko=$(curl -s -o /dev/null -w "%{http_code}" "https://kctf.kr/ko?hc=$(date +%s)")
+  en=$(curl -s -o /dev/null -w "%{http_code}" "https://kctf.kr/en?hc=$(date +%s)")
+  # 구 도메인은 302(kctf.kr 로 이동)가 정상. 200 이면 리다이렉트가 안 걸린 것.
+  old=$(curl -s -o /dev/null -w "%{http_code}" "https://kcctf.org/ko?hc=$(date +%s)")
+  echo "  시도 $i: kctf.kr/ko=$ko /en=$en · kcctf.org=$old(302 기대)"
   if [ "$ko" = "200" ] && [ "$en" = "200" ]; then ok=1; break; fi
 done
 if [ "$ok" = "1" ]; then
-  echo "✅ 배포 완료 + 라이브 200 확인 — https://kcctf.org"
+  echo "✅ 배포 완료 + 라이브 200 확인 — https://kctf.kr (kcctf.org → 302 이동)"
 else
   echo "🚨 배포는 끝났지만 라이브가 200이 아님 — 손상 번들 가능성!"
   echo "   복구:  rm -rf .next .firebase && bash firebase-deploy.sh  (next dev 반드시 끈 상태에서)"
