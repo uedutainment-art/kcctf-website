@@ -23,7 +23,10 @@ const REDIRECT_STATUS = 302;
 export default function middleware(request: NextRequest) {
   // 구 도메인 접속을 새 도메인으로 — 경로·쿼리를 그대로 보존해야 QR·기존 링크가 안 깨진다
   if (CANONICAL_REDIRECT) {
-    const host = request.headers.get('host')?.split(':')[0].toLowerCase();
+    // Firebase Hosting SSR 은 host 헤더를 내부 컨테이너 값으로 바꿔 넣는다.
+    // 방문자가 실제로 친 도메인은 x-forwarded-host 에 들어오므로 그쪽을 먼저 본다.
+    const rawHost = request.headers.get('x-forwarded-host') ?? request.headers.get('host') ?? '';
+    const host = rawHost.split(',')[0].trim().split(':')[0].toLowerCase();
     if (host && LEGACY_HOSTS.has(host)) {
       const url = new URL(request.url);
       url.protocol = 'https:';
