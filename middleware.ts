@@ -13,7 +13,7 @@ const intlMiddleware = createMiddleware(routing);
 // ⚠️ kcctf.org 는 행사가 끝날 때까지 절대 해지·DNS 삭제 금지.
 //    - 팜플릿 QR(kcctf.org/program-note)과 이미 발송된 문자·메일 링크가 살아 있어야 함
 //    - info@kcctf.org 가 Google Workspace 메일이라 MX 레코드가 org 에 있음
-const CANONICAL_REDIRECT = false;
+const CANONICAL_REDIRECT = true;
 const CANONICAL_HOST = 'kctf.kr';
 const LEGACY_HOSTS = new Set(['kcctf.org', 'www.kcctf.org', 'www.kctf.kr']);
 // 302(임시)로 시작한다. 301 은 브라우저가 영구 캐시해서, 잘못 켰을 때 되돌려도
