@@ -107,8 +107,9 @@ export function LoopTable({
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
-// 시각 기준 정렬 표 — 한 줄 = 한 시간대. 왼쪽 호텔→행사장, 오른쪽 행사장→호텔이 같은 선상에 놓임.
-// 자정 이후는 구분선 + 날짜 라벨, 심야 30분 간격 시간대는 셀 안에 두 편이 들어가고 머스터드 강조.
+// 한 줄 = 버스 한 대의 한 바퀴. 왼쪽 호텔→행사장(더베네치아·에스턴·봄내) 다음에 같은 버스의
+// 오른쪽 행사장→호텔(봄내·에스턴·더베네치아)이 이어지도록, 왼쪽 출발은 반 바퀴(30분) 뒤 줄에 붙인다.
+// 자정을 넘겨 시작하는 줄 앞에 날짜 구분선, 심야 30분 간격(한 칸에 두 편)은 머스터드 강조.
 // ─────────────────────────────────────────────────────────────────────────────
 
 /** 운행일 낮(12:00)부터 다음날 새벽까지를 한 축에 올리기 위한 정렬 키 (분). 00:00~11:59 는 다음날로 취급 */
@@ -118,52 +119,46 @@ function seqMinutes(t: string): number {
 }
 
 export type LoopDayLabels = {
-  hourCol: string;      // 시각
-  toVenue: string;      // 호텔 → 행사장
-  toHotels: string;     // 행사장 → 호텔
-  toVenueStops: string; // 더베네치아 · 에스턴 · 봄내
-  toHotelsStops: string;// 봄내 · 에스턴 · 더베네치아
-  toVenueShort: string; // 모바일: 더베네치아 → 봄내
-  toHotelsShort: string;// 모바일: 봄내 → 더베네치아
-  first: string; last: string; afterMidnight: string; late: string;
-  hourSuffix: string;   // 시 / :00
+  toVenueStops: string;  // 칸 제목 = 정류장 순서: 더베네치아 → 에스턴 → 봄내체육관
+  toHotelsStops: string; // 봄내체육관 → 에스턴 → 더베네치아
+  afterMidnight: string; // 자정 넘긴 구간 구분선
+  late: string;          // 머스터드 칸 범례 (심야 30분 간격)
 };
 
 export function LoopDayTable({
   toVenue, toHotels, labels,
 }: { toVenue: string[]; toHotels: string[]; labels: LoopDayLabels }) {
-  // 시간대(정렬 키의 시) → 양방향 출발 시각 목록
-  const slots = new Map<number, { v: string[]; h: string[] }>();
-  const put = (dir: 'v' | 'h', dep: string) => {
-    const key = Math.floor(seqMinutes(dep) / 60);
-    const cur = slots.get(key) ?? { v: [], h: [] };
+  const halfLoop = LOOP_SHUTTLE.loopMinutes / 2;
+  const rows = new Map<number, { v: string[]; h: string[] }>();
+  const put = (dir: 'v' | 'h', dep: string, shift: number) => {
+    const key = Math.floor((seqMinutes(dep) + shift) / 60);
+    const cur = rows.get(key) ?? { v: [], h: [] };
     cur[dir].push(dep);
-    slots.set(key, cur);
+    rows.set(key, cur);
   };
-  toVenue.forEach((d) => put('v', d));
-  toHotels.forEach((d) => put('h', d));
-  const keys = Array.from(slots.keys()).sort((a, b) => a - b);
+  toVenue.forEach((d) => put('v', d, halfLoop));
+  toHotels.forEach((d) => put('h', d, 0));
+  const keys = Array.from(rows.keys()).sort((a, b) => a - b);
+  const rowStart = (k: number) => {
+    const { v, h } = rows.get(k)!;
+    return seqMinutes(v[0] ?? h[0]);
+  };
+  const hasLate = keys.some((k) => rows.get(k)!.v.length > 1 || rows.get(k)!.h.length > 1);
 
-  const firstV = toVenue[0], lastV = toVenue[toVenue.length - 1];
-  const firstH = toHotels[0], lastH = toHotels[toHotels.length - 1];
-
-  const Cell = ({ deps, first, last, late = false }: { deps: string[]; first: string; last: string; late?: boolean }) => {
+  const Cell = ({ deps }: { deps: string[] }) => {
     if (deps.length === 0) return <td className="py-2 text-center text-charcoal/25">—</td>;
+    const late = deps.length > 1;
     return (
       <td className={['py-1.5 text-center', late ? 'bg-mustard/30 font-bold text-burgundy' : ''].join(' ')}>
         {deps.map((dep) => {
           const st = stopTimes(dep);
-          const isFirst = dep === first, isLast = dep === last;
           return (
-            <div key={dep} className={['flex items-center justify-center gap-1 sm:gap-2 py-0.5 whitespace-nowrap', isLast ? 'text-charcoal/55' : ''].join(' ')}>
+            <div key={dep} className="flex items-center justify-center gap-1 whitespace-nowrap py-0.5 sm:gap-2">
               <span>{st[0]}</span>
-              <span className="text-charcoal/35 sm:hidden">→</span>
-              <span className="hidden text-charcoal/35 sm:inline">·</span>
-              <span className="hidden text-charcoal/70 sm:inline">{st[1]}</span>
-              <span className="hidden text-charcoal/35 sm:inline">·</span>
+              <span className="text-charcoal/35">·</span>
+              <span className="text-charcoal/70">{st[1]}</span>
+              <span className="text-charcoal/35">·</span>
               <span>{st[2]}</span>
-              {isFirst && <span className="font-kr-sans text-[9px] font-normal text-charcoal/50 sm:text-[10px]">{labels.first}</span>}
-              {isLast && <span className="font-kr-sans text-[9px] font-normal text-charcoal/50 sm:text-[10px]">{labels.last}</span>}
             </div>
           );
         })}
@@ -172,35 +167,24 @@ export function LoopDayTable({
   };
 
   let dividerShown = false;
-  let lateBadgeShown = false;
   return (
     <div className="overflow-x-auto">
       <table className="w-full border-collapse font-en-body text-[12px] tabular-nums sm:text-[13px]">
         <thead>
           <tr className="border-b border-ink-soft/20">
-            <th className="w-[44px] py-1.5 text-left font-kr-sans text-[11px] font-bold text-charcoal/55 sm:w-[56px]">{labels.hourCol}</th>
-            <th className="py-1.5 text-center">
-              <span className="block font-kr-sans text-[12px] font-bold text-burgundy">{labels.toVenue}</span>
-              <span className="block font-kr-sans text-[10.5px] font-normal text-charcoal/50 sm:hidden">{labels.toVenueShort}</span>
-              <span className="hidden font-kr-sans text-[10.5px] font-normal text-charcoal/50 sm:block">{labels.toVenueStops}</span>
-            </th>
-            <th className="py-1.5 text-center">
-              <span className="block font-kr-sans text-[12px] font-bold text-burgundy">{labels.toHotels}</span>
-              <span className="block font-kr-sans text-[10.5px] font-normal text-charcoal/50 sm:hidden">{labels.toHotelsShort}</span>
-              <span className="hidden font-kr-sans text-[10.5px] font-normal text-charcoal/50 sm:block">{labels.toHotelsStops}</span>
-            </th>
+            <th className="w-1/2 px-1 py-2.5 text-center font-kr-sans text-[12.5px] font-bold leading-snug text-burgundy sm:text-[14px]">{labels.toVenueStops}</th>
+            <th className="w-1/2 px-1 py-2.5 text-center font-kr-sans text-[12.5px] font-bold leading-snug text-burgundy sm:text-[14px]">{labels.toHotelsStops}</th>
           </tr>
         </thead>
         <tbody>
           {keys.map((k) => {
-            const { v, h } = slots.get(k)!;
-            const hour = k % 24;
-            const rows: JSX.Element[] = [];
-            if (k >= 24 && !dividerShown) {
+            const { v, h } = rows.get(k)!;
+            const out: JSX.Element[] = [];
+            if (!dividerShown && rowStart(k) >= 24 * 60) {
               dividerShown = true;
-              rows.push(
+              out.push(
                 <tr key={`mid-${k}`}>
-                  <td colSpan={3} className="py-1.5">
+                  <td colSpan={2} className="py-1.5">
                     <div className="flex items-center gap-2">
                       <span className="h-px flex-1 bg-burgundy/25" />
                       <span className="font-kr-sans text-[10.5px] font-bold tracking-[0.12em] text-burgundy/80">🌙 {labels.afterMidnight}</span>
@@ -210,25 +194,22 @@ export function LoopDayTable({
                 </tr>,
               );
             }
-            const isLateRow = h.length > 1 || v.length > 1;
-            const showBadge = isLateRow && !lateBadgeShown;
-            if (showBadge) lateBadgeShown = true;
-            rows.push(
+            out.push(
               <tr key={k} className="border-b border-ink-soft/10 text-ink-soft">
-                <td className="py-2 pr-1 font-kr-sans text-[11.5px] font-bold text-charcoal/70 sm:whitespace-nowrap sm:text-[12px]">
-                  {String(hour).padStart(2, '0')}{labels.hourSuffix}
-                  {showBadge && (
-                    <span className="mt-0.5 block w-fit whitespace-nowrap rounded-full bg-burgundy px-1.5 py-[1px] font-kr-sans text-[9px] font-bold text-warm-white sm:ml-1.5 sm:mt-0 sm:inline">{labels.late}</span>
-                  )}
-                </td>
-                <Cell deps={v} first={firstV} last={lastV} late={isLateRow} />
-                <Cell deps={h} first={firstH} last={lastH} late={isLateRow} />
+                <Cell deps={v} />
+                <Cell deps={h} />
               </tr>,
             );
-            return rows;
+            return out;
           })}
         </tbody>
       </table>
+      {hasLate && (
+        <p className="mt-2 flex items-center justify-end gap-1.5 font-kr-sans text-[10.5px] text-charcoal/55">
+          <span aria-hidden className="inline-block h-2.5 w-2.5 rounded-sm bg-mustard/60" />
+          {labels.late}
+        </p>
+      )}
     </div>
   );
 }

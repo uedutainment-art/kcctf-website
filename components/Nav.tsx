@@ -144,7 +144,7 @@ export default function Nav() {
                 href={pathname}
                 locale={altLocale}
                 aria-label={locale === 'ko' ? 'English' : '한국어'}
-                className="px-3 py-4 font-en-body font-bold text-[15px] tracking-[0.14em] uppercase text-ink transition-colors duration-200 hover:text-burgundy"
+                className="px-3 py-4 font-en-body font-bold text-[30px] leading-none tracking-[0.06em] uppercase text-ink transition-colors duration-200 hover:text-burgundy"
               >
                 {t('languageSwitch')}
               </Link>
@@ -164,7 +164,7 @@ export default function Nav() {
                 href={pathname}
                 locale={altLocale}
                 aria-label={locale === 'ko' ? 'English' : '한국어'}
-                className="px-2 py-3 font-en-body font-bold text-[15px] tracking-[0.12em] uppercase text-ink transition-colors duration-200 hover:text-burgundy"
+                className="px-2 py-3 font-en-body font-bold text-[30px] leading-none tracking-[0.04em] uppercase text-ink transition-colors duration-200 hover:text-burgundy"
               >
                 {t('languageSwitch')}
               </Link>

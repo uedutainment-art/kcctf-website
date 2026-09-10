@@ -58,26 +58,15 @@ export default function ChuncheonShuttlePage({ params: { locale } }: { params: {
         <div className="mt-8 space-y-8">
           {LOOP_DAYS.map((d) => {
             const labels = {
-              hourCol: isKo ? '시각' : 'Hour',
-              toVenue: isKo ? '호텔 → 행사장' : 'Hotels → Venue',
-              toHotels: isKo ? '행사장 → 호텔' : 'Venue → Hotels',
-              toVenueStops: isKo ? '더베네치아 출발 · 에스턴 · 봄내 도착' : 'dep. Venezia · Eston · arr. Bomnae',
-              toHotelsStops: isKo ? '봄내 출발 · 에스턴 · 더베네치아 도착' : 'dep. Bomnae · Eston · arr. Venezia',
-              toVenueShort: isKo ? '더베네치아 → 봄내' : 'Venezia → Bomnae',
-              toHotelsShort: isKo ? '봄내 → 더베네치아' : 'Bomnae → Venezia',
-              first: isKo ? '첫차' : 'first',
-              last: isKo ? '막차' : 'last',
+              toVenueStops: isKo ? '더베네치아 → 에스턴 → 봄내체육관' : 'The Venezia → Eston → Bomnae Complex',
+              toHotelsStops: isKo ? '봄내체육관 → 에스턴 → 더베네치아' : 'Bomnae Complex → Eston → The Venezia',
               afterMidnight: isKo ? `${nextDayLabel(d, isKo)} 새벽` : `${nextDayLabel(d, isKo)} early hours`,
-              late: isKo ? '30분 간격' : 'every 30 min',
-              hourSuffix: isKo ? '시' : ':00',
+              late: isKo ? '심야 30분 간격' : 'late night · every 30 min',
             };
             return (
               <section key={d} className="overflow-hidden rounded-lg border border-ink-soft/15 bg-warm-white shadow-card">
                 <div className="bg-cream border-l-4 border-burgundy px-5 py-3 flex items-baseline justify-between">
                   <h2 className="font-kr-serif text-[20px] font-black text-ink-soft">{dayLabel(d, isKo)}</h2>
-                  <span className="font-en-body text-[10px] font-bold uppercase tracking-[0.2em] text-charcoal/50">
-                    {isKo ? `막차 ${LOOP_SHUTTLE.toHotels[d].slice(-1)[0]} 봄내 출발` : `last run ${LOOP_SHUTTLE.toHotels[d].slice(-1)[0]} from Bomnae`}
-                  </span>
                 </div>
                 <div className="px-5 py-4">
                   <LoopDayTable toVenue={LOOP_SHUTTLE.toVenue[d]} toHotels={LOOP_SHUTTLE.toHotels[d]} labels={labels} />
