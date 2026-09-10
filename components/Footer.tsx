@@ -114,7 +114,7 @@ export default function Footer() {
                 <span className="font-kr-sans text-[14px] text-warm-white/30">Instagram</span>
               </li>
               <li>
-                <span className="font-kr-sans text-[14px] text-warm-white/30">Facebook</span>
+                <a href="https://www.facebook.com/groups/413601948060266/" target="_blank" rel="noopener noreferrer" className="font-kr-sans text-[14px] text-warm-white/65 hover:text-warm-white transition-colors">Facebook</a>
               </li>
             </ul>
           </div>
