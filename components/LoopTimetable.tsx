@@ -205,8 +205,8 @@ export function LoopDayTable({
         </tbody>
       </table>
       {hasLate && (
-        <p className="mt-2 flex items-center justify-end gap-1.5 font-kr-sans text-[10.5px] text-charcoal/55">
-          <span aria-hidden className="inline-block h-2.5 w-2.5 rounded-sm bg-mustard/60" />
+        <p className="mt-3 flex items-center justify-center gap-2 font-kr-sans text-[14px] font-bold text-burgundy">
+          <span aria-hidden className="inline-block h-3.5 w-3.5 rounded-sm bg-mustard/60 ring-1 ring-burgundy/25" />
           {labels.late}
         </p>
       )}
