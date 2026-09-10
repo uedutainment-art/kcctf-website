@@ -104,15 +104,12 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Follow placeholder */}
+          {/* Follow — Instagram은 계정 정리 전까지 숨김(2026-09-11 대표) */}
           <div>
             <p className="font-en-body font-bold text-[16px] tracking-[0.2em] uppercase text-gold mb-5">
               {t('followTitle')}
             </p>
             <ul className="flex flex-col gap-3">
-              <li>
-                <span className="font-kr-sans text-[14px] text-warm-white/30">Instagram</span>
-              </li>
               <li>
                 <a href="https://www.facebook.com/groups/413601948060266/" target="_blank" rel="noopener noreferrer" className="font-kr-sans text-[14px] text-warm-white/65 hover:text-warm-white transition-colors">Facebook</a>
               </li>
