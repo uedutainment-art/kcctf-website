@@ -45,6 +45,10 @@
       {
         "label": "Stay",
         "href": "#accommodation"
+      },
+      {
+        "label": "Free Shuttle",
+        "href": "/shuttle/chuncheon"
       }
     ]
   },

@@ -42,11 +42,14 @@ export default function Nav() {
       tickets:       '#accommodation', // tickets/FAQ 영역에선 숙소 활성 유지
       faq:           '#accommodation',
     };
+    // 메뉴 클릭 시 섹션은 globals.css section[id] scroll-margin-top(120px) 지점에 멈춘다.
+    // 판정선이 그보다 위(예: 80px)면 방금 누른 섹션이 선택되지 않고 한 칸 위 메뉴에 불이 들어온다.
+    const ACTIVE_LINE = 130;
     const onScroll = () => {
       let current = '';
       for (const id of sections) {
         const el = document.getElementById(id);
-        if (el && el.getBoundingClientRect().top <= 80) {
+        if (el && el.getBoundingClientRect().top <= ACTIVE_LINE) {
           current = sectionToHref[id];
         }
       }
@@ -79,7 +82,11 @@ export default function Nav() {
   const altLocale = locale === 'ko' ? 'en' : 'ko';
   // 서브페이지(/shuttle 등)에서는 섹션 앵커가 같은 페이지에 없으므로 홈(/ko#section)으로 보냄
   const onHome = pathname === '/';
-  const sectionHref = (hash: string) => (onHome ? hash : `/${locale}${hash}`);
+  // '#섹션' 은 홈 안 스크롤, '/경로' 는 별도 페이지(예: 순환 셔틀 시간표) — 페이지 링크는 현재 언어를 붙여서
+  const sectionHref = (href: string) =>
+    href.startsWith('/') ? `/${locale}${href}` : onHome ? href : `/${locale}${href}`;
+  const isItemActive = (href: string) =>
+    href.startsWith('/') ? pathname === href : activeHref === href;
 
   return (
     <>
@@ -112,7 +119,7 @@ export default function Nav() {
             {/* Desktop nav links */}
             <nav className="hidden lg:flex items-center gap-1" aria-label="Main navigation">
               {navItems.map((item) => {
-                const isActive = activeHref === item.href;
+                const isActive = isItemActive(item.href);
                 return (
                   <a
                     key={item.href}
@@ -137,7 +144,7 @@ export default function Nav() {
                 href={pathname}
                 locale={altLocale}
                 aria-label={locale === 'ko' ? 'English' : '한국어'}
-                className="px-3 py-4 font-en-body font-bold text-[11px] tracking-[0.22em] uppercase text-ink transition-colors duration-200 hover:text-burgundy"
+                className="px-3 py-4 font-en-body font-bold text-[15px] tracking-[0.14em] uppercase text-ink transition-colors duration-200 hover:text-burgundy"
               >
                 {t('languageSwitch')}
               </Link>
@@ -157,7 +164,7 @@ export default function Nav() {
                 href={pathname}
                 locale={altLocale}
                 aria-label={locale === 'ko' ? 'English' : '한국어'}
-                className="px-2 py-3 font-en-body font-bold text-[11px] tracking-[0.22em] uppercase text-ink transition-colors duration-200 hover:text-burgundy"
+                className="px-2 py-3 font-en-body font-bold text-[15px] tracking-[0.12em] uppercase text-ink transition-colors duration-200 hover:text-burgundy"
               >
                 {t('languageSwitch')}
               </Link>

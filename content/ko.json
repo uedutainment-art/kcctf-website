@@ -45,6 +45,10 @@
       {
         "label": "숙소",
         "href": "#accommodation"
+      },
+      {
+        "label": "무료 순환 셔틀 시간표",
+        "href": "/shuttle/chuncheon"
       }
     ]
   },
