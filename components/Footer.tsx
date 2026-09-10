@@ -138,7 +138,8 @@ export default function Footer() {
               <img
                 src="/images/city-chuncheon-logo-white-trim.png"
                 alt="춘천시"
-                style={{ width: '84px', height: 'auto', opacity: 0.58 }}
+                // 로고 PNG가 순백이 아닌 밝은 회색(243)이라, 아래 대사관 글자(warm-white 65%)와 같은 밝기가 되려면 0.67
+                style={{ width: '84px', height: 'auto', opacity: 0.67 }}
                 className="mt-1 mb-2"
               />
               <p className="font-kr-sans text-[14px] text-warm-white/65 leading-[1.6]">
