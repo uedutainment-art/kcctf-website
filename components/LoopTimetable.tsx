@@ -203,13 +203,20 @@ export function LoopDayTable({
             return out;
           })}
         </tbody>
+        {/* 범례를 표 안(tfoot)에 둬야 표가 화면보다 넓어져 가로 스크롤될 때도(앱 내 브라우저 글자 확대 등) 표 가운데에 붙어 다닌다 */}
+        {hasLate && (
+          <tfoot>
+            <tr>
+              <td colSpan={2} className="pt-3 text-center">
+                <span className="inline-flex items-center gap-2 font-kr-sans text-[14px] font-bold text-burgundy">
+                  <span aria-hidden className="inline-block h-3.5 w-3.5 rounded-sm bg-mustard/60 ring-1 ring-burgundy/25" />
+                  {labels.late}
+                </span>
+              </td>
+            </tr>
+          </tfoot>
+        )}
       </table>
-      {hasLate && (
-        <p className="mt-3 flex items-center justify-center gap-2 font-kr-sans text-[14px] font-bold text-burgundy">
-          <span aria-hidden className="inline-block h-3.5 w-3.5 rounded-sm bg-mustard/60 ring-1 ring-burgundy/25" />
-          {labels.late}
-        </p>
-      )}
     </div>
   );
 }
