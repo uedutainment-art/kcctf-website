@@ -143,7 +143,10 @@ export function LoopDayTable({
     const { v, h } = rows.get(k)!;
     return seqMinutes(v[0] ?? h[0]);
   };
-  const hasLate = keys.some((k) => rows.get(k)!.v.length > 1 || rows.get(k)!.h.length > 1);
+  // 범례는 강조(30분 간격) 칸이 있는 쪽 칸 아래 가운데에 둔다 — 지금 데이터에선 오른쪽(행사장→호텔)만 해당
+  const lateV = keys.some((k) => rows.get(k)!.v.length > 1);
+  const lateH = keys.some((k) => rows.get(k)!.h.length > 1);
+  const hasLate = lateV || lateH;
 
   const Cell = ({ deps }: { deps: string[] }) => {
     if (deps.length === 0) return <td className="py-2 text-center text-charcoal/25">—</td>;
@@ -207,12 +210,14 @@ export function LoopDayTable({
         {hasLate && (
           <tfoot>
             <tr>
-              <td colSpan={2} className="pt-3 text-center">
+              {lateV && !lateH ? null : lateH && !lateV ? <td /> : null}
+              <td colSpan={lateV && lateH ? 2 : 1} className="pt-3 text-center">
                 <span className="inline-flex items-center gap-2 font-kr-sans text-[14px] font-bold text-burgundy">
                   <span aria-hidden className="inline-block h-3.5 w-3.5 rounded-sm bg-mustard/60 ring-1 ring-burgundy/25" />
                   {labels.late}
                 </span>
               </td>
+              {lateV && !lateH ? <td /> : null}
             </tr>
           </tfoot>
         )}
