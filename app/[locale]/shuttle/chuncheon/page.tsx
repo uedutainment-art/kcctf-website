@@ -42,11 +42,11 @@ export default function ChuncheonShuttlePage({ params: { locale } }: { params: {
           <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
             <p className="font-kr-sans text-[13px] text-ink-soft">
               <b className="text-burgundy">{isKo ? '호텔 → 행사장' : 'Hotels → Venue'}</b>
-              <br />{isKo ? '더베네치아 출발 → 에스턴 +10분 → 봄내 도착 +20분' : 'Dep. Venezia → Eston +10 min → Arr. Bomnae +20 min'}
+              <br />{isKo ? '더베네치아 출발 → 에스턴 +10분 → 봄내체육관 도착 +20분' : 'Dep. Venezia → Eston +10 min → Arr. Bomnae Complex +20 min'}
             </p>
             <p className="font-kr-sans text-[13px] text-ink-soft">
               <b className="text-burgundy">{isKo ? '행사장 → 호텔' : 'Venue → Hotels'}</b>
-              <br />{isKo ? '봄내 출발 → 에스턴 +10분 → 더베네치아 도착 +20분' : 'Dep. Bomnae → Eston +10 min → Arr. Venezia +20 min'}
+              <br />{isKo ? '봄내체육관 출발 → 에스턴 +10분 → 더베네치아 도착 +20분' : 'Dep. Bomnae Complex → Eston +10 min → Arr. Venezia +20 min'}
             </p>
           </div>
           <ul className="mt-3 space-y-0.5 border-t border-ink-soft/10 pt-3">
